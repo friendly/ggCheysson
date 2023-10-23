@@ -1,0 +1,15 @@
+<pattern id="category-12512022-1" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+<rect fill="#d18781" width="100" height="100"/>
+</pattern>
+
+<pattern id="category-12512022-2" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+<rect fill="#edd493" width="100" height="100"/>
+</pattern>
+
+<pattern id="category-12512022-3" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+<rect fill="#7c9a77" width="100" height="100"/>
+</pattern>
+
+<pattern id="category-12512022-4" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+<rect fill="#6a8782" width="100" height="100"/>
+</pattern>

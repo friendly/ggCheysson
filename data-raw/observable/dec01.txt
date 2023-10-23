@@ -1,0 +1,31 @@
+<pattern id="diverging-12541021-1" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
+  <rect class="pattern" x="0" y="0" width="100%" height="100%" fill="#e16767" />
+</pattern>
+
+<pattern id="diverging-12541021-2" x="0" y="0" width="3" height="3" patternUnits="userSpaceOnUse">
+  <rect class="pattern" width="100%" height="100%" fill="#edddce" />
+  <line class="pattern" stroke="#e16767" stroke-width="2px" y1="1" x2="100%" y2="1" />
+</pattern>
+
+<pattern id="diverging-12541021-3" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
+  <rect class="pattern" width="100%" height="100%" fill="#edddce" />
+  <line class="pattern" y1="1.5" x2="100%" y2="1.5" stroke="#e16767" stroke-width="1.5px" />
+</pattern>
+
+<pattern id="diverging-12541021-4" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
+  <rect class="pattern" x="0" y="0" width="100%" height="100%" fill="#edddce" />
+</pattern>
+
+<pattern id="diverging-12541021-5" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
+  <rect class="pattern" width="100%" height="100%" fill="#edddce" />
+  <line class="pattern" y1="1.5" x2="100%" y2="1.5" stroke="#e8d463" stroke-width="1.5px" />
+</pattern>
+
+<pattern id="diverging-12541021-6" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+  <rect class="pattern" width="100%" height="100%" fill="#edddce" />
+  <line class="pattern" stroke="#e8d463" stroke-width="3px" y1="2" x2="100%"  y2="2" />
+</pattern>
+
+<pattern id="diverging-12541021-7" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
+  <rect class="pattern" x="0" y="0" width="100%" height="100%" fill="#e8d463" />
+</pattern>

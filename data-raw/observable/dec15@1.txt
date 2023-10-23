@@ -1,0 +1,36 @@
+<pattern id="grouped-12516018-1" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+<rect fill="#d46858" width="100" height="100"/>
+</pattern>
+
+<pattern id="grouped-12516018-2" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(-65.43 176.88)">
+<rect fill="none" width="100" height="100"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="46.97" y1="-53.03" x2="153.03" y2="53.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="41.97" y1="-48.03" x2="148.03" y2="58.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="36.97" y1="-43.03" x2="143.03" y2="63.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="31.97" y1="-38.03" x2="138.03" y2="68.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="26.97" y1="-33.03" x2="133.03" y2="73.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="21.97" y1="-28.03" x2="128.03" y2="78.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="16.97" y1="-23.03" x2="123.03" y2="83.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="11.97" y1="-18.03" x2="118.03" y2="88.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="6.97" y1="-13.03" x2="113.03" y2="93.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="1.97" y1="-8.03" x2="108.03" y2="98.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="-3.03" y1="-3.03" x2="103.03" y2="103.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="-8.03" y1="1.97" x2="98.03" y2="108.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="-13.03" y1="6.97" x2="93.03" y2="113.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="-18.03" y1="11.97" x2="88.03" y2="118.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="-23.03" y1="16.97" x2="83.03" y2="123.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="-28.03" y1="21.97" x2="78.03" y2="128.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="-33.03" y1="26.97" x2="73.03" y2="133.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="-38.03" y1="31.97" x2="68.03" y2="138.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="-43.03" y1="36.97" x2="63.03" y2="143.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="-48.03" y1="41.97" x2="58.03" y2="148.03"/>
+<line style="stroke:#d46858;stroke-miterlimit:10;stroke-width:1.5px;fill:none" x1="-53.03" y1="46.97" x2="53.03" y2="153.03"/>
+</pattern>
+
+<pattern id="grouped-12516018-3" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+<rect fill="#6d7d97" width="100" height="100"/>
+</pattern>
+
+<pattern id="grouped-12516018-4" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+<rect fill="#68494b" width="100" height="100"/>
+</pattern>
