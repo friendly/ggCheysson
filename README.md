@@ -14,8 +14,10 @@ maps and graphs. These consist of:
 * **Cheysson fonts** to reflect some character of the hand-drawn style used in these images.
 
 At present, it is just a work-in-progress, awaiting translation from the original sources
-to R, most likely using the framework of the [ggthemes package](https://jrnold.github.io/ggthemes/).  This README simply documents the sources and
-steps so far.
+to R, most likely using the framework of the 
+[ggpattern](https://coolbutuseless.github.io/package/ggpattern/) and
+[ggthemes](https://jrnold.github.io/ggthemes/).  
+This README simply documents the sources and steps so far.
 
 ### Sources
 
