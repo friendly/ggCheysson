@@ -4,9 +4,10 @@ Version: 0.0.0.9000
 Authors@R: 
     person("Michael", "Friendly", , "friendly@yorku.ca", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3237-0941"))
-Description: Implements stylistic elements (fonts, haschures, color palettes) used by Emile
+Description: Implements stylistic elements (fonts, hachure patterns, color palettes) used by Emile
   Cheysson in the Albums de Statistique Graphique, sometimes called the pinacle of the
   Golden Age of Statistical Graphics.
+Suggests: ggpattern, ggthemes, gridpattern
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
