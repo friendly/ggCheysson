@@ -16,7 +16,7 @@ maps and graphs. These consist of:
 At present, it is just a work-in-progress, awaiting translation from the original sources
 to R, most likely using the framework of the 
 [ggpattern](https://coolbutuseless.github.io/package/ggpattern/) and
-[ggthemes](https://jrnold.github.io/ggthemes/).  
+[ggthemes](https://jrnold.github.io/ggthemes/) packages. 
 This README simply documents the sources and steps so far.
 
 ### Sources
