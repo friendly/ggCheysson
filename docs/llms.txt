@@ -1,0 +1,368 @@
+# ggCheysson
+
+![](reference/figures/logo.png)
+
+The `ggCheysson` package brings the graphical styles of the *Albums de
+Statistique Graphique* to R and ggplot2. Produced by the Ministry of
+Public Works in France under the direction of [Émile
+Cheysson](https://en.wikipedia.org/wiki/%C3%89mile_Cheysson) from
+1879-1897, these albums represent the pinnacle of the Golden Age of
+Statistical Graphics.
+
+## Features
+
+This package provides a complete aesthetic system for creating
+visualizations in Cheysson’s distinctive style:
+
+### 🎨 Color Palettes
+
+- **20 authentic color palettes** extracted from the original Albums
+- Sequential, diverging, grouped, and categorical palette types
+- Named by album year and plate number (e.g., `1880_07`, `1881_03`)
+- Compatible with standard ggplot2 color scales
+
+### 📐 Hatching Patterns
+
+- **83 pattern specifications** including solid fills, stripes, and
+  crosshatching
+- Line angles (0°, 45°, 90°, 135°) matching historical diagrams
+- Variable densities and line widths
+- Full integration with
+  [ggpattern](https://coolbutuseless.github.io/package/ggpattern/)
+
+### ✍️ Authentic Fonts
+
+- **5 hand-drawn font families** replicating Cheysson’s lettering style
+- Regular, Italic, Sans Caps, Outline Caps, and Title variants
+- Automatic loading and integration with ggplot2 themes
+- Created by Kenneth Fields for historical accuracy
+
+### 🎭 Complete Themes
+
+- [`theme_cheysson()`](http://friendly.github.io/ggCheysson/reference/theme_cheysson.md) -
+  Full period-appropriate theme
+- [`theme_cheysson_minimal()`](http://friendly.github.io/ggCheysson/reference/theme_cheysson_minimal.md) -
+  Minimal grid variant
+- [`theme_cheysson_map()`](http://friendly.github.io/ggCheysson/reference/theme_cheysson_map.md) -
+  Optimized for cartographic work
+
+## Installation
+
+Install the development version from GitHub:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("friendly/ggCheysson")
+```
+
+### Suggested Dependencies
+
+For full functionality, install these packages:
+
+``` r
+install.packages(c("ggpattern", "systemfonts"))
+```
+
+## Quick Start
+
+### Basic Color Palette
+
+``` r
+library(ggplot2)
+library(ggCheysson)
+
+ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
+  geom_point(size = 3) +
+  scale_color_cheysson("1881_04") +
+  labs(title = "Iris Dataset") +
+  theme_minimal()
+```
+
+### With Fonts and Theme
+
+``` r
+# Load Cheysson fonts (once per session)
+load_cheysson_fonts()
+
+ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
+  geom_point(size = 3) +
+  scale_color_cheysson("1883_04") +
+  labs(
+    title = "Automobile Efficiency",
+    subtitle = "Weight vs Fuel Economy",
+    x = "Weight (1000 lbs)",
+    y = "Miles per Gallon"
+  ) +
+  theme_cheysson()
+```
+
+### Complete Cheysson Aesthetic (Colors + Patterns + Fonts)
+
+``` r
+library(ggpattern)
+
+data <- data.frame(
+  category = LETTERS[1:4],
+  value = c(15, 23, 18, 20)
+)
+
+ggplot(data, aes(category, value, fill = category)) +
+  geom_col_pattern(
+    aes(
+      pattern_type = category,
+      pattern_fill = category,
+      pattern_angle = category
+    ),
+    pattern = "stripe",
+    pattern_density = 0.35,
+    color = "black"
+  ) +
+  scale_fill_cheysson_pattern("1881_03") +
+  scale_pattern_fill_cheysson("1881_03") +
+  scale_pattern_type_cheysson("1881_03") +
+  scale_pattern_angle_cheysson("1881_03") +
+  labs(
+    title = "Statistical Comparison",
+    x = "Category",
+    y = "Value"
+  ) +
+  theme_cheysson() +
+  theme(legend.position = "none")
+```
+
+## Available Palettes
+
+View all available palettes:
+
+``` r
+# List all palettes
+list_cheysson_pals()
+
+# List by type
+list_cheysson_pals("sequential")
+list_cheysson_pals("category")
+
+# View palette colors
+cheysson_pal("1880_07")
+```
+
+Palette types: - **Sequential** (7 palettes): For ordered quantitative
+data - **Diverging** (2 palettes): For data with neutral midpoint -
+**Grouped** (5 palettes): For comparing related groups - **Category** (6
+palettes): For categorical data
+
+## Pattern Support
+
+With ggpattern, recreate the distinctive hatching styles:
+
+``` r
+# List available pattern palettes
+list_cheysson_patterns()
+
+# Get pattern specifications
+patterns <- cheysson_pattern("1881_03")
+
+# Use in plots with pattern scales
+scale_pattern_fill_cheysson("1881_03")
+scale_pattern_type_cheysson("1881_03")
+scale_pattern_angle_cheysson("1881_03")
+```
+
+## Font Families
+
+Five authentic font families are included:
+
+| Family                | Description    | Use               |
+|-----------------------|----------------|-------------------|
+| `Cheysson`            | Regular serif  | Body text, labels |
+| `CheyssonItalic`      | Italic variant | Emphasis          |
+| `CheyssonSansCaps`    | Sans capitals  | Axis titles       |
+| `CheyssonOutlineCaps` | Outlined caps  | Decorative titles |
+| `CheyssonTitle`       | Display font   | Main titles       |
+
+``` r
+# Load fonts
+load_cheysson_fonts()
+
+# List available fonts
+list_cheysson_fonts()
+
+# Use specific fonts
+theme(
+  plot.title = element_text(family = "CheyssonTitle"),
+  axis.title = element_text(family = "CheyssonSansCaps"),
+  axis.text = element_text(family = "Cheysson")
+)
+```
+
+## Package Contents
+
+### Data
+
+- `cheysson_palettes` - Color palette specifications (20 palettes)
+- `cheysson_patterns` - Pattern/hatching specifications (83 patterns)
+- `albumImages` - Metadata linking palettes to original album plates
+
+### Color Functions
+
+- [`cheysson_pal()`](http://friendly.github.io/ggCheysson/reference/cheysson_pal.md) -
+  Get colors from a palette
+- [`scale_color_cheysson()`](http://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+  /
+  [`scale_fill_cheysson()`](http://friendly.github.io/ggCheysson/reference/scale_cheysson.md) -
+  ggplot2 color scales
+- [`list_cheysson_pals()`](http://friendly.github.io/ggCheysson/reference/list_cheysson_pals.md) -
+  List available palettes
+
+### Pattern Functions
+
+- [`cheysson_pattern()`](http://friendly.github.io/ggCheysson/reference/cheysson_pattern.md) -
+  Get pattern specifications
+- `scale_pattern_*_cheysson()` - ggpattern scales for fills, types,
+  angles, densities
+- [`list_cheysson_patterns()`](http://friendly.github.io/ggCheysson/reference/list_cheysson_patterns.md) -
+  List available pattern palettes
+
+### Font Functions
+
+- [`load_cheysson_fonts()`](http://friendly.github.io/ggCheysson/reference/load_cheysson_fonts.md) -
+  Load font families
+- [`cheysson_font()`](http://friendly.github.io/ggCheysson/reference/cheysson_font.md) -
+  Get font family names
+- [`list_cheysson_fonts()`](http://friendly.github.io/ggCheysson/reference/list_cheysson_fonts.md) -
+  View font information
+- [`cheysson_fonts_available()`](http://friendly.github.io/ggCheysson/reference/cheysson_fonts_available.md) -
+  Check font availability
+
+### Themes
+
+- [`theme_cheysson()`](http://friendly.github.io/ggCheysson/reference/theme_cheysson.md) -
+  Complete Cheysson theme
+- [`theme_cheysson_minimal()`](http://friendly.github.io/ggCheysson/reference/theme_cheysson_minimal.md) -
+  Minimal variant
+- [`theme_cheysson_map()`](http://friendly.github.io/ggCheysson/reference/theme_cheysson_map.md) -
+  For maps
+
+## Historical Context
+
+The *Albums de Statistique Graphique* were published annually by
+France’s Ministry of Public Works, showcasing infrastructure statistics
+through innovative visualizations. Under Émile Cheysson’s direction,
+these albums combined:
+
+- Sophisticated use of color to represent quantitative variables
+- Hatching patterns to differentiate categories and show density
+- Hand-lettered text with distinctive character
+- Clear hierarchical organization of information
+
+This package preserves these design elements for modern statistical
+graphics.
+
+## Sources and Attribution
+
+### Color Palettes and Patterns
+
+- **David Rumsey Map Collection**: Complete digitized *Albums de
+  Statistique Graphique* [View
+  collection](https://www.davidrumsey.com/luna/servlet/view/search?q=album+de+statistique)
+
+- **RJ Andrews**: SVG pattern extraction and digitization [Classic Map
+  Color Design](https://infowetrust.com/project/album-colors) \|
+  [GitHub](https://github.com/infowetrust/albumcolors)
+
+- **Tom Shanley**: Observable implementation [Cheysson Color
+  Palettes](https://observablehq.com/@tomshanley/cheysson-color-palettes)
+
+### Fonts
+
+- **Kenneth Fields**: Hand-drawn font family creation [The style of
+  Émile
+  Cheysson](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/the-style-of-emile-cheysson/)
+
+## Gallery
+
+![](reference/figures/maps.png)
+
+*Original maps from the Albums showing the variety of colors and
+patterns*
+
+![](reference/figures/RJ-Andrews-color-palettes.jpg)
+
+*Extracted color palettes by RJ Andrews*
+
+## Development Status
+
+This package is under active development. Current features are stable
+and tested, but the API may evolve. Feedback and contributions are
+welcome!
+
+## Related Packages
+
+- [ggpattern](https://coolbutuseless.github.io/package/ggpattern/) -
+  Pattern fills for ggplot2
+- [ggthemes](https://jrnold.github.io/ggthemes/) - Additional themes for
+  ggplot2
+- [systemfonts](https://github.com/r-lib/systemfonts) - Font handling
+  for R
+
+## License
+
+GPL (\>= 3)
+
+## Citation
+
+``` r
+citation("ggCheysson")
+```
+
+To cite the original *Albums de Statistique Graphique*:
+
+> France. Ministère des travaux publics. *Album de statistique graphique
+> de \[year\]*. Paris: Imprimerie nationale, \[1879-1897\].
+
+# Package index
+
+## All functions
+
+- [`albumImages`](http://friendly.github.io/ggCheysson/reference/albumImages.md)
+  : Album Images Metadata
+- [`cheysson_font()`](http://friendly.github.io/ggCheysson/reference/cheysson_font.md)
+  : Get Cheysson font family name
+- [`cheysson_fonts_available()`](http://friendly.github.io/ggCheysson/reference/cheysson_fonts_available.md)
+  : Check if Cheysson fonts are loaded
+- [`cheysson_pal()`](http://friendly.github.io/ggCheysson/reference/cheysson_pal.md)
+  : Get a Cheysson color palette
+- [`cheysson_palettes`](http://friendly.github.io/ggCheysson/reference/cheysson_palettes.md)
+  : Cheysson Color Palettes
+- [`cheysson_pattern()`](http://friendly.github.io/ggCheysson/reference/cheysson_pattern.md)
+  : Get Cheysson pattern specifications
+- [`cheysson_patterns`](http://friendly.github.io/ggCheysson/reference/cheysson_patterns.md)
+  : Cheysson Pattern Data
+- [`cheysson_pattern_params()`](http://friendly.github.io/ggCheysson/reference/cheysson_pattern_params.md)
+  : Create ggpattern-compatible pattern parameters
+- [`list_cheysson_fonts()`](http://friendly.github.io/ggCheysson/reference/list_cheysson_fonts.md)
+  : List available Cheysson fonts
+- [`list_cheysson_pals()`](http://friendly.github.io/ggCheysson/reference/list_cheysson_pals.md)
+  : List available Cheysson palettes
+- [`list_cheysson_patterns()`](http://friendly.github.io/ggCheysson/reference/list_cheysson_patterns.md)
+  : List available Cheysson pattern palettes
+- [`load_cheysson_fonts()`](http://friendly.github.io/ggCheysson/reference/load_cheysson_fonts.md)
+  : Load Cheysson fonts
+- [`scale_color_cheysson()`](http://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+  [`scale_colour_cheysson()`](http://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+  [`scale_fill_cheysson()`](http://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+  : Cheysson color scales for ggplot2
+- [`scale_fill_cheysson_pattern()`](http://friendly.github.io/ggCheysson/reference/scale_fill_cheysson_pattern.md)
+  : Apply Cheysson patterns to fill aesthetic
+- [`scale_pattern_fill_cheysson()`](http://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
+  [`scale_pattern_type_cheysson()`](http://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
+  [`scale_pattern_angle_cheysson()`](http://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
+  [`scale_pattern_density_cheysson()`](http://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
+  : Cheysson pattern scales for ggpattern
+- [`theme_cheysson()`](http://friendly.github.io/ggCheysson/reference/theme_cheysson.md)
+  : Cheysson theme for ggplot2
+- [`theme_cheysson_map()`](http://friendly.github.io/ggCheysson/reference/theme_cheysson_map.md)
+  : Cheysson map theme
+- [`theme_cheysson_minimal()`](http://friendly.github.io/ggCheysson/reference/theme_cheysson_minimal.md)
+  : Minimal Cheysson theme
+

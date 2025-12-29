@@ -5,3 +5,6 @@
 ^dev$
 ^fonts$
 ^data-raw$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
