@@ -2,83 +2,275 @@
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-# ggCheysson 
+# ggCheysson
 
 <img src="man/figures/logo.png" height="200" style="float:right; height:200px;"/>
-The `ggCheysson` package aims to bring the graphical styles of the
-_Albums de Statistique Graphique_, produced by the Ministry of Public Works
-in France under the direction of [Émile Cheysson](https://en.wikipedia.org/wiki/%C3%89mile_Cheysson), to R within the `ggplot2` framework for producing
-maps and graphs. These consist of:
 
-* **colors and fill patterns** used in various maps to portray quantitative variables with a sequential or diverging pallete, and hatching patterns to convey quantity within a given color
-* **Cheysson fonts** to reflect some character of the hand-drawn style used in these images.
+The `ggCheysson` package brings the graphical styles of the _Albums de Statistique Graphique_ to R and ggplot2. Produced by the Ministry of Public Works in France under the direction of [Émile Cheysson](https://en.wikipedia.org/wiki/%C3%89mile_Cheysson) from 1879-1897, these albums represent the pinnacle of the Golden Age of Statistical Graphics.
 
-At present, it is just a work-in-progress, awaiting translation from the original sources
-to R, most likely using the framework of the 
-[ggpattern](https://coolbutuseless.github.io/package/ggpattern/) and
-[ggthemes](https://jrnold.github.io/ggthemes/) packages. 
-This README simply documents the sources and steps so far.
+## Features
 
-### Sources
+This package provides a complete aesthetic system for creating visualizations in Cheysson's distinctive style:
 
-* David Rumsey acquired the complete set of the _Albums de Statistique Graphique_, and placed
-them online in the [David Rumsey Map Collection](https://www.davidrumsey.com/luna/servlet/view/search?sort=Pub_List_No_InitialSort%2CPub_Date%2CPub_List_No%2CSeries_No&q=album+de+statistique&search=Go)
+### 🎨 Color Palettes
+- **20 authentic color palettes** extracted from the original Albums
+- Sequential, diverging, grouped, and categorical palette types
+- Named by album year and plate number (e.g., `1880_07`, `1881_03`)
+- Compatible with standard ggplot2 color scales
 
-* From this, RJ Andrews, [Classic Map Color Design: Recreating palettes from the _Albums de Statistique Graphique._](https://infowetrust.com/project/album-colors), identified 25 maps from the
-Albums, containing a variety of colors and fill patterns. He then constructed SVG
-patterns in this [Github repo](https://github.com/infowetrust/albumcolors).
+### 📐 Hatching Patterns
+- **83 pattern specifications** including solid fills, stripes, and crosshatching
+- Line angles (0°, 45°, 90°, 135°) matching historical diagrams
+- Variable densities and line widths
+- Full integration with [ggpattern](https://coolbutuseless.github.io/package/ggpattern/)
 
-* Tom Shanley, [Cheysson Color Palettes](https://observablehq.com/@tomshanley/cheysson-color-palettes). A collection of
-SVG colors and patterns for [Observable](https://observablehq.com).
+### ✍️ Authentic Fonts
+- **5 hand-drawn font families** replicating Cheysson's lettering style
+- Regular, Italic, Sans Caps, Outline Caps, and Title variants
+- Automatic loading and integration with ggplot2 themes
+- Created by Kenneth Fields for historical accuracy
 
-* Kenneth Fields, [The style of Émile Cheysson](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/the-style-of-emile-cheysson/), packages these for [ArcGIS Pro](https://www.esri.com/en-us/arcgis/products/arcgis-pro/overview).
-
-### Colors and fill patterns
-
-The 25 maps use a variety of sequential, diverging and categorical palettes. These are named
-for the album year and plate number in  the figure below, for example **1880 map 7** for the
-upper left figure.
-
-<img src="man/figures/maps.png" width="350">
-
-RJ Andrews abstracted the color and patterns from these images into SVG files, represented
-in the figure below. He named these according to days of an Advent calendar, 
-so, for example, the palette for the image "1880 map 07" was published for Advent Day Dec. 06,
-and is labeled "Dec.06-1880.07".
-
-<img src="man/figures/RJ-Andrews-color-palettes.jpg" width="600">
-
-Tom Shanley used these SVG files for his [Cheysson Color Palettes](https://observablehq.com/@tomshanley/cheysson-color-palettes), and unfortunately named
-them according to RJ's Advent Days. These are contained in the `data-raw/observable/` folder,
-with names like `dec06.txt`, for the palette of the 1880 Map 7.
-
-
-### Fonts
-
-Kenneth Fields created a set of five fonts to mimic the hand drawn lettering used
-in the _Albums_. The reside in the `fonts/` directory as `.ttf` files, and consist of
-`Cheysson Regular`, `Cheysson Italic`, `Cheysson Sans Caps`, `Cheysson Outline Caps`,
-and `Cheysson Title`.
-
-<img src="man/figures/fonts1.png" width="300">  
-<img src="man/figures/fonts2.png" width="300">
-
-**TODO**: Figure out if these fonts can be installed from the package, or give instructions.
+### 🎭 Complete Themes
+- `theme_cheysson()` - Full period-appropriate theme
+- `theme_cheysson_minimal()` - Minimal grid variant
+- `theme_cheysson_map()` - Optimized for cartographic work
 
 ## Installation
 
-There's not much here yet, but you can install the development version of `ggCheysson` like so:
+Install the development version from GitHub:
 
 ``` r
-remotes::install.github("friendly/ggCheysson")
+# install.packages("remotes")
+remotes::install_github("friendly/ggCheysson")
 ```
 
-## Example
+### Suggested Dependencies
 
-This is a basic example which illustrates that there's not much that can be done yet.
+For full functionality, install these packages:
 
 ``` r
+install.packages(c("ggpattern", "systemfonts"))
+```
+
+## Quick Start
+
+### Basic Color Palette
+
+```r
+library(ggplot2)
 library(ggCheysson)
-## basic example code
+
+ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
+  geom_point(size = 3) +
+  scale_color_cheysson("1881_04") +
+  labs(title = "Iris Dataset") +
+  theme_minimal()
 ```
 
+### With Fonts and Theme
+
+```r
+# Load Cheysson fonts (once per session)
+load_cheysson_fonts()
+
+ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
+  geom_point(size = 3) +
+  scale_color_cheysson("1883_04") +
+  labs(
+    title = "Automobile Efficiency",
+    subtitle = "Weight vs Fuel Economy",
+    x = "Weight (1000 lbs)",
+    y = "Miles per Gallon"
+  ) +
+  theme_cheysson()
+```
+
+### Complete Cheysson Aesthetic (Colors + Patterns + Fonts)
+
+```r
+library(ggpattern)
+
+data <- data.frame(
+  category = LETTERS[1:4],
+  value = c(15, 23, 18, 20)
+)
+
+ggplot(data, aes(category, value, fill = category)) +
+  geom_col_pattern(
+    aes(
+      pattern_type = category,
+      pattern_fill = category,
+      pattern_angle = category
+    ),
+    pattern = "stripe",
+    pattern_density = 0.35,
+    color = "black"
+  ) +
+  scale_fill_cheysson_pattern("1881_03") +
+  scale_pattern_fill_cheysson("1881_03") +
+  scale_pattern_type_cheysson("1881_03") +
+  scale_pattern_angle_cheysson("1881_03") +
+  labs(
+    title = "Statistical Comparison",
+    x = "Category",
+    y = "Value"
+  ) +
+  theme_cheysson() +
+  theme(legend.position = "none")
+```
+
+## Available Palettes
+
+View all available palettes:
+
+```r
+# List all palettes
+list_cheysson_pals()
+
+# List by type
+list_cheysson_pals("sequential")
+list_cheysson_pals("category")
+
+# View palette colors
+cheysson_pal("1880_07")
+```
+
+Palette types:
+- **Sequential** (7 palettes): For ordered quantitative data
+- **Diverging** (2 palettes): For data with neutral midpoint
+- **Grouped** (5 palettes): For comparing related groups
+- **Category** (6 palettes): For categorical data
+
+## Pattern Support
+
+With ggpattern, recreate the distinctive hatching styles:
+
+```r
+# List available pattern palettes
+list_cheysson_patterns()
+
+# Get pattern specifications
+patterns <- cheysson_pattern("1881_03")
+
+# Use in plots with pattern scales
+scale_pattern_fill_cheysson("1881_03")
+scale_pattern_type_cheysson("1881_03")
+scale_pattern_angle_cheysson("1881_03")
+```
+
+## Font Families
+
+Five authentic font families are included:
+
+| Family | Description | Use |
+|--------|-------------|-----|
+| `Cheysson` | Regular serif | Body text, labels |
+| `CheyssonItalic` | Italic variant | Emphasis |
+| `CheyssonSansCaps` | Sans capitals | Axis titles |
+| `CheyssonOutlineCaps` | Outlined caps | Decorative titles |
+| `CheyssonTitle` | Display font | Main titles |
+
+```r
+# Load fonts
+load_cheysson_fonts()
+
+# List available fonts
+list_cheysson_fonts()
+
+# Use specific fonts
+theme(
+  plot.title = element_text(family = "CheyssonTitle"),
+  axis.title = element_text(family = "CheyssonSansCaps"),
+  axis.text = element_text(family = "Cheysson")
+)
+```
+
+## Package Contents
+
+### Data
+- `cheysson_palettes` - Color palette specifications (20 palettes)
+- `cheysson_patterns` - Pattern/hatching specifications (83 patterns)
+- `albumImages` - Metadata linking palettes to original album plates
+
+### Color Functions
+- `cheysson_pal()` - Get colors from a palette
+- `scale_color_cheysson()` / `scale_fill_cheysson()` - ggplot2 color scales
+- `list_cheysson_pals()` - List available palettes
+
+### Pattern Functions
+- `cheysson_pattern()` - Get pattern specifications
+- `scale_pattern_*_cheysson()` - ggpattern scales for fills, types, angles, densities
+- `list_cheysson_patterns()` - List available pattern palettes
+
+### Font Functions
+- `load_cheysson_fonts()` - Load font families
+- `cheysson_font()` - Get font family names
+- `list_cheysson_fonts()` - View font information
+- `cheysson_fonts_available()` - Check font availability
+
+### Themes
+- `theme_cheysson()` - Complete Cheysson theme
+- `theme_cheysson_minimal()` - Minimal variant
+- `theme_cheysson_map()` - For maps
+
+## Historical Context
+
+The _Albums de Statistique Graphique_ were published annually by France's Ministry of Public Works, showcasing infrastructure statistics through innovative visualizations. Under Émile Cheysson's direction, these albums combined:
+
+- Sophisticated use of color to represent quantitative variables
+- Hatching patterns to differentiate categories and show density
+- Hand-lettered text with distinctive character
+- Clear hierarchical organization of information
+
+This package preserves these design elements for modern statistical graphics.
+
+## Sources and Attribution
+
+### Color Palettes and Patterns
+- **David Rumsey Map Collection**: Complete digitized _Albums de Statistique Graphique_
+  [View collection](https://www.davidrumsey.com/luna/servlet/view/search?q=album+de+statistique)
+
+- **RJ Andrews**: SVG pattern extraction and digitization
+  [Classic Map Color Design](https://infowetrust.com/project/album-colors) | [GitHub](https://github.com/infowetrust/albumcolors)
+
+- **Tom Shanley**: Observable implementation
+  [Cheysson Color Palettes](https://observablehq.com/@tomshanley/cheysson-color-palettes)
+
+### Fonts
+- **Kenneth Fields**: Hand-drawn font family creation
+  [The style of Émile Cheysson](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/the-style-of-emile-cheysson/)
+
+## Gallery
+
+<img src="man/figures/maps.png" width="350">
+
+*Original maps from the Albums showing the variety of colors and patterns*
+
+<img src="man/figures/RJ-Andrews-color-palettes.jpg" width="600">
+
+*Extracted color palettes by RJ Andrews*
+
+## Development Status
+
+This package is under active development. Current features are stable and tested, but the API may evolve. Feedback and contributions are welcome!
+
+## Related Packages
+
+- [ggpattern](https://coolbutuseless.github.io/package/ggpattern/) - Pattern fills for ggplot2
+- [ggthemes](https://jrnold.github.io/ggthemes/) - Additional themes for ggplot2
+- [systemfonts](https://github.com/r-lib/systemfonts) - Font handling for R
+
+## License
+
+GPL (>= 3)
+
+## Citation
+
+```r
+citation("ggCheysson")
+```
+
+To cite the original _Albums de Statistique Graphique_:
+
+> France. Ministère des travaux publics. _Album de statistique graphique de [year]_.
+> Paris: Imprimerie nationale, [1879-1897].

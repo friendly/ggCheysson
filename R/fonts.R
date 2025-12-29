@@ -1,0 +1,223 @@
+#' Load Cheysson fonts
+#'
+#' Registers the Cheysson font families for use in plots. This function should
+#' be called before using Cheysson fonts in ggplot2.
+#'
+#' @param method Font loading method: "systemfonts" (default) or "showtext".
+#'   systemfonts is recommended for most uses. showtext is useful for saving
+#'   plots to files.
+#'
+#' @details
+#' The package includes five Cheysson font families:
+#' \itemize{
+#'   \item \strong{Cheysson}: Regular serif font for body text
+#'   \item \strong{CheyssonItalic}: Italic variant
+#'   \item \strong{CheyssonSansCaps}: Sans-serif capitals
+#'   \item \strong{CheyssonOutlineCaps}: Outlined capitals for titles
+#'   \item \strong{CheyssonTitle}: Decorative font for titles
+#' }
+#'
+#' When using showtext, you must call \code{showtext::showtext_auto()} before
+#' creating plots, and \code{showtext::showtext_auto(FALSE)} when done.
+#'
+#' @return Invisibly returns a character vector of loaded font family names
+#'
+#' @examples
+#' \dontrun{
+#' # Load fonts (default method)
+#' load_cheysson_fonts()
+#'
+#' # Use in a plot
+#' library(ggplot2)
+#' ggplot(mtcars, aes(wt, mpg)) +
+#'   geom_point() +
+#'   labs(title = "Using Cheysson Fonts") +
+#'   theme(
+#'     text = element_text(family = "Cheysson"),
+#'     plot.title = element_text(family = "CheyssonTitle")
+#'   )
+#'
+#' # For saving plots with showtext
+#' load_cheysson_fonts(method = "showtext")
+#' showtext::showtext_auto()
+#' # ... create plot ...
+#' ggsave("plot.png")
+#' showtext::showtext_auto(FALSE)
+#' }
+#'
+#' @export
+load_cheysson_fonts <- function(method = c("systemfonts", "showtext")) {
+  method <- match.arg(method)
+
+  # Get font directory
+  font_dir <- system.file("fonts", package = "ggCheysson")
+
+  if (!dir.exists(font_dir) || length(list.files(font_dir)) == 0) {
+    stop("Font directory not found. Fonts may not be installed with the package.")
+  }
+
+  # Font file mapping
+  fonts <- list(
+    Cheysson = "CheyssonRegular-Regular.ttf",
+    CheyssonItalic = "CheyssonItalic-Italic.ttf",
+    CheyssonSansCaps = "CheyssonSansCaps-Regular.ttf",
+    CheyssonOutlineCaps = "CheyssonOutlineCaps-Regular.ttf",
+    CheyssonTitle = "CheyssonTitle-Regular.ttf"
+  )
+
+  loaded <- character()
+
+  if (method == "systemfonts") {
+    if (!requireNamespace("systemfonts", quietly = TRUE)) {
+      stop("Package 'systemfonts' is required. Install with: install.packages('systemfonts')")
+    }
+
+    for (family in names(fonts)) {
+      font_file <- file.path(font_dir, fonts[[family]])
+
+      if (file.exists(font_file)) {
+        tryCatch({
+          systemfonts::register_font(
+            name = family,
+            plain = font_file
+          )
+          loaded <- c(loaded, family)
+        }, error = function(e) {
+          warning(sprintf("Failed to register font '%s': %s", family, e$message))
+        })
+      } else {
+        warning(sprintf("Font file not found: %s", font_file))
+      }
+    }
+
+    message(sprintf("Loaded %d Cheysson font families using systemfonts", length(loaded)))
+
+  } else if (method == "showtext") {
+    if (!requireNamespace("showtext", quietly = TRUE)) {
+      stop("Package 'showtext' is required. Install with: install.packages('showtext')")
+    }
+
+    for (family in names(fonts)) {
+      font_file <- file.path(font_dir, fonts[[family]])
+
+      if (file.exists(font_file)) {
+        tryCatch({
+          showtext::font_add(
+            family = family,
+            regular = font_file
+          )
+          loaded <- c(loaded, family)
+        }, error = function(e) {
+          warning(sprintf("Failed to add font '%s': %s", family, e$message))
+        })
+      } else {
+        warning(sprintf("Font file not found: %s", font_file))
+      }
+    }
+
+    message(sprintf("Loaded %d Cheysson font families using showtext", length(loaded)))
+    message("Remember to call showtext::showtext_auto() before creating plots")
+  }
+
+  invisible(loaded)
+}
+
+
+#' List available Cheysson fonts
+#'
+#' Returns information about the Cheysson font families included in the package.
+#'
+#' @return A data frame with font family names and descriptions
+#'
+#' @examples
+#' list_cheysson_fonts()
+#'
+#' @export
+list_cheysson_fonts <- function() {
+  data.frame(
+    family = c("Cheysson", "CheyssonItalic", "CheyssonSansCaps",
+               "CheyssonOutlineCaps", "CheyssonTitle"),
+    description = c(
+      "Regular serif font for body text",
+      "Italic variant for emphasis",
+      "Sans-serif capitals for labels",
+      "Outlined capitals for decorative titles",
+      "Decorative font for main titles"
+    ),
+    use = c(
+      "General text, axis labels, legends",
+      "Emphasis, annotations",
+      "Axis labels, category names",
+      "Plot titles, headings",
+      "Main plot titles"
+    ),
+    stringsAsFactors = FALSE
+  )
+}
+
+
+#' Check if Cheysson fonts are loaded
+#'
+#' Checks whether Cheysson fonts have been registered and are available for use.
+#'
+#' @param method Check for "systemfonts" or "showtext". If NULL (default),
+#'   checks both methods.
+#'
+#' @return Logical indicating whether fonts are available
+#'
+#' @examples
+#' if (cheysson_fonts_available()) {
+#'   message("Cheysson fonts are ready to use!")
+#' }
+#'
+#' @export
+cheysson_fonts_available <- function(method = NULL) {
+  available <- FALSE
+
+  if (is.null(method) || method == "systemfonts") {
+    if (requireNamespace("systemfonts", quietly = TRUE)) {
+      registered <- systemfonts::registry_fonts()
+      cheysson_count <- sum(grepl("^Cheysson", registered$family))
+      if (cheysson_count > 0) {
+        available <- TRUE
+      }
+    }
+  }
+
+  if (!available && (is.null(method) || method == "showtext")) {
+    if (requireNamespace("showtext", quietly = TRUE)) {
+      fonts <- showtext::font_families()
+      cheysson_count <- sum(grepl("^Cheysson", fonts))
+      if (cheysson_count > 0) {
+        available <- TRUE
+      }
+    }
+  }
+
+  return(available)
+}
+
+
+#' Get Cheysson font family name
+#'
+#' Returns the appropriate Cheysson font family name for a given purpose.
+#'
+#' @param type Font type: "regular", "italic", "sans", "outline", or "title"
+#'
+#' @return Character string with font family name
+#'
+#' @examples
+#' cheysson_font("title")  # Returns "CheyssonTitle"
+#' cheysson_font("regular")  # Returns "Cheysson"
+#'
+#' @export
+cheysson_font <- function(type = c("regular", "italic", "sans", "outline", "title")) {
+  type <- match.arg(type)
+
+  switch(type,
+         regular = "Cheysson",
+         italic = "CheyssonItalic",
+         sans = "CheyssonSansCaps",
+         outline = "CheyssonOutlineCaps",
+         title = "CheyssonTitle")
+}
