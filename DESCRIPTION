@@ -14,7 +14,8 @@ Suggests:
     ggthemes,
     gridpattern,
     systemfonts,
-    showtext
+    showtext,
+    sysfonts
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

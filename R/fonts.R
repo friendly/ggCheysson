@@ -22,6 +22,8 @@
 #'
 #' @return Invisibly returns a character vector of loaded font family names
 #'
+#' @importFrom utils getFromNamespace
+#'
 #' @examples
 #' \dontrun{
 #' # Load fonts (default method)
@@ -96,13 +98,19 @@ load_cheysson_fonts <- function(method = c("systemfonts", "showtext")) {
     if (!requireNamespace("showtext", quietly = TRUE)) {
       stop("Package 'showtext' is required. Install with: install.packages('showtext')")
     }
+    if (!requireNamespace("sysfonts", quietly = TRUE)) {
+      stop("Package 'sysfonts' is required (dependency of showtext). Install with: install.packages('sysfonts')")
+    }
+
+    # Get sysfonts functions (showtext uses sysfonts for font loading)
+    font_add <- getFromNamespace("font_add", "sysfonts")
 
     for (family in names(fonts)) {
       font_file <- file.path(font_dir, fonts[[family]])
 
       if (file.exists(font_file)) {
         tryCatch({
-          showtext::font_add(
+          font_add(
             family = family,
             regular = font_file
           )
@@ -185,12 +193,17 @@ cheysson_fonts_available <- function(method = NULL) {
   }
 
   if (!available && (is.null(method) || method == "showtext")) {
-    if (requireNamespace("showtext", quietly = TRUE)) {
-      fonts <- showtext::font_families()
-      cheysson_count <- sum(grepl("^Cheysson", fonts))
-      if (cheysson_count > 0) {
-        available <- TRUE
-      }
+    if (requireNamespace("sysfonts", quietly = TRUE)) {
+      tryCatch({
+        font_families <- getFromNamespace("font_families", "sysfonts")
+        fonts <- font_families()
+        cheysson_count <- sum(grepl("^Cheysson", fonts))
+        if (cheysson_count > 0) {
+          available <- TRUE
+        }
+      }, error = function(e) {
+        # Silently ignore if sysfonts function not available
+      })
     }
   }
 
