@@ -2,3 +2,6 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^.claude$
+^dev$
+^fonts$
+^data-raw$

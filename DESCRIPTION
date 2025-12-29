@@ -1,6 +1,6 @@
 Package: ggCheysson
 Title: Styles of Emile Cheysson for ggplot2
-Version: 0.0.0.9000
+Version: 0.1.0.9000
 Authors@R: 
     person("Michael", "Friendly", , "friendly@yorku.ca", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3237-0941"))

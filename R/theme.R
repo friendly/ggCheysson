@@ -27,6 +27,7 @@
 #'   \item Body text: Cheysson (regular)
 #' }
 #'
+#' @importFrom ggplot2 theme_bw
 #' @return A ggplot2 theme object
 #'
 #' @examples

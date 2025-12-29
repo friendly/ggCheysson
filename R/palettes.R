@@ -65,6 +65,8 @@
 #'
 #' @return A character vector of hex color codes
 #'
+#' @importFrom grDevices colorRampPalette
+#'
 #' @examples
 #' # Get all colors from a specific palette
 #' cheysson_pal("1880_07")
@@ -115,7 +117,7 @@ cheysson_pal <- function(palette = "1880_07", n = NULL, type = 1) {
     return(colors[1:n])
   } else {
     # Interpolate colors if n > length(colors)
-    colorRampPalette(colors)(n)
+    grDevices::colorRampPalette(colors)(n)
   }
 }
 
