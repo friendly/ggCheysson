@@ -1,12 +1,19 @@
 Package: ggCheysson
-Title: Styles of Emile Cheysson for ggplot2
+Title: Graphic Styles of Emile Cheysson for ggplot2
 Version: 1.0.0
+Date: 2025-12-30
 Authors@R: 
-    person("Michael", "Friendly", , "friendly@yorku.ca", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-3237-0941"))
-Description: Implements stylistic elements (fonts, hachure patterns, color palettes) used by 'Emile
-  Cheysson' in the 'Albums de Statistique Graphique', sometimes called the pinacle of the
+    c(person(given = "Michael", family = "Friendly", 
+             email = "friendly@yorku.ca", role = c("aut", "cre"),
+             comment = c(ORCID = "0000-0002-3237-0941")),
+      person(given = "RJ", family = "Andrews", role = "ctb"),
+      person(given = "Tom", family = "Shanley",  role = "ctb"),
+      person(given = "Kenneth", family = "Fields",  role = "ctb")
+      )
+Description: Implements for 'ggplot2' the stylistic elements (fonts, hachure patterns, color palettes) used by 'Emile
+  Cheysson' in the 'Albums de Statistique Graphique', sometimes called the pinnacle of the
   Golden Age of Statistical Graphics.
+Url: https://github.com/friendly/ggCheysson, https://friendly.github.io/ggCheysson/
 Imports:
     ggplot2
 Suggests:
@@ -15,7 +22,8 @@ Suggests:
     gridpattern,
     systemfonts,
     showtext,
-    sysfonts
+    sysfonts,
+    ragg
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

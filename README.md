@@ -87,6 +87,8 @@ install.packages(c("ggpattern", "systemfonts"))
 
 ## Quick Start
 
+Here are a few examples to get you started.
+
 ### Basic Color Palette
 
 ``` r
@@ -106,7 +108,9 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
 
 ``` r
 # Load Cheysson fonts (once per session)
-load_cheysson_fonts()
+load_cheysson_fonts(method = "showtext")
+# Enable showtext for rendering
+showtext::showtext_auto()
 
 ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
   geom_point(size = 3) +
@@ -119,6 +123,8 @@ ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
   ) +
   theme_cheysson()
 ```
+
+<img src="man/figures/README-with-fonts-1.png" width="100%" />
 
 ### Complete Cheysson Aesthetic (Colors + Patterns + Fonts)
 
@@ -153,6 +159,8 @@ ggplot(data, aes(category, value, fill = category)) +
   theme_cheysson() +
   theme(legend.position = "none")
 ```
+
+<img src="man/figures/README-complete-aesthetic-1.png" width="100%" />
 
 ## Available Palettes
 
@@ -201,10 +209,12 @@ cheysson_pal("1880_07")
 #> [1] "#d9636c" "#869e80" "#dec367" "#85aab1" "#aea9a4" "#ed8238" "#ab90a4"
 ```
 
-Palette types: - **Sequential** (7 palettes): For ordered quantitative
-data - **Diverging** (2 palettes): For data with neutral midpoint -
-**Grouped** (5 palettes): For comparing related groups - **Category** (6
-palettes): For categorical data
+Palette types:
+
+- **Sequential** (7 palettes): For ordered quantitative data
+- **Diverging** (2 palettes): For data with neutral midpoint
+- **Grouped** (5 palettes): For comparing related groups
+- **Category** (6 palettes): For categorical data
 
 ## Pattern Support
 
@@ -225,7 +235,7 @@ scale_pattern_angle_cheysson("1881_03")
 
 ## Font Families
 
-Five authentic font families are included:
+Five authentic Cheysson font families are included:
 
 | Family                | Description    | Use               |
 |-----------------------|----------------|-------------------|

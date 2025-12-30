@@ -14,6 +14,16 @@ cat("=== Complete Cheysson Aesthetic Demo ===\n\n")
 cat("Loading Cheysson fonts...\n")
 load_cheysson_fonts()
 
+# Check if ragg is available for better font support on Windows
+use_ragg <- requireNamespace("ragg", quietly = TRUE)
+if (use_ragg) {
+  cat("Using ragg device for optimal font rendering\n")
+  ggsave_device <- ragg::agg_png
+} else {
+  cat("Note: Install ragg package for better font support: install.packages('ragg')\n")
+  ggsave_device <- "png"
+}
+
 # Example 1: Bar chart with all elements
 cat("\n1. Creating bar chart with patterns, colors, and fonts...\n")
 
@@ -46,7 +56,7 @@ p1 <- ggplot(trade_data, aes(reorder(country, tonnage), tonnage, fill = country)
     axis.text.x = element_text(angle = 45, hjust = 1)
   )
 
-ggsave(here("dev/complete_example1.png"), p1, width = 9, height = 6, dpi = 150)
+ggsave(here("dev/complete_example1.png"), p1, width = 9, height = 6, dpi = 150, device = ggsave_device)
 cat("Saved: dev/complete_example1.png\n")
 
 # Example 2: Time series with Cheysson aesthetic
@@ -79,7 +89,7 @@ p2 <- ggplot(railway_data, aes(year, value, color = type, linetype = type)) +
   theme_cheysson_minimal() +
   theme(legend.position = c(0.15, 0.85))
 
-ggsave(here("dev/complete_example2.png"), p2, width = 10, height = 6, dpi = 150)
+ggsave(here("dev/complete_example2.png"), p2, width = 10, height = 6, dpi = 150, device = ggsave_device)
 cat("Saved: dev/complete_example2.png\n")
 
 # Example 3: Stacked area chart
@@ -109,7 +119,7 @@ p3 <- ggplot(industry_data, aes(year, value, fill = sector)) +
   theme_cheysson() +
   theme(legend.position = "bottom")
 
-ggsave(here("dev/complete_example3.png"), p3, width = 9, height = 6, dpi = 150)
+ggsave(here("dev/complete_example3.png"), p3, width = 9, height = 6, dpi = 150, device = ggsave_device)
 cat("Saved: dev/complete_example3.png\n")
 
 # Example 4: Grouped bar chart with patterns
@@ -151,7 +161,7 @@ p4 <- ggplot(comparison_data, aes(region, value, fill = category)) +
   theme_cheysson() +
   theme(legend.position = "right")
 
-ggsave(here("dev/complete_example4.png"), p4, width = 10, height = 6, dpi = 150)
+ggsave(here("dev/complete_example4.png"), p4, width = 10, height = 6, dpi = 150, device = ggsave_device)
 cat("Saved: dev/complete_example4.png\n")
 
 # Example 5: Small multiples
@@ -185,7 +195,7 @@ p5 <- ggplot(regional_data, aes(year, value)) +
     strip.text = element_text(family = "CheyssonSansCaps", size = 11)
   )
 
-ggsave(here("dev/complete_example5.png"), p5, width = 10, height = 7, dpi = 150)
+ggsave(here("dev/complete_example5.png"), p5, width = 10, height = 7, dpi = 150, device = ggsave_device)
 cat("Saved: dev/complete_example5.png\n")
 
 cat("\n=== All examples complete! ===\n")

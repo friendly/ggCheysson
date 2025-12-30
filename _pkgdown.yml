@@ -1,4 +1,4 @@
-url: http://friendly.github.io/ggCheysson/
+url: https://friendly.github.io/ggCheysson/
 template:
   bootstrap: 5
   # params:
@@ -7,4 +7,59 @@ template:
     base_font: {google: "Roboto"}
     heading_font: {google: "Roboto Slab"}
     code_font: {google: "JetBrains Mono"}
+
+reference:
+  - title: Color Palettes
+    desc: >
+      Authentic color palettes extracted from the Albums de Statistique Graphique.
+      20 palettes organized by type (sequential, diverging, grouped, category).
+    contents:
+    - cheysson_pal
+    - list_cheysson_pals
+    - scale_cheysson
+    - starts_with("scale_color")
+    - starts_with("scale_fill")
+    - -scale_fill_cheysson_pattern
+    - -starts_with("scale_pattern")
+
+  - title: Hatching Patterns
+    desc: >
+      Pattern specifications for ggpattern, recreating the distinctive hatching
+      and fill styles used in Cheysson's maps and diagrams.
+    contents:
+    - cheysson_pattern
+    - cheysson_pattern_params
+    - list_cheysson_patterns
+    - get_pattern_param
+    - scale_fill_cheysson_pattern
+    - scale_pattern_cheysson
+    - starts_with("scale_pattern_")
+
+  - title: Fonts
+    desc: >
+      Five hand-drawn font families replicating Cheysson's lettering style.
+      Functions for loading and managing the Cheysson fonts.
+    contents:
+    - load_cheysson_fonts
+    - list_cheysson_fonts
+    - cheysson_fonts_available
+    - cheysson_font
+
+  - title: Themes
+    desc: >
+      Complete ggplot2 themes incorporating Cheysson fonts and period-appropriate
+      styling for modern statistical graphics.
+    contents:
+    - theme_cheysson
+    - theme_cheysson_minimal
+    - theme_cheysson_map
+
+  - title: Data
+    desc: >
+      Package datasets containing palette specifications, pattern definitions,
+      and metadata linking to the original Albums.
+    contents:
+    - cheysson_palettes
+    - cheysson_patterns
+    - albumImages
 

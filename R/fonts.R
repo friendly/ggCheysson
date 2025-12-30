@@ -20,6 +20,15 @@
 #' When using showtext, you must call \code{showtext::showtext_auto()} before
 #' creating plots, and \code{showtext::showtext_auto(FALSE)} when done.
 #'
+#' \strong{Windows users}: The systemfonts method works for saved plots (with ragg)
+#' but custom fonts won't appear in the on-screen plot window. For on-screen
+#' preview with fonts:
+#' \itemize{
+#'   \item Use \code{method = "showtext"} instead, or
+#'   \item In RStudio: Tools > Global Options > General > Graphics > Backend: "AGG"
+#' }
+#' For saving plots with systemfonts, use \code{ggsave(..., device = ragg::agg_png)}.
+#'
 #' @return Invisibly returns a character vector of loaded font family names
 #'
 #' @importFrom utils getFromNamespace
@@ -31,7 +40,7 @@
 #'
 #' # Use in a plot
 #' library(ggplot2)
-#' ggplot(mtcars, aes(wt, mpg)) +
+#' p <- ggplot(mtcars, aes(wt, mpg)) +
 #'   geom_point() +
 #'   labs(title = "Using Cheysson Fonts") +
 #'   theme(
@@ -39,7 +48,14 @@
 #'     plot.title = element_text(family = "CheyssonTitle")
 #'   )
 #'
-#' # For saving plots with showtext
+#' # On Windows, use ragg device for proper font rendering
+#' if (requireNamespace("ragg", quietly = TRUE)) {
+#'   ggsave("plot.png", p, device = ragg::agg_png)
+#' } else {
+#'   ggsave("plot.png", p)
+#' }
+#'
+#' # Alternative: Use showtext method
 #' load_cheysson_fonts(method = "showtext")
 #' showtext::showtext_auto()
 #' # ... create plot ...
@@ -94,6 +110,15 @@ load_cheysson_fonts <- function(method = c("systemfonts", "showtext")) {
 
     message(sprintf("Loaded %d Cheysson font families using systemfonts", length(loaded)))
 
+    # Windows-specific note about graphics devices
+    if (.Platform$OS.type == "windows") {
+      message("\nWindows users - Important notes:")
+      message("  • Fonts work in SAVED plots: use ggsave(..., device = ragg::agg_png)")
+      message("  • Fonts DON'T appear in on-screen plot window with systemfonts")
+      message("  • For on-screen preview: use load_cheysson_fonts(method = 'showtext')")
+      message("  • Or in RStudio: Tools > Global Options > Graphics > Backend: 'AGG'")
+    }
+
   } else if (method == "showtext") {
     if (!requireNamespace("showtext", quietly = TRUE)) {
       stop("Package 'showtext' is required. Install with: install.packages('showtext')")
@@ -124,7 +149,7 @@ load_cheysson_fonts <- function(method = c("systemfonts", "showtext")) {
     }
 
     message(sprintf("Loaded %d Cheysson font families using showtext", length(loaded)))
-    message("Remember to call showtext::showtext_auto() before creating plots")
+    message("Remember to call `showtext::showtext_auto()` before creating plots")
   }
 
   invisible(loaded)

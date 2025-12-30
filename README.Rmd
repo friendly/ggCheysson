@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 [![Last Commit](https://img.shields.io/github/last-commit/friendly/ggCheysson)](https://github.com/friendly/ggCheysson)
 <!-- badges: end -->
 
-# ggCheysson <img src="man/figures/logo.png" height="200" style="float:right; height:200px;"/>
+# ggCheysson <img src="man/figures/logo.png" height="200" style="float:right; height:200px;"/> 
 
 The `ggCheysson` package brings the graphical styles of the _Albums de Statistique Graphique_ to R and ggplot2. 
 
@@ -85,6 +85,8 @@ install.packages(c("ggpattern", "systemfonts"))
 
 ## Quick Start
 
+Here are a few examples to get you started.
+
 ### Basic Color Palette
 
 ```{r basic-palette, fig.height=4, fig.width=6}
@@ -100,9 +102,11 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
 
 ### With Fonts and Theme
 
-```{r with-fonts, fig.height=5, fig.width=7, eval=FALSE}
+```{r with-fonts, fig.height=5, fig.width=7}
 # Load Cheysson fonts (once per session)
-load_cheysson_fonts()
+load_cheysson_fonts(method = "showtext")
+# Enable showtext for rendering
+showtext::showtext_auto()
 
 ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
   geom_point(size = 3) +
@@ -118,7 +122,7 @@ ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
 
 ### Complete Cheysson Aesthetic (Colors + Patterns + Fonts)
 
-```{r complete-aesthetic, fig.height=5, fig.width=7, eval=FALSE}
+```{r complete-aesthetic, fig.height=5, fig.width=7}
 library(ggpattern)
 
 data <- data.frame(
@@ -168,6 +172,7 @@ cheysson_pal("1880_07")
 ```
 
 Palette types:
+
 - **Sequential** (7 palettes): For ordered quantitative data
 - **Diverging** (2 palettes): For data with neutral midpoint
 - **Grouped** (5 palettes): For comparing related groups
@@ -192,7 +197,7 @@ scale_pattern_angle_cheysson("1881_03")
 
 ## Font Families
 
-Five authentic font families are included:
+Five authentic Cheysson font families are included:
 
 | Family | Description | Use |
 |--------|-------------|-----|
@@ -298,7 +303,9 @@ GPL (>= 3)
 
 ## Citation
 
-```r
+To cite `ggCheysson`, please use:
+
+```{r citation}
 citation("ggCheysson")
 ```
 
