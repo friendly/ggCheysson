@@ -3,11 +3,27 @@
 ![](reference/figures/logo.png)
 
 The `ggCheysson` package brings the graphical styles of the *Albums de
-Statistique Graphique* to R and ggplot2. Produced by the Ministry of
-Public Works in France under the direction of [Émile
+Statistique Graphique* to R and ggplot2.
+
+The Albums were produced by the Ministry of Public Works in France under
+the direction of [Émile
 Cheysson](https://en.wikipedia.org/wiki/%C3%89mile_Cheysson) from
-1879-1897, these albums represent the pinnacle of the Golden Age of
-Statistical Graphics.
+1879-1897. They represent the “pinnacle of the Golden Age of Statistical
+Graphics” (Friendly, 2008) for their innovation in visualization
+techniques, graphic design and beauty.
+
+The package is based on work by:
+
+- David Rumsey Map Collection: Complete digitized *Albums de Statistique
+  Graphique* [View
+  collection](https://www.davidrumsey.com/luna/servlet/view/search?q=album+de+statistique)
+- RJ Andrews: [Classic Map Color
+  Design](https://infowetrust.com/project/album-colors) \|
+  [GitHub](https://github.com/infowetrust/albumcolors)
+- Tom Shanley: Observable implementation [Cheysson Color
+  Palettes](https://observablehq.com/@tomshanley/cheysson-color-palettes)
+- Kenneth Fields: Hand-drawn font family creation [The style of Émile
+  Cheysson](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/the-style-of-emile-cheysson/)
 
 ## Features
 
@@ -78,6 +94,8 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   theme_minimal()
 ```
 
+![](reference/figures/README-basic-palette-1.png)
+
 ### With Fonts and Theme
 
 ``` r
@@ -137,13 +155,44 @@ View all available palettes:
 ``` r
 # List all palettes
 list_cheysson_pals()
+#>       name       type album plate n_colors
+#> 1  1880_07   category  1880     7        7
+#> 2  1881_03 sequential  1881     3        1
+#> 3  1881_04   category  1881     4        4
+#> 4  1881_08    grouped  1881     8        5
+#> 5  1882_04    grouped  1882     4        2
+#> 6  1883_04  diverging  1883     4        2
+#> 7  1883_06   category  1883     6        4
+#> 8  1883_07  diverging  1883     7        3
+#> 9  1886_04 sequential  1886     4        2
+#> 10 1886_07   category  1886     7        3
+#> 11 1886_08    grouped  1886     8        4
+#> 12 1887_06    grouped  1887     6        2
+#> 13 1888_05 sequential  1888     5        1
+#> 14 1891_03    grouped  1891     3        2
+#> 15 1891_06 sequential  1891     6        1
+#> 16 1891_07 sequential  1891     7        2
+#> 17 1895_04 sequential  1895     4        3
+#> 18 1900_06 sequential  1900     6        2
+#> 19 1906_04   category  1906     4        4
+#> 20 1906_06   category  1906     6        6
 
 # List by type
 list_cheysson_pals("sequential")
-list_cheysson_pals("category")
+#>      name       type album plate n_colors
+#> 1 1881_03 sequential  1881     3        1
+#> 2 1886_04 sequential  1886     4        2
+#> 3 1888_05 sequential  1888     5        1
+#> 4 1891_06 sequential  1891     6        1
+#> 5 1891_07 sequential  1891     7        2
+#> 6 1895_04 sequential  1895     4        3
+#> 7 1900_06 sequential  1900     6        2
+```
 
+``` r
 # View palette colors
 cheysson_pal("1880_07")
+#> [1] "#d9636c" "#869e80" "#dec367" "#85aab1" "#aea9a4" "#ed8238" "#ab90a4"
 ```
 
 Palette types: - **Sequential** (7 palettes): For ordered quantitative
@@ -319,3 +368,9 @@ To cite the original *Albums de Statistique Graphique*:
 
 > France. Ministère des travaux publics. *Album de statistique graphique
 > de \[year\]*. Paris: Imprimerie nationale, \[1879-1897\].
+
+## References
+
+Friendly, M. (2008). The Golden Age of Statistical Graphics.
+*Statistical Science*, **23**(4), 502–535.
+<https://doi.org/10.1214/08-STS268>

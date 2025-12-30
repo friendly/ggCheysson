@@ -5,11 +5,11 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Last
+Commit](https://img.shields.io/github/last-commit/friendly/ggCheysson)](https://github.com/friendly/ggCheysson)
 <!-- badges: end -->
 
-# ggCheysson
-
-<img src="man/figures/logo.png" height="200" style="float:right; height:200px;"/>
+# ggCheysson <img src="man/figures/logo.png" height="200" style="float:right; height:200px;"/>
 
 The `ggCheysson` package brings the graphical styles of the *Albums de
 Statistique Graphique* to R and ggplot2.

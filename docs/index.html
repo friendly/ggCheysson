@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="index.html">ggCheysson</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,19 @@
 </h1>
 </div>
 <p><img src="reference/figures/logo.png" height="200" style="float:right; height:200px;"></p>
-<p>The <code>ggCheysson</code> package brings the graphical styles of the <em>Albums de Statistique Graphique</em> to R and ggplot2. Produced by the Ministry of Public Works in France under the direction of <a href="https://en.wikipedia.org/wiki/%C3%89mile_Cheysson" class="external-link">Émile Cheysson</a> from 1879-1897, these albums represent the pinnacle of the Golden Age of Statistical Graphics.</p>
+<p>The <code>ggCheysson</code> package brings the graphical styles of the <em>Albums de Statistique Graphique</em> to R and ggplot2.</p>
+<p>The Albums were produced by the Ministry of Public Works in France under the direction of <a href="https://en.wikipedia.org/wiki/%C3%89mile_Cheysson" class="external-link">Émile Cheysson</a> from 1879-1897. They represent the “pinnacle of the Golden Age of Statistical Graphics” (Friendly, 2008) for their innovation in visualization techniques, graphic design and beauty.</p>
+<p>The package is based on work by:</p>
+<ul>
+<li>David Rumsey Map Collection: Complete digitized <em>Albums de Statistique Graphique</em> <a href="https://www.davidrumsey.com/luna/servlet/view/search?q=album+de+statistique" class="external-link">View collection</a>
+</li>
+<li>RJ Andrews: <a href="https://infowetrust.com/project/album-colors" class="external-link">Classic Map Color Design</a> | <a href="https://github.com/infowetrust/albumcolors" class="external-link">GitHub</a>
+</li>
+<li>Tom Shanley: Observable implementation <a href="https://observablehq.com/@tomshanley/cheysson-color-palettes" class="external-link">Cheysson Color Palettes</a>
+</li>
+<li>Kenneth Fields: Hand-drawn font family creation <a href="https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/the-style-of-emile-cheysson/" class="external-link">The style of Émile Cheysson</a>
+</li>
+</ul>
 <div class="section level2">
 <h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
 </h2>
@@ -143,6 +155,7 @@
 <span>  <span class="fu"><a href="reference/scale_cheysson.html">scale_color_cheysson</a></span><span class="op">(</span><span class="st">"1881_04"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Iris Dataset"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-basic-palette-1.png" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="with-fonts-and-theme">With Fonts and Theme<a class="anchor" aria-label="anchor" href="#with-fonts-and-theme"></a>
@@ -174,7 +187,7 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">category</span>, <span class="va">value</span>, fill <span class="op">=</span> <span class="va">category</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/geom-docs.html" class="external-link">geom_col_pattern</a></span><span class="op">(</span></span>
+<span>  <span class="fu">geom_col_pattern</span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
 <span>      pattern_type <span class="op">=</span> <span class="va">category</span>,</span>
 <span>      pattern_fill <span class="op">=</span> <span class="va">category</span>,</span>
@@ -204,20 +217,49 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># List all palettes</span></span>
 <span><span class="fu"><a href="reference/list_cheysson_pals.html">list_cheysson_pals</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;       name       type album plate n_colors</span></span>
+<span><span class="co">#&gt; 1  1880_07   category  1880     7        7</span></span>
+<span><span class="co">#&gt; 2  1881_03 sequential  1881     3        1</span></span>
+<span><span class="co">#&gt; 3  1881_04   category  1881     4        4</span></span>
+<span><span class="co">#&gt; 4  1881_08    grouped  1881     8        5</span></span>
+<span><span class="co">#&gt; 5  1882_04    grouped  1882     4        2</span></span>
+<span><span class="co">#&gt; 6  1883_04  diverging  1883     4        2</span></span>
+<span><span class="co">#&gt; 7  1883_06   category  1883     6        4</span></span>
+<span><span class="co">#&gt; 8  1883_07  diverging  1883     7        3</span></span>
+<span><span class="co">#&gt; 9  1886_04 sequential  1886     4        2</span></span>
+<span><span class="co">#&gt; 10 1886_07   category  1886     7        3</span></span>
+<span><span class="co">#&gt; 11 1886_08    grouped  1886     8        4</span></span>
+<span><span class="co">#&gt; 12 1887_06    grouped  1887     6        2</span></span>
+<span><span class="co">#&gt; 13 1888_05 sequential  1888     5        1</span></span>
+<span><span class="co">#&gt; 14 1891_03    grouped  1891     3        2</span></span>
+<span><span class="co">#&gt; 15 1891_06 sequential  1891     6        1</span></span>
+<span><span class="co">#&gt; 16 1891_07 sequential  1891     7        2</span></span>
+<span><span class="co">#&gt; 17 1895_04 sequential  1895     4        3</span></span>
+<span><span class="co">#&gt; 18 1900_06 sequential  1900     6        2</span></span>
+<span><span class="co">#&gt; 19 1906_04   category  1906     4        4</span></span>
+<span><span class="co">#&gt; 20 1906_06   category  1906     6        6</span></span>
 <span></span>
 <span><span class="co"># List by type</span></span>
 <span><span class="fu"><a href="reference/list_cheysson_pals.html">list_cheysson_pals</a></span><span class="op">(</span><span class="st">"sequential"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/list_cheysson_pals.html">list_cheysson_pals</a></span><span class="op">(</span><span class="st">"category"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># View palette colors</span></span>
-<span><span class="fu"><a href="reference/cheysson_pal.html">cheysson_pal</a></span><span class="op">(</span><span class="st">"1880_07"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#&gt;      name       type album plate n_colors</span></span>
+<span><span class="co">#&gt; 1 1881_03 sequential  1881     3        1</span></span>
+<span><span class="co">#&gt; 2 1886_04 sequential  1886     4        2</span></span>
+<span><span class="co">#&gt; 3 1888_05 sequential  1888     5        1</span></span>
+<span><span class="co">#&gt; 4 1891_06 sequential  1891     6        1</span></span>
+<span><span class="co">#&gt; 5 1891_07 sequential  1891     7        2</span></span>
+<span><span class="co">#&gt; 6 1895_04 sequential  1895     4        3</span></span>
+<span><span class="co">#&gt; 7 1900_06 sequential  1900     6        2</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># View palette colors</span></span>
+<span><span class="fu"><a href="reference/cheysson_pal.html">cheysson_pal</a></span><span class="op">(</span><span class="st">"1880_07"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "#d9636c" "#869e80" "#dec367" "#85aab1" "#aea9a4" "#ed8238" "#ab90a4"</span></span></code></pre></div>
 <p>Palette types: - <strong>Sequential</strong> (7 palettes): For ordered quantitative data - <strong>Diverging</strong> (2 palettes): For data with neutral midpoint - <strong>Grouped</strong> (5 palettes): For comparing related groups - <strong>Category</strong> (6 palettes): For categorical data</p>
 </div>
 <div class="section level2">
 <h2 id="pattern-support">Pattern Support<a class="anchor" aria-label="anchor" href="#pattern-support"></a>
 </h2>
 <p>With ggpattern, recreate the distinctive hatching styles:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># List available pattern palettes</span></span>
 <span><span class="fu"><a href="reference/list_cheysson_patterns.html">list_cheysson_patterns</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -267,7 +309,7 @@
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load fonts</span></span>
 <span><span class="fu"><a href="reference/load_cheysson_fonts.html">load_cheysson_fonts</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -414,12 +456,17 @@
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"ggCheysson"</span><span class="op">)</span></span></code></pre></div>
 <p>To cite the original <em>Albums de Statistique Graphique</em>:</p>
 <blockquote>
 <p>France. Ministère des travaux publics. <em>Album de statistique graphique de [year]</em>. Paris: Imprimerie nationale, [1879-1897].</p>
 </blockquote>
+</div>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<p>Friendly, M. (2008). The Golden Age of Statistical Graphics. <em>Statistical Science</em>, <strong>23</strong>(4), 502–535. <a href="https://doi.org/10.1214/08-STS268" class="external-link uri">https://doi.org/10.1214/08-STS268</a></p>
 </div>
 </div>
 

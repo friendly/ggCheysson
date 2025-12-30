@@ -11,12 +11,12 @@ Source:
 [`DESCRIPTION`](https://github.com/friendly/ggCheysson/blob/HEAD/DESCRIPTION)
 
 Friendly M (2025). *ggCheysson: Styles of Emile Cheysson for ggplot2*. R
-package version 0.1.0.9000, <https://github.com/friendly/ggCheysson>.
+package version 1.0.0, <https://github.com/friendly/ggCheysson>.
 
     @Manual{,
       title = {ggCheysson: Styles of Emile Cheysson for ggplot2},
       author = {Michael Friendly},
       year = {2025},
-      note = {R package version 0.1.0.9000},
+      note = {R package version 1.0.0},
       url = {https://github.com/friendly/ggCheysson},
     }

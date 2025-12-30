@@ -34,10 +34,7 @@ scale_pattern_density_cheysson(palette = "1881_03", reverse = FALSE, ...)
 ## Details
 
 These scales require the ggpattern package. Use with ggpattern geoms
-like
-[`geom_col_pattern()`](https://trevorldavis.com/R/ggpattern/reference/geom-docs.html),
-[`geom_bar_pattern()`](https://trevorldavis.com/R/ggpattern/reference/geom-docs.html),
-etc.
+like `geom_col_pattern()`, `geom_bar_pattern()`, etc.
 
 The scales apply multiple pattern aesthetics simultaneously:
 
