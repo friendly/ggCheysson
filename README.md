@@ -3,10 +3,11 @@
 
 <!-- badges: start -->
 
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/ggCheysson)](http://cran.r-project.org/package=ggCheysson)
 [![Last
 Commit](https://img.shields.io/github/last-commit/friendly/ggCheysson)](https://github.com/friendly/ggCheysson)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 # ggCheysson <img src="man/figures/logo.png" height="200" style="float:right; height:200px;"/>
@@ -14,8 +15,8 @@ Commit](https://img.shields.io/github/last-commit/friendly/ggCheysson)](https://
 The `ggCheysson` package brings the graphical styles of the *Albums de
 Statistique Graphique* to R and ggplot2.
 
-The Albums were produced by the Ministry of Public Works in France under
-the direction of [Émile
+The *Albums* were produced by the Ministry of Public Works in France
+under the direction of [Émile
 Cheysson](https://en.wikipedia.org/wiki/%C3%89mile_Cheysson) from
 1879-1897. They represent the “pinnacle of the Golden Age of Statistical
 Graphics” (Friendly, 2008) for their innovation in visualization
@@ -33,6 +34,21 @@ The package is based on work by:
   Palettes](https://observablehq.com/@tomshanley/cheysson-color-palettes)
 - Kenneth Fields: Hand-drawn font family creation [The style of Émile
   Cheysson](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/the-style-of-emile-cheysson/)
+
+## Historical Context
+
+The *Albums de Statistique Graphique* were published annually by
+France’s Ministry of Public Works, showcasing infrastructure statistics
+through innovative visualizations. Under Émile Cheysson’s direction,
+these albums combined:
+
+- Sophisticated use of color to represent quantitative variables
+- Hatching patterns to differentiate categories and show density
+- Hand-lettered text with distinctive character
+- Clear hierarchical organization of information
+
+This package preserves these design elements for modern statistical
+graphics.
 
 ## Features
 
@@ -68,6 +84,15 @@ visualizations in Cheysson’s distinctive style:
 - `theme_cheysson_minimal()` - Minimal grid variant
 - `theme_cheysson_map()` - Optimized for cartographic work
 
+These were derived by RJ Andrews from a collection of 25 thematic maps
+across the span of years in which the *Albums* were produced, shown
+below
+
+<center>
+
+<img src="man/figures/maps.png" height=300>
+</center>
+
 ## Installation
 
 Install the development version from GitHub:
@@ -90,6 +115,8 @@ install.packages(c("ggpattern", "systemfonts"))
 Here are a few examples to get you started.
 
 ### Basic Color Palette
+
+Use the color palette of the 1881 Album, plate 4
 
 ``` r
 library(ggplot2)
@@ -295,21 +322,6 @@ theme(
 - `theme_cheysson_minimal()` - Minimal variant
 - `theme_cheysson_map()` - For maps
 
-## Historical Context
-
-The *Albums de Statistique Graphique* were published annually by
-France’s Ministry of Public Works, showcasing infrastructure statistics
-through innovative visualizations. Under Émile Cheysson’s direction,
-these albums combined:
-
-- Sophisticated use of color to represent quantitative variables
-- Hatching patterns to differentiate categories and show density
-- Hand-lettered text with distinctive character
-- Clear hierarchical organization of information
-
-This package preserves these design elements for modern statistical
-graphics.
-
 ## Sources and Attribution
 
 ### Color Palettes and Patterns
@@ -363,8 +375,25 @@ GPL (\>= 3)
 
 ## Citation
 
+To cite `ggCheysson`, please use:
+
 ``` r
 citation("ggCheysson")
+#> To cite package 'ggCheysson' in publications use:
+#> 
+#>   Friendly M (2025). _ggCheysson: Styles of Emile Cheysson for
+#>   ggplot2_. R package version 1.0.0,
+#>   <https://github.com/friendly/ggCheysson>.
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Manual{,
+#>     title = {ggCheysson: Styles of Emile Cheysson for ggplot2},
+#>     author = {Michael Friendly},
+#>     year = {2025},
+#>     note = {R package version 1.0.0},
+#>     url = {https://github.com/friendly/ggCheysson},
+#>   }
 ```
 
 To cite the original *Albums de Statistique Graphique*:

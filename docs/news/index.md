@@ -6,3 +6,5 @@
   fonts
 - Fixed problem with fonts, requiring
   [`showtext::showtext_auto()`](https://rdrr.io/pkg/showtext/man/showtext_auto.html)
+- Added Getting started vignette
+- Added Guerry maps vignette

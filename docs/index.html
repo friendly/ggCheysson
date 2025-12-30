@@ -19,8 +19,8 @@
 <link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Graphic Styles of Emile Cheysson for ggplot2">
-<meta name="description" content="Implements for ggplot2 the stylistic elements (fonts, hachure patterns, color palettes) used by Emile Cheysson in the Albums de Statistique Graphique, sometimes called the pinnacle of the Golden Age of Statistical Graphics.">
-<meta property="og:description" content="Implements for ggplot2 the stylistic elements (fonts, hachure patterns, color palettes) used by Emile Cheysson in the Albums de Statistique Graphique, sometimes called the pinnacle of the Golden Age of Statistical Graphics.">
+<meta name="description" content="Implements for ggplot2 the stylistic elements (fonts, hatched patterns, color palettes) used by Emile Cheysson in the Albums de Statistique Graphique, sometimes called the pinnacle of the Golden Age of Statistical Graphics.">
+<meta property="og:description" content="Implements for ggplot2 the stylistic elements (fonts, hatched patterns, color palettes) used by Emile Cheysson in the Albums de Statistique Graphique, sometimes called the pinnacle of the Golden Age of Statistical Graphics.">
 <meta property="og:image" content="https://friendly.github.io/ggCheysson/logo.png">
 </head>
 <body>
@@ -41,6 +41,13 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/getting-started.html">Getting Started with ggCheysson</a></li>
+    <li><a class="dropdown-item" href="articles/guerry-maps.html">Mapping Guerry's Moral Statistics with Cheysson Palettes</a></li>
+  </ul>
+</li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
@@ -62,7 +69,7 @@
 </h1>
 </div>
 <p>The <code>ggCheysson</code> package brings the graphical styles of the <em>Albums de Statistique Graphique</em> to R and ggplot2.</p>
-<p>The Albums were produced by the Ministry of Public Works in France under the direction of <a href="https://en.wikipedia.org/wiki/%C3%89mile_Cheysson" class="external-link">Émile Cheysson</a> from 1879-1897. They represent the “pinnacle of the Golden Age of Statistical Graphics” (Friendly, 2008) for their innovation in visualization techniques, graphic design and beauty.</p>
+<p>The <em>Albums</em> were produced by the Ministry of Public Works in France under the direction of <a href="https://en.wikipedia.org/wiki/%C3%89mile_Cheysson" class="external-link">Émile Cheysson</a> from 1879-1897. They represent the “pinnacle of the Golden Age of Statistical Graphics” (Friendly, 2008) for their innovation in visualization techniques, graphic design and beauty.</p>
 <p>The package is based on work by:</p>
 <ul>
 <li>David Rumsey Map Collection: Complete digitized <em>Albums de Statistique Graphique</em> <a href="https://www.davidrumsey.com/luna/servlet/view/search?q=album+de+statistique" class="external-link">View collection</a>
@@ -74,6 +81,18 @@
 <li>Kenneth Fields: Hand-drawn font family creation <a href="https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/the-style-of-emile-cheysson/" class="external-link">The style of Émile Cheysson</a>
 </li>
 </ul>
+<div class="section level2">
+<h2 id="historical-context">Historical Context<a class="anchor" aria-label="anchor" href="#historical-context"></a>
+</h2>
+<p>The <em>Albums de Statistique Graphique</em> were published annually by France’s Ministry of Public Works, showcasing infrastructure statistics through innovative visualizations. Under Émile Cheysson’s direction, these albums combined:</p>
+<ul>
+<li>Sophisticated use of color to represent quantitative variables</li>
+<li>Hatching patterns to differentiate categories and show density</li>
+<li>Hand-lettered text with distinctive character</li>
+<li>Clear hierarchical organization of information</li>
+</ul>
+<p>This package preserves these design elements for modern statistical graphics.</p>
+</div>
 <div class="section level2">
 <h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
 </h2>
@@ -123,6 +142,10 @@
 <li>
 <code><a href="reference/theme_cheysson_map.html">theme_cheysson_map()</a></code> - Optimized for cartographic work</li>
 </ul>
+<p>These were derived by RJ Andrews from a collection of 25 thematic maps across the span of years in which the <em>Albums</em> were produced, shown below</p>
+<center>
+<img src="reference/figures/maps.png" height="300">
+</center>
 </div>
 </div>
 <div class="section level2">
@@ -147,6 +170,7 @@
 <div class="section level3">
 <h3 id="basic-color-palette">Basic Color Palette<a class="anchor" aria-label="anchor" href="#basic-color-palette"></a>
 </h3>
+<p>Use the color palette of the 1881 Album, plate 4</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/friendly/ggCheysson" class="external-link">ggCheysson</a></span><span class="op">)</span></span>
@@ -405,18 +429,6 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="historical-context">Historical Context<a class="anchor" aria-label="anchor" href="#historical-context"></a>
-</h2>
-<p>The <em>Albums de Statistique Graphique</em> were published annually by France’s Ministry of Public Works, showcasing infrastructure statistics through innovative visualizations. Under Émile Cheysson’s direction, these albums combined:</p>
-<ul>
-<li>Sophisticated use of color to represent quantitative variables</li>
-<li>Hatching patterns to differentiate categories and show density</li>
-<li>Hand-lettered text with distinctive character</li>
-<li>Clear hierarchical organization of information</li>
-</ul>
-<p>This package preserves these design elements for modern statistical graphics.</p>
-</div>
-<div class="section level2">
 <h2 id="sources-and-attribution">Sources and Attribution<a class="anchor" aria-label="anchor" href="#sources-and-attribution"></a>
 </h2>
 <div class="section level3">
@@ -471,8 +483,24 @@
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
+<p>To cite <code>ggCheysson</code>, please use:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"ggCheysson"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"ggCheysson"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; To cite package 'ggCheysson' in publications use:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Friendly M (2025). _ggCheysson: Styles of Emile Cheysson for</span></span>
+<span><span class="co">#&gt;   ggplot2_. R package version 1.0.0,</span></span>
+<span><span class="co">#&gt;   &lt;https://github.com/friendly/ggCheysson&gt;.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   @Manual{,</span></span>
+<span><span class="co">#&gt;     title = {ggCheysson: Styles of Emile Cheysson for ggplot2},</span></span>
+<span><span class="co">#&gt;     author = {Michael Friendly},</span></span>
+<span><span class="co">#&gt;     year = {2025},</span></span>
+<span><span class="co">#&gt;     note = {R package version 1.0.0},</span></span>
+<span><span class="co">#&gt;     url = {https://github.com/friendly/ggCheysson},</span></span>
+<span><span class="co">#&gt;   }</span></span></code></pre></div>
 <p>To cite the original <em>Albums de Statistique Graphique</em>:</p>
 <blockquote>
 <p>France. Ministère des travaux publics. <em>Album de statistique graphique de [year]</em>. Paris: Imprimerie nationale, [1879-1897].</p>
@@ -520,8 +548,9 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="http://cran.r-project.org/package=ggCheysson" class="external-link"><img src="http://www.r-pkg.org/badges/version/ggCheysson" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://github.com/friendly/ggCheysson" class="external-link"><img src="https://img.shields.io/github/last-commit/friendly/ggCheysson" alt="Last Commit"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 </ul>
 </div>
 

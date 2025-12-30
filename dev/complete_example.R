@@ -13,6 +13,7 @@ cat("=== Complete Cheysson Aesthetic Demo ===\n\n")
 # Load fonts
 cat("Loading Cheysson fonts...\n")
 load_cheysson_fonts()
+showtext::showtext_auto()
 
 # Check if ragg is available for better font support on Windows
 use_ragg <- requireNamespace("ragg", quietly = TRUE)

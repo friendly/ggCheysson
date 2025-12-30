@@ -1,8 +1,10 @@
 pandoc: 3.6.3
 pkgdown: 2.2.0
 pkgdown_sha: ~
-articles: {}
-last_built: 2025-12-30T16:51Z
+articles:
+  getting-started: getting-started.html
+  guerry-maps: guerry-maps.html
+last_built: 2025-12-30T20:34Z
 urls:
   reference: https://friendly.github.io/ggCheysson/reference
   article: https://friendly.github.io/ggCheysson/articles

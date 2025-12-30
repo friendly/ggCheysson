@@ -63,3 +63,10 @@ reference:
     - cheysson_patterns
     - albumImages
 
+articles:
+  - title: Vignettes
+    navbar: ~
+    contents:
+    - getting-started
+    - guerry-maps
+

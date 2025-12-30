@@ -17,15 +17,16 @@ knitr::opts_chunk$set(
 ```
 
 <!-- badges: start -->
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/ggCheysson)](http://cran.r-project.org/package=ggCheysson)
 [![Last Commit](https://img.shields.io/github/last-commit/friendly/ggCheysson)](https://github.com/friendly/ggCheysson)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 # ggCheysson <img src="man/figures/logo.png" height="200" style="float:right; height:200px;"/> 
 
 The `ggCheysson` package brings the graphical styles of the _Albums de Statistique Graphique_ to R and ggplot2. 
 
-The Albums were produced by the Ministry of Public Works in France under the direction of [Émile Cheysson](https://en.wikipedia.org/wiki/%C3%89mile_Cheysson) from 1879-1897. They represent the "pinnacle of the Golden Age of Statistical Graphics"
+The _Albums_ were produced by the Ministry of Public Works in France under the direction of [Émile Cheysson](https://en.wikipedia.org/wiki/%C3%89mile_Cheysson) from 1879-1897. They represent the "pinnacle of the Golden Age of Statistical Graphics"
 (Friendly, 2008) for their innovation in visualization techniques, graphic design and
 beauty.
 
@@ -38,6 +39,17 @@ The package is based on work by:
   [Cheysson Color Palettes](https://observablehq.com/@tomshanley/cheysson-color-palettes)
 * Kenneth Fields: Hand-drawn font family creation
   [The style of Émile Cheysson](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/the-style-of-emile-cheysson/)
+
+## Historical Context
+
+The _Albums de Statistique Graphique_ were published annually by France's Ministry of Public Works, showcasing infrastructure statistics through innovative visualizations. Under Émile Cheysson's direction, these albums combined:
+
+- Sophisticated use of color to represent quantitative variables
+- Hatching patterns to differentiate categories and show density
+- Hand-lettered text with distinctive character
+- Clear hierarchical organization of information
+
+This package preserves these design elements for modern statistical graphics.
 
 ## Features
 
@@ -66,6 +78,12 @@ This package provides a complete aesthetic system for creating visualizations in
 - `theme_cheysson_minimal()` - Minimal grid variant
 - `theme_cheysson_map()` - Optimized for cartographic work
 
+These were derived by RJ Andrews from a collection of 25 thematic maps across the span of years in which the _Albums_ were produced, shown below
+
+<center>
+<img src="man/figures/maps.png" height=400>
+</center>
+
 ## Installation
 
 Install the development version from GitHub:
@@ -88,6 +106,7 @@ install.packages(c("ggpattern", "systemfonts"))
 Here are a few examples to get you started.
 
 ### Basic Color Palette
+Use the color palette of the 1881 Album, plate 4
 
 ```{r basic-palette, fig.height=4, fig.width=6}
 library(ggplot2)
@@ -249,17 +268,6 @@ theme(
 - `theme_cheysson()` - Complete Cheysson theme
 - `theme_cheysson_minimal()` - Minimal variant
 - `theme_cheysson_map()` - For maps
-
-## Historical Context
-
-The _Albums de Statistique Graphique_ were published annually by France's Ministry of Public Works, showcasing infrastructure statistics through innovative visualizations. Under Émile Cheysson's direction, these albums combined:
-
-- Sophisticated use of color to represent quantitative variables
-- Hatching patterns to differentiate categories and show density
-- Hand-lettered text with distinctive character
-- Clear hierarchical organization of information
-
-This package preserves these design elements for modern statistical graphics.
 
 ## Sources and Attribution
 
