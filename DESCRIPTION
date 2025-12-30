@@ -10,10 +10,9 @@ Authors@R:
       person(given = "Tom", family = "Shanley",  role = "ctb"),
       person(given = "Kenneth", family = "Fields",  role = "ctb")
       )
-Description: Implements for 'ggplot2' the stylistic elements (fonts, hachure patterns, color palettes) used by 'Emile
+Description: Implements for 'ggplot2' the stylistic elements (fonts, hatched patterns, color palettes) used by 'Emile
   Cheysson' in the 'Albums de Statistique Graphique', sometimes called the pinnacle of the
   Golden Age of Statistical Graphics.
-Url: https://github.com/friendly/ggCheysson, https://friendly.github.io/ggCheysson/
 Imports:
     ggplot2
 Suggests:
@@ -28,7 +27,7 @@ License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
-URL: https://github.com/friendly/ggCheysson
+URL: https://github.com/friendly/ggCheysson, https://friendly.github.io/ggCheysson/
 BugReports: https://github.com/friendly/ggCheysson/issues
 Depends: 
     R (>= 3.5)

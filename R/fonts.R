@@ -113,10 +113,10 @@ load_cheysson_fonts <- function(method = c("systemfonts", "showtext")) {
     # Windows-specific note about graphics devices
     if (.Platform$OS.type == "windows") {
       message("\nWindows users - Important notes:")
-      message("  • Fonts work in SAVED plots: use ggsave(..., device = ragg::agg_png)")
-      message("  • Fonts DON'T appear in on-screen plot window with systemfonts")
-      message("  • For on-screen preview: use load_cheysson_fonts(method = 'showtext')")
-      message("  • Or in RStudio: Tools > Global Options > Graphics > Backend: 'AGG'")
+      message("  * Fonts work in SAVED plots: use ggsave(..., device = ragg::agg_png)")
+      message("  * Fonts DON'T appear in on-screen plot window with systemfonts")
+      message("  * For on-screen preview: use load_cheysson_fonts(method = 'showtext')")
+      message("  * Or in RStudio: Tools > Global Options > Graphics > Backend: 'AGG'")
     }
 
   } else if (method == "showtext") {

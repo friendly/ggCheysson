@@ -10,3 +10,4 @@
 ^pkgdown$
 ^README\.Rmd$
 ^.nojekyll$
+^cran-comments\.md$
