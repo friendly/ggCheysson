@@ -4,8 +4,8 @@ Version: 1.0.0
 Authors@R: 
     person("Michael", "Friendly", , "friendly@yorku.ca", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3237-0941"))
-Description: Implements stylistic elements (fonts, hachure patterns, color palettes) used by Emile
-  Cheysson in the Albums de Statistique Graphique, sometimes called the pinacle of the
+Description: Implements stylistic elements (fonts, hachure patterns, color palettes) used by 'Emile
+  Cheysson' in the 'Albums de Statistique Graphique', sometimes called the pinacle of the
   Golden Age of Statistical Graphics.
 Imports:
     ggplot2
