@@ -1,7 +1,5 @@
 # ggCheysson
 
-![](reference/figures/logo.png)
-
 The `ggCheysson` package brings the graphical styles of the *Albums de
 Statistique Graphique* to R and ggplot2.
 
@@ -55,11 +53,11 @@ visualizations in Cheysson’s distinctive style:
 
 ### 🎭 Complete Themes
 
-- [`theme_cheysson()`](http://friendly.github.io/ggCheysson/reference/theme_cheysson.md) -
+- [`theme_cheysson()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson.md) -
   Full period-appropriate theme
-- [`theme_cheysson_minimal()`](http://friendly.github.io/ggCheysson/reference/theme_cheysson_minimal.md) -
+- [`theme_cheysson_minimal()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson_minimal.md) -
   Minimal grid variant
-- [`theme_cheysson_map()`](http://friendly.github.io/ggCheysson/reference/theme_cheysson_map.md) -
+- [`theme_cheysson_map()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson_map.md) -
   Optimized for cartographic work
 
 ## Installation
@@ -81,6 +79,8 @@ install.packages(c("ggpattern", "systemfonts"))
 
 ## Quick Start
 
+Here are a few examples to get you started.
+
 ### Basic Color Palette
 
 ``` r
@@ -100,7 +100,9 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
 
 ``` r
 # Load Cheysson fonts (once per session)
-load_cheysson_fonts()
+load_cheysson_fonts(method = "showtext")
+# Enable showtext for rendering
+showtext::showtext_auto()
 
 ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
   geom_point(size = 3) +
@@ -113,6 +115,8 @@ ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
   ) +
   theme_cheysson()
 ```
+
+![](reference/figures/README-with-fonts-1.png)
 
 ### Complete Cheysson Aesthetic (Colors + Patterns + Fonts)
 
@@ -147,6 +151,8 @@ ggplot(data, aes(category, value, fill = category)) +
   theme_cheysson() +
   theme(legend.position = "none")
 ```
+
+![](reference/figures/README-complete-aesthetic-1.png)
 
 ## Available Palettes
 
@@ -195,10 +201,12 @@ cheysson_pal("1880_07")
 #> [1] "#d9636c" "#869e80" "#dec367" "#85aab1" "#aea9a4" "#ed8238" "#ab90a4"
 ```
 
-Palette types: - **Sequential** (7 palettes): For ordered quantitative
-data - **Diverging** (2 palettes): For data with neutral midpoint -
-**Grouped** (5 palettes): For comparing related groups - **Category** (6
-palettes): For categorical data
+Palette types:
+
+- **Sequential** (7 palettes): For ordered quantitative data
+- **Diverging** (2 palettes): For data with neutral midpoint
+- **Grouped** (5 palettes): For comparing related groups
+- **Category** (6 palettes): For categorical data
 
 ## Pattern Support
 
@@ -219,7 +227,7 @@ scale_pattern_angle_cheysson("1881_03")
 
 ## Font Families
 
-Five authentic font families are included:
+Five authentic Cheysson font families are included:
 
 | Family                | Description    | Use               |
 |-----------------------|----------------|-------------------|
@@ -254,42 +262,42 @@ theme(
 
 ### Color Functions
 
-- [`cheysson_pal()`](http://friendly.github.io/ggCheysson/reference/cheysson_pal.md) -
+- [`cheysson_pal()`](https://friendly.github.io/ggCheysson/reference/cheysson_pal.md) -
   Get colors from a palette
-- [`scale_color_cheysson()`](http://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+- [`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
   /
-  [`scale_fill_cheysson()`](http://friendly.github.io/ggCheysson/reference/scale_cheysson.md) -
+  [`scale_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md) -
   ggplot2 color scales
-- [`list_cheysson_pals()`](http://friendly.github.io/ggCheysson/reference/list_cheysson_pals.md) -
+- [`list_cheysson_pals()`](https://friendly.github.io/ggCheysson/reference/list_cheysson_pals.md) -
   List available palettes
 
 ### Pattern Functions
 
-- [`cheysson_pattern()`](http://friendly.github.io/ggCheysson/reference/cheysson_pattern.md) -
+- [`cheysson_pattern()`](https://friendly.github.io/ggCheysson/reference/cheysson_pattern.md) -
   Get pattern specifications
 - `scale_pattern_*_cheysson()` - ggpattern scales for fills, types,
   angles, densities
-- [`list_cheysson_patterns()`](http://friendly.github.io/ggCheysson/reference/list_cheysson_patterns.md) -
+- [`list_cheysson_patterns()`](https://friendly.github.io/ggCheysson/reference/list_cheysson_patterns.md) -
   List available pattern palettes
 
 ### Font Functions
 
-- [`load_cheysson_fonts()`](http://friendly.github.io/ggCheysson/reference/load_cheysson_fonts.md) -
+- [`load_cheysson_fonts()`](https://friendly.github.io/ggCheysson/reference/load_cheysson_fonts.md) -
   Load font families
-- [`cheysson_font()`](http://friendly.github.io/ggCheysson/reference/cheysson_font.md) -
+- [`cheysson_font()`](https://friendly.github.io/ggCheysson/reference/cheysson_font.md) -
   Get font family names
-- [`list_cheysson_fonts()`](http://friendly.github.io/ggCheysson/reference/list_cheysson_fonts.md) -
+- [`list_cheysson_fonts()`](https://friendly.github.io/ggCheysson/reference/list_cheysson_fonts.md) -
   View font information
-- [`cheysson_fonts_available()`](http://friendly.github.io/ggCheysson/reference/cheysson_fonts_available.md) -
+- [`cheysson_fonts_available()`](https://friendly.github.io/ggCheysson/reference/cheysson_fonts_available.md) -
   Check font availability
 
 ### Themes
 
-- [`theme_cheysson()`](http://friendly.github.io/ggCheysson/reference/theme_cheysson.md) -
+- [`theme_cheysson()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson.md) -
   Complete Cheysson theme
-- [`theme_cheysson_minimal()`](http://friendly.github.io/ggCheysson/reference/theme_cheysson_minimal.md) -
+- [`theme_cheysson_minimal()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson_minimal.md) -
   Minimal variant
-- [`theme_cheysson_map()`](http://friendly.github.io/ggCheysson/reference/theme_cheysson_map.md) -
+- [`theme_cheysson_map()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson_map.md) -
   For maps
 
 ## Historical Context

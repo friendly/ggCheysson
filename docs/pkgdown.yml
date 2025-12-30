@@ -1,8 +1,8 @@
-pandoc: '3.4'
+pandoc: 3.6.3
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles: {}
-last_built: 2025-12-30T03:12Z
+last_built: 2025-12-30T16:51Z
 urls:
-  reference: http://friendly.github.io/ggCheysson/reference
-  article: http://friendly.github.io/ggCheysson/articles
+  reference: https://friendly.github.io/ggCheysson/reference
+  article: https://friendly.github.io/ggCheysson/articles

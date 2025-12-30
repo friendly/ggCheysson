@@ -67,8 +67,8 @@ Each pattern specification includes:
 
 ## See also
 
-[`cheysson_pattern`](http://friendly.github.io/ggCheysson/reference/cheysson_pattern.md),
-[`scale_pattern_fill_cheysson`](http://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
+[`cheysson_pattern`](https://friendly.github.io/ggCheysson/reference/cheysson_pattern.md),
+[`scale_pattern_fill_cheysson`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
 
 ## Examples
 

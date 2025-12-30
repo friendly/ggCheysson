@@ -65,8 +65,8 @@ Palette types:
 
 ## See also
 
-[`cheysson_pal`](http://friendly.github.io/ggCheysson/reference/cheysson_pal.md),
-[`scale_color_cheysson`](http://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+[`cheysson_pal`](https://friendly.github.io/ggCheysson/reference/cheysson_pal.md),
+[`scale_color_cheysson`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
 
 ## Examples
 

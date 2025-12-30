@@ -61,8 +61,8 @@ of "dec06").
 
 ## See also
 
-[`cheysson_palettes`](http://friendly.github.io/ggCheysson/reference/cheysson_palettes.md),
-[`cheysson_patterns`](http://friendly.github.io/ggCheysson/reference/cheysson_patterns.md)
+[`cheysson_palettes`](https://friendly.github.io/ggCheysson/reference/cheysson_palettes.md),
+[`cheysson_patterns`](https://friendly.github.io/ggCheysson/reference/cheysson_patterns.md)
 
 ## Examples
 
