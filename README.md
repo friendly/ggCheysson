@@ -50,6 +50,23 @@ these albums combined:
 This package preserves these design elements for modern statistical
 graphics.
 
+## Installation
+
+Install the development version from GitHub:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("friendly/ggCheysson")
+```
+
+### Suggested Dependencies
+
+For full functionality, install these packages:
+
+``` r
+install.packages(c("ggpattern", "systemfonts"))
+```
+
 ## Features
 
 This package provides a complete aesthetic system for creating
@@ -86,29 +103,26 @@ visualizations in Cheysson’s distinctive style:
 
 These were derived by RJ Andrews from a collection of 25 thematic maps
 across the span of years in which the *Albums* were produced, shown
-below
+below.
 
 <center>
 
-<img src="man/figures/maps.png" height=300>
+<img src="man/figures/maps.png" width=400>
 </center>
 
-## Installation
+From these, he abstracted the following combinations of color and
+pattern he thought characterized these maps:
 
-Install the development version from GitHub:
+<center>
 
-``` r
-# install.packages("remotes")
-remotes::install_github("friendly/ggCheysson")
-```
+<img src="man/figures/color-palettes.png" width=600>
+</center>
 
-### Suggested Dependencies
+### Not Yet
 
-For full functionality, install these packages:
-
-``` r
-install.packages(c("ggpattern", "systemfonts"))
-```
+This initial version of the package defines separate functions and
+`ggplot2` scales for color palettes and shading patterns. Their
+combination into Cheysson “color - pattern” features is planned.
 
 ## Quick Start
 
@@ -262,7 +276,7 @@ scale_pattern_angle_cheysson("1881_03")
 
 ## Font Families
 
-Five authentic Cheysson font families are included:
+Five Cheysson font families are included:
 
 | Family                | Description    | Use               |
 |-----------------------|----------------|-------------------|
@@ -272,9 +286,19 @@ Five authentic Cheysson font families are included:
 | `CheyssonOutlineCaps` | Outlined caps  | Decorative titles |
 | `CheyssonTitle`       | Display font   | Main titles       |
 
+Here are some of these:
+
+<center>
+
+<img src="man/figures/fonts1.png" height = 400>
+</center>
+
+To use these:
+
 ``` r
 # Load fonts
-load_cheysson_fonts()
+load_cheysson_fonts(method = "showtext")
+showtext::showtext_auto()
 
 # List available fonts
 list_cheysson_fonts()

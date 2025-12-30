@@ -94,6 +94,21 @@
 <p>This package preserves these design elements for modern statistical graphics.</p>
 </div>
 <div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>Install the development version from GitHub:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"friendly/ggCheysson"</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="suggested-dependencies">Suggested Dependencies<a class="anchor" aria-label="anchor" href="#suggested-dependencies"></a>
+</h3>
+<p>For full functionality, install these packages:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ggpattern"</span>, <span class="st">"systemfonts"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
 <h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
 </h2>
 <p>This package provides a complete aesthetic system for creating visualizations in Cheysson’s distinctive style:</p>
@@ -142,25 +157,19 @@
 <li>
 <code><a href="reference/theme_cheysson_map.html">theme_cheysson_map()</a></code> - Optimized for cartographic work</li>
 </ul>
-<p>These were derived by RJ Andrews from a collection of 25 thematic maps across the span of years in which the <em>Albums</em> were produced, shown below</p>
+<p>These were derived by RJ Andrews from a collection of 25 thematic maps across the span of years in which the <em>Albums</em> were produced, shown below.</p>
 <center>
-<img src="reference/figures/maps.png" height="300">
+<img src="reference/figures/maps.png" width="400">
+</center>
+<p>From these, he abstracted the following combinations of color and pattern he thought characterized these maps:</p>
+<center>
+<img src="reference/figures/color-palettes.png" width="600">
 </center>
 </div>
-</div>
-<div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h2>
-<p>Install the development version from GitHub:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"friendly/ggCheysson"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
-<h3 id="suggested-dependencies">Suggested Dependencies<a class="anchor" aria-label="anchor" href="#suggested-dependencies"></a>
+<h3 id="not-yet">Not Yet<a class="anchor" aria-label="anchor" href="#not-yet"></a>
 </h3>
-<p>For full functionality, install these packages:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ggpattern"</span>, <span class="st">"systemfonts"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>This initial version of the package defines separate functions and <code>ggplot2</code> scales for color palettes and shading patterns. Their combination into Cheysson “color - pattern” features is planned.</p>
 </div>
 </div>
 <div class="section level2">
@@ -313,7 +322,7 @@
 <div class="section level2">
 <h2 id="font-families">Font Families<a class="anchor" aria-label="anchor" href="#font-families"></a>
 </h2>
-<p>Five authentic Cheysson font families are included:</p>
+<p>Five Cheysson font families are included:</p>
 <table class="table">
 <thead><tr>
 <th>Family</th>
@@ -348,9 +357,15 @@
 </tr>
 </tbody>
 </table>
+<p>Here are some of these:</p>
+<center>
+<img src="reference/figures/fonts1.png" height="400">
+</center>
+<p>To use these:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load fonts</span></span>
-<span><span class="fu"><a href="reference/load_cheysson_fonts.html">load_cheysson_fonts</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/load_cheysson_fonts.html">load_cheysson_fonts</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"showtext"</span><span class="op">)</span></span>
+<span><span class="fu">showtext</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_auto.html" class="external-link">showtext_auto</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># List available fonts</span></span>
 <span><span class="fu"><a href="reference/list_cheysson_fonts.html">list_cheysson_fonts</a></span><span class="op">(</span><span class="op">)</span></span>

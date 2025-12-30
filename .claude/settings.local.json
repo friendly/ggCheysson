@@ -4,7 +4,12 @@
       "Bash(mkdir:*)",
       "Bash(Rscript:*)",
       "Bash(ls:*)",
-      "WebSearch"
+      "WebSearch",
+      "WebFetch(domain:observablehq.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.observablehq.com)",
+      "WebFetch(domain:static.observableusercontent.com)"
     ]
   }
 }
