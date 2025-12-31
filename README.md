@@ -250,6 +250,37 @@ cheysson_pal("1880_07")
 #> [1] "#d9636c" "#869e80" "#dec367" "#85aab1" "#aea9a4" "#ed8238" "#ab90a4"
 ```
 
+### Visualizing Palettes
+
+Use `show_palette()` to display a palette with color swatches and hex
+codes:
+
+``` r
+# Display a single palette with metadata
+show_palette("1895_04")
+```
+
+<img src="man/figures/README-show-palette-1.png" width="100%" />
+
+``` r
+# Display multiple palettes at once
+show_palettes(c("1880_07", "1881_03", "1895_04"))
+```
+
+<img src="man/figures/README-show-palette-multi-1.png" width="100%" /><img src="man/figures/README-show-palette-multi-2.png" width="100%" /><img src="man/figures/README-show-palette-multi-3.png" width="100%" />
+
+``` r
+# Display four palettes in a 2x2 grid
+show_palettes(c("1880_07", "1881_03", "1895_04", "1906_06"), ncol = 2)
+```
+
+<img src="man/figures/README-show-palette-grid-1.png" width="100%" /><img src="man/figures/README-show-palette-grid-2.png" width="100%" /><img src="man/figures/README-show-palette-grid-3.png" width="100%" /><img src="man/figures/README-show-palette-grid-4.png" width="100%" />
+
+``` r
+# Display all palettes of a specific type
+show_palettes("category")
+```
+
 Palette types:
 
 - **Sequential** (7 palettes): For ordered quantitative data
@@ -325,6 +356,9 @@ theme(
 - `scale_color_cheysson()` / `scale_fill_cheysson()` - ggplot2 color
   scales
 - `list_cheysson_pals()` - List available palettes
+- `show_palette()` - Display a single palette with color swatches and
+  hex codes
+- `show_palettes()` - Display multiple palettes for comparison
 
 ### Pattern Functions
 
@@ -405,14 +439,14 @@ To cite `ggCheysson`, please use:
 citation("ggCheysson")
 #> To cite package 'ggCheysson' in publications use:
 #> 
-#>   Friendly M (2025). _ggCheysson: Styles of Emile Cheysson for
+#>   Friendly M (2025). _ggCheysson: Graphic Styles of Emile Cheysson for
 #>   ggplot2_. R package version 1.0.0,
 #>   <https://github.com/friendly/ggCheysson>.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
-#>     title = {ggCheysson: Styles of Emile Cheysson for ggplot2},
+#>     title = {ggCheysson: Graphic Styles of Emile Cheysson for ggplot2},
 #>     author = {Michael Friendly},
 #>     year = {2025},
 #>     note = {R package version 1.0.0},

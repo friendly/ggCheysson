@@ -221,7 +221,7 @@ show_palettes(c("1880_07", "1881_03", "1895_04"))
 show_palettes(c("1880_07", "1881_03", "1895_04", "1906_06"), ncol = 2)
 ```
 
-```{r show-palette-type, fig.height=8, fig.width=8}
+```{r show-palette-type, fig.height=8, fig.width=8, eval=FALSE}
 # Display all palettes of a specific type
 show_palettes("category")
 ```
