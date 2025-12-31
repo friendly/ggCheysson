@@ -1022,6 +1022,147 @@ cheysson_colorpat_palettes[["1891_03"]] <- list(
   )
 )
 
+# ----------------------------------------------------------------------------
+# Palette 11: 1881_08 (Grouped - 8 Elements with Mixed Patterns)
+# ----------------------------------------------------------------------------
+
+# This palette demonstrates complex grouped encoding:
+#   - FOUR BASE COLORS + REPEATED BROWN
+#   - MIXED PATTERNS (crosshatch, solid, stripes)
+#   - 8 elements for detailed categorical grouping
+
+cheysson_colorpat_palettes[["1881_08"]] <- list(
+  name = "1881_08",
+  type = "grouped",
+  album = 1881,
+  plate = 30,
+  n_elements = 8,
+
+  elements = list(
+    # Element 1: Gold with crosshatch
+    list(
+      position = 1,
+      label = "Group A",
+      fill = "#d3af4b",              # Golden yellow
+      pattern_type = "crosshatch",
+      pattern_fill = "#a88a2b",      # Darker gold
+      pattern_color = "#a88a2b",
+      pattern_angle = NA,
+      pattern_density = 0.30,
+      pattern_spacing = 0.025,
+      pattern_linewidth = 0.5
+    ),
+
+    # Element 2: Rust (solid)
+    list(
+      position = 2,
+      label = "Group B",
+      fill = "#cd7451",              # Rust/terracotta
+      pattern_type = "none",
+      pattern_fill = "#cd7451",
+      pattern_color = "#cd7451",
+      pattern_angle = NA,
+      pattern_density = 1.0,
+      pattern_spacing = NA,
+      pattern_linewidth = NA
+    ),
+
+    # Element 3: Cream (solid)
+    list(
+      position = 3,
+      label = "Group C",
+      fill = "#f9ece3",              # Cream/off-white
+      pattern_type = "none",
+      pattern_fill = "#f9ece3",
+      pattern_color = "#f9ece3",
+      pattern_angle = NA,
+      pattern_density = 1.0,
+      pattern_spacing = NA,
+      pattern_linewidth = NA
+    ),
+
+    # Element 4: Gray (solid)
+    list(
+      position = 4,
+      label = "Group D",
+      fill = "#737e7e",              # Blue-gray
+      pattern_type = "none",
+      pattern_fill = "#737e7e",
+      pattern_color = "#737e7e",
+      pattern_angle = NA,
+      pattern_density = 1.0,
+      pattern_spacing = NA,
+      pattern_linewidth = NA
+    ),
+
+    # Elements 5-8: Dark brown with stripes (repeated pattern group)
+    # Element 5: Brown stripe variant 1
+    list(
+      position = 5,
+      label = "Group E1",
+      fill = "#514031",              # Dark brown
+      pattern_type = "stripe",
+      pattern_fill = "#3a2d20",      # Very dark brown
+      pattern_color = "#3a2d20",
+      pattern_angle = 135,           # Diagonal
+      pattern_density = 0.30,
+      pattern_spacing = 0.025,
+      pattern_linewidth = 0.5
+    ),
+
+    # Element 6: Brown stripe variant 2
+    list(
+      position = 6,
+      label = "Group E2",
+      fill = "#514031",              # Same brown
+      pattern_type = "stripe",
+      pattern_fill = "#3a2d20",
+      pattern_color = "#3a2d20",
+      pattern_angle = 90,            # Vertical
+      pattern_density = 0.30,
+      pattern_spacing = 0.025,
+      pattern_linewidth = 0.5
+    ),
+
+    # Element 7: Brown stripe variant 3
+    list(
+      position = 7,
+      label = "Group E3",
+      fill = "#514031",              # Same brown
+      pattern_type = "stripe",
+      pattern_fill = "#3a2d20",
+      pattern_color = "#3a2d20",
+      pattern_angle = 45,            # Diagonal opposite
+      pattern_density = 0.30,
+      pattern_spacing = 0.025,
+      pattern_linewidth = 0.5
+    ),
+
+    # Element 8: Brown stripe variant 4
+    list(
+      position = 8,
+      label = "Group E4",
+      fill = "#514031",              # Same brown
+      pattern_type = "stripe",
+      pattern_fill = "#3a2d20",
+      pattern_color = "#3a2d20",
+      pattern_angle = 135,           # Back to diagonal
+      pattern_density = 0.35,        # Slightly denser
+      pattern_spacing = 0.02,
+      pattern_linewidth = 0.5
+    )
+  ),
+
+  metadata = list(
+    source_url = "https://observablehq.com/@tomshanley/cheysson-color-palettes",
+    rumsey_url = "https://www.davidrumsey.com/luna/servlet/detail/RUMSEY~8~1~309128~90078955",
+    rumsey_no = "12512.030",
+    title = "Carte Figurative des Travaux D'Achevement",
+    extracted_date = "2025-12-31",
+    notes = "8-element grouped palette with 4 distinct colors plus 4 brown variations with different stripe angles. Demonstrates complex categorical grouping."
+  )
+)
+
 # ============================================================================
 # PART 2: ACCESSOR FUNCTION
 # ============================================================================
@@ -1306,21 +1447,22 @@ if (interactive() && FALSE) {
 }
 
 cat("\n=== Prototype Unified Color-Pattern Palette System ===\n\n")
-cat("Created 10 palettes (50% of full 20-palette set):\n\n")
+cat("Created 11 palettes (55% of full 20-palette set):\n\n")
 cat("DIVERGING (1 palette):\n")
 cat("  1. 1883_04 (4 elements) - Dual encoding: color=direction, pattern=magnitude\n\n")
 cat("SEQUENTIAL (3 palettes):\n")
 cat("  2. 1881_03 (3 elements) - Monochrome with pattern density progression\n")
 cat("  3. 1891_07 (7 elements) - Hybrid: color variation (low) + pattern variation (high)\n")
 cat("  4. 1891_06 (6 elements) - Monochrome blue with vertical stripe density progression\n\n")
-cat("GROUPED (3 palettes):\n")
+cat("GROUPED (4 palettes):\n")
 cat("  5. 1881_04 (4 elements) - Color-only, no patterns\n")
 cat("  6. 1886_08 (8 elements) - Alternating stripe/crosshatch patterns\n")
-cat("  7. 1891_03 (3 elements) - Two colors with pattern subgroup\n\n")
+cat("  7. 1891_03 (3 elements) - Two colors with pattern subgroup\n")
+cat("  8. 1881_08 (8 elements) - Mixed patterns with angle variation\n\n")
 cat("CATEGORICAL (3 palettes):\n")
-cat("  8. 1880_07 (7 elements) - Diverse solid colors, warm-cool alternation\n")
-cat("  9. 1906_04 (4 elements) - High-contrast: black, blue, yellow, red\n")
-cat(" 10. 1906_06 (6 elements) - Mixed solid/pattern approach\n\n")
+cat("  9. 1880_07 (7 elements) - Diverse solid colors, warm-cool alternation\n")
+cat(" 10. 1906_04 (4 elements) - High-contrast: black, blue, yellow, red\n")
+cat(" 11. 1906_06 (6 elements) - Mixed solid/pattern approach\n\n")
 cat("Functions:\n")
 cat("  - Accessor: cheysson_colorpat('palette_name')\n")
 cat("  - Scale: scale_colorpat_cheysson('palette_name')\n")

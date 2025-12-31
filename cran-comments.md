@@ -10,6 +10,6 @@ Possibly misspelled words in DESCRIPTION:
   Cheysson (2:32, 14:3)
   ggplot (2:45)
 
-- these are false positives.
+- these are false positives. The description includes: 'ggplot2' in quotes
 
 * This is a new release.
