@@ -166,3 +166,156 @@ list_cheysson_pals <- function(type = NULL) {
 
   return(df)
 }
+
+
+#' Display a Cheysson palette with color swatches and hex codes
+#'
+#' Creates a visual display of a color palette showing color swatches along with
+#' their hex codes. This is useful for documentation, presentations, and exploring
+#' the available palettes.
+#'
+#' @param palette Name of palette (e.g., "1880_07"), or palette type
+#'   ("sequential", "diverging", "grouped", "category").
+#' @param n Number of colors to display. If NULL (default), shows all colors in
+#'   the palette. If specified, will interpolate if n > palette size.
+#' @param show_info Logical; if TRUE (default), displays palette metadata
+#'   (type, album, plate) above the swatches.
+#' @param cex Text size multiplier for hex codes (default 1).
+#'
+#' @return Invisibly returns a character vector of the displayed hex codes.
+#'   The function is called primarily for its side effect of creating a plot.
+#'
+#' @importFrom graphics par rect text mtext
+#'
+#' @examples
+#' \dontrun{
+#' # Display a specific palette
+#' show_palette("1880_07")
+#'
+#' # Display palette without metadata
+#' show_palette("1881_03", show_info = FALSE)
+#'
+#' # Display 10 interpolated colors
+#' show_palette("1895_04", n = 10)
+#'
+#' # Display first sequential palette
+#' show_palette("sequential")
+#' }
+#'
+#' @export
+show_palette <- function(palette = "1880_07", n = NULL, show_info = TRUE, cex = 1) {
+  # Get palette information
+  if (palette %in% names(cheysson_palettes)) {
+    pal <- cheysson_palettes[[palette]]
+    pal_name <- palette
+  } else {
+    # Check if it's a type name
+    palette_type <- tolower(palette)
+    if (palette_type %in% c("sequential", "diverging", "grouped", "category")) {
+      type_palettes <- Filter(function(x) x$type == palette_type, cheysson_palettes)
+      pal <- type_palettes[[1]]
+      pal_name <- names(type_palettes)[1]
+    } else {
+      stop(sprintf("Palette '%s' not found", palette))
+    }
+  }
+
+  # Get colors
+  colors <- cheysson_pal(pal_name, n = n)
+  n_colors <- length(colors)
+
+  # Save old par settings
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
+
+  # Set up plot margins
+  if (show_info) {
+    par(mar = c(3, 1, 3, 1))
+  } else {
+    par(mar = c(3, 1, 1, 1))
+  }
+
+  # Create empty plot
+  plot(0, 0, type = "n", xlim = c(0, n_colors), ylim = c(0, 1),
+       xlab = "", ylab = "", xaxt = "n", yaxt = "n", bty = "n")
+
+  # Draw color rectangles
+  for (i in 1:n_colors) {
+    rect(i - 1, 0.2, i, 0.8, col = colors[i], border = "gray30", lwd = 1)
+  }
+
+  # Add hex codes below rectangles
+  for (i in 1:n_colors) {
+    text(i - 0.5, 0.1, colors[i], srt = 0, adj = c(0.5, 1),
+         cex = cex * 0.9, family = "mono", col = "gray20")
+  }
+
+  # Add palette info at top if requested
+  if (show_info) {
+    info_text <- sprintf("%s  |  Type: %s  |  Album: %s, Plate: %s  |  %d colors",
+                        pal_name, pal$type, pal$album, pal$plate, length(pal$colors))
+    mtext(info_text, side = 3, line = 0.5, cex = cex * 0.9, col = "gray20")
+  }
+
+  invisible(colors)
+}
+
+
+#' Display multiple Cheysson palettes
+#'
+#' Creates a visual display of multiple color palettes, useful for comparing
+#' palettes or showing all palettes of a certain type.
+#'
+#' @param palettes Character vector of palette names. If NULL (default), shows
+#'   all palettes. Can also be a palette type ("sequential", "diverging",
+#'   "grouped", "category") to show all palettes of that type.
+#' @param ncol Number of columns for layout (default 1).
+#' @param cex Text size multiplier (default 0.8).
+#'
+#' @return Invisibly returns NULL. The function is called for its side effect
+#'   of creating a plot.
+#'
+#' @importFrom graphics par layout rect text mtext
+#'
+#' @examples
+#' \dontrun{
+#' # Show all sequential palettes
+#' show_palettes("sequential")
+#'
+#' # Show specific palettes
+#' show_palettes(c("1880_07", "1881_03", "1895_04"))
+#'
+#' # Show all palettes (may be large)
+#' show_palettes()
+#' }
+#'
+#' @export
+show_palettes <- function(palettes = NULL, ncol = 1, cex = 0.8) {
+  # Determine which palettes to show
+  if (is.null(palettes)) {
+    pal_names <- names(cheysson_palettes)
+  } else if (length(palettes) == 1 &&
+             tolower(palettes) %in% c("sequential", "diverging", "grouped", "category")) {
+    type_palettes <- Filter(function(x) x$type == tolower(palettes), cheysson_palettes)
+    pal_names <- names(type_palettes)
+  } else {
+    pal_names <- palettes
+  }
+
+  n_pals <- length(pal_names)
+
+  # Save old par settings
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
+
+  # Set up layout
+  nrow <- ceiling(n_pals / ncol)
+  par(mfrow = c(nrow, ncol))
+
+  # Draw each palette
+  for (pal_name in pal_names) {
+    show_palette(pal_name, show_info = TRUE, cex = cex)
+  }
+
+  invisible(NULL)
+}
