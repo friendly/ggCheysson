@@ -4,3 +4,4 @@
 * Fixed problem with fonts, requiring `showtext::showtext_auto()`
 * Added Getting started vignette
 * Added Guerry maps vignette
+* Added `show_palette()` functions

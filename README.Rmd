@@ -202,6 +202,30 @@ list_cheysson_pals("sequential")
 cheysson_pal("1880_07")
 ```
 
+### Visualizing Palettes
+
+Use `show_palette()` to display a palette with color swatches and hex codes:
+
+```{r show-palette, fig.height=2, fig.width=8}
+# Display a single palette with metadata
+show_palette("1895_04")
+```
+
+```{r show-palette-multi, fig.height=6, fig.width=8}
+# Display multiple palettes at once
+show_palettes(c("1880_07", "1881_03", "1895_04"))
+```
+
+```{r show-palette-grid, fig.height=4, fig.width=10}
+# Display four palettes in a 2x2 grid
+show_palettes(c("1880_07", "1881_03", "1895_04", "1906_06"), ncol = 2)
+```
+
+```{r show-palette-type, fig.height=8, fig.width=8}
+# Display all palettes of a specific type
+show_palettes("category")
+```
+
 Palette types:
 
 - **Sequential** (7 palettes): For ordered quantitative data
@@ -272,6 +296,8 @@ theme(
 - `cheysson_pal()` - Get colors from a palette
 - `scale_color_cheysson()` / `scale_fill_cheysson()` - ggplot2 color scales
 - `list_cheysson_pals()` - List available palettes
+- `show_palette()` - Display a single palette with color swatches and hex codes
+- `show_palettes()` - Display multiple palettes for comparison
 
 ### Pattern Functions
 - `cheysson_pattern()` - Get pattern specifications
