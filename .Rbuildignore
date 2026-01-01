@@ -11,3 +11,4 @@
 ^README\.Rmd$
 ^.nojekyll$
 ^cran-comments\.md$
+^CRAN-SUBMISSION$
