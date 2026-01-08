@@ -2,7 +2,10 @@
 title: "Mapping Guerry's Moral Statistics with Cheysson Palettes"
 author: "Michael Friendly"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2 
 vignette: >
   %\VignetteIndexEntry{Mapping Guerry's Moral Statistics with Cheysson Palettes}
   %\VignetteEngine{knitr::rmarkdown}

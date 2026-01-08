@@ -2,7 +2,10 @@
 title: "Getting Started with ggCheysson"
 author: "Michael Friendly"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2 
 vignette: >
   %\VignetteIndexEntry{Getting Started with ggCheysson}
   %\VignetteEngine{knitr::rmarkdown}
