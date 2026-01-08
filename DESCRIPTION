@@ -1,7 +1,7 @@
 Package: ggCheysson
 Title: Graphic Styles of Emile Cheysson for 'ggplot2'
 Version: 1.0.0
-Date: 2025-12-30
+Date: 2026-01-08
 Authors@R: 
     c(person(given = "Michael", family = "Friendly", 
              email = "friendly@yorku.ca", role = c("aut", "cre"),
@@ -12,7 +12,7 @@ Authors@R:
       )
 Description: Implements for 'ggplot2' the stylistic elements (fonts, hatched patterns, color palettes) used by 'Emile
   Cheysson' in the 'Albums de Statistique Graphique', sometimes called the pinnacle of the
-  Golden Age of Statistical Graphics.
+  Golden Age of Statistical Graphics. 
 Imports:
     ggplot2
 Suggests:
