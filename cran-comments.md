@@ -21,13 +21,14 @@ This is a resubmission in response to CRAN feedback received 2026-01-12.
 
 3. **Examples properly tagged with `\dontrun{}` or `\donttest{}`**:
 
-   **`\dontrun{}`** (require user interaction or special setup):
+   **`\dontrun{}`** (require interactive graphics device or user setup):
+   - `show_palette()`, `show_palettes()` - use base graphics `par()` which requires
+     an active graphics device
    - `theme_cheysson()`, `theme_cheysson_minimal()`, `theme_cheysson_map()` - require
      `load_cheysson_fonts()` to be called first for proper font rendering
    - `load_cheysson_fonts()` - modifies system font registry
 
    **`\donttest{}`** (work automatically but need graphics/suggested packages):
-   - `show_palette()`, `show_palettes()` - require graphics device
    - `scale_*_cheysson()` functions - create ggplot2 graphics
    - `scale_pattern_*_cheysson()` - require suggested package (ggpattern)
 
@@ -36,7 +37,10 @@ This is a resubmission in response to CRAN feedback received 2026-01-12.
    - `cheysson_pattern()`, `cheysson_pattern_params()`, `list_cheysson_patterns()` - data operations
    - `cheysson_font()`, `cheysson_fonts_available()` - utility functions
 
-   All examples are fully functional for end users.
+   All examples are fully functional for users.
+
+4. **Installed package size** was large (~5Mb). This was due to several large images used in the README file. They
+   have been added to .Rbuildignore, and replaced with links to those images in the GitHub repo.
 
 ## Test environments
 * local Windows 10 install, 4.5.1 (2025-06-13 ucrt)
@@ -44,20 +48,13 @@ This is a resubmission in response to CRAN feedback received 2026-01-12.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 2 notes
+0 errors | 0 warnings | 1 notes
 
 **NOTE 1:** Possibly misspelled words in DESCRIPTION:
   Cheysson (2:32, 14:3)
-  Emile (13:34)
 
-These are proper names (Émile Cheysson) and are spelled correctly.
+This is a proper name (Émile Cheysson) and are spelled correctly.
 
-**NOTE 2:** Installed package size (if this appears)
-
-Large demonstration images for README are hosted on GitHub and excluded from
-the CRAN tarball via .Rbuildignore. The package includes five custom TrueType
-font files (1.2Mb) essential for authentic historical styling, which is typical
-for graphics packages with embedded fonts.
 
 * This is a new package release.
 

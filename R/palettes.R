@@ -188,7 +188,7 @@ list_cheysson_pals <- function(type = NULL) {
 #' @importFrom graphics par rect text mtext
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Display a specific palette
 #' show_palette("1880_07")
 #'
@@ -278,7 +278,7 @@ show_palette <- function(palette = "1880_07", n = NULL, show_info = TRUE, cex = 
 #' @importFrom graphics par layout rect text mtext
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Show all sequential palettes
 #' show_palettes("sequential")
 #'

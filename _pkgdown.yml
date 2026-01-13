@@ -16,6 +16,7 @@ reference:
     contents:
     - cheysson_pal
     - list_cheysson_pals
+    - starts_with("show_palette")
     - scale_cheysson
     - starts_with("scale_color")
     - starts_with("scale_fill")

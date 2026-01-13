@@ -24,7 +24,7 @@ Creates a visual display of multiple color palettes, useful for comparing
 palettes or showing all palettes of a certain type.
 }
 \examples{
-\donttest{
+\dontrun{
 # Show all sequential palettes
 show_palettes("sequential")
 
