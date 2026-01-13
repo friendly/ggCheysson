@@ -20,10 +20,8 @@ Converts Cheysson pattern specifications to parameters suitable for
 ggpattern geoms.
 }
 \examples{
-\dontrun{
 patterns <- cheysson_pattern("1881_03")
 cheysson_pattern_params(patterns, "fill")
 cheysson_pattern_params(patterns, "pattern_angle")
-}
 
 }

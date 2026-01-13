@@ -34,12 +34,17 @@ Default is TRUE.}
 
 \item{...}{Additional arguments passed to ggplot2 scale functions}
 }
+\value{
+A ggplot2 scale object that can be added to a plot. For discrete
+scales, returns a discrete_scale object. For continuous scales, returns
+a continuous scale object (gradient).
+}
 \description{
 Color and fill scales using Cheysson palettes from the Albums de Statistique
 Graphique.
 }
 \examples{
-\dontrun{
+\donttest{
 library(ggplot2)
 
 # Discrete color scale

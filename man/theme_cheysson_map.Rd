@@ -22,6 +22,9 @@ available, otherwise falls back to sans-serif}
 \item{load_fonts}{Automatically load Cheysson fonts if not already loaded
 (default: TRUE)}
 }
+\value{
+A ggplot2 theme object that can be added to a plot with \code{+}.
+}
 \description{
 A theme specifically designed for maps, with no grid and minimal elements,
 in the style of Cheysson's cartographic works.
@@ -29,9 +32,15 @@ in the style of Cheysson's cartographic works.
 \examples{
 \dontrun{
 # For use with spatial data/maps
-ggplot(map_data) +
-  geom_sf() +
-  theme_cheysson_map()
+library(ggplot2)
+
+# Load fonts first
+load_cheysson_fonts()
+
+# Example with spatial data (requires sf package)
+if (requireNamespace("sf", quietly = TRUE)) {
+  # ggplot(map_data) + geom_sf() + theme_cheysson_map()
+}
 }
 
 }

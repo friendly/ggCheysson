@@ -24,15 +24,12 @@ Creates a visual display of multiple color palettes, useful for comparing
 palettes or showing all palettes of a certain type.
 }
 \examples{
-\dontrun{
+\donttest{
 # Show all sequential palettes
 show_palettes("sequential")
 
 # Show specific palettes
 show_palettes(c("1880_07", "1881_03", "1895_04"))
-
-# Show all palettes (may be large)
-show_palettes()
 }
 
 }

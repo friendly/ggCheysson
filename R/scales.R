@@ -10,8 +10,12 @@
 #' @param reverse Whether to reverse the palette colors. Default is FALSE.
 #' @param ... Additional arguments passed to ggplot2 scale functions
 #'
+#' @returns A ggplot2 scale object that can be added to a plot. For discrete
+#'   scales, returns a discrete_scale object. For continuous scales, returns
+#'   a continuous scale object (gradient).
+#'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(ggplot2)
 #'
 #' # Discrete color scale

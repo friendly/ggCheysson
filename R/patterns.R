@@ -135,11 +135,9 @@ get_pattern_param <- function(pattern_spec, param, default = NA) {
 #' @return Vector of parameter values
 #'
 #' @examples
-#' \dontrun{
 #' patterns <- cheysson_pattern("1881_03")
 #' cheysson_pattern_params(patterns, "fill")
 #' cheysson_pattern_params(patterns, "pattern_angle")
-#' }
 #'
 #' @export
 cheysson_pattern_params <- function(patterns, param = "fill") {

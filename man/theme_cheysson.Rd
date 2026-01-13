@@ -52,6 +52,9 @@ Font selection:
 \dontrun{
 library(ggplot2)
 
+# Load fonts first (required for proper rendering)
+load_cheysson_fonts()
+
 # Basic usage
 ggplot(mtcars, aes(wt, mpg)) +
   geom_point() +

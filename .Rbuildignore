@@ -12,3 +12,9 @@
 ^.nojekyll$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+^man/figures/maps\.png$
+^man/figures/RJ-Andrews-color-palettes\.jpg$
+^man/figures/cheysson1\.png$
+^man/figures/cheysson2\.png$
+^tmpclaude-.*$
+^README\.html$

@@ -9,7 +9,9 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:api.observablehq.com)",
-      "WebFetch(domain:static.observableusercontent.com)"
+      "WebFetch(domain:static.observableusercontent.com)",
+      "Bash(find:*)",
+      "Bash(grep:*)"
     ]
   }
 }

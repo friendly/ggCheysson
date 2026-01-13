@@ -9,6 +9,10 @@
 #' @param reverse Whether to reverse the pattern order. Default is FALSE.
 #' @param ... Additional arguments passed to ggplot2 scale functions
 #'
+#' @returns A ggplot2 discrete scale object for the specified pattern aesthetic
+#'   (pattern_fill, pattern_type, pattern_angle, or pattern_density). These
+#'   scales apply the historically accurate Cheysson patterns to ggpattern geoms.
+#'
 #' @details
 #' These scales require the ggpattern package. Use with ggpattern geoms like
 #' \code{geom_col_pattern()}, \code{geom_bar_pattern()}, etc.
@@ -23,34 +27,34 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
-#' library(ggplot2)
-#' library(ggpattern)
+#' \donttest{
+#' # Requires ggpattern package
+#' if (requireNamespace("ggpattern", quietly = TRUE)) {
+#'   library(ggplot2)
+#'   library(ggpattern)
 #'
-#' # Basic bar chart with patterns
-#' ggplot(mpg, aes(class, fill = class)) +
-#'   geom_bar_pattern(
-#'     aes(
-#'       pattern_type = class,
-#'       pattern_fill = class,
-#'       pattern_angle = class
-#'     ),
-#'     pattern = "stripe",
-#'     pattern_density = 0.3,
-#'     pattern_spacing = 0.025,
-#'     color = "black"
-#'   ) +
-#'   scale_pattern_fill_cheysson("category") +
-#'   scale_pattern_type_cheysson("category") +
-#'   theme_minimal()
+#'   # Basic bar chart with patterns
+#'   data <- data.frame(
+#'     category = LETTERS[1:4],
+#'     value = c(15, 23, 18, 20)
+#'   )
 #'
-#' # Use specific palette
-#' ggplot(iris, aes(Species, Sepal.Width, fill = Species)) +
-#'   geom_col_pattern(
-#'     aes(pattern_type = Species, pattern_fill = Species),
-#'     position = "dodge"
-#'   ) +
-#'   scale_pattern_fill_cheysson("1881_03")
+#'   ggplot(data, aes(category, value, fill = category)) +
+#'     geom_col_pattern(
+#'       aes(
+#'         pattern_type = category,
+#'         pattern_fill = category,
+#'         pattern_angle = category
+#'       ),
+#'       pattern = "stripe",
+#'       pattern_density = 0.3,
+#'       color = "black"
+#'     ) +
+#'     scale_pattern_fill_cheysson("category") +
+#'     scale_pattern_type_cheysson("category") +
+#'     scale_pattern_angle_cheysson("category") +
+#'     theme_minimal()
+#' }
 #' }
 #'
 #' @name scale_pattern_cheysson
@@ -173,12 +177,27 @@ scale_pattern_density_cheysson <- function(palette = "1881_03", reverse = FALSE,
 #'
 #' @inheritParams scale_pattern_fill_cheysson
 #'
+#' @returns A ggplot2 discrete scale object for the fill aesthetic. Applies
+#'   the base fill colors from Cheysson patterns.
+#'
 #' @examples
-#' \dontrun{
-#' ggplot(mpg, aes(class, fill = class)) +
-#'   geom_bar_pattern(aes(pattern_type = class)) +
-#'   scale_fill_cheysson_pattern("category") +
-#'   scale_pattern_type_cheysson("category")
+#' \donttest{
+#' # Requires ggpattern package
+#' if (requireNamespace("ggpattern", quietly = TRUE)) {
+#'   library(ggplot2)
+#'   library(ggpattern)
+#'
+#'   data <- data.frame(
+#'     category = LETTERS[1:4],
+#'     value = c(15, 23, 18, 20)
+#'   )
+#'
+#'   ggplot(data, aes(category, value, fill = category)) +
+#'     geom_col_pattern(aes(pattern_type = category), pattern = "stripe") +
+#'     scale_fill_cheysson_pattern("category") +
+#'     scale_pattern_type_cheysson("category") +
+#'     theme_minimal()
+#' }
 #' }
 #'
 #' @export

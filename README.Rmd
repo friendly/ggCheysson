@@ -98,7 +98,7 @@ This package provides a complete aesthetic system for creating visualizations in
 These were derived by RJ Andrews from a collection of 25 thematic maps across the span of years in which the _Albums_ were produced, shown below.
 
 <center>
-<img src="man/figures/maps.png" width=400>
+<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png" width=400>
 </center>
 
 From these, he abstracted the following combinations of color and pattern he thought characterized these maps:
@@ -189,7 +189,9 @@ ggplot(data, aes(category, value, fill = category)) +
 
 View all available palettes:
 
-```{r list-palettes}
+```{r list-palettes, message=FALSE}
+library(ggCheysson)
+
 # List all palettes
 list_cheysson_pals()
 
@@ -274,8 +276,8 @@ To use these:
 load_cheysson_fonts(method = "showtext")
 showtext::showtext_auto()
 
-# List available fonts
-list_cheysson_fonts()
+# View font metadata
+cheysson_fonts
 
 # Use specific fonts
 theme(
@@ -290,6 +292,7 @@ theme(
 ### Data
 - `cheysson_palettes` - Color palette specifications (20 palettes)
 - `cheysson_patterns` - Pattern/hatching specifications (83 patterns)
+- `cheysson_fonts` - Font family metadata (5 fonts)
 - `albumImages` - Metadata linking palettes to original album plates
 
 ### Color Functions
@@ -307,7 +310,6 @@ theme(
 ### Font Functions
 - `load_cheysson_fonts()` - Load font families
 - `cheysson_font()` - Get font family names
-- `list_cheysson_fonts()` - View font information
 - `cheysson_fonts_available()` - Check font availability
 
 ### Themes
@@ -333,11 +335,11 @@ theme(
 
 ## Gallery
 
-<img src="man/figures/maps.png" width="350">
+<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png" width="350">
 
 *Original maps from the Albums showing the variety of colors and patterns*
 
-<img src="man/figures/RJ-Andrews-color-palettes.jpg" width="600">
+<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/RJ-Andrews-color-palettes.jpg" width="600">
 
 *Extracted color palettes by RJ Andrews*
 

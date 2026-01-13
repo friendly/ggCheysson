@@ -25,12 +25,20 @@ available, otherwise falls back to sans-serif}
 \item{load_fonts}{Automatically load Cheysson fonts if not already loaded
 (default: TRUE)}
 }
+\value{
+A ggplot2 theme object that can be added to a plot with \code{+}.
+}
 \description{
 A more minimal version of theme_cheysson with fewer grid lines,
 suitable for maps and diagrams.
 }
 \examples{
 \dontrun{
+library(ggplot2)
+
+# Load fonts first
+load_cheysson_fonts()
+
 ggplot(mtcars, aes(wt, mpg)) +
   geom_point() +
   theme_cheysson_minimal()

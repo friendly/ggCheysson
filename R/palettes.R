@@ -188,7 +188,7 @@ list_cheysson_pals <- function(type = NULL) {
 #' @importFrom graphics par rect text mtext
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Display a specific palette
 #' show_palette("1880_07")
 #'
@@ -224,9 +224,9 @@ show_palette <- function(palette = "1880_07", n = NULL, show_info = TRUE, cex = 
   colors <- cheysson_pal(pal_name, n = n)
   n_colors <- length(colors)
 
-  # Save old par settings
-  oldpar <- par(no.readonly = TRUE)
-  on.exit(par(oldpar))
+  # Save old par settings (only the ones we'll change)
+  oldpar <- par(mar = par("mar"))
+  on.exit(par(oldpar), add = TRUE)
 
   # Set up plot margins
   if (show_info) {
@@ -278,15 +278,12 @@ show_palette <- function(palette = "1880_07", n = NULL, show_info = TRUE, cex = 
 #' @importFrom graphics par layout rect text mtext
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Show all sequential palettes
 #' show_palettes("sequential")
 #'
 #' # Show specific palettes
 #' show_palettes(c("1880_07", "1881_03", "1895_04"))
-#'
-#' # Show all palettes (may be large)
-#' show_palettes()
 #' }
 #'
 #' @export
@@ -304,9 +301,9 @@ show_palettes <- function(palettes = NULL, ncol = 1, cex = 0.8) {
 
   n_pals <- length(pal_names)
 
-  # Save old par settings
-  oldpar <- par(no.readonly = TRUE)
-  on.exit(par(oldpar))
+  # Save old par settings (only the ones we'll change)
+  oldpar <- par(mfrow = par("mfrow"))
+  on.exit(par(oldpar), add = TRUE)
 
   # Set up layout
   nrow <- ceiling(n_pals / ncol)

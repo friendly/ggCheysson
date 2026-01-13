@@ -41,7 +41,6 @@ reference:
       Functions for loading and managing the Cheysson fonts.
     contents:
     - load_cheysson_fonts
-    - list_cheysson_fonts
     - cheysson_fonts_available
     - cheysson_font
 
@@ -57,10 +56,11 @@ reference:
   - title: Data
     desc: >
       Package datasets containing palette specifications, pattern definitions,
-      and metadata linking to the original Albums.
+      font metadata, and metadata linking to the original Albums.
     contents:
     - cheysson_palettes
     - cheysson_patterns
+    - cheysson_fonts
     - albumImages
 
 articles:

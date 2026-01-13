@@ -1,6 +1,5 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <!-- badges: start -->
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/ggCheysson)](https://cran.r-project.org/package=ggCheysson)
@@ -106,7 +105,6 @@ across the span of years in which the *Albums* were produced, shown
 below.
 
 <center>
-
 <img src="man/figures/maps.png" width=400>
 </center>
 
@@ -114,7 +112,6 @@ From these, he abstracted the following combinations of color and
 pattern he thought characterized these maps:
 
 <center>
-
 <img src="man/figures/color-palettes.png" width=600>
 </center>
 
@@ -208,6 +205,8 @@ ggplot(data, aes(category, value, fill = category)) +
 View all available palettes:
 
 ``` r
+library(ggCheysson)
+
 # List all palettes
 list_cheysson_pals()
 #>       name       type album plate n_colors
@@ -320,7 +319,6 @@ Five Cheysson font families are included:
 Here are some of these:
 
 <center>
-
 <img src="man/figures/fonts1.png" height = 400>
 </center>
 
@@ -331,8 +329,8 @@ To use these:
 load_cheysson_fonts(method = "showtext")
 showtext::showtext_auto()
 
-# List available fonts
-list_cheysson_fonts()
+# View font metadata
+cheysson_fonts
 
 # Use specific fonts
 theme(
@@ -348,6 +346,7 @@ theme(
 
 - `cheysson_palettes` - Color palette specifications (20 palettes)
 - `cheysson_patterns` - Pattern/hatching specifications (83 patterns)
+- `cheysson_fonts` - Font family metadata (5 fonts)
 - `albumImages` - Metadata linking palettes to original album plates
 
 ### Color Functions
@@ -371,7 +370,6 @@ theme(
 
 - `load_cheysson_fonts()` - Load font families
 - `cheysson_font()` - Get font family names
-- `list_cheysson_fonts()` - View font information
 - `cheysson_fonts_available()` - Check font availability
 
 ### Themes
@@ -439,16 +437,16 @@ To cite `ggCheysson`, please use:
 citation("ggCheysson")
 #> To cite package 'ggCheysson' in publications use:
 #> 
-#>   Friendly M (2025). _ggCheysson: Graphic Styles of Emile Cheysson for
-#>   ggplot2_. R package version 1.0.0,
+#>   Friendly M (2026). _ggCheysson: Graphic Styles of Emile Cheysson for
+#>   'ggplot2'_. R package version 1.0.0,
 #>   <https://github.com/friendly/ggCheysson>.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
-#>     title = {ggCheysson: Graphic Styles of Emile Cheysson for ggplot2},
+#>     title = {ggCheysson: Graphic Styles of Emile Cheysson for 'ggplot2'},
 #>     author = {Michael Friendly},
-#>     year = {2025},
+#>     year = {2026},
 #>     note = {R package version 1.0.0},
 #>     url = {https://github.com/friendly/ggCheysson},
 #>   }

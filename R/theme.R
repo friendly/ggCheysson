@@ -34,6 +34,9 @@
 #' \dontrun{
 #' library(ggplot2)
 #'
+#' # Load fonts first (required for proper rendering)
+#' load_cheysson_fonts()
+#'
 #' # Basic usage
 #' ggplot(mtcars, aes(wt, mpg)) +
 #'   geom_point() +
@@ -203,8 +206,15 @@ theme_cheysson <- function(base_size = 11,
 #'
 #' @inheritParams theme_cheysson
 #'
+#' @returns A ggplot2 theme object that can be added to a plot with `+`.
+#'
 #' @examples
 #' \dontrun{
+#' library(ggplot2)
+#'
+#' # Load fonts first
+#' load_cheysson_fonts()
+#'
 #' ggplot(mtcars, aes(wt, mpg)) +
 #'   geom_point() +
 #'   theme_cheysson_minimal()
@@ -246,12 +256,20 @@ theme_cheysson_minimal <- function(base_size = 11,
 #'
 #' @inheritParams theme_cheysson
 #'
+#' @returns A ggplot2 theme object that can be added to a plot with `+`.
+#'
 #' @examples
 #' \dontrun{
 #' # For use with spatial data/maps
-#' ggplot(map_data) +
-#'   geom_sf() +
-#'   theme_cheysson_map()
+#' library(ggplot2)
+#'
+#' # Load fonts first
+#' load_cheysson_fonts()
+#'
+#' # Example with spatial data (requires sf package)
+#' if (requireNamespace("sf", quietly = TRUE)) {
+#'   # ggplot(map_data) + geom_sf() + theme_cheysson_map()
+#' }
 #' }
 #'
 #' @export

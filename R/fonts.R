@@ -34,7 +34,7 @@
 #' @importFrom utils getFromNamespace
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Load fonts (default method)
 #' load_cheysson_fonts()
 #'
@@ -48,19 +48,14 @@
 #'     plot.title = element_text(family = "CheyssonTitle")
 #'   )
 #'
-#' # On Windows, use ragg device for proper font rendering
+#' # Save to temporary file
+#' tmp <- tempfile(fileext = ".png")
 #' if (requireNamespace("ragg", quietly = TRUE)) {
-#'   ggsave("plot.png", p, device = ragg::agg_png)
+#'   ggsave(tmp, p, device = ragg::agg_png)
 #' } else {
-#'   ggsave("plot.png", p)
+#'   ggsave(tmp, p)
 #' }
-#'
-#' # Alternative: Use showtext method
-#' load_cheysson_fonts(method = "showtext")
-#' showtext::showtext_auto()
-#' # ... create plot ...
-#' ggsave("plot.png")
-#' showtext::showtext_auto(FALSE)
+#' unlink(tmp)
 #' }
 #'
 #' @export
@@ -156,37 +151,6 @@ load_cheysson_fonts <- function(method = c("systemfonts", "showtext")) {
 }
 
 
-#' List available Cheysson fonts
-#'
-#' Returns information about the Cheysson font families included in the package.
-#'
-#' @return A data frame with font family names and descriptions
-#'
-#' @examples
-#' list_cheysson_fonts()
-#'
-#' @export
-list_cheysson_fonts <- function() {
-  data.frame(
-    family = c("Cheysson", "CheyssonItalic", "CheyssonSansCaps",
-               "CheyssonOutlineCaps", "CheyssonTitle"),
-    description = c(
-      "Regular serif font for body text",
-      "Italic variant for emphasis",
-      "Sans-serif capitals for labels",
-      "Outlined capitals for decorative titles",
-      "Decorative font for main titles"
-    ),
-    use = c(
-      "General text, axis labels, legends",
-      "Emphasis, annotations",
-      "Axis labels, category names",
-      "Plot titles, headings",
-      "Main plot titles"
-    ),
-    stringsAsFactors = FALSE
-  )
-}
 
 
 #' Check if Cheysson fonts are loaded

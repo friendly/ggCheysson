@@ -28,7 +28,7 @@ their hex codes. This is useful for documentation, presentations, and exploring
 the available palettes.
 }
 \examples{
-\dontrun{
+\donttest{
 # Display a specific palette
 show_palette("1880_07")
 
