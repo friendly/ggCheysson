@@ -1,5 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <!-- badges: start -->
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/ggCheysson)](https://cran.r-project.org/package=ggCheysson)
@@ -10,6 +11,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 <!-- badges: end -->
 
 # ggCheysson <img src="man/figures/logo.png" height="200" style="float:right; height:200px;"/>
+
+Version 1.0.0; documentation built 2026-01-13
 
 The `ggCheysson` package brings the graphical styles of the *Albums de
 Statistique Graphique* to R and ggplot2.
@@ -105,13 +108,15 @@ across the span of years in which the *Albums* were produced, shown
 below.
 
 <center>
-<img src="man/figures/maps.png" width=400>
+
+<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png" width=400>
 </center>
 
 From these, he abstracted the following combinations of color and
 pattern he thought characterized these maps:
 
 <center>
+
 <img src="man/figures/color-palettes.png" width=600>
 </center>
 
@@ -140,7 +145,7 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   theme_minimal()
 ```
 
-<img src="man/figures/README-basic-palette-1.png" width="100%" />
+<img src="man/figures/README-basic-palette-1.png" alt="" width="100%" />
 
 ### With Fonts and Theme
 
@@ -162,7 +167,7 @@ ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
   theme_cheysson()
 ```
 
-<img src="man/figures/README-with-fonts-1.png" width="100%" />
+<img src="man/figures/README-with-fonts-1.png" alt="" width="100%" />
 
 ### Complete Cheysson Aesthetic (Colors + Patterns + Fonts)
 
@@ -198,7 +203,7 @@ ggplot(data, aes(category, value, fill = category)) +
   theme(legend.position = "none")
 ```
 
-<img src="man/figures/README-complete-aesthetic-1.png" width="100%" />
+<img src="man/figures/README-complete-aesthetic-1.png" alt="" width="100%" />
 
 ## Available Palettes
 
@@ -259,21 +264,21 @@ codes:
 show_palette("1895_04")
 ```
 
-<img src="man/figures/README-show-palette-1.png" width="100%" />
+<img src="man/figures/README-show-palette-1.png" alt="" width="100%" />
 
 ``` r
 # Display multiple palettes at once
 show_palettes(c("1880_07", "1881_03", "1895_04"))
 ```
 
-<img src="man/figures/README-show-palette-multi-1.png" width="100%" /><img src="man/figures/README-show-palette-multi-2.png" width="100%" /><img src="man/figures/README-show-palette-multi-3.png" width="100%" />
+<img src="man/figures/README-show-palette-multi-1.png" alt="" width="100%" /><img src="man/figures/README-show-palette-multi-2.png" alt="" width="100%" /><img src="man/figures/README-show-palette-multi-3.png" alt="" width="100%" />
 
 ``` r
 # Display four palettes in a 2x2 grid
 show_palettes(c("1880_07", "1881_03", "1895_04", "1906_06"), ncol = 2)
 ```
 
-<img src="man/figures/README-show-palette-grid-1.png" width="100%" /><img src="man/figures/README-show-palette-grid-2.png" width="100%" /><img src="man/figures/README-show-palette-grid-3.png" width="100%" /><img src="man/figures/README-show-palette-grid-4.png" width="100%" />
+<img src="man/figures/README-show-palette-grid-1.png" alt="" width="100%" /><img src="man/figures/README-show-palette-grid-2.png" alt="" width="100%" /><img src="man/figures/README-show-palette-grid-3.png" alt="" width="100%" /><img src="man/figures/README-show-palette-grid-4.png" alt="" width="100%" />
 
 ``` r
 # Display all palettes of a specific type
@@ -319,6 +324,7 @@ Five Cheysson font families are included:
 Here are some of these:
 
 <center>
+
 <img src="man/figures/fonts1.png" height = 400>
 </center>
 
@@ -401,12 +407,12 @@ theme(
 
 ## Gallery
 
-<img src="man/figures/maps.png" width="350">
+<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png" width="350">
 
 *Original maps from the Albums showing the variety of colors and
 patterns*
 
-<img src="man/figures/RJ-Andrews-color-palettes.jpg" width="600">
+<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/RJ-Andrews-color-palettes.jpg" width="600">
 
 *Extracted color palettes by RJ Andrews*
 
@@ -437,16 +443,16 @@ To cite `ggCheysson`, please use:
 citation("ggCheysson")
 #> To cite package 'ggCheysson' in publications use:
 #> 
-#>   Friendly M (2026). _ggCheysson: Graphic Styles of Emile Cheysson for
-#>   'ggplot2'_. R package version 1.0.0,
+#>   Friendly M (2025). _ggCheysson: Graphic Styles of Emile Cheysson for
+#>   ggplot2_. R package version 1.0.0,
 #>   <https://github.com/friendly/ggCheysson>.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
-#>     title = {ggCheysson: Graphic Styles of Emile Cheysson for 'ggplot2'},
+#>     title = {ggCheysson: Graphic Styles of Emile Cheysson for ggplot2},
 #>     author = {Michael Friendly},
-#>     year = {2026},
+#>     year = {2025},
 #>     note = {R package version 1.0.0},
 #>     url = {https://github.com/friendly/ggCheysson},
 #>   }

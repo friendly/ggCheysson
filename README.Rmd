@@ -23,6 +23,7 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 # ggCheysson <img src="man/figures/logo.png" height="200" style="float:right; height:200px;"/> 
+Version `r getNamespaceVersion("ggCheysson")`; documentation built `r Sys.Date()`
 
 The `ggCheysson` package brings the graphical styles of the _Albums de Statistique Graphique_ to R and ggplot2. 
 
