@@ -18,3 +18,5 @@
 ^man/figures/cheysson2\.png$
 ^tmpclaude-.*$
 ^README\.html$
+^\.positai$
+^\.claude$
