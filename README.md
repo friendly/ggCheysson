@@ -3,6 +3,7 @@
 <!-- badges: start -->
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/ggCheysson)](https://cran.r-project.org/package=ggCheysson)
+[![R-Universe](https://friendly.r-universe.dev/badges/ggCheysson)](https://friendly.r-universe.dev/ggCheysson)
 [![Last
 Commit](https://img.shields.io/github/last-commit/friendly/ggCheysson)](https://github.com/friendly/ggCheysson)
 [![pkgdown](https://img.shields.io/badge/documentation-blue)](https://friendly.github.io/ggCheysson/)
@@ -54,11 +55,14 @@ graphics.
 
 ## 📂 Installation
 
-Install the development version from GitHub:
+Install the development version from GitHub or R-universe:
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("friendly/ggCheysson")
+
+# or, from R-universe
+install.packages("ggCheysson", repos = c("https://friendly.r-universe.dev"))
 ```
 
 ### Suggested Dependencies
