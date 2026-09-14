@@ -84,6 +84,15 @@ theme_cheysson <- function(base_size = 11,
     axis_title_family <- if (fonts_available) "CheyssonSansCaps" else base_family
   }
 
+  # CheyssonSansCaps measures ~12-20% smaller than a typical sans font at the
+  # same nominal point size (systemfonts::font_info(): max_ascend 8.8 vs
+  # Arial's 9.95; lineheight 10.1 vs 12.7) - a common trait of all-caps
+  # designs, which have no ascenders/descenders to fill out the type's em
+  # box. Scale text set in that family back up so axis/legend titles and
+  # facet strips read at roughly the same visual size as theme_minimal(),
+  # rather than shrinking further on top of an already-undersized glyph.
+  caps_size_adjust <- if (axis_title_family == "CheyssonSansCaps") 1.15 else 1
+
   # Base theme
   theme_bw(base_size = base_size, base_family = base_family) +
     ggplot2::theme(
@@ -110,7 +119,7 @@ theme_cheysson <- function(base_size = 11,
       # Axis titles
       axis.title = ggplot2::element_text(
         family = axis_title_family,
-        size = base_size * 0.95
+        size = base_size * 0.95 * caps_size_adjust
       ),
 
       axis.title.x = ggplot2::element_text(
@@ -132,7 +141,7 @@ theme_cheysson <- function(base_size = 11,
       # Legend
       legend.title = ggplot2::element_text(
         family = axis_title_family,
-        size = base_size * 0.95
+        size = base_size * 0.95 * caps_size_adjust
       ),
 
       legend.text = ggplot2::element_text(
@@ -182,7 +191,7 @@ theme_cheysson <- function(base_size = 11,
 
       strip.text = ggplot2::element_text(
         family = axis_title_family,
-        size = base_size * 0.95,
+        size = base_size * 0.95 * caps_size_adjust,
         margin = ggplot2::margin(4, 4, 4, 4)
       ),
 

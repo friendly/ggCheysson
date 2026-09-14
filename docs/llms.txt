@@ -42,11 +42,14 @@ graphics.
 
 ## 📂 Installation
 
-Install the development version from GitHub:
+Install the development version from GitHub or R-universe:
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("friendly/ggCheysson")
+
+# or, from R-universe
+install.packages("ggCheysson", repos = c("https://friendly.r-universe.dev"))
 ```
 
 ### Suggested Dependencies
