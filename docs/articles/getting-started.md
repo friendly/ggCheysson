@@ -13,6 +13,7 @@ features:
 - **Themes**: Period-appropriate ggplot2 themes
 
 ``` r
+
 library(ggCheysson)
 library(ggplot2)
 ```
@@ -22,6 +23,7 @@ library(ggplot2)
 For vignettes and documents, we recommend using the `showtext` method:
 
 ``` r
+
 # Load Cheysson fonts
 load_cheysson_fonts(method = "showtext")
 showtext::showtext_auto()
@@ -32,6 +34,7 @@ showtext::showtext_auto()
 The package includes 20 color palettes organized into four types:
 
 ``` r
+
 # View all available palettes
 head(list_cheysson_pals(), 10)
 #>       name       type album plate n_colors
@@ -69,6 +72,7 @@ list_cheysson_pals("category")
 ### Scatterplot with Sequential Palette
 
 ``` r
+
 # Create data with continuous variable
 data(iris)
 
@@ -92,6 +96,7 @@ print(p1)
 ### Scatterplot with Categorical Palette
 
 ``` r
+
 p2 <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   geom_point(size = 3, alpha = 0.8) +
   scale_color_cheysson("1881_04") +
@@ -114,6 +119,7 @@ The package integrates with `ggpattern` to recreate Cheysson’s
 distinctive hatching patterns.
 
 ``` r
+
 # Simple bar chart with colors only
 data(mtcars)
 cyl_summary <- aggregate(mpg ~ cyl, data = mtcars, FUN = mean)
@@ -137,6 +143,7 @@ print(p3)
 ![](getting-started_files/figure-html/barplot-simple-1.png)
 
 ``` r
+
 # Bar chart with patterns
 if (requireNamespace("ggpattern", quietly = TRUE)) {
   library(ggpattern)
@@ -176,6 +183,7 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
 ## Line Graphs: Time Series
 
 ``` r
+
 # Create time series data
 years <- 1880:1900
 railway_data <- data.frame(
@@ -213,6 +221,7 @@ print(p5)
 ## Stacked Area Chart
 
 ``` r
+
 # Stacked area for composition over time
 industry_data <- data.frame(
   year = rep(1880:1895, 4),
@@ -246,6 +255,7 @@ print(p6)
 ## Faceted Plots: Small Multiples
 
 ``` r
+
 # Regional comparison using facets
 set.seed(42)
 regional_data <- data.frame(
@@ -283,6 +293,7 @@ print(p7)
 ## Grouped Bar Chart with Patterns
 
 ``` r
+
 if (requireNamespace("ggpattern", quietly = TRUE)) {
   # Infrastructure comparison
   infrastructure <- data.frame(
@@ -329,6 +340,7 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
 ## Map-Style Visualization
 
 ``` r
+
 # Simulated geographic data (dept-level statistics)
 set.seed(123)
 departments <- data.frame(
@@ -360,6 +372,7 @@ print(p9)
 ### Diverging Palette
 
 ``` r
+
 # Show temperature anomalies with diverging palette
 temp_data <- data.frame(
   year = 1880:1897,
@@ -418,6 +431,7 @@ The ggCheysson package provides:
 ### Available Palettes
 
 ``` r
+
 # Count by type
 table(sapply(cheysson_palettes, function(x) x$type))
 #> 
