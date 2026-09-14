@@ -40,8 +40,34 @@ didn't need it (its `legend.title` uses `base_family`, not `axis_title_family`).
   429 from bot-blocking, documented in `cran-comments.md`)
 - [x] Cleaned up unnecessary `\dontrun{}`/`\donttest{}` wrapping (commit `89b81c9`)
 - [x] roxygen2 bumped to 8.1.0 (`Config/roxygen2/version`, was pinned `RoxygenNote: 7.3.3`)
-- [ ] Resolve the axis-title-size task above first (visible in generated docs/vignettes)
+- [x] Resolve the axis-title-size task above first (visible in generated docs/vignettes)
+- [x] pkgdown site rebuilt and committed (`f53d0e9`, 2026-09-14) - see git-corruption note below
 - [ ] Actually submit (`devtools::submit_cran()` or equivalent) once the above is settled
+
+## Git/Dropbox corruption (fixed 2026-09-14)
+
+The repo lives inside a Dropbox-synced folder, and Dropbox corrupted `.git` mid-session: the
+4 most recent commits' objects went missing from `.git/objects` (loose files never landed, or
+were removed post-write) even though `refs/heads/master` and the reflog still pointed to them,
+and `.git/index` was left stale/wrong - `git status` failed outright (`fatal: bad object HEAD`),
+and after that, showed every tracked file as both staged-deleted and untracked.
+
+Fixed via `git fetch origin` (recovered the missing commit objects - they'd already been pushed,
+so nothing was lost) + `git reset` (mixed, resynced the index to HEAD without touching the
+working tree). Confirmed no source work was lost: R/, DESCRIPTION, NAMESPACE, man/, vignettes/
+were already identical to HEAD and to `origin/master`.
+
+Also hit two more Dropbox-lock symptoms while rebuilding pkgdown: a transient
+`cannot open the connection ... Invalid argument` on `docs/articles/guerry-maps.html` (cleared on
+retry), and `pkgdown::clean_site()` hit `[EBUSY] resource busy or locked` on
+`docs/deps/JetBrains_Mono-0.4.10` partway through deleting `docs/`, leaving it half-gone (fixed
+via `git checkout -- docs/` to restore from the index, then a plain `build_site()` without
+`clean_site()`).
+
+**Takeaway: this repo should not live in a continuously-syncing Dropbox folder.** Recommend
+moving it out of Dropbox (or adding it to Dropbox's ignore list) before the next session - the
+same class of corruption can recur, and this time it happened to be recoverable only because
+`origin` had already received the missing commits.
 
 ## Other loose ends
 
