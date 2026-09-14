@@ -15,7 +15,6 @@
 #'   a continuous scale object (gradient).
 #'
 #' @examples
-#' \donttest{
 #' library(ggplot2)
 #'
 #' # Discrete color scale
@@ -37,7 +36,6 @@
 #' ggplot(iris, aes(Species, Sepal.Width, fill = Species)) +
 #'   geom_boxplot() +
 #'   scale_fill_cheysson(palette = "category")
-#' }
 #'
 #' @name scale_cheysson
 #' @rdname scale_cheysson

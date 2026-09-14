@@ -54,9 +54,16 @@ For saving plots with systemfonts, use
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+# \donttest{
 # Load fonts (default method)
 load_cheysson_fonts()
+#> Loaded 5 Cheysson font families using systemfonts
+#> 
+#> Windows users - Important notes:
+#>   * Fonts work in SAVED plots: use ggsave(..., device = ragg::agg_png)
+#>   * Fonts DON'T appear in on-screen plot window with systemfonts
+#>   * For on-screen preview: use load_cheysson_fonts(method = 'showtext')
+#>   * Or in RStudio: Tools > Global Options > Graphics > Backend: 'AGG'
 
 # Use in a plot
 library(ggplot2)
@@ -68,18 +75,14 @@ p <- ggplot(mtcars, aes(wt, mpg)) +
     plot.title = element_text(family = "CheyssonTitle")
   )
 
-# On Windows, use ragg device for proper font rendering
+# Save to temporary file
+tmp <- tempfile(fileext = ".png")
 if (requireNamespace("ragg", quietly = TRUE)) {
-  ggsave("plot.png", p, device = ragg::agg_png)
+  ggsave(tmp, p, device = ragg::agg_png)
 } else {
-  ggsave("plot.png", p)
+  ggsave(tmp, p)
 }
-
-# Alternative: Use showtext method
-load_cheysson_fonts(method = "showtext")
-showtext::showtext_auto()
-# ... create plot ...
-ggsave("plot.png")
-showtext::showtext_auto(FALSE)
-} # }
+#> Saving 6.67 x 6.67 in image
+unlink(tmp)
+# }
 ```

@@ -34,13 +34,25 @@ theme_cheysson_map(
   Automatically load Cheysson fonts if not already loaded (default:
   TRUE)
 
+## Value
+
+A ggplot2 theme object that can be added to a plot with `+`.
+
 ## Examples
 
 ``` r
 if (FALSE) { # \dontrun{
+# Not run automatically: see theme_cheysson() for why (same font/grid crash)
+# once a plot with this theme is actually rendered/printed.
 # For use with spatial data/maps
-ggplot(map_data) +
-  geom_sf() +
-  theme_cheysson_map()
+library(ggplot2)
+
+# Load fonts first
+load_cheysson_fonts()
+
+# Example with spatial data (requires sf package)
+if (requireNamespace("sf", quietly = TRUE)) {
+  # ggplot(map_data) + geom_sf() + theme_cheysson_map()
+}
 } # }
 ```

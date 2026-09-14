@@ -31,6 +31,8 @@ in the style of Cheysson's cartographic works.
 }
 \examples{
 \dontrun{
+# Not run automatically: see theme_cheysson() for why (same font/grid crash)
+# once a plot with this theme is actually rendered/printed.
 # For use with spatial data/maps
 library(ggplot2)
 

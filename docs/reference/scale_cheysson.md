@@ -43,10 +43,15 @@ scale_fill_cheysson(palette = "1880_07", discrete = TRUE, reverse = FALSE, ...)
 
   Additional arguments passed to ggplot2 scale functions
 
+## Value
+
+A ggplot2 scale object that can be added to a plot. For discrete scales,
+returns a discrete_scale object. For continuous scales, returns a
+continuous scale object (gradient).
+
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 library(ggplot2)
 
 # Discrete color scale
@@ -54,19 +59,22 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   geom_point() +
   scale_color_cheysson()
 
+
 # Use a specific palette
 ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   geom_point() +
   scale_color_cheysson(palette = "1881_04")
+
 
 # Use a sequential palette for continuous data
 ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Petal.Length)) +
   geom_point() +
   scale_color_cheysson(palette = "sequential", discrete = FALSE)
 
+
 # Fill scale with category colors
 ggplot(iris, aes(Species, Sepal.Width, fill = Species)) +
   geom_boxplot() +
   scale_fill_cheysson(palette = "category")
-} # }
+
 ```

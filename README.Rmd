@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/ggCheysson)](https://cran.r-project.org/package=ggCheysson)
 [![Last Commit](https://img.shields.io/github/last-commit/friendly/ggCheysson)](https://github.com/friendly/ggCheysson)
+[![pkgdown](https://img.shields.io/badge/documentation-blue)](https://friendly.github.io/ggCheysson/)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
@@ -41,7 +42,7 @@ The package is based on work by:
 * Kenneth Fields: Hand-drawn font family creation
   [The style of Émile Cheysson](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/the-style-of-emile-cheysson/)
 
-## Historical Context
+## 🏛️ Historical Context
 
 The _Albums de Statistique Graphique_ were published annually by France's Ministry of Public Works, showcasing infrastructure statistics through innovative visualizations. Under Émile Cheysson's direction, these albums combined:
 
@@ -52,7 +53,7 @@ The _Albums de Statistique Graphique_ were published annually by France's Minist
 
 This package preserves these design elements for modern statistical graphics.
 
-## Installation
+## 📂 Installation
 
 Install the development version from GitHub:
 
@@ -69,7 +70,7 @@ For full functionality, install these packages:
 install.packages(c("ggpattern", "systemfonts"))
 ```
 
-## Features
+## ✨ Features
 
 This package provides a complete aesthetic system for creating visualizations in Cheysson's distinctive style:
 
@@ -114,7 +115,7 @@ This initial version of the package defines separate functions and `ggplot2` sca
 shading patterns. Their combination into Cheysson "color - pattern" features is planned.
 
 
-## Quick Start
+## 🚀 Quick Start
 
 Here are a few examples to get you started.
 
@@ -186,7 +187,7 @@ ggplot(data, aes(category, value, fill = category)) +
   theme(legend.position = "none")
 ```
 
-## Available Palettes
+## 🌈 Available Palettes
 
 View all available palettes:
 
@@ -236,7 +237,7 @@ Palette types:
 - **Grouped** (5 palettes): For comparing related groups
 - **Category** (6 palettes): For categorical data
 
-## Pattern Support
+## 📐 Pattern Support
 
 With ggpattern, recreate the distinctive hatching styles:
 
@@ -253,7 +254,7 @@ scale_pattern_type_cheysson("1881_03")
 scale_pattern_angle_cheysson("1881_03")
 ```
 
-## Font Families
+## ✍️ Font Families
 
 Five Cheysson font families are included:
 
@@ -288,7 +289,7 @@ theme(
 )
 ```
 
-## Package Contents
+## 📦 Package Contents
 
 ### Data
 - `cheysson_palettes` - Color palette specifications (20 palettes)
@@ -318,7 +319,7 @@ theme(
 - `theme_cheysson_minimal()` - Minimal variant
 - `theme_cheysson_map()` - For maps
 
-## Sources and Attribution
+## 🙏 Sources and Attribution
 
 ### Color Palettes and Patterns
 - **David Rumsey Map Collection**: Complete digitized _Albums de Statistique Graphique_
@@ -334,7 +335,7 @@ theme(
 - **Kenneth Fields**: Hand-drawn font family creation
   [The style of Émile Cheysson](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/the-style-of-emile-cheysson/)
 
-## Gallery
+## 🖼️ Gallery
 
 <img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png" width="350">
 
@@ -344,21 +345,21 @@ theme(
 
 *Extracted color palettes by RJ Andrews*
 
-## Development Status
+## 🚧 Development Status
 
 This package is under active development. Current features are stable and tested, but the API may evolve. Feedback and contributions are welcome!
 
-## Related Packages
+## 🔗 Related Packages
 
 - [ggpattern](https://coolbutuseless.github.io/package/ggpattern/) - Pattern fills for ggplot2
 - [ggthemes](https://jrnold.github.io/ggthemes/) - Additional themes for ggplot2
 - [systemfonts](https://github.com/r-lib/systemfonts) - Font handling for R
 
-## License
+## ⚖️ License
 
 GPL (>= 3)
 
-## Citation
+## 📖 Citation
 
 To cite `ggCheysson`, please use:
 
@@ -371,7 +372,7 @@ To cite the original _Albums de Statistique Graphique_:
 > France. Ministère des travaux publics. _Album de statistique graphique de [year]_.
 > Paris: Imprimerie nationale, [1879-1897].
 
-## References
+## 📚 References
 
 Friendly, M. (2008). The Golden Age of Statistical Graphics. _Statistical Science_, **23**(4), 502–535. https://doi.org/10.1214/08-STS268
 

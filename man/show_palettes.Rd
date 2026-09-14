@@ -24,12 +24,12 @@ Creates a visual display of multiple color palettes, useful for comparing
 palettes or showing all palettes of a certain type.
 }
 \examples{
-\dontrun{
-# Show all sequential palettes
-show_palettes("sequential")
+# Show all sequential palettes (use ncol > 1 to keep panels legible with
+# several palettes; a tall single-column layout can also fail to render
+# when captured for the pkgdown reference site)
+show_palettes("sequential", ncol = 2)
 
 # Show specific palettes
 show_palettes(c("1880_07", "1881_03", "1895_04"))
-}
 
 }

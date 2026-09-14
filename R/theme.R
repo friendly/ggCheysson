@@ -1,7 +1,7 @@
 #' Cheysson theme for ggplot2
 #'
-#' A ggplot2 theme inspired by the visual style of the Albums de Statistique
-#' Graphique, using Cheysson fonts and appropriate styling.
+#' A ggplot2 theme inspired by the visual style of the _Albums de Statistique
+#' Graphique_, using Cheysson fonts and appropriate styling.
 #'
 #' @param base_size Base font size (default: 11)
 #' @param base_family Base font family. If "auto" (default), uses Cheysson if
@@ -32,6 +32,9 @@
 #'
 #' @examples
 #' \dontrun{
+#' # Not run automatically: rendering text with a Cheysson font registered via
+#' # systemfonts can crash grid with "invalid font type" on some graphics
+#' # devices (reproduced under R CMD check --as-cran); works fine interactively.
 #' library(ggplot2)
 #'
 #' # Load fonts first (required for proper rendering)
@@ -210,6 +213,7 @@ theme_cheysson <- function(base_size = 11,
 #'
 #' @examples
 #' \dontrun{
+#' # Not run automatically: see theme_cheysson() for why (same font/grid crash).
 #' library(ggplot2)
 #'
 #' # Load fonts first
@@ -260,6 +264,8 @@ theme_cheysson_minimal <- function(base_size = 11,
 #'
 #' @examples
 #' \dontrun{
+#' # Not run automatically: see theme_cheysson() for why (same font/grid crash)
+#' # once a plot with this theme is actually rendered/printed.
 #' # For use with spatial data/maps
 #' library(ggplot2)
 #'

@@ -1,5 +1,7 @@
 # ggCheysson
 
+Version 1.0.0; documentation built 2026-09-14
+
 The `ggCheysson` package brings the graphical styles of the *Albums de
 Statistique Graphique* to R and ggplot2.
 
@@ -23,7 +25,7 @@ The package is based on work by:
 - Kenneth Fields: Hand-drawn font family creation [The style of Émile
   Cheysson](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/the-style-of-emile-cheysson/)
 
-## Historical Context
+## 🏛️ Historical Context
 
 The *Albums de Statistique Graphique* were published annually by
 France’s Ministry of Public Works, showcasing infrastructure statistics
@@ -38,7 +40,24 @@ these albums combined:
 This package preserves these design elements for modern statistical
 graphics.
 
-## Features
+## 📂 Installation
+
+Install the development version from GitHub:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("friendly/ggCheysson")
+```
+
+### Suggested Dependencies
+
+For full functionality, install these packages:
+
+``` r
+install.packages(c("ggpattern", "systemfonts"))
+```
+
+## ✨ Features
 
 This package provides a complete aesthetic system for creating
 visualizations in Cheysson’s distinctive style:
@@ -77,28 +96,22 @@ visualizations in Cheysson’s distinctive style:
 
 These were derived by RJ Andrews from a collection of 25 thematic maps
 across the span of years in which the *Albums* were produced, shown
-below
+below.
 
-![](reference/figures/maps.png)
+![](https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png)
 
-## Installation
+From these, he abstracted the following combinations of color and
+pattern he thought characterized these maps:
 
-Install the development version from GitHub:
+![](reference/figures/color-palettes.png)
 
-``` r
-# install.packages("remotes")
-remotes::install_github("friendly/ggCheysson")
-```
+### Not Yet
 
-### Suggested Dependencies
+This initial version of the package defines separate functions and
+`ggplot2` scales for color palettes and shading patterns. Their
+combination into Cheysson “color - pattern” features is planned.
 
-For full functionality, install these packages:
-
-``` r
-install.packages(c("ggpattern", "systemfonts"))
-```
-
-## Quick Start
+## 🚀 Quick Start
 
 Here are a few examples to get you started.
 
@@ -177,11 +190,13 @@ ggplot(data, aes(category, value, fill = category)) +
 
 ![](reference/figures/README-complete-aesthetic-1.png)
 
-## Available Palettes
+## 🌈 Available Palettes
 
 View all available palettes:
 
 ``` r
+library(ggCheysson)
+
 # List all palettes
 list_cheysson_pals()
 #>       name       type album plate n_colors
@@ -224,6 +239,38 @@ cheysson_pal("1880_07")
 #> [1] "#d9636c" "#869e80" "#dec367" "#85aab1" "#aea9a4" "#ed8238" "#ab90a4"
 ```
 
+### Visualizing Palettes
+
+Use
+[`show_palette()`](https://friendly.github.io/ggCheysson/reference/show_palette.md)
+to display a palette with color swatches and hex codes:
+
+``` r
+# Display a single palette with metadata
+show_palette("1895_04")
+```
+
+![](reference/figures/README-show-palette-1.png)
+
+``` r
+# Display multiple palettes at once
+show_palettes(c("1880_07", "1881_03", "1895_04"))
+```
+
+![](reference/figures/README-show-palette-multi-1.png)
+
+``` r
+# Display four palettes in a 2x2 grid
+show_palettes(c("1880_07", "1881_03", "1895_04", "1906_06"), ncol = 2)
+```
+
+![](reference/figures/README-show-palette-grid-1.png)
+
+``` r
+# Display all palettes of a specific type
+show_palettes("category")
+```
+
 Palette types:
 
 - **Sequential** (7 palettes): For ordered quantitative data
@@ -231,7 +278,7 @@ Palette types:
 - **Grouped** (5 palettes): For comparing related groups
 - **Category** (6 palettes): For categorical data
 
-## Pattern Support
+## 📐 Pattern Support
 
 With ggpattern, recreate the distinctive hatching styles:
 
@@ -248,9 +295,9 @@ scale_pattern_type_cheysson("1881_03")
 scale_pattern_angle_cheysson("1881_03")
 ```
 
-## Font Families
+## ✍️ Font Families
 
-Five authentic Cheysson font families are included:
+Five Cheysson font families are included:
 
 | Family                | Description    | Use               |
 |-----------------------|----------------|-------------------|
@@ -260,12 +307,19 @@ Five authentic Cheysson font families are included:
 | `CheyssonOutlineCaps` | Outlined caps  | Decorative titles |
 | `CheyssonTitle`       | Display font   | Main titles       |
 
+Here are some of these:
+
+![](reference/figures/fonts1.png)
+
+To use these:
+
 ``` r
 # Load fonts
-load_cheysson_fonts()
+load_cheysson_fonts(method = "showtext")
+showtext::showtext_auto()
 
-# List available fonts
-list_cheysson_fonts()
+# View font metadata
+cheysson_fonts
 
 # Use specific fonts
 theme(
@@ -275,12 +329,13 @@ theme(
 )
 ```
 
-## Package Contents
+## 📦 Package Contents
 
 ### Data
 
 - `cheysson_palettes` - Color palette specifications (20 palettes)
 - `cheysson_patterns` - Pattern/hatching specifications (83 patterns)
+- `cheysson_fonts` - Font family metadata (5 fonts)
 - `albumImages` - Metadata linking palettes to original album plates
 
 ### Color Functions
@@ -293,6 +348,10 @@ theme(
   ggplot2 color scales
 - [`list_cheysson_pals()`](https://friendly.github.io/ggCheysson/reference/list_cheysson_pals.md) -
   List available palettes
+- [`show_palette()`](https://friendly.github.io/ggCheysson/reference/show_palette.md) -
+  Display a single palette with color swatches and hex codes
+- [`show_palettes()`](https://friendly.github.io/ggCheysson/reference/show_palettes.md) -
+  Display multiple palettes for comparison
 
 ### Pattern Functions
 
@@ -309,8 +368,6 @@ theme(
   Load font families
 - [`cheysson_font()`](https://friendly.github.io/ggCheysson/reference/cheysson_font.md) -
   Get font family names
-- [`list_cheysson_fonts()`](https://friendly.github.io/ggCheysson/reference/list_cheysson_fonts.md) -
-  View font information
 - [`cheysson_fonts_available()`](https://friendly.github.io/ggCheysson/reference/cheysson_fonts_available.md) -
   Check font availability
 
@@ -323,7 +380,7 @@ theme(
 - [`theme_cheysson_map()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson_map.md) -
   For maps
 
-## Sources and Attribution
+## 🙏 Sources and Attribution
 
 ### Color Palettes and Patterns
 
@@ -344,24 +401,24 @@ theme(
   Émile
   Cheysson](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/the-style-of-emile-cheysson/)
 
-## Gallery
+## 🖼️ Gallery
 
-![](reference/figures/maps.png)
+![](https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png)
 
 *Original maps from the Albums showing the variety of colors and
 patterns*
 
-![](reference/figures/RJ-Andrews-color-palettes.jpg)
+![](https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/RJ-Andrews-color-palettes.jpg)
 
 *Extracted color palettes by RJ Andrews*
 
-## Development Status
+## 🚧 Development Status
 
 This package is under active development. Current features are stable
 and tested, but the API may evolve. Feedback and contributions are
 welcome!
 
-## Related Packages
+## 🔗 Related Packages
 
 - [ggpattern](https://coolbutuseless.github.io/package/ggpattern/) -
   Pattern fills for ggplot2
@@ -370,11 +427,11 @@ welcome!
 - [systemfonts](https://github.com/r-lib/systemfonts) - Font handling
   for R
 
-## License
+## ⚖️ License
 
 GPL (\>= 3)
 
-## Citation
+## 📖 Citation
 
 To cite `ggCheysson`, please use:
 
@@ -382,16 +439,16 @@ To cite `ggCheysson`, please use:
 citation("ggCheysson")
 #> To cite package 'ggCheysson' in publications use:
 #> 
-#>   Friendly M (2025). _ggCheysson: Styles of Emile Cheysson for
-#>   ggplot2_. R package version 1.0.0,
+#>   Friendly M (2026). _ggCheysson: Graphic Styles of Emile Cheysson for
+#>   'ggplot2'_. R package version 1.0.0,
 #>   <https://github.com/friendly/ggCheysson>.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
-#>     title = {ggCheysson: Styles of Emile Cheysson for ggplot2},
+#>     title = {ggCheysson: Graphic Styles of Emile Cheysson for 'ggplot2'},
 #>     author = {Michael Friendly},
-#>     year = {2025},
+#>     year = {2026},
 #>     note = {R package version 1.0.0},
 #>     url = {https://github.com/friendly/ggCheysson},
 #>   }
@@ -402,7 +459,7 @@ To cite the original *Albums de Statistique Graphique*:
 > France. Ministère des travaux publics. *Album de statistique graphique
 > de \[year\]*. Paris: Imprimerie nationale, \[1879-1897\].
 
-## References
+## 📚 References
 
 Friendly, M. (2008). The Golden Age of Statistical Graphics.
 *Statistical Science*, **23**(4), 502–535.

@@ -188,7 +188,6 @@ list_cheysson_pals <- function(type = NULL) {
 #' @importFrom graphics par rect text mtext
 #'
 #' @examples
-#' \dontrun{
 #' # Display a specific palette
 #' show_palette("1880_07")
 #'
@@ -200,7 +199,6 @@ list_cheysson_pals <- function(type = NULL) {
 #'
 #' # Display first sequential palette
 #' show_palette("sequential")
-#' }
 #'
 #' @export
 show_palette <- function(palette = "1880_07", n = NULL, show_info = TRUE, cex = 1) {
@@ -278,13 +276,13 @@ show_palette <- function(palette = "1880_07", n = NULL, show_info = TRUE, cex = 
 #' @importFrom graphics par layout rect text mtext
 #'
 #' @examples
-#' \dontrun{
-#' # Show all sequential palettes
-#' show_palettes("sequential")
+#' # Show all sequential palettes (use ncol > 1 to keep panels legible with
+#' # several palettes; a tall single-column layout can also fail to render
+#' # when captured for the pkgdown reference site)
+#' show_palettes("sequential", ncol = 2)
 #'
 #' # Show specific palettes
 #' show_palettes(c("1880_07", "1881_03", "1895_04"))
-#' }
 #'
 #' @export
 show_palettes <- function(palettes = NULL, ncol = 1, cex = 0.8) {

@@ -25,13 +25,31 @@ scale_fill_cheysson_pattern(palette = "1881_03", reverse = FALSE, ...)
 
   Additional arguments passed to ggplot2 scale functions
 
+## Value
+
+A ggplot2 discrete scale object for the fill aesthetic. Applies the base
+fill colors from Cheysson patterns.
+
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-ggplot(mpg, aes(class, fill = class)) +
-  geom_bar_pattern(aes(pattern_type = class)) +
-  scale_fill_cheysson_pattern("category") +
-  scale_pattern_type_cheysson("category")
-} # }
+# \donttest{
+# Requires ggpattern package
+if (requireNamespace("ggpattern", quietly = TRUE)) {
+  library(ggplot2)
+  library(ggpattern)
+
+  data <- data.frame(
+    category = LETTERS[1:4],
+    value = c(15, 23, 18, 20)
+  )
+
+  ggplot(data, aes(category, value, fill = category)) +
+    geom_col_pattern(aes(pattern_type = category), pattern = "stripe") +
+    scale_fill_cheysson_pattern("category") +
+    scale_pattern_type_cheysson("category") +
+    theme_minimal()
+}
+
+# }
 ```

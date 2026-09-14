@@ -28,7 +28,6 @@ their hex codes. This is useful for documentation, presentations, and exploring
 the available palettes.
 }
 \examples{
-\dontrun{
 # Display a specific palette
 show_palette("1880_07")
 
@@ -40,6 +39,5 @@ show_palette("1895_04", n = 10)
 
 # Display first sequential palette
 show_palette("sequential")
-}
 
 }

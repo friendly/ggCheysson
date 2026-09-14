@@ -39,10 +39,20 @@ theme_cheysson_minimal(
   Automatically load Cheysson fonts if not already loaded (default:
   TRUE)
 
+## Value
+
+A ggplot2 theme object that can be added to a plot with `+`.
+
 ## Examples
 
 ``` r
 if (FALSE) { # \dontrun{
+# Not run automatically: see theme_cheysson() for why (same font/grid crash).
+library(ggplot2)
+
+# Load fonts first
+load_cheysson_fonts()
+
 ggplot(mtcars, aes(wt, mpg)) +
   geom_point() +
   theme_cheysson_minimal()

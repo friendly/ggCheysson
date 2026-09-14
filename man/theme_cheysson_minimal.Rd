@@ -34,6 +34,7 @@ suitable for maps and diagrams.
 }
 \examples{
 \dontrun{
+# Not run automatically: see theme_cheysson() for why (same font/grid crash).
 library(ggplot2)
 
 # Load fonts first

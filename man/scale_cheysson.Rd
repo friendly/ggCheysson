@@ -44,7 +44,6 @@ Color and fill scales using Cheysson palettes from the Albums de Statistique
 Graphique.
 }
 \examples{
-\donttest{
 library(ggplot2)
 
 # Discrete color scale
@@ -66,6 +65,5 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Petal.Length)) +
 ggplot(iris, aes(Species, Sepal.Width, fill = Species)) +
   geom_boxplot() +
   scale_fill_cheysson(palette = "category")
-}
 
 }

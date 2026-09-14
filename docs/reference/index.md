@@ -10,6 +10,10 @@ grouped, category).
   : Get a Cheysson color palette
 - [`list_cheysson_pals()`](https://friendly.github.io/ggCheysson/reference/list_cheysson_pals.md)
   : List available Cheysson palettes
+- [`show_palette()`](https://friendly.github.io/ggCheysson/reference/show_palette.md)
+  : Display a Cheysson palette with color swatches and hex codes
+- [`show_palettes()`](https://friendly.github.io/ggCheysson/reference/show_palettes.md)
+  : Display multiple Cheysson palettes
 - [`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
   [`scale_colour_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
   [`scale_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
@@ -43,8 +47,6 @@ Functions for loading and managing the Cheysson fonts.
 
 - [`load_cheysson_fonts()`](https://friendly.github.io/ggCheysson/reference/load_cheysson_fonts.md)
   : Load Cheysson fonts
-- [`list_cheysson_fonts()`](https://friendly.github.io/ggCheysson/reference/list_cheysson_fonts.md)
-  : List available Cheysson fonts
 - [`cheysson_fonts_available()`](https://friendly.github.io/ggCheysson/reference/cheysson_fonts_available.md)
   : Check if Cheysson fonts are loaded
 - [`cheysson_font()`](https://friendly.github.io/ggCheysson/reference/cheysson_font.md)
@@ -65,11 +67,13 @@ period-appropriate styling for modern statistical graphics.
 ## Data
 
 Package datasets containing palette specifications, pattern definitions,
-and metadata linking to the original Albums.
+font metadata, and metadata linking to the original Albums.
 
 - [`cheysson_palettes`](https://friendly.github.io/ggCheysson/reference/cheysson_palettes.md)
   : Cheysson Color Palettes
 - [`cheysson_patterns`](https://friendly.github.io/ggCheysson/reference/cheysson_patterns.md)
   : Cheysson Pattern Data
+- [`cheysson_fonts`](https://friendly.github.io/ggCheysson/reference/cheysson_fonts.md)
+  : Cheysson Font Families
 - [`albumImages`](https://friendly.github.io/ggCheysson/reference/albumImages.md)
   : Album Images Metadata

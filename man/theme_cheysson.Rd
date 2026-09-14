@@ -29,8 +29,8 @@ available, otherwise falls back to sans-serif}
 A ggplot2 theme object
 }
 \description{
-A ggplot2 theme inspired by the visual style of the Albums de Statistique
-Graphique, using Cheysson fonts and appropriate styling.
+A ggplot2 theme inspired by the visual style of the \emph{Albums de Statistique
+Graphique}, using Cheysson fonts and appropriate styling.
 }
 \details{
 This theme applies the following styling:
@@ -50,6 +50,9 @@ Font selection:
 }
 \examples{
 \dontrun{
+# Not run automatically: rendering text with a Cheysson font registered via
+# systemfonts can crash grid with "invalid font type" on some graphics
+# devices (reproduced under R CMD check --as-cran); works fine interactively.
 library(ggplot2)
 
 # Load fonts first (required for proper rendering)

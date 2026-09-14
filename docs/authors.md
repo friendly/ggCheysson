@@ -16,14 +16,14 @@
 Source:
 [`DESCRIPTION`](https://github.com/friendly/ggCheysson/blob/HEAD/DESCRIPTION)
 
-Friendly M (2025). *ggCheysson: Graphic Styles of Emile Cheysson for
-ggplot2*. R package version 1.0.0,
+Friendly M (2026). *ggCheysson: Graphic Styles of Emile Cheysson for
+'ggplot2'*. R package version 1.0.0,
 <https://github.com/friendly/ggCheysson>.
 
     @Manual{,
-      title = {ggCheysson: Graphic Styles of Emile Cheysson for ggplot2},
+      title = {ggCheysson: Graphic Styles of Emile Cheysson for 'ggplot2'},
       author = {Michael Friendly},
-      year = {2025},
+      year = {2026},
       note = {R package version 1.0.0},
       url = {https://github.com/friendly/ggCheysson},
     }

@@ -1,7 +1,7 @@
 # Cheysson theme for ggplot2
 
-A ggplot2 theme inspired by the visual style of the Albums de
-Statistique Graphique, using Cheysson fonts and appropriate styling.
+A ggplot2 theme inspired by the visual style of the *Albums de
+Statistique Graphique*, using Cheysson fonts and appropriate styling.
 
 ## Usage
 
@@ -67,7 +67,13 @@ Font selection:
 
 ``` r
 if (FALSE) { # \dontrun{
+# Not run automatically: rendering text with a Cheysson font registered via
+# systemfonts can crash grid with "invalid font type" on some graphics
+# devices (reproduced under R CMD check --as-cran); works fine interactively.
 library(ggplot2)
+
+# Load fonts first (required for proper rendering)
+load_cheysson_fonts()
 
 # Basic usage
 ggplot(mtcars, aes(wt, mpg)) +
