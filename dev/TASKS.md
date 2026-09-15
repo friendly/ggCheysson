@@ -72,6 +72,14 @@ moving it out of Dropbox (or adding it to Dropbox's ignore list) before the next
 same class of corruption can recur, and this time it happened to be recoverable only because
 `origin` had already received the missing commits.
 
+2026-09-14, follow-up: user confirmed Dropbox's per-folder "Ignore" flag doesn't reliably stop
+sync of newly-created files (checked via File Info - showed excluded, but `.git` kept syncing
+anyway), which tracks with `.git/objects` constantly gaining new loose files as git writes them.
+User agrees the real fix is moving R project folders out of Dropbox entirely, not just `.git`,
+but isn't ready to do that migration yet. Not planning to relocate just `.git` (the `gitdir:`
+pointer trick) either, since it's a partial fix superseded by the eventual full move. No action
+needed here until the user is ready - don't re-suggest the partial fix unprompted.
+
 ## Other loose ends
 
 - `data-raw/albumColors-RJ.csv` added 2026-09-14 (RJ Andrews source metadata: album/plate/type/
