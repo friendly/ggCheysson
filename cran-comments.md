@@ -1,6 +1,10 @@
 ## Test environments
 * local Windows 11 install, R 4.6.1 (2026-06-24 ucrt), `--as-cran` and `--run-donttest`
 * win-builder R Under development (unstable) (2026-09-13 r90534 ucrt)
+* R-hub (GitHub Actions), Ubuntu 24.04.5 LTS, R Under development (unstable) (2026-09-14 r90539),
+  x86_64 - 0 errors, 0 warnings; found and fixed 1 NOTE ("hidden files and directories: .github",
+  from adding the R-hub workflow file itself - `.github` added to `.Rbuildignore`, confirmed
+  clean in a subsequent local `--as-cran` run)
 
 ## R CMD check results
 

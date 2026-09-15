@@ -50,6 +50,15 @@ didn't need it (its `legend.title` uses `base_family`, not `axis_title_family`).
   checks replaced with `identical()` (avoids R 4.3+'s `||`/`&&` length>1 error), and
   `cheysson_pal()`/`cheysson_pattern()` now validate `n` is a single positive number before
   comparing it to the palette/pattern length. `ry check` clean afterward.
+- [x] R-hub Ubuntu check (2026-09-15): set up `rhub::rhub_setup()` (new
+  `.github/workflows/rhub.yaml`, `workflow_dispatch`-only, commit `c5edc2f`) - needed a `gh auth
+  refresh --scopes workflow` first, user's `gh` token lacked `workflow` scope. Ran
+  `rhub::rhub_check(platforms = "linux")`: Ubuntu 24.04.5 LTS, R-devel (2026-09-14 r90539),
+  24m18s, 0 errors/0 warnings/1 NOTE ("hidden files and directories: .github" - caused by the
+  workflow file itself, not a real problem). Fixed by adding `.github` to `.Rbuildignore`;
+  confirmed clean in a subsequent local `--as-cran` run. Not yet re-verified clean on R-hub
+  itself (would need another ~24min run) - `cran-comments.md` documents the found-and-fixed NOTE
+  rather than claiming an unverified 0/0/0 on that specific platform.
 - [ ] Actually submit (`devtools::submit_cran()` or equivalent) once the above is settled
 
 ## Git/Dropbox corruption (fixed 2026-09-14)
