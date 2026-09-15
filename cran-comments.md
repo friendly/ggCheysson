@@ -13,18 +13,19 @@
 **NOTE 1:** Possibly misspelled words in DESCRIPTION:
   Cheysson (2:32, 14:3)
 
-This is a proper name (Émile Cheysson) and is spelled correctly.
+This is a proper name (Émile Cheysson) and is spelled correctly. I even put it in quotes, but to no effect on triggering a NOTE.
 
 * This is a new submission. An earlier version (1.0.0) was submitted on 2026-01-08 but was never
   accepted, so there is no ggCheysson release currently on CRAN.
-* The Tom Shanley Observable notebook citation (`R/data.R`, `R/palettes.R`, `README.md`) previously
-  linked directly to observablehq.com, which returns HTTP 429 to automated, non-browser requests
-  and was flagged as a possibly-invalid URL. Replaced with a Wayback Machine snapshot of the same
-  page, which resolves reliably; no more URL NOTE.
 
 ## Changes since the 2026-01-08 submission (from NEWS.md)
 
 ### ggCheysson 1.0.1
+
+* The Tom Shanley Observable notebook citation (`R/data.R`, `R/palettes.R`, `README.md`) previously
+  linked directly to `observablehq.com`, which returns HTTP 429 to automated, non-browser requests
+  and was flagged as a possibly-invalid URL. Replaced with a Wayback Machine snapshot of the same
+  page, which resolves reliably; no more URL NOTE.
 
 * Fixed undersized axis and legend titles in `theme_cheysson()` (inherited by
   `theme_cheysson_minimal()`): `CheyssonSansCaps` renders visibly smaller than other package

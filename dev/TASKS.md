@@ -50,6 +50,7 @@ didn't need it (its `legend.title` uses `base_family`, not `axis_title_family`).
   checks replaced with `identical()` (avoids R 4.3+'s `||`/`&&` length>1 error), and
   `cheysson_pal()`/`cheysson_pattern()` now validate `n` is a single positive number before
   comparing it to the palette/pattern length. `ry check` clean afterward.
+  
 - [x] R-hub Ubuntu check (2026-09-15): set up `rhub::rhub_setup()` (new
   `.github/workflows/rhub.yaml`, `workflow_dispatch`-only, commit `c5edc2f`) - needed a `gh auth
   refresh --scopes workflow` first, user's `gh` token lacked `workflow` scope. Ran
@@ -59,6 +60,7 @@ didn't need it (its `legend.title` uses `base_family`, not `axis_title_family`).
   confirmed clean in a subsequent local `--as-cran` run. Not yet re-verified clean on R-hub
   itself (would need another ~24min run) - `cran-comments.md` documents the found-and-fixed NOTE
   rather than claiming an unverified 0/0/0 on that specific platform.
+  
 - [x] Eliminated the Observable URL NOTE (2026-09-15) rather than just explaining it: found a
   working Wayback Machine snapshot (`web.archive.org/web/20210130125506/...`, verified real
   content via its og:title/og:description, not a blank JS shell, and 200s reliably across 3
@@ -68,6 +70,7 @@ didn't need it (its `legend.title` uses `base_family`, not `axis_title_family`).
 - [x] `cran-comments.md` rewritten (2026-09-15): reframed as "new submission" (1.0.0 was never
   accepted, so nothing to resubmit over) instead of "resubmission"; added full NEWS.md text for
   1.0.1 and 1.0.0, per user request.
+  
 - [ ] Fresh win-builder R-devel run attempted 2026-09-15, FAILED: FTP `STOR` rejected with a bare
   `550` (confirmed with a manual `curl -v -T ... ftp://win-builder.r-project.org/R-devel/`, so
   it's the server, not `devtools`/`curl` R packages). Most likely cause: the server still has
@@ -114,6 +117,18 @@ needed here until the user is ready - don't re-suggest the partial fix unprompte
 
 - `data-raw/albumColors-RJ.csv` added 2026-09-14 (RJ Andrews source metadata: album/plate/type/
   Rumsey link) - not yet wired into any `data-raw/*.R` extraction script; purpose/next step
-  unconfirmed with user.
+  unconfirmed with user. 
+  - Could this be useful in the package?
+  
 - `dev/colorpat/` (unified color-pattern palette system) - explicitly on hold, deferred past this
   release (`dev/README.md`).
+
+## New development
+
+- [ ] Make a plan to incorporate "palettes" that combine color and pattern fills. Check with authors of `ggpattern` on how best to do this. The goal would be to be able to use the palettes shown in C:\Dropbox\R\projects\ggCheysson\man\figures\RJ-Andrews-color-palettes.jpg
+
+- [ ] Another post from Tom Shanley: https://observablehq.com/@tomshanley/cheysson-grid discusses
+  "programmatically creating gridlines like those used these charts created by Émile Cheysson in
+  1881", via clipping. It proposes a `CheyssonLineChart`, and includes the data `cheysson18818data` 
+  to draw this.
+
