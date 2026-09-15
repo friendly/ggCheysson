@@ -45,6 +45,11 @@ didn't need it (its `legend.title` uses `base_family`, not `axis_title_family`).
 - [x] Version bumped 1.0.0 -> 1.0.1, Date -> 2026-09-14 (`55eb244`, 2026-09-14); NEWS.md, README.md
   (re-knit via `devtools::build_readme()`), and cran-comments.md updated to note this is a
   resubmission of the version rejected 2026-01-08
+- [x] Ran `ry check` (static type checker for R) across `R/` - flagged 4 real length-safety
+  warnings, all fixed (`7b93765`, 2026-09-14): `cheysson_fonts_available()`'s `method == "..."`
+  checks replaced with `identical()` (avoids R 4.3+'s `||`/`&&` length>1 error), and
+  `cheysson_pal()`/`cheysson_pattern()` now validate `n` is a single positive number before
+  comparing it to the palette/pattern length. `ry check` clean afterward.
 - [ ] Actually submit (`devtools::submit_cran()` or equivalent) once the above is settled
 
 ## Git/Dropbox corruption (fixed 2026-09-14)

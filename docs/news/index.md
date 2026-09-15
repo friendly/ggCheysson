@@ -16,6 +16,13 @@
   the `scale_*_cheysson()` family); kept `\donttest{}` only where
   custom-font grid text rendering can crash on some devices
 - Added R-universe badge and installation instructions to README
+- Hardened
+  [`cheysson_fonts_available()`](https://friendly.github.io/ggCheysson/reference/cheysson_fonts_available.md),
+  [`cheysson_pal()`](https://friendly.github.io/ggCheysson/reference/cheysson_pal.md),
+  and
+  [`cheysson_pattern()`](https://friendly.github.io/ggCheysson/reference/cheysson_pattern.md)
+  against non-length-1 arguments (`method`, `n`) that could otherwise
+  trigger opaque errors
 
 ## ggCheysson 1.0.0
 
