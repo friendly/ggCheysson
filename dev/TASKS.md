@@ -42,6 +42,9 @@ didn't need it (its `legend.title` uses `base_family`, not `axis_title_family`).
 - [x] roxygen2 bumped to 8.1.0 (`Config/roxygen2/version`, was pinned `RoxygenNote: 7.3.3`)
 - [x] Resolve the axis-title-size task above first (visible in generated docs/vignettes)
 - [x] pkgdown site rebuilt and committed (`f53d0e9`, 2026-09-14) - see git-corruption note below
+- [x] Version bumped 1.0.0 -> 1.0.1, Date -> 2026-09-14 (`55eb244`, 2026-09-14); NEWS.md, README.md
+  (re-knit via `devtools::build_readme()`), and cran-comments.md updated to note this is a
+  resubmission of the version rejected 2026-01-08
 - [ ] Actually submit (`devtools::submit_cran()` or equivalent) once the above is settled
 
 ## Git/Dropbox corruption (fixed 2026-09-14)
