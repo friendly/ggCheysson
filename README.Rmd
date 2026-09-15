@@ -167,21 +167,24 @@ data <- data.frame(
   value = c(15, 23, 18, 20)
 )
 
+# Pull the palette's pattern specs directly, so pattern type and hatch
+# color follow the actual data rather than a single fixed pattern
+patterns <- cheysson_pattern("1883_06")
+
 ggplot(data, aes(category, value, fill = category)) +
   geom_col_pattern(
     aes(
-      pattern_type = category,
+      pattern = category,
       pattern_fill = category,
       pattern_angle = category
     ),
-    pattern = "stripe",
     pattern_density = 0.35,
     color = "black"
   ) +
-  scale_fill_cheysson_pattern("1881_03") +
-  scale_pattern_fill_cheysson("1881_03") +
-  scale_pattern_type_cheysson("1881_03") +
-  scale_pattern_angle_cheysson("1881_03") +
+  scale_fill_cheysson_pattern("1883_06") +
+  scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")) +
+  scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")) +
+  scale_pattern_angle_cheysson("1883_06") +
   labs(
     title = "Statistical Comparison",
     x = "Category",
@@ -250,12 +253,12 @@ With ggpattern, recreate the distinctive hatching styles:
 list_cheysson_patterns()
 
 # Get pattern specifications
-patterns <- cheysson_pattern("1881_03")
+patterns <- cheysson_pattern("1883_06")
 
 # Use in plots with pattern scales
-scale_pattern_fill_cheysson("1881_03")
-scale_pattern_type_cheysson("1881_03")
-scale_pattern_angle_cheysson("1881_03")
+scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type"))
+scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill"))
+scale_pattern_angle_cheysson("1883_06")
 ```
 
 ## ✍️ Font Families

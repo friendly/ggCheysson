@@ -125,10 +125,33 @@ needed here until the user is ready - don't re-suggest the partial fix unprompte
 
 ## New development
 
-- [ ] Make a plan to incorporate "palettes" that combine color and pattern fills. Check with authors of `ggpattern` on how best to do this. The goal would be to be able to use the palettes shown in C:\Dropbox\R\projects\ggCheysson\man\figures\RJ-Andrews-color-palettes.jpg
+- [ ] Make a plan to incorporate "palettes" that combine color and pattern fills. There are a 
+  bunch of attempts and tests in `dev/colorpat/`. Review this work. If useful, check with authors
+  of `ggpattern` on how best to do this. The goal would be to be able to use the palettes shown in
+  C:\Dropbox\R\projects\ggCheysson\man\figures\RJ-Andrews-color-palettes.jpg
+  - This should probably be done on a branch, `colorpat` since it is an API change.
+  - [ ] Found 2026-09-15 while fixing the README's `1881_03` (1-color) example: two of the four
+    `scale_pattern_*_cheysson()` functions are actually broken, which is directly relevant here.
+    `scale_pattern_type_cheysson()` sets `aesthetics = "pattern_type"` in its `discrete_scale()`
+    call, but ggpattern's real pattern-shape aesthetic is `pattern` (`pattern_type` is a
+    different, mostly-unused aesthetic) - so it silently has no effect. Separately,
+    `scale_pattern_fill_cheysson()` reads `cheysson_pattern_params(patterns, "fill")` (the base
+    rect fill) instead of `"pattern_fill"` (the hatch color) - confirmed via `ggplot_build()`
+    that it always returns `"transparent"` regardless of palette. `scale_pattern_angle_cheysson()`
+    and `scale_fill_cheysson_pattern()` are correct. Full writeup, reproduction, and a working
+    fix (verified visually, not yet applied to `R/`) in `dev/colorpat/PATTERN_SCALE_BUGS.md` and
+    `dev/colorpat/test_pattern_scale_bugs.R`. Left `R/` untouched since 1.0.1 was just submitted
+    to CRAN; the README's flagship pattern example was reworked to route around both bugs from
+    calling code (`scale_pattern_manual()`/`scale_pattern_fill_manual()` fed by
+    `cheysson_pattern_params()`, which itself is correct) rather than waiting on this fix.
 
 - [ ] Another post from Tom Shanley: https://observablehq.com/@tomshanley/cheysson-grid discusses
   "programmatically creating gridlines like those used these charts created by Émile Cheysson in
   1881", via clipping. It proposes a `CheyssonLineChart`, and includes the data `cheysson18818data` 
   to draw this.
+
+- [ ] Tom Shanley's post, https://observablehq.com/@tomshanley/cheysson-color-palettes, illustrates 
+  each of the Cheysson palettes with a snip from an original figure. It would be useful to download 
+  a couple of these and use in the README or elsewhere. Note that he uses different names than RJ 
+  for the palettes.
 
