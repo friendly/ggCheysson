@@ -65,6 +65,16 @@ didn't need it (its `legend.title` uses `base_family`, not `axis_title_family`).
   attempts) and swapped it in everywhere the live observablehq.com URL appeared (`R/data.R`,
   `R/palettes.R`, `README.Rmd` x2). `urlchecker::url_check()` and local `--as-cran` both confirm
   it's gone - down to the single benign "Cheysson" spelling NOTE.
+- [x] `cran-comments.md` rewritten (2026-09-15): reframed as "new submission" (1.0.0 was never
+  accepted, so nothing to resubmit over) instead of "resubmission"; added full NEWS.md text for
+  1.0.1 and 1.0.0, per user request.
+- [ ] Fresh win-builder R-devel run attempted 2026-09-15, FAILED: FTP `STOR` rejected with a bare
+  `550` (confirmed with a manual `curl -v -T ... ftp://win-builder.r-project.org/R-devel/`, so
+  it's the server, not `devtools`/`curl` R packages). Most likely cause: the server still has
+  `ggCheysson_1.0.1.tar.gz` queued/unprocessed from the earlier run under the same filename.
+  Retried twice, same result both times - did not retry further or wait it out. Options for next
+  time: wait longer and retry, or use `rhub::rhub_check(platforms = "windows")` (infrastructure
+  already set up) as a substitute Windows check.
 - [ ] Actually submit (`devtools::submit_cran()` or equivalent) once the above is settled
 
 ## Git/Dropbox corruption (fixed 2026-09-14)
