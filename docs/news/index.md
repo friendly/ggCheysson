@@ -1,5 +1,22 @@
 # Changelog
 
+## ggCheysson 1.0.1
+
+- Fixed undersized axis and legend titles in
+  [`theme_cheysson()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson.md)
+  (inherited by
+  [`theme_cheysson_minimal()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson_minimal.md)):
+  `CheyssonSansCaps` renders visibly smaller than other package fonts at
+  the same nominal size, so title text is now scaled up to match
+- Bumped `roxygen2` to 8.1.0 (`Config/roxygen2/version`)
+- Removed unnecessary `\dontrun{}`/`\donttest{}` wrapping from examples
+  that run cleanly
+  ([`show_palette()`](https://friendly.github.io/ggCheysson/reference/show_palette.md),
+  [`show_palettes()`](https://friendly.github.io/ggCheysson/reference/show_palettes.md),
+  the `scale_*_cheysson()` family); kept `\donttest{}` only where
+  custom-font grid text rendering can crash on some devices
+- Added R-universe badge and installation instructions to README
+
 ## ggCheysson 1.0.0
 
 - Initial version, implementing Cheysson color palettes, patterns and

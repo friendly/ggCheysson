@@ -20,6 +20,6 @@ This URL is valid and loads normally in a browser. Observable's servers return
 HTTP 429 to automated, non-browser requests (confirmed with several different
 HTTP clients from outside the CRAN check infrastructure), so this is expected
 to recur on any automated check and is not a broken link.
-
-
-* This is a new package release.
+* This package (as v1.0.0) was submitted to CRAN on 2026-01-08 but was not accepted. The issues
+  raised have been addressed in this v1.0.1 resubmission (see NEWS.md), and R CMD check is clean
+  as reported above.

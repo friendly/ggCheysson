@@ -1,5 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <!-- badges: start -->
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/ggCheysson)](https://cran.r-project.org/package=ggCheysson)
@@ -13,7 +14,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 # ggCheysson <img src="man/figures/logo.png" height="200" style="float:right; height:200px;"/>
 
-Version 1.0.0; documentation built 2026-09-14
+Version 1.0.1; documentation built 2026-09-14
 
 The `ggCheysson` package brings the graphical styles of the *Albums de
 Statistique Graphique* to R and ggplot2.
@@ -112,6 +113,7 @@ across the span of years in which the *Albums* were produced, shown
 below.
 
 <center>
+
 <img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png" width=400>
 </center>
 
@@ -119,6 +121,7 @@ From these, he abstracted the following combinations of color and
 pattern he thought characterized these maps:
 
 <center>
+
 <img src="man/figures/color-palettes.png" width=600>
 </center>
 
@@ -326,6 +329,7 @@ Five Cheysson font families are included:
 Here are some of these:
 
 <center>
+
 <img src="man/figures/fonts1.png" height = 400>
 </center>
 
@@ -445,7 +449,7 @@ citation("ggCheysson")
 #> To cite package 'ggCheysson' in publications use:
 #> 
 #>   Friendly M (2026). _ggCheysson: Graphic Styles of Emile Cheysson for
-#>   'ggplot2'_. R package version 1.0.0,
+#>   'ggplot2'_. R package version 1.0.1,
 #>   <https://github.com/friendly/ggCheysson>.
 #> 
 #> A BibTeX entry for LaTeX users is
@@ -454,7 +458,7 @@ citation("ggCheysson")
 #>     title = {ggCheysson: Graphic Styles of Emile Cheysson for 'ggplot2'},
 #>     author = {Michael Friendly},
 #>     year = {2026},
-#>     note = {R package version 1.0.0},
+#>     note = {R package version 1.0.1},
 #>     url = {https://github.com/friendly/ggCheysson},
 #>   }
 ```

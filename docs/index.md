@@ -1,6 +1,6 @@
 # ggCheysson
 
-Version 1.0.0; documentation built 2026-09-14
+Version 1.0.1; documentation built 2026-09-14
 
 The `ggCheysson` package brings the graphical styles of the *Albums de
 Statistique Graphique* to R and ggplot2.
@@ -457,7 +457,7 @@ citation("ggCheysson")
 #> To cite package 'ggCheysson' in publications use:
 #> 
 #>   Friendly M (2026). _ggCheysson: Graphic Styles of Emile Cheysson for
-#>   'ggplot2'_. R package version 1.0.0,
+#>   'ggplot2'_. R package version 1.0.1,
 #>   <https://github.com/friendly/ggCheysson>.
 #> 
 #> A BibTeX entry for LaTeX users is
@@ -466,7 +466,7 @@ citation("ggCheysson")
 #>     title = {ggCheysson: Graphic Styles of Emile Cheysson for 'ggplot2'},
 #>     author = {Michael Friendly},
 #>     year = {2026},
-#>     note = {R package version 1.0.0},
+#>     note = {R package version 1.0.1},
 #>     url = {https://github.com/friendly/ggCheysson},
 #>   }
 ```

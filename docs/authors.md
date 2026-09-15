@@ -17,13 +17,13 @@ Source:
 [`DESCRIPTION`](https://github.com/friendly/ggCheysson/blob/HEAD/DESCRIPTION)
 
 Friendly M (2026). *ggCheysson: Graphic Styles of Emile Cheysson for
-'ggplot2'*. R package version 1.0.0,
+'ggplot2'*. R package version 1.0.1,
 <https://github.com/friendly/ggCheysson>.
 
     @Manual{,
       title = {ggCheysson: Graphic Styles of Emile Cheysson for 'ggplot2'},
       author = {Michael Friendly},
       year = {2026},
-      note = {R package version 1.0.0},
+      note = {R package version 1.0.1},
       url = {https://github.com/friendly/ggCheysson},
     }
