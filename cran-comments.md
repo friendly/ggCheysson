@@ -8,22 +8,17 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 2 notes
+0 errors | 0 warnings | 1 note
 
 **NOTE 1:** Possibly misspelled words in DESCRIPTION:
   Cheysson (2:32, 14:3)
 
 This is a proper name (Émile Cheysson) and is spelled correctly.
 
-**NOTE 2:** Found the following (possibly) invalid URLs:
-  URL: https://observablehq.com/@tomshanley/cheysson-color-palettes
-    Status: 429
-    Message: Too Many Requests
-
-This URL is valid and loads normally in a browser. Observable's servers return
-HTTP 429 to automated, non-browser requests (confirmed with several different
-HTTP clients from outside the CRAN check infrastructure), so this is expected
-to recur on any automated check and is not a broken link.
 * This package (as v1.0.0) was submitted to CRAN on 2026-01-08 but was not accepted. The issues
   raised have been addressed in this v1.0.1 resubmission (see NEWS.md), and R CMD check is clean
   as reported above.
+* The Tom Shanley Observable notebook citation (`R/data.R`, `R/palettes.R`, `README.md`) previously
+  linked directly to observablehq.com, which returns HTTP 429 to automated, non-browser requests
+  and was flagged as a possibly-invalid URL. Replaced with a Wayback Machine snapshot of the same
+  page, which resolves reliably; no more URL NOTE.

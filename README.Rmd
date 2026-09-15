@@ -39,7 +39,7 @@ The package is based on work by:
   [View collection](https://www.davidrumsey.com/luna/servlet/view/search?q=album+de+statistique)
 * RJ Andrews: [Classic Map Color Design](https://infowetrust.com/project/album-colors) | [GitHub](https://github.com/infowetrust/albumcolors)
 * Tom Shanley: Observable implementation
-  [Cheysson Color Palettes](https://observablehq.com/@tomshanley/cheysson-color-palettes)
+  [Cheysson Color Palettes](https://web.archive.org/web/20210130125506/https://observablehq.com/@tomshanley/cheysson-color-palettes)
 * Kenneth Fields: Hand-drawn font family creation
   [The style of Émile Cheysson](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/the-style-of-emile-cheysson/)
 
@@ -333,7 +333,7 @@ theme(
   [Classic Map Color Design](https://infowetrust.com/project/album-colors) | [GitHub](https://github.com/infowetrust/albumcolors)
 
 - **Tom Shanley**: Observable implementation
-  [Cheysson Color Palettes](https://observablehq.com/@tomshanley/cheysson-color-palettes)
+  [Cheysson Color Palettes](https://web.archive.org/web/20210130125506/https://observablehq.com/@tomshanley/cheysson-color-palettes)
 
 ### Fonts
 - **Kenneth Fields**: Hand-drawn font family creation

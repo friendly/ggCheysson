@@ -59,6 +59,12 @@ didn't need it (its `legend.title` uses `base_family`, not `axis_title_family`).
   confirmed clean in a subsequent local `--as-cran` run. Not yet re-verified clean on R-hub
   itself (would need another ~24min run) - `cran-comments.md` documents the found-and-fixed NOTE
   rather than claiming an unverified 0/0/0 on that specific platform.
+- [x] Eliminated the Observable URL NOTE (2026-09-15) rather than just explaining it: found a
+  working Wayback Machine snapshot (`web.archive.org/web/20210130125506/...`, verified real
+  content via its og:title/og:description, not a blank JS shell, and 200s reliably across 3
+  attempts) and swapped it in everywhere the live observablehq.com URL appeared (`R/data.R`,
+  `R/palettes.R`, `README.Rmd` x2). `urlchecker::url_check()` and local `--as-cran` both confirm
+  it's gone - down to the single benign "Cheysson" spelling NOTE.
 - [ ] Actually submit (`devtools::submit_cran()` or equivalent) once the above is settled
 
 ## Git/Dropbox corruption (fixed 2026-09-14)

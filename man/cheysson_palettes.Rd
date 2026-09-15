@@ -20,7 +20,7 @@ Color patterns digitized by RJ Andrews from the David Rumsey Map Collection
 \url{https://github.com/infowetrust/albumcolors}
 
 Observable implementation by Tom Shanley
-\url{https://observablehq.com/@tomshanley/cheysson-color-palettes}
+\url{https://web.archive.org/web/20210130125506/https://observablehq.com/@tomshanley/cheysson-color-palettes}
 }
 \usage{
 cheysson_palettes

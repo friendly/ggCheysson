@@ -1,6 +1,5 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <!-- badges: start -->
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/ggCheysson)](https://cran.r-project.org/package=ggCheysson)
@@ -14,7 +13,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 # ggCheysson <img src="man/figures/logo.png" height="200" style="float:right; height:200px;"/>
 
-Version 1.0.1; documentation built 2026-09-14
+Version 1.0.1; documentation built 2026-09-15
 
 The `ggCheysson` package brings the graphical styles of the *Albums de
 Statistique Graphique* to R and ggplot2.
@@ -35,7 +34,7 @@ The package is based on work by:
   Design](https://infowetrust.com/project/album-colors) \|
   [GitHub](https://github.com/infowetrust/albumcolors)
 - Tom Shanley: Observable implementation [Cheysson Color
-  Palettes](https://observablehq.com/@tomshanley/cheysson-color-palettes)
+  Palettes](https://web.archive.org/web/20210130125506/https://observablehq.com/@tomshanley/cheysson-color-palettes)
 - Kenneth Fields: Hand-drawn font family creation [The style of Émile
   Cheysson](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/the-style-of-emile-cheysson/)
 
@@ -113,7 +112,6 @@ across the span of years in which the *Albums* were produced, shown
 below.
 
 <center>
-
 <img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png" width=400>
 </center>
 
@@ -121,7 +119,6 @@ From these, he abstracted the following combinations of color and
 pattern he thought characterized these maps:
 
 <center>
-
 <img src="man/figures/color-palettes.png" width=600>
 </center>
 
@@ -329,7 +326,6 @@ Five Cheysson font families are included:
 Here are some of these:
 
 <center>
-
 <img src="man/figures/fonts1.png" height = 400>
 </center>
 
@@ -402,7 +398,7 @@ theme(
   [GitHub](https://github.com/infowetrust/albumcolors)
 
 - **Tom Shanley**: Observable implementation [Cheysson Color
-  Palettes](https://observablehq.com/@tomshanley/cheysson-color-palettes)
+  Palettes](https://web.archive.org/web/20210130125506/https://observablehq.com/@tomshanley/cheysson-color-palettes)
 
 ### Fonts
 

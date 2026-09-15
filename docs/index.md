@@ -1,6 +1,6 @@
 # ggCheysson
 
-Version 1.0.1; documentation built 2026-09-14
+Version 1.0.1; documentation built 2026-09-15
 
 The `ggCheysson` package brings the graphical styles of the *Albums de
 Statistique Graphique* to R and ggplot2.
@@ -21,7 +21,7 @@ The package is based on work by:
   Design](https://infowetrust.com/project/album-colors) \|
   [GitHub](https://github.com/infowetrust/albumcolors)
 - Tom Shanley: Observable implementation [Cheysson Color
-  Palettes](https://observablehq.com/@tomshanley/cheysson-color-palettes)
+  Palettes](https://web.archive.org/web/20210130125506/https://observablehq.com/@tomshanley/cheysson-color-palettes)
 - Kenneth Fields: Hand-drawn font family creation [The style of Émile
   Cheysson](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/the-style-of-emile-cheysson/)
 
@@ -45,7 +45,6 @@ graphics.
 Install the development version from GitHub or R-universe:
 
 ``` r
-
 # install.packages("remotes")
 remotes::install_github("friendly/ggCheysson")
 
@@ -58,7 +57,6 @@ install.packages("ggCheysson", repos = c("https://friendly.r-universe.dev"))
 For full functionality, install these packages:
 
 ``` r
-
 install.packages(c("ggpattern", "systemfonts"))
 ```
 
@@ -125,7 +123,6 @@ Here are a few examples to get you started.
 Use the color palette of the 1881 Album, plate 4
 
 ``` r
-
 library(ggplot2)
 library(ggCheysson)
 
@@ -141,7 +138,6 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
 ### With Fonts and Theme
 
 ``` r
-
 # Load Cheysson fonts (once per session)
 load_cheysson_fonts(method = "showtext")
 # Enable showtext for rendering
@@ -164,7 +160,6 @@ ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
 ### Complete Cheysson Aesthetic (Colors + Patterns + Fonts)
 
 ``` r
-
 library(ggpattern)
 
 data <- data.frame(
@@ -203,7 +198,6 @@ ggplot(data, aes(category, value, fill = category)) +
 View all available palettes:
 
 ``` r
-
 library(ggCheysson)
 
 # List all palettes
@@ -243,7 +237,6 @@ list_cheysson_pals("sequential")
 ```
 
 ``` r
-
 # View palette colors
 cheysson_pal("1880_07")
 #> [1] "#d9636c" "#869e80" "#dec367" "#85aab1" "#aea9a4" "#ed8238" "#ab90a4"
@@ -256,7 +249,6 @@ Use
 to display a palette with color swatches and hex codes:
 
 ``` r
-
 # Display a single palette with metadata
 show_palette("1895_04")
 ```
@@ -264,7 +256,6 @@ show_palette("1895_04")
 ![](reference/figures/README-show-palette-1.png)
 
 ``` r
-
 # Display multiple palettes at once
 show_palettes(c("1880_07", "1881_03", "1895_04"))
 ```
@@ -272,7 +263,6 @@ show_palettes(c("1880_07", "1881_03", "1895_04"))
 ![](reference/figures/README-show-palette-multi-1.png)
 
 ``` r
-
 # Display four palettes in a 2x2 grid
 show_palettes(c("1880_07", "1881_03", "1895_04", "1906_06"), ncol = 2)
 ```
@@ -280,7 +270,6 @@ show_palettes(c("1880_07", "1881_03", "1895_04", "1906_06"), ncol = 2)
 ![](reference/figures/README-show-palette-grid-1.png)
 
 ``` r
-
 # Display all palettes of a specific type
 show_palettes("category")
 ```
@@ -297,7 +286,6 @@ Palette types:
 With ggpattern, recreate the distinctive hatching styles:
 
 ``` r
-
 # List available pattern palettes
 list_cheysson_patterns()
 
@@ -329,7 +317,6 @@ Here are some of these:
 To use these:
 
 ``` r
-
 # Load fonts
 load_cheysson_fonts(method = "showtext")
 showtext::showtext_auto()
@@ -409,7 +396,7 @@ theme(
   [GitHub](https://github.com/infowetrust/albumcolors)
 
 - **Tom Shanley**: Observable implementation [Cheysson Color
-  Palettes](https://observablehq.com/@tomshanley/cheysson-color-palettes)
+  Palettes](https://web.archive.org/web/20210130125506/https://observablehq.com/@tomshanley/cheysson-color-palettes)
 
 ### Fonts
 
@@ -452,7 +439,6 @@ GPL (\>= 3)
 To cite `ggCheysson`, please use:
 
 ``` r
-
 citation("ggCheysson")
 #> To cite package 'ggCheysson' in publications use:
 #> 

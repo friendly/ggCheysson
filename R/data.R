@@ -28,7 +28,7 @@
 #' \itemize{
 #'   \item David Rumsey Map Collection: \url{https://www.davidrumsey.com/}
 #'   \item RJ Andrews Album Colors: \url{https://github.com/infowetrust/albumcolors}
-#'   \item Tom Shanley Observable: \url{https://observablehq.com/@tomshanley/cheysson-color-palettes}
+#'   \item Tom Shanley Observable: \url{https://web.archive.org/web/20210130125506/https://observablehq.com/@tomshanley/cheysson-color-palettes}
 #' }
 #'
 #' @examples

@@ -44,7 +44,7 @@ Color patterns digitized by RJ Andrews from the David Rumsey Map
 Collection <https://github.com/infowetrust/albumcolors>
 
 Observable implementation by Tom Shanley
-<https://observablehq.com/@tomshanley/cheysson-color-palettes>
+<https://web.archive.org/web/20210130125506/https://observablehq.com/@tomshanley/cheysson-color-palettes>
 
 ## Details
 

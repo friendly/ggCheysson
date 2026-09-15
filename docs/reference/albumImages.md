@@ -45,7 +45,7 @@ A data frame with 25 rows and 6 variables:
 - RJ Andrews Album Colors: <https://github.com/infowetrust/albumcolors>
 
 - Tom Shanley Observable:
-  <https://observablehq.com/@tomshanley/cheysson-color-palettes>
+  <https://web.archive.org/web/20210130125506/https://observablehq.com/@tomshanley/cheysson-color-palettes>
 
 ## Details
 
