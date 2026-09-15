@@ -171,7 +171,7 @@ load_cheysson_fonts <- function(method = c("systemfonts", "showtext")) {
 cheysson_fonts_available <- function(method = NULL) {
   available <- FALSE
 
-  if (is.null(method) || method == "systemfonts") {
+  if (is.null(method) || identical(method, "systemfonts")) {
     if (requireNamespace("systemfonts", quietly = TRUE)) {
       registered <- systemfonts::registry_fonts()
       cheysson_count <- sum(grepl("^Cheysson", registered$family))
@@ -181,7 +181,7 @@ cheysson_fonts_available <- function(method = NULL) {
     }
   }
 
-  if (!available && (is.null(method) || method == "showtext")) {
+  if (!available && (is.null(method) || identical(method, "showtext"))) {
     if (requireNamespace("sysfonts", quietly = TRUE)) {
       tryCatch({
         font_families <- getFromNamespace("font_families", "sysfonts")

@@ -94,6 +94,9 @@ cheysson_pattern <- function(palette = "1881_03", n = NULL, type = 1) {
   }
 
   # If n is specified, return first n patterns
+  if (length(n) != 1 || !is.numeric(n) || n < 1) {
+    stop("`n` must be a single positive number")
+  }
   if (n <= length(patterns)) {
     return(patterns[1:n])
   } else {

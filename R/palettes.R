@@ -112,6 +112,9 @@ cheysson_pal <- function(palette = "1880_07", n = NULL, type = 1) {
   }
 
   # If n is specified
+  if (length(n) != 1 || !is.numeric(n) || n < 1) {
+    stop("`n` must be a single positive number")
+  }
   if (n <= length(colors)) {
     # Return first n colors
     return(colors[1:n])
