@@ -406,9 +406,27 @@ even after another machine's `.git` has been moved out.
       shape/content; spot-checked lookups by `name`, `andrews_label`, and `shanley_id` all resolve
       correctly; confirmed every `name` resolves to both a `cheysson_palettes` and
       `cheysson_patterns` entry. `R CMD check`: 0 errors, 1 WARNING ("Undocumented data sets:
-      'cheysson_labels'") - expected and not yet fixed; documenting it and deciding how it's
-      actually exposed/used (e.g. a `cheysson_lookup(label, from = "andrews")`-style accessor?) is
-      the "integrate it into the package" step the user flagged as separate, still open.
+      'cheysson_labels'") - expected at the time.
+
+    - [x] 2026-09-16: **documented it.** Added a `cheysson_labels` roxygen block to `R/data.R`
+      (matching the existing `albumImages`/`cheysson_fonts` style) explaining what it's *for* (look
+      up a palette by whichever scheme you have it in - an Advent day, a Rumsey catalog number, or
+      an Andrews/Shanley label - and get back the `name` to actually use with
+      `scale_color_cheysson()` etc.), documenting all 10 columns, and linking to all 4 sources
+      (David Rumsey, RJ Andrews' GitHub + his own `man/figures/RJ-Andrews-color-palettes.jpg`
+      reference grid, Tom Shanley's Observable notebook + his own
+      `man/figures/shanley-palettes.png` reference grid, and the package's own
+      `data-raw/observable/albumColors.csv`). `@details` also explains the `old_name`
+      naming-collision history this table documents. Hit one Rd markup NOTE (literal `{...}` in
+      prose text being parsed as markup - `checkRd: Lost braces`) - fixed by rewording, not
+      escaping, since the escaped form was harder to read. Also needed a `_pkgdown.yml` reference
+      index entry (pkgdown errors on a "missing from index" topic otherwise, separate from R CMD
+      check). Verified: full `R CMD check` 0/0/0, rendered the Rd with `tools::Rd2txt()` and
+      read it end to end, pkgdown rebuilds clean.
+      
+      Still open: an actual lookup *function* (e.g. something like
+      `cheysson_lookup(label, from = "andrews")`) rather than requiring users to subset
+      `cheysson_labels` by hand - not asked for yet, noting it as a natural next step if wanted.
       
 - [ ] Another post from Tom Shanley: https://observablehq.com/@tomshanley/cheysson-grid discusses
   "programmatically creating gridlines like those used these charts created by Émile Cheysson in

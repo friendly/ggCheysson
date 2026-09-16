@@ -77,3 +77,5 @@ font metadata, and metadata linking to the original Albums.
   : Cheysson Font Families
 - [`albumImages`](https://friendly.github.io/ggCheysson/reference/albumImages.md)
   : Album Images Metadata
+- [`cheysson_labels`](https://friendly.github.io/ggCheysson/reference/cheysson_labels.md)
+  : Cheysson Palette Naming Crosswalk

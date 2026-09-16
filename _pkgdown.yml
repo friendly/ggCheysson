@@ -63,6 +63,7 @@ reference:
     - cheysson_patterns
     - cheysson_fonts
     - albumImages
+    - cheysson_labels
 
 articles:
   - title: Vignettes
