@@ -227,6 +227,27 @@ even after another machine's `.git` has been moved out.
       entries are genuinely `pattern_angle = 0`/horizontal, confirmed via `str()`, despite
       rendering diagonal in that script) - worth fixing when building the RJ-Andrews comparison
       grid next.
+
+    - [x] 2026-09-16: built `dev/colorpat/RJ-Andrews-reconstruct.{R,png}` - a 3-column
+      reconstruction of `man/figures/RJ-Andrews-color-palettes.jpg` from current data/functions,
+      same row order as the reference (read directly off the image as an adventDay sequence, not
+      re-derived from any naming scheme), small "Dec.DD-Album.plate" labels per row (`plate` =
+      the true unique identifier - `RumseyListNo`'s decimal suffix, e.g. `12514.021` -> `21` -
+      confirmed against Shanley's own `{type}{RumseyListNo digits}` naming in
+      `man/figures/shanley-palettes.png`, e.g. his `diverging12541021`, NOT the `fill`/`Qty`-based
+      names our package uses). Building this surfaced a **third, bigger data bug**: our
+      `data-raw/cheysson_palettes.R`/`cheysson_patterns.R` build palette names from `Album + Qty`
+      (e.g. `"1880_07"`), but `Qty` is not a unique plate discriminator - 4 real collisions
+      (`1880_07` <- adventDay 6 & 24; `1881_04` <- 21 & 25; `1886_04` <- 4, 15 & 19; `1886_08` <-
+      2 & 7) silently overwrote 5 of the original 25 palettes during extraction (plain
+      `list[[name]] <-` assignment, last adventDay wins - confirmed against each shipped
+      `dec_day`). So 5 of 25 reference palettes are **not just gapped but entirely absent** from
+      the shipped package, recoverable from the same source SVGs (not yet done - would need a
+      real unique key, e.g. `dec_day` or `RumseyListNo`, which touches public palette names
+      throughout the package). Per user decision: built the grid now with the 20 available,
+      showing the 5 lost ones as explicit grey crosshatch placeholders (correctly labeled from
+      `data-raw/observable/albumColors.csv`, which has all 25 rows) rather than omitting or
+      approximating them.
       
     - **`UNIFIED_COLOR_PATTERN_PLAN.md` has a real API plan**: new data object
       `cheysson_colorpat_palettes` (list of palettes, each with `elements` =
