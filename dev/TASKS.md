@@ -138,23 +138,73 @@ even after another machine's `.git` has been moved out.
   bunch of attempts and tests in `dev/colorpat/`. Review this work. If useful, check with authors
   of `ggpattern` on how best to do this. The goal would be to be able to use the palettes shown in
   C:\Dropbox\R\projects\ggCheysson\man\figures\RJ-Andrews-color-palettes.jpg
-  
-  - This should probably be done on a branch, `colorpat` since it is an API change.
-  
-  - [ ] Found 2026-09-15 while fixing the README's `1881_03` (1-color) example: two of the four
-    `scale_pattern_*_cheysson()` functions are actually broken, which is directly relevant here.
-    `scale_pattern_type_cheysson()` sets `aesthetics = "pattern_type"` in its `discrete_scale()`
-    call, but ggpattern's real pattern-shape aesthetic is `pattern` (`pattern_type` is a
-    different, mostly-unused aesthetic) - so it silently has no effect. Separately,
-    `scale_pattern_fill_cheysson()` reads `cheysson_pattern_params(patterns, "fill")` (the base
-    rect fill) instead of `"pattern_fill"` (the hatch color) - confirmed via `ggplot_build()`
-    that it always returns `"transparent"` regardless of palette. `scale_pattern_angle_cheysson()`
-    and `scale_fill_cheysson_pattern()` are correct. Full writeup, reproduction, and a working
-    fix (verified visually, not yet applied to `R/`) in `dev/colorpat/PATTERN_SCALE_BUGS.md` and
-    `dev/colorpat/test_pattern_scale_bugs.R`. Left `R/` untouched since 1.0.1 was just submitted
-    to CRAN; the README's flagship pattern example was reworked to route around both bugs from
-    calling code (`scale_pattern_manual()`/`scale_pattern_fill_manual()` fed by
-    `cheysson_pattern_params()`, which itself is correct) rather than waiting on this fix.
+
+  - [x] 2026-09-16: created the `colorpat` branch (pushed to origin).
+
+  - [x] Fixed the two real bugs found 2026-09-15 while reworking the README's `1881_03` example
+    (`scale_pattern_type_cheysson()` targeted the wrong ggpattern aesthetic - `"pattern_type"`
+    instead of `"pattern"`; `scale_pattern_fill_cheysson()` read the wrong param -`"fill"` instead
+    of `"pattern_fill"`). Full diagnosis in `dev/colorpat/PATTERN_SCALE_BUGS.md`. Applied to
+    `R/scale_patterns.R` plus its two roxygen examples, and to all 5 affected plots across
+    `vignettes/getting-started.Rmd` and `vignettes/guerry-maps.Rmd` (same bug pattern:
+    `aes(pattern_type = ...)` -> `aes(pattern = ...)`, dropped the now-redundant fixed
+    `pattern = "stripe"` param, `guides()`/`labs()` `pattern_type =` -> `pattern =`). Verified via
+    `ggplot_build()` and visually; full `R CMD check` clean (0/0/1, only the expected "New
+    submission" NOTE), vignettes rebuild fine. Commit `853d36d` on `colorpat`. `README.Rmd` left
+    as-is - it already works around both bugs via `scale_pattern_manual()`, which still works.
+
+  - Asked a subagent (2026-09-16) to read all ~35 files under `dev/colorpat/` plus git history and
+    cross-reference against shipped `R/`/`data/`, to sort current work from stale exploration
+    before resuming. Findings:
+    - **Timeline**: 2025-12-30 problem framed + `UNIFIED_COLOR_PATTERN_PLAN.md` written +
+      `data-raw/observable/` SVGs parsed (7/20 palettes clean, 13/20 with `NA` gaps) ->
+      2025-12-31 `prototype_colorpat.R` built working functions, grew 1->11/20 palettes across
+      the session (each milestone = a superseded snapshot doc + test script + PNG) -> 2026-01-04
+      pure reorg into `dev/colorpat/`, marked **ON HOLD** in `dev/README.md` ("too complex for
+      current release") -> ~8.5 months dormant until the unrelated 2026-09-15 bug-fix pass above,
+      filed in the same folder but conceptually separate.
+    - **Best starting point**: `prototype_colorpat.R` (1472 lines, working
+      `cheysson_colorpat()`/`scale_colorpat_cheysson()`/`list_colorpat_palettes()`/print method,
+      11/20 palettes) + `PROGRESS_UPDATE.md` (final-state summary) + `test_ten_palettes.R`/
+      `test_ten_palettes_swatches.png` (best combined visual QA).
+    - **Important finding**: the shipped `data/cheysson_patterns.rda` (built by
+      `data-raw/cheysson_patterns.R`) already stores positionally-paired fill+pattern data per
+      palette element for all 20 palettes - matches `colorpat_extraction/1883_04.md`/`1881_03.md`
+      element-for-element. So the "unified color-pattern pairs" data structure `dev/colorpat/` set
+      out to build largely **already exists in production**; none of the prototype *functions*
+      have been ported (`grep -ril colorpat R/` is empty), but the *data* substantially has. This
+      narrows the likely remaining scope to a thin scale/accessor layer over existing
+      `cheysson_patterns` data (now that the two bugs above are fixed), not a from-scratch
+      20-palette re-extraction. Worth checking the production data covers all 20 palettes (closing
+      the 9/20 gap that stalled the prototype) before doing any new manual Rumsey-plate work.
+    - **`UNIFIED_COLOR_PATTERN_PLAN.md` has a real API plan**: new data object
+      `cheysson_colorpat_palettes` (list of palettes, each with `elements` =
+      `{fill, pattern_type, pattern_fill, pattern_angle, pattern_density, label}`); accessor
+      `cheysson_colorpat(palette, n)`; unified scale `scale_colorpat_cheysson(palette,
+      aesthetics = "auto", reverse, ...)` that auto-detects and returns/applies multiple ggplot2
+      scales at once; lister `list_colorpat_palettes(type)`; explicit stance to keep old
+      `scale_fill_cheysson()`/`scale_pattern_*_cheysson()` working alongside the new ones.
+    - **Known dead ends / unresolved, don't repeat**: (1) `1883_04`'s neutral-midpoint color
+      (`#f5f5f5`) was invented, not extracted from the plate - `colorpat_extraction/1883_04.md`
+      still has it as an open question; (2) `scale_colorpat_cheysson()` returns a *list* of scale
+      objects requiring manual `+` per aesthetic, not one addable object - unsolved, flagged in
+      `PROTOTYPE_SUMMARY.md`; there's also a stray `+.gg` operator override near
+      `prototype_colorpat.R:1358` that shadows ggplot2's own `+` - do not reuse, it's an abandoned,
+      risky approach; (3) pattern interpolation for `n > palette size` was punted on in the plan
+      ("recycle patterns, but warn") and never implemented/tested.
+    - **Safe to archive/delete** (all fully superseded, nothing orphaned - every PNG traced to its
+      generating script): `PROTOTYPE_SUMMARY.md`/`THREE_PALETTES_SUMMARY.md`/
+      `FIVE_PALETTES_SUMMARY.md`/`TEN_PALETTES_SUMMARY.md` (four successive snapshots, superseded
+      by `PROGRESS_UPDATE.md`); `test_prototype_colorpat.R`/`test_all_prototypes.R`/
+      `test_five_palettes.R` and their PNGs (`test_colorpat_old/new/comparison.png`,
+      `test_1883_04_diverging.png`, `test_1881_03_sequential.png`, `test_1881_04_categorical.png`,
+      `test_all_three_palettes.png`, `test_1891_07_sequential.png`, `test_1886_08_grouped.png`,
+      `test_five_palettes_swatches.png`) - superseded by `test_ten_palettes.R`/
+      `test_ten_palettes_swatches.png`. `colorpat_extraction/` + `colorpat_extractions.RData` +
+      `extract_colorpat_pairings.R` + `COLORPAT_EXTRACTION_TEMPLATE.md` are reference-only now
+      (Rumsey-plate URLs, `NA`-gap list) given production data likely already covers this.
+    - Not yet decided with user: whether to actually delete/archive the superseded files, or just
+      leave them and work from the "current" set identified above.
 
 - [ ] Another post from Tom Shanley: https://observablehq.com/@tomshanley/cheysson-grid discusses
   "programmatically creating gridlines like those used these charts created by Émile Cheysson in
