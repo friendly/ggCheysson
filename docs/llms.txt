@@ -119,9 +119,11 @@ scales
 [`scale_pattern_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md))
 had bugs that silently prevented pattern type and color from varying by
 category at all - now fixed, so colors and patterns can be layered
-together as shown below. A fully unified API that applies Cheysson’s
-actual *designed* color-pattern pairings in a single call, matching the
-combined look of the original Albums, is still in development.
+together as shown below.
+
+A fully unified API that applies Cheysson’s actual *designed*
+color-pattern pairings in a single call, matching the combined look of
+the original Albums, is still in development.
 
 ## 🚀 Quick Start
 
