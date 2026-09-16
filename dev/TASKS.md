@@ -427,6 +427,16 @@ even after another machine's `.git` has been moved out.
       Still open: an actual lookup *function* (e.g. something like
       `cheysson_lookup(label, from = "andrews")`) rather than requiring users to subset
       `cheysson_labels` by hand - not asked for yet, noting it as a natural next step if wanted.
+
+    - [x] 2026-09-16: bumped `DESCRIPTION` to **1.1.0** (Date 2026-09-16) and started a NEWS.md
+      section for it. User's call, reasoned explicitly: the palette rename is a breaking change to
+      public identifiers (not a bugfix in the semver sense, even though it started as one), so
+      1.1.0 over the initially-considered 1.0.2 - and safe to do now regardless of `master`'s
+      1.0.1 being under CRAN review, since branches can carry any version and this only matters at
+      merge/release time. NEWS.md 1.1.0 covers: the breaking naming fix (25 palettes now, was 20;
+      134 pattern specs, was 83), the 15-gap SVG-parsing fix, the two `scale_pattern_*_cheysson()`
+      bugs, the new `cheysson_labels` dataset, and the README pattern examples. `R CMD check`
+      still 0/0/0 after the bump.
       
 - [ ] Another post from Tom Shanley: https://observablehq.com/@tomshanley/cheysson-grid discusses
   "programmatically creating gridlines like those used these charts created by Émile Cheysson in
