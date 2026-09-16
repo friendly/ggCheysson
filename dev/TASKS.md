@@ -74,6 +74,11 @@ didn't need it (its `legend.title` uses `base_family`, not `axis_title_family`).
 - [X] Fresh win-builder R-devel run -- clean now except for New submission / Cheysson spelling
 - [x] Submitted to CRAN 2026-09-15 (on desktop), at commit `ac60e4f`; `CRAN-SUBMISSION` confirms
   Version 1.0.1. Awaiting CRAN's response.
+- [x] 2026-09-16: win-builder incoming pretest matched our own local/win-builder results (same
+  NOTEs, nothing new) -
+  https://win-builder.r-project.org/incoming_pretest/ggCheysson_1.0.1_20260915_174459/. Package
+  has moved into CRAN's newbie queue for manual review:
+  https://cran.r-project.org/incoming/newbies/?C=M;O=D. Still awaiting a human reviewer.
 
 ## Git/Dropbox corruption (fixed 2026-09-14)
 
