@@ -71,13 +71,7 @@ didn't need it (its `legend.title` uses `base_family`, not `axis_title_family`).
   accepted, so nothing to resubmit over) instead of "resubmission"; added full NEWS.md text for
   1.0.1 and 1.0.0, per user request.
   
-- [ ] Fresh win-builder R-devel run attempted 2026-09-15, FAILED: FTP `STOR` rejected with a bare
-  `550` (confirmed with a manual `curl -v -T ... ftp://win-builder.r-project.org/R-devel/`, so
-  it's the server, not `devtools`/`curl` R packages). Most likely cause: the server still has
-  `ggCheysson_1.0.1.tar.gz` queued/unprocessed from the earlier run under the same filename.
-  Retried twice, same result both times - did not retry further or wait it out. Options for next
-  time: wait longer and retry, or use `rhub::rhub_check(platforms = "windows")` (infrastructure
-  already set up) as a substitute Windows check.
+- [X] Fresh win-builder R-devel run -- clean now except for New submission / Cheysson spelling
 - [x] Submitted to CRAN 2026-09-15 (on desktop), at commit `ac60e4f`; `CRAN-SUBMISSION` confirms
   Version 1.0.1. Awaiting CRAN's response.
 
@@ -144,7 +138,9 @@ even after another machine's `.git` has been moved out.
   bunch of attempts and tests in `dev/colorpat/`. Review this work. If useful, check with authors
   of `ggpattern` on how best to do this. The goal would be to be able to use the palettes shown in
   C:\Dropbox\R\projects\ggCheysson\man\figures\RJ-Andrews-color-palettes.jpg
+  
   - This should probably be done on a branch, `colorpat` since it is an API change.
+  
   - [ ] Found 2026-09-15 while fixing the README's `1881_03` (1-color) example: two of the four
     `scale_pattern_*_cheysson()` functions are actually broken, which is directly relevant here.
     `scale_pattern_type_cheysson()` sets `aesthetics = "pattern_type"` in its `discrete_scale()`
