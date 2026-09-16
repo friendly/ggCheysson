@@ -35,7 +35,7 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
   )
 
   ggplot(data, aes(category, value, fill = category)) +
-    geom_col_pattern(aes(pattern_type = category), pattern = "stripe") +
+    geom_col_pattern(aes(pattern = category)) +
     scale_fill_cheysson_pattern("category") +
     scale_pattern_type_cheysson("category") +
     theme_minimal()

@@ -26,7 +26,7 @@ scale_pattern_density_cheysson(palette = "1881_03", reverse = FALSE, ...)
 }
 \value{
 A ggplot2 discrete scale object for the specified pattern aesthetic
-(pattern_fill, pattern_type, pattern_angle, or pattern_density). These
+(pattern_fill, pattern, pattern_angle, or pattern_density). These
 scales apply the historically accurate Cheysson patterns to ggpattern geoms.
 }
 \description{
@@ -41,7 +41,9 @@ These scales require the ggpattern package. Use with ggpattern geoms like
 The scales apply multiple pattern aesthetics simultaneously:
 \itemize{
 \item \code{fill}: Base fill color
-\item \code{pattern_type}: Type of pattern (none, stripe, crosshatch)
+\item \code{pattern}: Type of pattern (none, stripe, crosshatch) - set via
+\code{scale_pattern_type_cheysson()}, which targets ggpattern's \code{pattern}
+aesthetic
 \item \code{pattern_fill}: Color of pattern lines
 \item \code{pattern_angle}: Angle of stripes
 \item \code{pattern_density}: Density of pattern lines
@@ -63,11 +65,10 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
   ggplot(data, aes(category, value, fill = category)) +
     geom_col_pattern(
       aes(
-        pattern_type = category,
+        pattern = category,
         pattern_fill = category,
         pattern_angle = category
       ),
-      pattern = "stripe",
       pattern_density = 0.3,
       color = "black"
     ) +

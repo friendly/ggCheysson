@@ -148,8 +148,7 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
 
   p4 <- ggplot(trade_data, aes(reorder(country, exports), exports, fill = country)) +
     geom_col_pattern(
-      aes(pattern_type = country, pattern_fill = country),
-      pattern = "stripe",
+      aes(pattern = country, pattern_fill = country),
       pattern_density = 0.3,
       pattern_spacing = 0.025,
       color = "black",
@@ -290,8 +289,7 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
 
   p8 <- ggplot(infrastructure, aes(region, length, fill = type)) +
     geom_col_pattern(
-      aes(pattern_type = type, pattern_fill = type),
-      pattern = "stripe",
+      aes(pattern = type, pattern_fill = type),
       position = "dodge",
       pattern_density = 0.35,
       pattern_spacing = 0.02,
@@ -307,7 +305,7 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
       x = "Region",
       y = "Network Extent (kilometers × 100)",
       fill = "Type",
-      pattern_type = "Type"
+      pattern = "Type"
     ) +
     theme_cheysson() +
     theme(legend.position = "right")

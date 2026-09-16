@@ -10,7 +10,7 @@
 #' @param ... Additional arguments passed to ggplot2 scale functions
 #'
 #' @returns A ggplot2 discrete scale object for the specified pattern aesthetic
-#'   (pattern_fill, pattern_type, pattern_angle, or pattern_density). These
+#'   (pattern_fill, pattern, pattern_angle, or pattern_density). These
 #'   scales apply the historically accurate Cheysson patterns to ggpattern geoms.
 #'
 #' @details
@@ -20,7 +20,9 @@
 #' The scales apply multiple pattern aesthetics simultaneously:
 #' \itemize{
 #'   \item \code{fill}: Base fill color
-#'   \item \code{pattern_type}: Type of pattern (none, stripe, crosshatch)
+#'   \item \code{pattern}: Type of pattern (none, stripe, crosshatch) - set via
+#'     \code{scale_pattern_type_cheysson()}, which targets ggpattern's \code{pattern}
+#'     aesthetic
 #'   \item \code{pattern_fill}: Color of pattern lines
 #'   \item \code{pattern_angle}: Angle of stripes
 #'   \item \code{pattern_density}: Density of pattern lines
@@ -42,11 +44,10 @@
 #'   ggplot(data, aes(category, value, fill = category)) +
 #'     geom_col_pattern(
 #'       aes(
-#'         pattern_type = category,
+#'         pattern = category,
 #'         pattern_fill = category,
 #'         pattern_angle = category
 #'       ),
-#'       pattern = "stripe",
 #'       pattern_density = 0.3,
 #'       color = "black"
 #'     ) +
@@ -71,8 +72,8 @@ scale_pattern_fill_cheysson <- function(palette = "1881_03", reverse = FALSE, ..
     patterns <- rev(patterns)
   }
 
-  # Extract fill colors
-  fills <- cheysson_pattern_params(patterns, "fill")
+  # Extract pattern (hatch line) colors
+  fills <- cheysson_pattern_params(patterns, "pattern_fill")
 
   ggplot2::discrete_scale(
     aesthetics = "pattern_fill",
@@ -102,7 +103,7 @@ scale_pattern_type_cheysson <- function(palette = "1881_03", reverse = FALSE, ..
   types <- cheysson_pattern_params(patterns, "pattern_type")
 
   ggplot2::discrete_scale(
-    aesthetics = "pattern_type",
+    aesthetics = "pattern",
     scale_name = "cheysson_pattern_type",
     palette = function(n) {
       if (n <= length(types)) {
@@ -193,7 +194,7 @@ scale_pattern_density_cheysson <- function(palette = "1881_03", reverse = FALSE,
 #'   )
 #'
 #'   ggplot(data, aes(category, value, fill = category)) +
-#'     geom_col_pattern(aes(pattern_type = category), pattern = "stripe") +
+#'     geom_col_pattern(aes(pattern = category)) +
 #'     scale_fill_cheysson_pattern("category") +
 #'     scale_pattern_type_cheysson("category") +
 #'     theme_minimal()
