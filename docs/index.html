@@ -340,18 +340,52 @@
 <div class="section level2">
 <h2 id="id_-pattern-support">📐 Pattern Support<a class="anchor" aria-label="anchor" href="#id_-pattern-support"></a>
 </h2>
-<p>With ggpattern, recreate the distinctive hatching styles:</p>
+<p>With ggpattern, recreate the distinctive hatching styles - each palette pairs colors with historically accurate patterns (solid fills, stripes, crosshatching):</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># List available pattern palettes</span></span>
-<span><span class="fu"><a href="reference/list_cheysson_patterns.html">list_cheysson_patterns</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trevorld/ggpattern" class="external-link">ggpattern</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Get pattern specifications</span></span>
-<span><span class="va">patterns</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cheysson_pattern.html">cheysson_pattern</a></span><span class="op">(</span><span class="st">"1883_13"</span><span class="op">)</span></span>
+<span><span class="co"># List available pattern palettes</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="reference/list_cheysson_patterns.html">list_cheysson_patterns</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      name       type album plate n_patterns</span></span>
+<span><span class="co">#&gt; 1 1880_07    grouped  1880     7          7</span></span>
+<span><span class="co">#&gt; 2 1880_21   category  1880    21          7</span></span>
+<span><span class="co">#&gt; 3 1881_12 sequential  1881    12          3</span></span>
+<span><span class="co">#&gt; 4 1881_14    grouped  1881    14          4</span></span>
+<span><span class="co">#&gt; 5 1881_22   category  1881    22          4</span></span>
+<span><span class="co">#&gt; 6 1881_30    grouped  1881    30          8</span></span>
 <span></span>
-<span><span class="co"># Use in plots with pattern scales</span></span>
-<span><span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/scale_pattern_manual.html" class="external-link">scale_pattern_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="reference/cheysson_pattern_params.html">cheysson_pattern_params</a></span><span class="op">(</span><span class="va">patterns</span>, <span class="st">"pattern_type"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/scale_pattern_manual.html" class="external-link">scale_pattern_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="reference/cheysson_pattern_params.html">cheysson_pattern_params</a></span><span class="op">(</span><span class="va">patterns</span>, <span class="st">"pattern_fill"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/scale_pattern_cheysson.html">scale_pattern_angle_cheysson</a></span><span class="op">(</span><span class="st">"1883_13"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># Get pattern specifications for one palette</span></span>
+<span><span class="va">patterns</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cheysson_pattern.html">cheysson_pattern</a></span><span class="op">(</span><span class="st">"1886_24"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Display the palette's patterns as swatches</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">patterns</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">i</span>, <span class="fl">1</span>, fill <span class="op">=</span> <span class="va">i</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/geom-docs.html" class="external-link">geom_col_pattern</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="va">i</span>, pattern_fill <span class="op">=</span> <span class="va">i</span><span class="op">)</span>,</span>
+<span>    pattern_density <span class="op">=</span> <span class="fl">0.35</span>, pattern_spacing <span class="op">=</span> <span class="fl">0.03</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"black"</span>, width <span class="op">=</span> <span class="fl">0.95</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="reference/cheysson_pattern_params.html">cheysson_pattern_params</a></span><span class="op">(</span><span class="va">patterns</span>, <span class="st">"fill"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/scale_pattern_manual.html" class="external-link">scale_pattern_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="reference/cheysson_pattern_params.html">cheysson_pattern_params</a></span><span class="op">(</span><span class="va">patterns</span>, <span class="st">"pattern_fill"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/scale_pattern_manual.html" class="external-link">scale_pattern_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="reference/cheysson_pattern_params.html">cheysson_pattern_params</a></span><span class="op">(</span><span class="va">patterns</span>, <span class="st">"pattern_type"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-pattern-swatches-1.png" alt="" width="100%"></p>
+<p>Use the pattern scales directly in a plot, alongside the matching fill scale:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>category <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">23</span>, <span class="fl">18</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">category</span>, <span class="va">value</span>, fill <span class="op">=</span> <span class="va">category</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/geom-docs.html" class="external-link">geom_col_pattern</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="va">category</span>, pattern_fill <span class="op">=</span> <span class="va">category</span><span class="op">)</span>,</span>
+<span>    pattern_density <span class="op">=</span> <span class="fl">0.35</span>, color <span class="op">=</span> <span class="st">"black"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="reference/scale_fill_cheysson_pattern.html">scale_fill_cheysson_pattern</a></span><span class="op">(</span><span class="st">"1886_24"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/scale_pattern_manual.html" class="external-link">scale_pattern_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="reference/cheysson_pattern_params.html">cheysson_pattern_params</a></span><span class="op">(</span><span class="va">patterns</span>, <span class="st">"pattern_type"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/scale_pattern_manual.html" class="external-link">scale_pattern_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="reference/cheysson_pattern_params.html">cheysson_pattern_params</a></span><span class="op">(</span><span class="va">patterns</span>, <span class="st">"pattern_fill"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Statistical Comparison"</span>, x <span class="op">=</span> <span class="st">"Category"</span>, y <span class="op">=</span> <span class="st">"Value"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-pattern-bars-1.png" alt="" width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="id_️-font-families">✍️ Font Families<a class="anchor" aria-label="anchor" href="#id_%EF%B8%8F-font-families"></a>
@@ -396,7 +430,7 @@
 <img src="reference/figures/fonts1.png" height="400">
 </center>
 <p>To use these:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load fonts</span></span>
 <span><span class="fu"><a href="reference/load_cheysson_fonts.html">load_cheysson_fonts</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"showtext"</span><span class="op">)</span></span>
 <span><span class="fu">showtext</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_auto.html" class="external-link">showtext_auto</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -537,7 +571,7 @@
 <h2 id="id_-citation">📖 Citation<a class="anchor" aria-label="anchor" href="#id_-citation"></a>
 </h2>
 <p>To cite <code>ggCheysson</code>, please use:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"ggCheysson"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; To cite package 'ggCheysson' in publications use:</span></span>
 <span><span class="co">#&gt; </span></span>

@@ -304,20 +304,64 @@ Palette types:
 
 ## 📐 Pattern Support
 
-With ggpattern, recreate the distinctive hatching styles:
+With ggpattern, recreate the distinctive hatching styles - each palette
+pairs colors with historically accurate patterns (solid fills, stripes,
+crosshatching):
 
 ``` r
+library(ggpattern)
+
 # List available pattern palettes
-list_cheysson_patterns()
+head(list_cheysson_patterns())
+#>      name       type album plate n_patterns
+#> 1 1880_07    grouped  1880     7          7
+#> 2 1880_21   category  1880    21          7
+#> 3 1881_12 sequential  1881    12          3
+#> 4 1881_14    grouped  1881    14          4
+#> 5 1881_22   category  1881    22          4
+#> 6 1881_30    grouped  1881    30          8
 
-# Get pattern specifications
-patterns <- cheysson_pattern("1883_13")
-
-# Use in plots with pattern scales
-scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type"))
-scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill"))
-scale_pattern_angle_cheysson("1883_13")
+# Get pattern specifications for one palette
+patterns <- cheysson_pattern("1886_24")
 ```
+
+``` r
+# Display the palette's patterns as swatches
+n <- length(patterns)
+ggplot(data.frame(i = factor(seq_len(n))), aes(i, 1, fill = i)) +
+  geom_col_pattern(
+    aes(pattern = i, pattern_fill = i),
+    pattern_density = 0.35, pattern_spacing = 0.03,
+    color = "black", width = 0.95
+  ) +
+  scale_fill_manual(values = cheysson_pattern_params(patterns, "fill")) +
+  scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")) +
+  scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")) +
+  theme_void() +
+  theme(legend.position = "none")
+```
+
+<img src="man/figures/README-pattern-swatches-1.png" alt="" width="100%" />
+
+Use the pattern scales directly in a plot, alongside the matching fill
+scale:
+
+``` r
+data <- data.frame(category = LETTERS[1:4], value = c(15, 23, 18, 20))
+
+ggplot(data, aes(category, value, fill = category)) +
+  geom_col_pattern(
+    aes(pattern = category, pattern_fill = category),
+    pattern_density = 0.35, color = "black"
+  ) +
+  scale_fill_cheysson_pattern("1886_24") +
+  scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")[1:4]) +
+  scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")[1:4]) +
+  labs(title = "Statistical Comparison", x = "Category", y = "Value") +
+  theme_minimal()
+```
+
+<img src="man/figures/README-pattern-bars-1.png" alt="" width="100%" />
 
 ## ✍️ Font Families
 
