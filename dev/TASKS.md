@@ -343,8 +343,44 @@ even after another machine's `.git` has been moved out.
       `extract_colorpat_pairings.R` + `COLORPAT_EXTRACTION_TEMPLATE.md` are reference-only now
       (Rumsey-plate URLs, `NA`-gap list) given production data likely already covers this.
       
-    - Not yet decided with user: whether to actually delete/archive the superseded files, or just
-      leave them and work from the "current" set identified above.
+    - [x] 2026-09-16: **resolved.** Read the actual content myself (not just the subagent's
+      earlier pass) before deciding, since it matters which category each file lands in. One
+      correction to the subagent's read: it called `colorpat_extraction/` "reference-only... given
+      production data likely already covers this" - disagree after reading it directly. It holds
+      manually-verified (color, pattern) *pairing* data plus qualitative judgment calls
+      (flagged ambiguous patterns, identified design patterns like "monochrome sequential" /
+      "diverging dual-encoded") that the production `cheysson_patterns` table doesn't capture -
+      this is the most directly relevant resource for the color+pattern-combination gap noted
+      above, not superseded by anything. Kept in place, not moved.
+      
+      Verdict: **nothing in `dev/colorpat/` is "truly not useful"** - everything is real work
+      product, nothing broken/empty/junk. Split into current (stays in `dev/colorpat/` directly)
+      vs. superseded-but-has-narrative-value (moved to `dev/colorpat/old/`, kept as one unit since
+      the docs/scripts/images cross-reference each other by filename - see
+      `dev/colorpat/old/README.md`):
+      - **Moved to `old/`** (17 files): `PROTOTYPE_SUMMARY.md`, `THREE_PALETTES_SUMMARY.md`,
+        `FIVE_PALETTES_SUMMARY.md`, `TEN_PALETTES_SUMMARY.md`, `test_prototype_colorpat.R`,
+        `test_all_prototypes.R`, `test_five_palettes.R`, and the 10 PNGs those three scripts
+        generate - all genuinely superseded by `PROGRESS_UPDATE.md`/`test_ten_palettes.R`, but
+        kept (not deleted) for the narrative record of how the design evolved.
+      - **Kept in place**: `COLORPAT_ISSUE_SUMMARY.md`, `UNIFIED_COLOR_PATTERN_PLAN.md`,
+        `COLORPAT_EXTRACTION_TEMPLATE.md`, `colorpat_extraction/` (all 7 files, see above),
+        `colorpat_extractions.RData`, `extract_colorpat_pairings.R`, `PROGRESS_UPDATE.md`,
+        `prototype_colorpat.R`, `test_ten_palettes.R`/`.png`, plus everything from this week's
+        active session work (`PATTERN_SCALE_BUGS.md`, `RJ-Andrews-reconstruct.*`,
+        `all_patterns_overview.png`, `palette_id_crosswalk.*`, `show_all_patterns.R`,
+        `test_pattern_scale_bugs.R`, `test_broken/fixed.png`).
+      
+      Checked nothing outside `dev/colorpat/` references any moved file before moving (`grep -rl`
+      across `R/`, `data-raw/`, vignettes, README - clean). Updated `dev/README.md`'s stale
+      "ON HOLD"/"too complex" framing to point at this file and note the branch resumed.
+      
+      **Important caveat, not fixed here**: `colorpat_extraction/`'s 4 palette `.md` files,
+      `PROGRESS_UPDATE.md`, and `prototype_colorpat.R` all predate 2026-09-16's naming fix and use
+      the old, now-invalid `Album_Qty` names throughout - `colorpat_extraction/README.md` even
+      flags the exact collision we later found and fixed ("'1881_04' appears twice in source data
+      with different types"). Any reuse of this material needs a rename pass first (mapping in
+      `dev/colorpat/palette_id_crosswalk.R`).
 
 - [ ] Another post from Tom Shanley: https://observablehq.com/@tomshanley/cheysson-grid discusses
   "programmatically creating gridlines like those used these charts created by Émile Cheysson in
