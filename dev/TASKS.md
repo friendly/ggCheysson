@@ -296,8 +296,19 @@ even after another machine's `.git` has been moved out.
       
       Verified via full `R CMD check` (0/0/0, examples included) and an actual
       `devtools::build_vignettes()` run (both vignettes rebuild clean) - not just a check that
-      skips vignettes. Rebuilt pkgdown and `README.md` afterward. All on `colorpat`, not pushed
-      yet.
+      skips vignettes. Rebuilt pkgdown and `README.md` afterward. Pushed (`faa789a`).
+
+    - [x] 2026-09-16: added 2 real (previously eval=FALSE / nonexistent) pattern examples to
+      README's Pattern Support section, using `1886_24` (good solid/stripe/crosshatch variety).
+      Pushed (`c384ad9`). **User flag, for the record - not yet addressed**: these examples don't
+      actually show the color+pattern *combination* style that inspired Andrews/Shanley's
+      original swatches (a solid color field with a contrasting pattern overlaid on top - two
+      encodings combined). The swatch example maps `fill` from
+      `cheysson_pattern_params(patterns, "fill")`, which is `"transparent"` for every hatch-type
+      entry (see `PATTERN_SCALE_BUGS.md`'s note on `scale_fill_cheysson_pattern()` - this is by
+      design, matching the historical "hatching on bare paper" style, not a bug) - so those
+      swatches show *only* a pattern on white, not a colored background with a pattern on top.
+      This is the same underlying gap the unified color-pattern work below was meant to close.
       
     - **`UNIFIED_COLOR_PATTERN_PLAN.md` has a real API plan**: new data object
       `cheysson_colorpat_palettes` (list of palettes, each with `elements` =
