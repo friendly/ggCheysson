@@ -108,11 +108,20 @@ pattern he thought characterized these maps:
 
 ![](reference/figures/color-palettes.png)
 
-### Not Yet
+### New here
 
-This initial version of the package defines separate functions and
-`ggplot2` scales for color palettes and shading patterns. Their
-combination into Cheysson “color - pattern” features is planned.
+This initial version (1.0.1) of the package defined separate functions
+and `ggplot2` scales for color palettes and shading patterns.
+
+Combining them correctly in one plot took real fixing: the pattern
+scales
+([`scale_pattern_type_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md),
+[`scale_pattern_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md))
+had bugs that silently prevented pattern type and color from varying by
+category at all - now fixed, so colors and patterns can be layered
+together as shown below. A fully unified API that applies Cheysson’s
+actual *designed* color-pattern pairings in a single call, matching the
+combined look of the original Albums, is still in development.
 
 ## 🚀 Quick Start
 

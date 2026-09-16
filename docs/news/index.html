@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggCheysson</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,6 +36,14 @@
       <small>Source: <a href="https://github.com/friendly/ggCheysson/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.1.0" id="ggcheysson-110">ggCheysson 1.1.0<a class="anchor" aria-label="anchor" href="#ggcheysson-110"></a></h2>
+<ul><li><p><strong>Breaking change</strong>: fixed a palette-naming collision bug. Palette names were built from <code>Album + Qty</code> (e.g. <code>"1880_07"</code>), but <code>Qty</code> is not a unique plate identifier - it’s a colors/pattern-element count that happened to repeat across genuinely different plates. 4 such collisions silently overwrote 5 of the original 25 palettes during data extraction. Names are now built from the real, unique plate identifier (<code>RumseyListNo</code>’s decimal suffix) instead: 19 of the 20 previously-shipped palettes have a new name, and all 5 previously-missing palettes are now included - <code>cheysson_palettes</code>/<code>cheysson_patterns</code> now have <strong>25</strong> palettes (was 20), with 134 pattern specifications (was 83). See the new <code>cheysson_labels</code> dataset (below) to map an old name to its new one</p></li>
+<li><p>Fixed 15 missing pattern elements across 6 palettes (<code>1882_04</code>, <code>1883_07</code>, <code>1886_04</code>, <code>1886_07</code>, <code>1887_06</code>, <code>1900_06</code>, in their old names): an SVG-parsing bug silently dropped hatch-line patterns whose coordinates relied on SVG’s implicit default of 0 for an omitted <code>x1</code>/<code>y1</code>/<code>x2</code>/<code>y2</code> attribute</p></li>
+<li><p>Fixed two <code>scale_pattern_*_cheysson()</code> bugs: <code><a href="../reference/scale_pattern_cheysson.html">scale_pattern_type_cheysson()</a></code> targeted the wrong ggpattern aesthetic (<code>pattern_type</code> instead of <code>pattern</code>) and so never actually varied the rendered pattern shape by category; <code><a href="../reference/scale_pattern_cheysson.html">scale_pattern_fill_cheysson()</a></code> read the wrong parameter (<code>fill</code> instead of <code>pattern_fill</code>) and always returned <code>"transparent"</code> regardless of palette</p></li>
+<li><p>Added <code>cheysson_labels</code>, a new dataset mapping every palette’s current name to its previous (pre-fix) name, RJ Andrews’ original Advent-calendar label, Tom Shanley’s Observable notebook ID, and the underlying David Rumsey catalog number - useful for looking up a palette by whichever naming scheme you encountered it in</p></li>
+<li><p>Added real (rendered) pattern examples to the README’s Pattern Support section, which previously had none</p></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.1" id="ggcheysson-101">ggCheysson 1.0.1<a class="anchor" aria-label="anchor" href="#ggcheysson-101"></a></h2>
 <ul><li><p>Fixed undersized axis and legend titles in <code><a href="../reference/theme_cheysson.html">theme_cheysson()</a></code> (inherited by <code><a href="../reference/theme_cheysson_minimal.html">theme_cheysson_minimal()</a></code>): <code>CheyssonSansCaps</code> renders visibly smaller than other package fonts at the same nominal size, so title text is now scaled up to match</p></li>

@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="index.html">ggCheysson</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -171,9 +171,10 @@
 </center>
 </div>
 <div class="section level3">
-<h3 id="not-yet">Not Yet<a class="anchor" aria-label="anchor" href="#not-yet"></a>
+<h3 id="new-here">New here<a class="anchor" aria-label="anchor" href="#new-here"></a>
 </h3>
-<p>This initial version of the package defines separate functions and <code>ggplot2</code> scales for color palettes and shading patterns. Their combination into Cheysson “color - pattern” features is planned.</p>
+<p>This initial version (1.0.1) of the package defined separate functions and <code>ggplot2</code> scales for color palettes and shading patterns.</p>
+<p>Combining them correctly in one plot took real fixing: the pattern scales (<code><a href="reference/scale_pattern_cheysson.html">scale_pattern_type_cheysson()</a></code>, <code><a href="reference/scale_pattern_cheysson.html">scale_pattern_fill_cheysson()</a></code>) had bugs that silently prevented pattern type and color from varying by category at all - now fixed, so colors and patterns can be layered together as shown below. A fully unified API that applies Cheysson’s actual <em>designed</em> color-pattern pairings in a single call, matching the combined look of the original Albums, is still in development.</p>
 </div>
 </div>
 <div class="section level2">
