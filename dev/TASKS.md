@@ -248,6 +248,28 @@ even after another machine's `.git` has been moved out.
       showing the 5 lost ones as explicit grey crosshatch placeholders (correctly labeled from
       `data-raw/observable/albumColors.csv`, which has all 25 rows) rather than omitting or
       approximating them.
+
+    - [x] 2026-09-16: cross-checked the naming-collision finding against Tom Shanley's own IDs
+      (`man/figures/shanley-palettes.png`, scheme `{type}{RumseyListNo digits}`, e.g.
+      `diverging12541021`) - 24/24 legible IDs resolve to a unique `advent_day` via
+      `RumseyListNo`, confirming it (equivalently `dec_day`) really is the one reliable key. Found
+      2 isolated typos in Shanley's ID *strings* specifically (not his prose, not Andrews' labels):
+      `diverging12541021` has digits 4/5 transposed (should be `diverging12514021`), and
+      `category1252605` is missing a trailing digit (should be `category12526050`). Also checked
+      whether `Qty` (the field the current naming bug uses) might mean something else useful: it
+      matches the actual shipped pattern-element count for 18/20 currently-shipped palettes
+      (2 mismatches, `advent_day` 5 and 22, not investigated further) - strong evidence `Qty` is a
+      swatch/element count, not a plate identifier, which is exactly why it collides.
+    - [x] 2026-09-16: built `dev/colorpat/palette_id_crosswalk.{R,csv}` - one row per advent day
+      (25 rows), columns `advent_day, album_year, plate, type, qty, rumsey_no,
+      current_pkg_name, shipped, andrews_label, shanley_id`. `plate` = `rumsey_no`'s decimal
+      suffix (there's no separate "plate number" field in any source data - this functions as the
+      de facto unique plate identifier, per the Shanley cross-check above; it's Rumsey's own
+      catalog suffix, not necessarily Cheysson's original plate/page number, which isn't
+      recoverable from data in this repo). Makes the 4 collision groups and all 5 lost advent days
+      fully explicit via `shipped == FALSE`, and gives three lookup paths (advent_day, rumsey_no,
+      or either external label) into the same data. Will need re-running if/when the underlying
+      Album+Qty naming scheme is fixed (kept as a script, not a one-off, for exactly that reason).
       
     - **`UNIFIED_COLOR_PATTERN_PLAN.md` has a real API plan**: new data object
       `cheysson_colorpat_palettes` (list of palettes, each with `elements` =
