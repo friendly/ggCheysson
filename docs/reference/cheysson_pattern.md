@@ -6,14 +6,14 @@ ggpattern.
 ## Usage
 
 ``` r
-cheysson_pattern(palette = "1881_03", n = NULL, type = 1)
+cheysson_pattern(palette = "1881_12", n = NULL, type = 1)
 ```
 
 ## Arguments
 
 - palette:
 
-  Name of palette (e.g., "1881_03") or palette type ("sequential",
+  Name of palette (e.g., "1881_12") or palette type ("sequential",
   "diverging", "grouped", "category").
 
 - n:
@@ -33,7 +33,7 @@ A list of pattern specifications suitable for ggpattern
 
 ``` r
 # Get all patterns from a palette
-cheysson_pattern("1881_03")
+cheysson_pattern("1881_12")
 #> [[1]]
 #> [[1]]$type
 #> [1] "stripe"
@@ -111,7 +111,7 @@ cheysson_pattern("1881_03")
 #> 
 
 # Get first 3 patterns
-cheysson_pattern("1881_03", n = 3)
+cheysson_pattern("1881_12", n = 3)
 #> [[1]]
 #> [[1]]$type
 #> [1] "stripe"

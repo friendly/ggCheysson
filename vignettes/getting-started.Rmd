@@ -62,7 +62,7 @@ if (requireNamespace("showtext", quietly = TRUE) &&
 
 ## Color Palettes
 
-The package includes 20 color palettes organized into four types:
+The package includes 25 color palettes organized into four types:
 
 ```{r list-palettes}
 # View all available palettes
@@ -81,7 +81,7 @@ data(iris)
 
 p1 <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Petal.Length)) +
   geom_point(size = 3, alpha = 0.8) +
-  scale_color_cheysson("1880_07", discrete = FALSE) +
+  scale_color_cheysson("1880_21", discrete = FALSE) +
   labs(
     title = "Iris Measurements",
     subtitle = "Using Sequential Palette 1880_07",
@@ -99,7 +99,7 @@ print(p1)
 ```{r scatterplot-category, fig.height=5, fig.width=7}
 p2 <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   geom_point(size = 3, alpha = 0.8) +
-  scale_color_cheysson("1881_04") +
+  scale_color_cheysson("1881_22") +
   labs(
     title = "Iris Species Comparison",
     subtitle = "Using Categorical Palette 1881_04",
@@ -123,7 +123,7 @@ cyl_summary$cyl <- factor(cyl_summary$cyl)
 
 p3 <- ggplot(cyl_summary, aes(cyl, mpg, fill = cyl)) +
   geom_col(color = "black", linewidth = 0.8) +
-  scale_fill_cheysson("1883_04") +
+  scale_fill_cheysson("1883_31") +
   labs(
     title = "Automobile Efficiency by Cylinder Count",
     subtitle = "Average Miles per Gallon",
@@ -154,9 +154,9 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
       color = "black",
       linewidth = 0.8
     ) +
-    scale_fill_cheysson_pattern("1881_03") +
-    scale_pattern_fill_cheysson("1881_03") +
-    scale_pattern_type_cheysson("1881_03") +
+    scale_fill_cheysson_pattern("1881_12") +
+    scale_pattern_fill_cheysson("1881_12") +
+    scale_pattern_type_cheysson("1881_12") +
     labs(
       title = "Export Statistics by Nation",
       subtitle = "Annual Trade Volume (1885)",
@@ -188,7 +188,7 @@ railway_data <- data.frame(
 p5 <- ggplot(railway_data, aes(year, volume, color = type)) +
   geom_line(linewidth = 1.5) +
   geom_point(size = 2.5) +
-  scale_color_cheysson("1883_04") +
+  scale_color_cheysson("1883_31") +
   labs(
     title = "Railway Traffic Development",
     subtitle = "Transportation Volume Index (1880-1900)",
@@ -222,7 +222,7 @@ industry_data <- data.frame(
 
 p6 <- ggplot(industry_data, aes(year, value, fill = sector)) +
   geom_area(alpha = 0.85, color = "black", linewidth = 0.4) +
-  scale_fill_cheysson("1881_04") +
+  scale_fill_cheysson("1881_22") +
   labs(
     title = "Industrial Production by Sector",
     subtitle = "Economic Output Distribution (1880-1895)",
@@ -296,9 +296,9 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
       color = "black",
       linewidth = 0.5
     ) +
-    scale_fill_cheysson_pattern("1881_03") +
-    scale_pattern_fill_cheysson("1881_03") +
-    scale_pattern_type_cheysson("1881_03") +
+    scale_fill_cheysson_pattern("1881_12") +
+    scale_pattern_fill_cheysson("1881_12") +
+    scale_pattern_type_cheysson("1881_12") +
     labs(
       title = "Transportation Network Comparison",
       subtitle = "Infrastructure Development by Region (1890)",
@@ -329,7 +329,7 @@ departments <- data.frame(
 p9 <- ggplot(departments, aes(x, y, fill = value)) +
   geom_tile(color = "black", linewidth = 1.2) +
   geom_text(aes(label = dept), size = 3.5, fontface = "bold") +
-  scale_fill_cheysson("1880_07", discrete = FALSE) +
+  scale_fill_cheysson("1880_21", discrete = FALSE) +
   coord_equal() +
   labs(
     title = "Regional Statistics Map",
@@ -381,8 +381,8 @@ print(p10)
 
 The ggCheysson package provides:
 
-- **20 color palettes** in 4 types (sequential, diverging, grouped, category)
-- **83 pattern specifications** for ggpattern integration
+- **25 color palettes** in 4 types (sequential, diverging, grouped, category)
+- **134 pattern specifications** for ggpattern integration
 - **5 font families** for authentic period styling
 - **3 complete themes** for different visualization needs
 

@@ -120,7 +120,7 @@ cat("Departments with data:", sum(!is.na(france_data$Crime_pers)), "\n")
 # Map of crimes against persons
 p1 <- ggplot(france_data) +
   geom_sf(aes(fill = Crime_pers_rank), color = "black", linewidth = 0.3) +
-  scale_fill_cheysson("1895_04", discrete = FALSE,
+  scale_fill_cheysson("1895_16", discrete = FALSE,
                       name = "Rank") +
   labs(
     title = "Crimes Against Persons",
@@ -144,7 +144,7 @@ print(p1)
 ``` r
 p2 <- ggplot(france_data) +
   geom_sf(aes(fill = Crime_prop_rank), color = "black", linewidth = 0.3) +
-  scale_fill_cheysson("1895_04", discrete = FALSE,
+  scale_fill_cheysson("1895_16", discrete = FALSE,
                       name = "Rank") +
   labs(
     title = "Crimes Against Property",
@@ -176,7 +176,7 @@ france_data$Literacy_quint <- cut(france_data$Literacy_rank,
 
 p3 <- ggplot(france_data) +
   geom_sf(aes(fill = Literacy_quint), color = "black", linewidth = 0.3) +
-  scale_fill_cheysson("1881_04",
+  scale_fill_cheysson("1881_22",
                       name = "Literacy\nQuintile",
                       na.value = "grey80") +
   labs(
@@ -206,17 +206,16 @@ patterns combined with colors:
 p3b <- ggplot(france_data) +
   geom_sf_pattern(
     aes(fill = Literacy_quint,
-        pattern_type = Literacy_quint,
+        pattern = Literacy_quint,
         pattern_fill = Literacy_quint),
-    pattern = "stripe",
     pattern_density = 0.3,
     pattern_spacing = 0.02,
     color = "black",
     linewidth = 0.4
   ) +
-  scale_fill_cheysson_pattern("1881_04", na.value = "grey90") +
-  scale_pattern_fill_cheysson("1881_04", na.value = "grey90") +
-  scale_pattern_type_cheysson("1881_04") +
+  scale_fill_cheysson_pattern("1881_22", na.value = "grey90") +
+  scale_pattern_fill_cheysson("1881_22", na.value = "grey90") +
+  scale_pattern_type_cheysson("1881_22") +
   labs(
     title = "Literacy Rates with Cheysson Patterns",
     subtitle = "Combining colors and hatching patterns (quintiles)",
@@ -230,7 +229,7 @@ p3b <- ggplot(france_data) +
   ) +
   guides(
     fill = guide_legend(title = "Literacy\nQuintile"),
-    pattern_type = guide_legend(title = "Literacy\nQuintile"),
+    pattern = guide_legend(title = "Literacy\nQuintile"),
     pattern_fill = "none"
   )
 
@@ -252,7 +251,7 @@ france_data$Donations_cat <- cut(france_data$Donations_rank,
 
 p4 <- ggplot(france_data) +
   geom_sf(aes(fill = Donations_cat), color = "black", linewidth = 0.3) +
-  scale_fill_cheysson("1883_04",
+  scale_fill_cheysson("1883_31",
                       name = "Donations\nLevel",
                       na.value = "grey80") +
   labs(
@@ -282,17 +281,16 @@ Here’s the donations map in authentic Cheysson style:
 p4b <- ggplot(france_data) +
   geom_sf_pattern(
     aes(fill = Donations_cat,
-        pattern_type = Donations_cat,
+        pattern = Donations_cat,
         pattern_fill = Donations_cat),
-    pattern = "stripe",
     pattern_density = 0.35,
     pattern_spacing = 0.025,
     color = "black",
     linewidth = 0.4
   ) +
-  scale_fill_cheysson_pattern("1883_04", na.value = "grey90") +
-  scale_pattern_fill_cheysson("1883_04", na.value = "grey90") +
-  scale_pattern_type_cheysson("1883_04") +
+  scale_fill_cheysson_pattern("1883_31", na.value = "grey90") +
+  scale_pattern_fill_cheysson("1883_31", na.value = "grey90") +
+  scale_pattern_type_cheysson("1883_31") +
   labs(
     title = "Charitable Donations with Hatching Patterns",
     subtitle = "Authentic Cheysson-style patterns and colors (quartiles)",
@@ -306,7 +304,7 @@ p4b <- ggplot(france_data) +
   ) +
   guides(
     fill = guide_legend(title = "Donations\nLevel"),
-    pattern_type = guide_legend(title = "Donations\nLevel"),
+    pattern = guide_legend(title = "Donations\nLevel"),
     pattern_fill = "none"
   )
 
@@ -320,7 +318,7 @@ print(p4b)
 ``` r
 p5 <- ggplot(france_data) +
   geom_sf(aes(fill = Infants_rank), color = "black", linewidth = 0.3) +
-  scale_fill_cheysson("1891_07", discrete = FALSE,
+  scale_fill_cheysson("1891_25", discrete = FALSE,
                       name = "Rank") +
   labs(
     title = "Illegitimate Births",
@@ -344,7 +342,7 @@ print(p5)
 ``` r
 p6 <- ggplot(france_data) +
   geom_sf(aes(fill = Suicides_rank), color = "black", linewidth = 0.3) +
-  scale_fill_cheysson("1887_06", discrete = FALSE,
+  scale_fill_cheysson("1887_22", discrete = FALSE,
                       name = "Rank") +
   labs(
     title = "Suicides",
@@ -387,7 +385,7 @@ crime_long <- france_data |>
 
 p7 <- ggplot(crime_long) +
   geom_sf(aes(fill = Rank), color = "grey30", linewidth = 0.2) +
-  scale_fill_cheysson("1895_04", discrete = FALSE,
+  scale_fill_cheysson("1895_16", discrete = FALSE,
                       name = "Rank") +
   facet_wrap(~ Variable, ncol = 2) +
   labs(
@@ -457,9 +455,8 @@ patterns to distinguish regions:
 p8b <- ggplot(france_data) +
   geom_sf_pattern(
     aes(fill = .data[[region_col]],
-        pattern_type = .data[[region_col]],
+        pattern = .data[[region_col]],
         pattern_fill = .data[[region_col]]),
-    pattern = "stripe",
     pattern_density = 0.3,
     pattern_spacing = 0.02,
     color = "black",
@@ -481,7 +478,7 @@ p8b <- ggplot(france_data) +
   ) +
   guides(
     fill = guide_legend(title = "Region"),
-    pattern_type = guide_legend(title = "Region"),
+    pattern = guide_legend(title = "Region"),
     pattern_fill = "none"
   )
 
@@ -511,7 +508,7 @@ france_data$Bivariate <- paste0(france_data$Crime_cat, "\n",
 # Plot
 p9 <- ggplot(france_data) +
   geom_sf(aes(fill = Crime_pers_rank), color = "black", linewidth = 0.5) +
-  scale_fill_cheysson("1895_04", discrete = FALSE, name = "Crime\nRank") +
+  scale_fill_cheysson("1895_16", discrete = FALSE, name = "Crime\nRank") +
   # Add point symbols sized by literacy
   geom_sf_text(aes(label = ifelse(Literacy_rank > 70, "H",
                                   ifelse(Literacy_rank < 25, "L", ""))),
@@ -571,32 +568,37 @@ choropleth maps:
 # Sequential palettes (good for continuous rankings)
 list_cheysson_pals("sequential")
 #>      name       type album plate n_colors
-#> 1 1881_03 sequential  1881     3        1
-#> 2 1886_04 sequential  1886     4        2
-#> 3 1888_05 sequential  1888     5        1
-#> 4 1891_06 sequential  1891     6        1
-#> 5 1891_07 sequential  1891     7        2
-#> 6 1895_04 sequential  1895     4        3
-#> 7 1900_06 sequential  1900     6        2
+#> 1 1881_12 sequential  1881    12        1
+#> 2 1886_26 sequential  1886    26        2
+#> 3 1888_27 sequential  1888    27        1
+#> 4 1891_19 sequential  1891    19        1
+#> 5 1891_25 sequential  1891    25        2
+#> 6 1895_16 sequential  1895    16        3
+#> 7 1900_28 sequential  1900    28        2
 
 # Grouped palettes (good for categories)
 list_cheysson_pals("grouped")
-#>      name    type album plate n_colors
-#> 1 1881_08 grouped  1881     8        5
-#> 2 1882_04 grouped  1882     4        2
-#> 3 1886_08 grouped  1886     8        4
-#> 4 1887_06 grouped  1887     6        2
-#> 5 1891_03 grouped  1891     3        2
+#>       name    type album plate n_colors
+#> 1  1880_07 grouped  1880     7        5
+#> 2  1881_14 grouped  1881    14        2
+#> 3  1881_30 grouped  1881    30        5
+#> 4  1882_18 grouped  1882    18        2
+#> 5  1886_11 grouped  1886    11        4
+#> 6  1886_17 grouped  1886    17        3
+#> 7  1886_18 grouped  1886    18        3
+#> 8  1886_24 grouped  1886    24        3
+#> 9  1887_22 grouped  1887    22        2
+#> 10 1891_14 grouped  1891    14        2
 
 # Category palettes (good for discrete regions)
 list_cheysson_pals("category")
 #>      name     type album plate n_colors
-#> 1 1880_07 category  1880     7        7
-#> 2 1881_04 category  1881     4        4
-#> 3 1883_06 category  1883     6        4
-#> 4 1886_07 category  1886     7        3
-#> 5 1906_04 category  1906     4        4
-#> 6 1906_06 category  1906     6        6
+#> 1 1880_21 category  1880    21        7
+#> 2 1881_22 category  1881    22        4
+#> 3 1883_13 category  1883    13        4
+#> 4 1886_28 category  1886    28        3
+#> 5 1906_06 category  1906     6        6
+#> 6 1906_50 category  1906    50        4
 ```
 
 **Note**: When using `discrete = FALSE`, even category palettes can

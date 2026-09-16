@@ -5,7 +5,7 @@
 \alias{cheysson_patterns}
 \title{Cheysson Pattern Data}
 \format{
-A list of 20 pattern palettes, each containing:
+A list of 25 pattern palettes, each containing:
 \describe{
 \item{patterns}{List of pattern specifications with fill colors and hatching parameters}
 \item{type}{Palette type: "sequential", "diverging", "grouped", or "category"}
@@ -44,7 +44,7 @@ Each pattern specification includes:
 names(cheysson_patterns)
 
 # Get patterns from a specific palette
-cheysson_patterns$`1881_03`
+cheysson_patterns$`1881_12`
 
 }
 \seealso{

@@ -30,6 +30,6 @@ palettes or showing all palettes of a certain type.
 show_palettes("sequential", ncol = 2)
 
 # Show specific palettes
-show_palettes(c("1880_07", "1881_03", "1895_04"))
+show_palettes(c("1880_21", "1881_12", "1895_16"))
 
 }

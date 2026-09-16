@@ -5,7 +5,7 @@
 \alias{cheysson_palettes}
 \title{Cheysson Color Palettes}
 \format{
-A list of 20 color palettes, each containing:
+A list of 25 color palettes, each containing:
 \describe{
 \item{colors}{Character vector of hex color codes}
 \item{type}{Palette type: "sequential", "diverging", "grouped", or "category"}
@@ -39,7 +39,7 @@ Palette types:
 \itemize{
 \item \strong{Sequential} (7 palettes): Ordered colors for quantitative data
 \item \strong{Diverging} (2 palettes): Two contrasting colors with neutral midpoint
-\item \strong{Grouped} (5 palettes): Related colors for comparing groups
+\item \strong{Grouped} (10 palettes): Related colors for comparing groups
 \item \strong{Category} (6 palettes): Distinct colors for categorical data
 }
 }

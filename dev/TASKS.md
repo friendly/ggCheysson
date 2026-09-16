@@ -270,6 +270,34 @@ even after another machine's `.git` has been moved out.
       fully explicit via `shipped == FALSE`, and gives three lookup paths (advent_day, rumsey_no,
       or either external label) into the same data. Will need re-running if/when the underlying
       Album+Qty naming scheme is fixed (kept as a script, not a one-off, for exactly that reason).
+
+    - [x] 2026-09-16: **fixed the Album+Qty naming scheme itself.** `data-raw/cheysson_palettes.R`
+      and `cheysson_patterns.R` now derive `plate` from `RumseyListNo`'s decimal suffix instead of
+      `Qty` (both scripts had the identical flawed line; also fixed the `plate` metadata field
+      each stored, which was silently just `Qty` under a misleading name). Regenerated
+      `data/cheysson_palettes.rda` and `data/cheysson_patterns.rda`: 20 -> **25** palettes, all 4
+      collisions resolved, all 5 previously-lost advent days recovered. Verified: names match
+      `dev/colorpat/palette_id_crosswalk.csv`'s `new_name` column exactly for both data objects;
+      `dec_day` -> name is now a clean 1:1 map covering 1:25; 0 NULL gaps still (the earlier fix
+      holds); renamed palettes carry forward byte-identical color data (e.g. `1883_06` -> `1883_13`
+      still `#060201 #cb3f50 #366788 #365178`).
+      
+      This renames 19 of the 20 previously-shipped palettes (only `1906_06` coincides by chance -
+      `plate == Qty` for that one row), so propagated the new names everywhere: every
+      `scale_*_cheysson()`/`cheysson_pal()`/`cheysson_pattern()`/`show_palette()` default
+      argument, every roxygen `@examples` block, `README.Rmd`, both vignettes
+      (`getting-started.Rmd`, `guerry-maps.Rmd`), and the stale "20 palettes"/"83 patterns"
+      counts throughout (now 25/134). Left two illustrative "e.g." mentions of `"1880_07"`
+      unchanged (`R/palettes.R`'s and `R/data.R`'s naming-convention explainers) since that name
+      is still valid and, happily, now actually accurate (plate 7 of the 1880 album) where before
+      it was only coincidentally so. Also fixed a related doc bug in `R/data.R`: `albumImages`'s
+      `Qty` field was documented as "Plate number within the album" - corrected to describe what
+      it actually is.
+      
+      Verified via full `R CMD check` (0/0/0, examples included) and an actual
+      `devtools::build_vignettes()` run (both vignettes rebuild clean) - not just a check that
+      skips vignettes. Rebuilt pkgdown and `README.md` afterward. All on `colorpat`, not pushed
+      yet.
       
     - **`UNIFIED_COLOR_PATTERN_PLAN.md` has a real API plan**: new data object
       `cheysson_colorpat_palettes` (list of palettes, each with `elements` =

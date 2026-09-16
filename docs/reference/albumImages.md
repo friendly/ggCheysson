@@ -28,7 +28,11 @@ A data frame with 25 rows and 6 variables:
 
 - Qty:
 
-  Plate number within the album
+  Number of colors/pattern elements in the palette - not a plate
+  identifier (see
+  [`cheysson_palettes`](https://friendly.github.io/ggCheysson/reference/cheysson_palettes.md)
+  for the actual unique plate number, derived from `RumseyListNo`'s
+  decimal suffix)
 
 - Type:
 
@@ -57,7 +61,10 @@ The naming convention "adventDay" comes from RJ Andrews' original
 digitization project where he released one palette per day during
 December as an Advent calendar. The package uses the Album year and
 plate number for more intuitive palette naming (e.g., "1880_07" instead
-of "dec06").
+of "dec06"). The plate number is derived from `RumseyListNo`'s decimal
+suffix (e.g. "12511.007" -\> 7), which is the real unique per-plate
+identifier - not `Qty`, which is a count of colors/pattern elements in
+the palette and can repeat across genuinely different plates.
 
 ## See also
 

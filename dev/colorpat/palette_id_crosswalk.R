@@ -22,6 +22,7 @@
 #   This is Rumsey's own catalog suffix, not necessarily Cheysson's original
 #   plate/page number from the physical Albums - that isn't recoverable from
 #   any source data available in this repo.
+#
 # - qty: kept from the source CSV for reference. Despite the name, it is NOT
 #   a plate discriminator - it matches the shipped pattern-element count for
 #   18/20 currently-shipped palettes (checked against actual
@@ -30,13 +31,16 @@
 #   swatch/element count, not an identifier. That's exactly why two
 #   genuinely different plates can share a Qty value and collide under the
 #   current Album+Qty naming scheme.
+#
 # - current_pkg_name: the name data-raw/cheysson_palettes.R /
 #   cheysson_patterns.R would assign via paste0(Album, "_", sprintf("%02d",
 #   Qty)) - may not be unique (see the 4 collisions below).
+#
 # - shipped: TRUE if this adventDay's data survived extraction under
 #   current_pkg_name (FALSE = silently overwritten by a later adventDay
 #   sharing the same current_pkg_name; see dev/TASKS.md for the 4 collision
 #   groups and dev/colorpat/PATTERN_SCALE_BUGS.md-style writeup).
+#
 # - andrews_label / shanley_id: derived programmatically from the verified
 #   rule (type + adventDay + Album + plate), not scraped from either image -
 #   both are believed correct even for the 2 adventDays where Shanley's own

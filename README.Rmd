@@ -79,13 +79,13 @@ install.packages(c("ggpattern", "systemfonts"))
 This package provides a complete aesthetic system for creating visualizations in Cheysson's distinctive style:
 
 ### 🎨 Color Palettes
-- **20 authentic color palettes** extracted from the original Albums
+- **25 authentic color palettes** extracted from the original Albums
 - Sequential, diverging, grouped, and categorical palette types
-- Named by album year and plate number (e.g., `1880_07`, `1881_03`)
+- Named by album year and plate number (e.g., `1880_07`, `1881_12`)
 - Compatible with standard ggplot2 color scales
 
 ### 📐 Hatching Patterns
-- **83 pattern specifications** including solid fills, stripes, and crosshatching
+- **134 pattern specifications** including solid fills, stripes, and crosshatching
 - Line angles (0°, 45°, 90°, 135°) matching historical diagrams
 - Variable densities and line widths
 - Full integration with [ggpattern](https://coolbutuseless.github.io/package/ggpattern/)
@@ -132,7 +132,7 @@ library(ggCheysson)
 
 ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   geom_point(size = 3) +
-  scale_color_cheysson("1881_04") +
+  scale_color_cheysson("1881_22") +
   labs(title = "Iris Dataset") +
   theme_minimal()
 ```
@@ -147,7 +147,7 @@ showtext::showtext_auto()
 
 ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
   geom_point(size = 3) +
-  scale_color_cheysson("1883_04") +
+  scale_color_cheysson("1883_31") +
   labs(
     title = "Automobile Efficiency",
     subtitle = "Weight vs Fuel Economy",
@@ -169,7 +169,7 @@ data <- data.frame(
 
 # Pull the palette's pattern specs directly, so pattern type and hatch
 # color follow the actual data rather than a single fixed pattern
-patterns <- cheysson_pattern("1883_06")
+patterns <- cheysson_pattern("1883_13")
 
 ggplot(data, aes(category, value, fill = category)) +
   geom_col_pattern(
@@ -181,10 +181,10 @@ ggplot(data, aes(category, value, fill = category)) +
     pattern_density = 0.35,
     color = "black"
   ) +
-  scale_fill_cheysson_pattern("1883_06") +
+  scale_fill_cheysson_pattern("1883_13") +
   scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")) +
   scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")) +
-  scale_pattern_angle_cheysson("1883_06") +
+  scale_pattern_angle_cheysson("1883_13") +
   labs(
     title = "Statistical Comparison",
     x = "Category",
@@ -210,7 +210,7 @@ list_cheysson_pals("sequential")
 
 ```{r palette-colors}
 # View palette colors
-cheysson_pal("1880_07")
+cheysson_pal("1880_21")
 ```
 
 ### Visualizing Palettes
@@ -219,17 +219,17 @@ Use `show_palette()` to display a palette with color swatches and hex codes:
 
 ```{r show-palette, fig.height=2, fig.width=8}
 # Display a single palette with metadata
-show_palette("1895_04")
+show_palette("1895_16")
 ```
 
 ```{r show-palette-multi, fig.height=6, fig.width=8}
 # Display multiple palettes at once
-show_palettes(c("1880_07", "1881_03", "1895_04"))
+show_palettes(c("1880_21", "1881_12", "1895_16"))
 ```
 
 ```{r show-palette-grid, fig.height=4, fig.width=10}
 # Display four palettes in a 2x2 grid
-show_palettes(c("1880_07", "1881_03", "1895_04", "1906_06"), ncol = 2)
+show_palettes(c("1880_21", "1881_12", "1895_16", "1906_06"), ncol = 2)
 ```
 
 ```{r show-palette-type, fig.height=8, fig.width=8, eval=FALSE}
@@ -241,7 +241,7 @@ Palette types:
 
 - **Sequential** (7 palettes): For ordered quantitative data
 - **Diverging** (2 palettes): For data with neutral midpoint
-- **Grouped** (5 palettes): For comparing related groups
+- **Grouped** (10 palettes): For comparing related groups
 - **Category** (6 palettes): For categorical data
 
 ## 📐 Pattern Support
@@ -253,12 +253,12 @@ With ggpattern, recreate the distinctive hatching styles:
 list_cheysson_patterns()
 
 # Get pattern specifications
-patterns <- cheysson_pattern("1883_06")
+patterns <- cheysson_pattern("1883_13")
 
 # Use in plots with pattern scales
 scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type"))
 scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill"))
-scale_pattern_angle_cheysson("1883_06")
+scale_pattern_angle_cheysson("1883_13")
 ```
 
 ## ✍️ Font Families
@@ -299,8 +299,8 @@ theme(
 ## 📦 Package Contents
 
 ### Data
-- `cheysson_palettes` - Color palette specifications (20 palettes)
-- `cheysson_patterns` - Pattern/hatching specifications (83 patterns)
+- `cheysson_palettes` - Color palette specifications (25 palettes)
+- `cheysson_patterns` - Pattern/hatching specifications (134 patterns)
 - `cheysson_fonts` - Font family metadata (5 fonts)
 - `albumImages` - Metadata linking palettes to original album plates
 

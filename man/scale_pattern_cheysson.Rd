@@ -8,17 +8,17 @@
 \alias{scale_pattern_density_cheysson}
 \title{Cheysson pattern scales for ggpattern}
 \usage{
-scale_pattern_fill_cheysson(palette = "1881_03", reverse = FALSE, ...)
+scale_pattern_fill_cheysson(palette = "1881_12", reverse = FALSE, ...)
 
-scale_pattern_type_cheysson(palette = "1881_03", reverse = FALSE, ...)
+scale_pattern_type_cheysson(palette = "1881_12", reverse = FALSE, ...)
 
-scale_pattern_angle_cheysson(palette = "1881_03", reverse = FALSE, ...)
+scale_pattern_angle_cheysson(palette = "1881_12", reverse = FALSE, ...)
 
-scale_pattern_density_cheysson(palette = "1881_03", reverse = FALSE, ...)
+scale_pattern_density_cheysson(palette = "1881_12", reverse = FALSE, ...)
 }
 \arguments{
-\item{palette}{Name of palette (e.g., "1881_03") or palette type
-("sequential", "diverging", "grouped", "category"). Default is "1881_03".}
+\item{palette}{Name of palette (e.g., "1881_12") or palette type
+("sequential", "diverging", "grouped", "category"). Default is "1881_12".}
 
 \item{reverse}{Whether to reverse the pattern order. Default is FALSE.}
 

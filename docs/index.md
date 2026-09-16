@@ -1,6 +1,6 @@
 # ggCheysson
 
-Version 1.0.1; documentation built 2026-09-15
+Version 1.0.1; documentation built 2026-09-16
 
 The `ggCheysson` package brings the graphical styles of the *Albums de
 Statistique Graphique* to R and ggplot2.
@@ -67,14 +67,14 @@ visualizations in Cheysson’s distinctive style:
 
 ### 🎨 Color Palettes
 
-- **20 authentic color palettes** extracted from the original Albums
+- **25 authentic color palettes** extracted from the original Albums
 - Sequential, diverging, grouped, and categorical palette types
-- Named by album year and plate number (e.g., `1880_07`, `1881_03`)
+- Named by album year and plate number (e.g., `1880_07`, `1881_12`)
 - Compatible with standard ggplot2 color scales
 
 ### 📐 Hatching Patterns
 
-- **83 pattern specifications** including solid fills, stripes, and
+- **134 pattern specifications** including solid fills, stripes, and
   crosshatching
 - Line angles (0°, 45°, 90°, 135°) matching historical diagrams
 - Variable densities and line widths
@@ -128,7 +128,7 @@ library(ggCheysson)
 
 ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   geom_point(size = 3) +
-  scale_color_cheysson("1881_04") +
+  scale_color_cheysson("1881_22") +
   labs(title = "Iris Dataset") +
   theme_minimal()
 ```
@@ -145,7 +145,7 @@ showtext::showtext_auto()
 
 ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
   geom_point(size = 3) +
-  scale_color_cheysson("1883_04") +
+  scale_color_cheysson("1883_31") +
   labs(
     title = "Automobile Efficiency",
     subtitle = "Weight vs Fuel Economy",
@@ -169,7 +169,7 @@ data <- data.frame(
 
 # Pull the palette's pattern specs directly, so pattern type and hatch
 # color follow the actual data rather than a single fixed pattern
-patterns <- cheysson_pattern("1883_06")
+patterns <- cheysson_pattern("1883_13")
 
 ggplot(data, aes(category, value, fill = category)) +
   geom_col_pattern(
@@ -181,10 +181,10 @@ ggplot(data, aes(category, value, fill = category)) +
     pattern_density = 0.35,
     color = "black"
   ) +
-  scale_fill_cheysson_pattern("1883_06") +
+  scale_fill_cheysson_pattern("1883_13") +
   scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")) +
   scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")) +
-  scale_pattern_angle_cheysson("1883_06") +
+  scale_pattern_angle_cheysson("1883_13") +
   labs(
     title = "Statistical Comparison",
     x = "Category",
@@ -206,42 +206,47 @@ library(ggCheysson)
 # List all palettes
 list_cheysson_pals()
 #>       name       type album plate n_colors
-#> 1  1880_07   category  1880     7        7
-#> 2  1881_03 sequential  1881     3        1
-#> 3  1881_04   category  1881     4        4
-#> 4  1881_08    grouped  1881     8        5
-#> 5  1882_04    grouped  1882     4        2
-#> 6  1883_04  diverging  1883     4        2
-#> 7  1883_06   category  1883     6        4
-#> 8  1883_07  diverging  1883     7        3
-#> 9  1886_04 sequential  1886     4        2
-#> 10 1886_07   category  1886     7        3
-#> 11 1886_08    grouped  1886     8        4
-#> 12 1887_06    grouped  1887     6        2
-#> 13 1888_05 sequential  1888     5        1
-#> 14 1891_03    grouped  1891     3        2
-#> 15 1891_06 sequential  1891     6        1
-#> 16 1891_07 sequential  1891     7        2
-#> 17 1895_04 sequential  1895     4        3
-#> 18 1900_06 sequential  1900     6        2
-#> 19 1906_04   category  1906     4        4
-#> 20 1906_06   category  1906     6        6
+#> 1  1880_07    grouped  1880     7        5
+#> 2  1880_21   category  1880    21        7
+#> 3  1881_12 sequential  1881    12        1
+#> 4  1881_14    grouped  1881    14        2
+#> 5  1881_22   category  1881    22        4
+#> 6  1881_30    grouped  1881    30        5
+#> 7  1882_18    grouped  1882    18        2
+#> 8  1883_13   category  1883    13        4
+#> 9  1883_21  diverging  1883    21        3
+#> 10 1883_31  diverging  1883    31        2
+#> 11 1886_11    grouped  1886    11        4
+#> 12 1886_17    grouped  1886    17        3
+#> 13 1886_18    grouped  1886    18        3
+#> 14 1886_24    grouped  1886    24        3
+#> 15 1886_26 sequential  1886    26        2
+#> 16 1886_28   category  1886    28        3
+#> 17 1887_22    grouped  1887    22        2
+#> 18 1888_27 sequential  1888    27        1
+#> 19 1891_14    grouped  1891    14        2
+#> 20 1891_19 sequential  1891    19        1
+#> 21 1891_25 sequential  1891    25        2
+#> 22 1895_16 sequential  1895    16        3
+#> 23 1900_28 sequential  1900    28        2
+#> 24 1906_06   category  1906     6        6
+#> 25 1906_50   category  1906    50        4
 
 # List by type
 list_cheysson_pals("sequential")
 #>      name       type album plate n_colors
-#> 1 1881_03 sequential  1881     3        1
-#> 2 1886_04 sequential  1886     4        2
-#> 3 1888_05 sequential  1888     5        1
-#> 4 1891_06 sequential  1891     6        1
-#> 5 1891_07 sequential  1891     7        2
-#> 6 1895_04 sequential  1895     4        3
-#> 7 1900_06 sequential  1900     6        2
+#> 1 1881_12 sequential  1881    12        1
+#> 2 1886_26 sequential  1886    26        2
+#> 3 1888_27 sequential  1888    27        1
+#> 4 1891_19 sequential  1891    19        1
+#> 5 1891_25 sequential  1891    25        2
+#> 6 1895_16 sequential  1895    16        3
+#> 7 1900_28 sequential  1900    28        2
 ```
 
 ``` r
 # View palette colors
-cheysson_pal("1880_07")
+cheysson_pal("1880_21")
 #> [1] "#d9636c" "#869e80" "#dec367" "#85aab1" "#aea9a4" "#ed8238" "#ab90a4"
 ```
 
@@ -253,21 +258,21 @@ to display a palette with color swatches and hex codes:
 
 ``` r
 # Display a single palette with metadata
-show_palette("1895_04")
+show_palette("1895_16")
 ```
 
 ![](reference/figures/README-show-palette-1.png)
 
 ``` r
 # Display multiple palettes at once
-show_palettes(c("1880_07", "1881_03", "1895_04"))
+show_palettes(c("1880_21", "1881_12", "1895_16"))
 ```
 
 ![](reference/figures/README-show-palette-multi-1.png)
 
 ``` r
 # Display four palettes in a 2x2 grid
-show_palettes(c("1880_07", "1881_03", "1895_04", "1906_06"), ncol = 2)
+show_palettes(c("1880_21", "1881_12", "1895_16", "1906_06"), ncol = 2)
 ```
 
 ![](reference/figures/README-show-palette-grid-1.png)
@@ -281,7 +286,7 @@ Palette types:
 
 - **Sequential** (7 palettes): For ordered quantitative data
 - **Diverging** (2 palettes): For data with neutral midpoint
-- **Grouped** (5 palettes): For comparing related groups
+- **Grouped** (10 palettes): For comparing related groups
 - **Category** (6 palettes): For categorical data
 
 ## 📐 Pattern Support
@@ -293,12 +298,12 @@ With ggpattern, recreate the distinctive hatching styles:
 list_cheysson_patterns()
 
 # Get pattern specifications
-patterns <- cheysson_pattern("1883_06")
+patterns <- cheysson_pattern("1883_13")
 
 # Use in plots with pattern scales
 scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type"))
 scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill"))
-scale_pattern_angle_cheysson("1883_06")
+scale_pattern_angle_cheysson("1883_13")
 ```
 
 ## ✍️ Font Families
@@ -339,8 +344,8 @@ theme(
 
 ### Data
 
-- `cheysson_palettes` - Color palette specifications (20 palettes)
-- `cheysson_patterns` - Pattern/hatching specifications (83 patterns)
+- `cheysson_palettes` - Color palette specifications (25 palettes)
+- `cheysson_patterns` - Pattern/hatching specifications (134 patterns)
 - `cheysson_fonts` - Font family metadata (5 fonts)
 - `albumImages` - Metadata linking palettes to original album plates
 

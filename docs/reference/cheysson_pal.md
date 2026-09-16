@@ -1,20 +1,20 @@
 # Get a Cheysson color palette
 
 Returns colors from a specified Cheysson palette. Palettes can be
-referenced by name (e.g., "1880_07") or by selecting a palette of a
+referenced by name (e.g., "1880_21") or by selecting a palette of a
 particular type.
 
 ## Usage
 
 ``` r
-cheysson_pal(palette = "1880_07", n = NULL, type = 1)
+cheysson_pal(palette = "1880_21", n = NULL, type = 1)
 ```
 
 ## Arguments
 
 - palette:
 
-  Name of palette (e.g., "1880_07"), or palette type ("sequential",
+  Name of palette (e.g., "1880_21"), or palette type ("sequential",
   "diverging", "grouped", "category"). If a type is specified, the first
   palette of that type is returned.
 
@@ -37,11 +37,11 @@ A character vector of hex color codes
 
 ``` r
 # Get all colors from a specific palette
-cheysson_pal("1880_07")
+cheysson_pal("1880_21")
 #> [1] "#d9636c" "#869e80" "#dec367" "#85aab1" "#aea9a4" "#ed8238" "#ab90a4"
 
 # Get 5 colors from a palette
-cheysson_pal("1880_07", n = 5)
+cheysson_pal("1880_21", n = 5)
 #> [1] "#d9636c" "#869e80" "#dec367" "#85aab1" "#aea9a4"
 
 # Get colors from first sequential palette

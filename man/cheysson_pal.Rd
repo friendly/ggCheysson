@@ -4,10 +4,10 @@
 \alias{cheysson_pal}
 \title{Get a Cheysson color palette}
 \usage{
-cheysson_pal(palette = "1880_07", n = NULL, type = 1)
+cheysson_pal(palette = "1880_21", n = NULL, type = 1)
 }
 \arguments{
-\item{palette}{Name of palette (e.g., "1880_07"), or palette type
+\item{palette}{Name of palette (e.g., "1880_21"), or palette type
 ("sequential", "diverging", "grouped", "category"). If a type is specified,
 the first palette of that type is returned.}
 
@@ -23,14 +23,14 @@ A character vector of hex color codes
 }
 \description{
 Returns colors from a specified Cheysson palette. Palettes can be referenced
-by name (e.g., "1880_07") or by selecting a palette of a particular type.
+by name (e.g., "1880_21") or by selecting a palette of a particular type.
 }
 \examples{
 # Get all colors from a specific palette
-cheysson_pal("1880_07")
+cheysson_pal("1880_21")
 
 # Get 5 colors from a palette
-cheysson_pal("1880_07", n = 5)
+cheysson_pal("1880_21", n = 5)
 
 # Get colors from first sequential palette
 cheysson_pal("sequential")

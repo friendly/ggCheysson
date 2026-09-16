@@ -12,7 +12,7 @@ cheysson_patterns
 
 ## Format
 
-A list of 20 pattern palettes, each containing:
+A list of 25 pattern palettes, each containing:
 
 - patterns:
 
@@ -75,12 +75,13 @@ Each pattern specification includes:
 ``` r
 # List available pattern palettes
 names(cheysson_patterns)
-#>  [1] "1880_07" "1881_03" "1881_04" "1881_08" "1882_04" "1883_04" "1883_06"
-#>  [8] "1883_07" "1886_04" "1886_07" "1886_08" "1887_06" "1888_05" "1891_03"
-#> [15] "1891_06" "1891_07" "1895_04" "1900_06" "1906_04" "1906_06"
+#>  [1] "1880_07" "1880_21" "1881_12" "1881_14" "1881_22" "1881_30" "1882_18"
+#>  [8] "1883_13" "1883_21" "1883_31" "1886_11" "1886_17" "1886_18" "1886_24"
+#> [15] "1886_26" "1886_28" "1887_22" "1888_27" "1891_14" "1891_19" "1891_25"
+#> [22] "1895_16" "1900_28" "1906_06" "1906_50"
 
 # Get patterns from a specific palette
-cheysson_patterns$`1881_03`
+cheysson_patterns$`1881_12`
 #> $patterns
 #> $patterns[[1]]
 #> $patterns[[1]]$type
@@ -165,10 +166,10 @@ cheysson_patterns$`1881_03`
 #> [1] 1881
 #> 
 #> $plate
-#> [1] 3
+#> [1] 12
 #> 
 #> $rumsey_no
-#> [1] 12512.01
+#> [1] "12512.012"
 #> 
 #> $dec_day
 #> [1] 3

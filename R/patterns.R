@@ -4,7 +4,7 @@
 #' Statistique Graphique. These patterns combine solid colors with line hatching
 #' (stripes and crosshatching) as used in Cheysson's maps.
 #'
-#' @format A list of 20 pattern palettes, each containing:
+#' @format A list of 25 pattern palettes, each containing:
 #' \describe{
 #'   \item{patterns}{List of pattern specifications with fill colors and hatching parameters}
 #'   \item{type}{Palette type: "sequential", "diverging", "grouped", or "category"}
@@ -35,7 +35,7 @@
 #' names(cheysson_patterns)
 #'
 #' # Get patterns from a specific palette
-#' cheysson_patterns$`1881_03`
+#' cheysson_patterns$`1881_12`
 #'
 #' @seealso \code{\link{cheysson_pattern}}, \code{\link{scale_pattern_fill_cheysson}}
 "cheysson_patterns"
@@ -45,7 +45,7 @@
 #'
 #' Returns pattern specifications from a Cheysson palette for use with ggpattern.
 #'
-#' @param palette Name of palette (e.g., "1881_03") or palette type
+#' @param palette Name of palette (e.g., "1881_12") or palette type
 #'   ("sequential", "diverging", "grouped", "category").
 #' @param n Number of patterns to return. If NULL, returns all patterns.
 #' @param type If palette is a type name, which palette of that type to use (default 1).
@@ -54,16 +54,16 @@
 #'
 #' @examples
 #' # Get all patterns from a palette
-#' cheysson_pattern("1881_03")
+#' cheysson_pattern("1881_12")
 #'
 #' # Get first 3 patterns
-#' cheysson_pattern("1881_03", n = 3)
+#' cheysson_pattern("1881_12", n = 3)
 #'
 #' # Get patterns from a sequential palette
 #' cheysson_pattern("sequential")
 #'
 #' @export
-cheysson_pattern <- function(palette = "1881_03", n = NULL, type = 1) {
+cheysson_pattern <- function(palette = "1881_12", n = NULL, type = 1) {
   # Check if palette exists directly
   if (palette %in% names(cheysson_patterns)) {
     pal <- cheysson_patterns[[palette]]
@@ -138,7 +138,7 @@ get_pattern_param <- function(pattern_spec, param, default = NA) {
 #' @return Vector of parameter values
 #'
 #' @examples
-#' patterns <- cheysson_pattern("1881_03")
+#' patterns <- cheysson_pattern("1881_12")
 #' cheysson_pattern_params(patterns, "fill")
 #' cheysson_pattern_params(patterns, "pattern_angle")
 #'

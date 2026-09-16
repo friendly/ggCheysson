@@ -123,7 +123,7 @@ cat("Departments with data:", sum(!is.na(france_data$Crime_pers)), "\n")
 # Map of crimes against persons
 p1 <- ggplot(france_data) +
   geom_sf(aes(fill = Crime_pers_rank), color = "black", linewidth = 0.3) +
-  scale_fill_cheysson("1895_04", discrete = FALSE,
+  scale_fill_cheysson("1895_16", discrete = FALSE,
                       name = "Rank") +
   labs(
     title = "Crimes Against Persons",
@@ -145,7 +145,7 @@ print(p1)
 ```{r map-crime-prop, fig.height=7, fig.width=8}
 p2 <- ggplot(france_data) +
   geom_sf(aes(fill = Crime_prop_rank), color = "black", linewidth = 0.3) +
-  scale_fill_cheysson("1895_04", discrete = FALSE,
+  scale_fill_cheysson("1895_16", discrete = FALSE,
                       name = "Rank") +
   labs(
     title = "Crimes Against Property",
@@ -175,7 +175,7 @@ france_data$Literacy_quint <- cut(france_data$Literacy_rank,
 
 p3 <- ggplot(france_data) +
   geom_sf(aes(fill = Literacy_quint), color = "black", linewidth = 0.3) +
-  scale_fill_cheysson("1881_04",
+  scale_fill_cheysson("1881_22",
                       name = "Literacy\nQuintile",
                       na.value = "grey80") +
   labs(
@@ -209,9 +209,9 @@ p3b <- ggplot(france_data) +
     color = "black",
     linewidth = 0.4
   ) +
-  scale_fill_cheysson_pattern("1881_04", na.value = "grey90") +
-  scale_pattern_fill_cheysson("1881_04", na.value = "grey90") +
-  scale_pattern_type_cheysson("1881_04") +
+  scale_fill_cheysson_pattern("1881_22", na.value = "grey90") +
+  scale_pattern_fill_cheysson("1881_22", na.value = "grey90") +
+  scale_pattern_type_cheysson("1881_22") +
   labs(
     title = "Literacy Rates with Cheysson Patterns",
     subtitle = "Combining colors and hatching patterns (quintiles)",
@@ -245,7 +245,7 @@ france_data$Donations_cat <- cut(france_data$Donations_rank,
 
 p4 <- ggplot(france_data) +
   geom_sf(aes(fill = Donations_cat), color = "black", linewidth = 0.3) +
-  scale_fill_cheysson("1883_04",
+  scale_fill_cheysson("1883_31",
                       name = "Donations\nLevel",
                       na.value = "grey80") +
   labs(
@@ -279,9 +279,9 @@ p4b <- ggplot(france_data) +
     color = "black",
     linewidth = 0.4
   ) +
-  scale_fill_cheysson_pattern("1883_04", na.value = "grey90") +
-  scale_pattern_fill_cheysson("1883_04", na.value = "grey90") +
-  scale_pattern_type_cheysson("1883_04") +
+  scale_fill_cheysson_pattern("1883_31", na.value = "grey90") +
+  scale_pattern_fill_cheysson("1883_31", na.value = "grey90") +
+  scale_pattern_type_cheysson("1883_31") +
   labs(
     title = "Charitable Donations with Hatching Patterns",
     subtitle = "Authentic Cheysson-style patterns and colors (quartiles)",
@@ -307,7 +307,7 @@ print(p4b)
 ```{r map-infants, fig.height=7, fig.width=8}
 p5 <- ggplot(france_data) +
   geom_sf(aes(fill = Infants_rank), color = "black", linewidth = 0.3) +
-  scale_fill_cheysson("1891_07", discrete = FALSE,
+  scale_fill_cheysson("1891_25", discrete = FALSE,
                       name = "Rank") +
   labs(
     title = "Illegitimate Births",
@@ -329,7 +329,7 @@ print(p5)
 ```{r map-suicides, fig.height=7, fig.width=8}
 p6 <- ggplot(france_data) +
   geom_sf(aes(fill = Suicides_rank), color = "black", linewidth = 0.3) +
-  scale_fill_cheysson("1887_06", discrete = FALSE,
+  scale_fill_cheysson("1887_22", discrete = FALSE,
                       name = "Rank") +
   labs(
     title = "Suicides",
@@ -370,7 +370,7 @@ crime_long <- france_data |>
 
 p7 <- ggplot(crime_long) +
   geom_sf(aes(fill = Rank), color = "grey30", linewidth = 0.2) +
-  scale_fill_cheysson("1895_04", discrete = FALSE,
+  scale_fill_cheysson("1895_16", discrete = FALSE,
                       name = "Rank") +
   facet_wrap(~ Variable, ncol = 2) +
   labs(
@@ -486,7 +486,7 @@ france_data$Bivariate <- paste0(france_data$Crime_cat, "\n",
 # Plot
 p9 <- ggplot(france_data) +
   geom_sf(aes(fill = Crime_pers_rank), color = "black", linewidth = 0.5) +
-  scale_fill_cheysson("1895_04", discrete = FALSE, name = "Crime\nRank") +
+  scale_fill_cheysson("1895_16", discrete = FALSE, name = "Crime\nRank") +
   # Add point symbols sized by literacy
   geom_sf_text(aes(label = ifelse(Literacy_rank > 70, "H",
                                   ifelse(Literacy_rank < 25, "L", ""))),

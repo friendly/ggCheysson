@@ -3,8 +3,8 @@
 #' Color and fill scales using Cheysson palettes from the Albums de Statistique
 #' Graphique.
 #'
-#' @param palette Name of palette (e.g., "1880_07") or palette type
-#'   ("sequential", "diverging", "grouped", "category"). Default is "1880_07".
+#' @param palette Name of palette (e.g., "1880_21") or palette type
+#'   ("sequential", "diverging", "grouped", "category"). Default is "1880_21".
 #' @param discrete Whether to use a discrete (TRUE) or continuous (FALSE) scale.
 #'   Default is TRUE.
 #' @param reverse Whether to reverse the palette colors. Default is FALSE.
@@ -25,7 +25,7 @@
 #' # Use a specific palette
 #' ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
 #'   geom_point() +
-#'   scale_color_cheysson(palette = "1881_04")
+#'   scale_color_cheysson(palette = "1881_22")
 #'
 #' # Use a sequential palette for continuous data
 #' ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Petal.Length)) +
@@ -44,7 +44,7 @@ NULL
 
 #' @rdname scale_cheysson
 #' @export
-scale_color_cheysson <- function(palette = "1880_07", discrete = TRUE, reverse = FALSE, ...) {
+scale_color_cheysson <- function(palette = "1880_21", discrete = TRUE, reverse = FALSE, ...) {
   pal_colors <- cheysson_pal(palette)
 
   if (reverse) {
@@ -74,7 +74,7 @@ scale_colour_cheysson <- scale_color_cheysson
 
 #' @rdname scale_cheysson
 #' @export
-scale_fill_cheysson <- function(palette = "1880_07", discrete = TRUE, reverse = FALSE, ...) {
+scale_fill_cheysson <- function(palette = "1880_21", discrete = TRUE, reverse = FALSE, ...) {
   pal_colors <- cheysson_pal(palette)
 
   if (reverse) {

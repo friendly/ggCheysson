@@ -7,14 +7,14 @@ and exploring the available palettes.
 ## Usage
 
 ``` r
-show_palette(palette = "1880_07", n = NULL, show_info = TRUE, cex = 1)
+show_palette(palette = "1880_21", n = NULL, show_info = TRUE, cex = 1)
 ```
 
 ## Arguments
 
 - palette:
 
-  Name of palette (e.g., "1880_07"), or palette type ("sequential",
+  Name of palette (e.g., "1880_21"), or palette type ("sequential",
   "diverging", "grouped", "category").
 
 - n:
@@ -40,15 +40,15 @@ function is called primarily for its side effect of creating a plot.
 
 ``` r
 # Display a specific palette
-show_palette("1880_07")
+show_palette("1880_21")
 
 
 # Display palette without metadata
-show_palette("1881_03", show_info = FALSE)
+show_palette("1881_12", show_info = FALSE)
 
 
 # Display 10 interpolated colors
-show_palette("1895_04", n = 10)
+show_palette("1895_16", n = 10)
 
 
 # Display first sequential palette

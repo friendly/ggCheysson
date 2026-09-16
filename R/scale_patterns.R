@@ -4,8 +4,8 @@
 #' Graphique. These scales work with ggpattern geoms to apply both colors and
 #' hatching patterns.
 #'
-#' @param palette Name of palette (e.g., "1881_03") or palette type
-#'   ("sequential", "diverging", "grouped", "category"). Default is "1881_03".
+#' @param palette Name of palette (e.g., "1881_12") or palette type
+#'   ("sequential", "diverging", "grouped", "category"). Default is "1881_12".
 #' @param reverse Whether to reverse the pattern order. Default is FALSE.
 #' @param ... Additional arguments passed to ggplot2 scale functions
 #'
@@ -65,7 +65,7 @@ NULL
 
 #' @rdname scale_pattern_cheysson
 #' @export
-scale_pattern_fill_cheysson <- function(palette = "1881_03", reverse = FALSE, ...) {
+scale_pattern_fill_cheysson <- function(palette = "1881_12", reverse = FALSE, ...) {
   patterns <- cheysson_pattern(palette)
 
   if (reverse) {
@@ -92,7 +92,7 @@ scale_pattern_fill_cheysson <- function(palette = "1881_03", reverse = FALSE, ..
 
 #' @rdname scale_pattern_cheysson
 #' @export
-scale_pattern_type_cheysson <- function(palette = "1881_03", reverse = FALSE, ...) {
+scale_pattern_type_cheysson <- function(palette = "1881_12", reverse = FALSE, ...) {
   patterns <- cheysson_pattern(palette)
 
   if (reverse) {
@@ -119,7 +119,7 @@ scale_pattern_type_cheysson <- function(palette = "1881_03", reverse = FALSE, ..
 
 #' @rdname scale_pattern_cheysson
 #' @export
-scale_pattern_angle_cheysson <- function(palette = "1881_03", reverse = FALSE, ...) {
+scale_pattern_angle_cheysson <- function(palette = "1881_12", reverse = FALSE, ...) {
   patterns <- cheysson_pattern(palette)
 
   if (reverse) {
@@ -146,7 +146,7 @@ scale_pattern_angle_cheysson <- function(palette = "1881_03", reverse = FALSE, .
 
 #' @rdname scale_pattern_cheysson
 #' @export
-scale_pattern_density_cheysson <- function(palette = "1881_03", reverse = FALSE, ...) {
+scale_pattern_density_cheysson <- function(palette = "1881_12", reverse = FALSE, ...) {
   patterns <- cheysson_pattern(palette)
 
   if (reverse) {
@@ -202,7 +202,7 @@ scale_pattern_density_cheysson <- function(palette = "1881_03", reverse = FALSE,
 #' }
 #'
 #' @export
-scale_fill_cheysson_pattern <- function(palette = "1881_03", reverse = FALSE, ...) {
+scale_fill_cheysson_pattern <- function(palette = "1881_12", reverse = FALSE, ...) {
   patterns <- cheysson_pattern(palette)
 
   if (reverse) {

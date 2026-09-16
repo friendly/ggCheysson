@@ -49,7 +49,7 @@
 #' # With Cheysson color palette
 #' ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
 #'   geom_point(size = 3) +
-#'   scale_color_cheysson("1881_04") +
+#'   scale_color_cheysson("1881_22") +
 #'   theme_cheysson()
 #' }
 #'

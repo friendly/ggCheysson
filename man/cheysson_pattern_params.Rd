@@ -20,7 +20,7 @@ Converts Cheysson pattern specifications to parameters suitable for
 ggpattern geoms.
 }
 \examples{
-patterns <- cheysson_pattern("1881_03")
+patterns <- cheysson_pattern("1881_12")
 cheysson_pattern_params(patterns, "fill")
 cheysson_pattern_params(patterns, "pattern_angle")
 
