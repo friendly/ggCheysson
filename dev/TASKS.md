@@ -379,9 +379,37 @@ even after another machine's `.git` has been moved out.
       `PROGRESS_UPDATE.md`, and `prototype_colorpat.R` all predate 2026-09-16's naming fix and use
       the old, now-invalid `Album_Qty` names throughout - `colorpat_extraction/README.md` even
       flags the exact collision we later found and fixed ("'1881_04' appears twice in source data
-      with different types"). Any reuse of this material needs a rename pass first (mapping in
-      `dev/colorpat/palette_id_crosswalk.R`).
+      with different types"). Any reuse of this material needs a rename pass first (mapping now in
+      `data-raw/cheysson_labels.R`, see next item - moved since the crosswalk table it was).
 
+    - [x] 2026-09-16: **promoted the crosswalk table to a real package dataset**,
+      `cheysson_labels` (name chosen by user). Moved `dev/colorpat/palette_id_crosswalk.R` ->
+      `data-raw/cheysson_labels.R` (`git mv`, preserves history) and adapted it to package
+      convention: `library(here)` for paths (matching `cheysson_palettes.R`/`cheysson_patterns.R`),
+      `usethis::use_data(cheysson_labels, overwrite = TRUE)` instead of `write_csv()` to a `dev/`
+      path, and 3 `stopifnot()` assertions (name unique; name matches
+      `names(cheysson_palettes)`/`names(cheysson_patterns)` exactly) so a future re-run fails loudly
+      if the naming logic ever drifts again instead of silently producing a wrong table. Deleted
+      the now-redundant `dev/colorpat/palette_id_crosswalk.csv` (single source of truth is now
+      `data/cheysson_labels.rda`, built by the script above).
+      
+      Per user request: dropped `shipped` (always `TRUE` now that the naming bug is fixed - no
+      longer meaningful) and renamed `current_pkg_name` -> `old_name`; added `name` *first* as the
+      real, current, verified-unique package identifier (what you'd pass to
+      `scale_color_cheysson()` etc.) - previously the table had no such column, since it predated
+      the fix and only recorded what a palette *would* be called. Final columns: `name`,
+      `advent_day`, `album_year`, `plate`, `type`, `qty`, `rumsey_no`, `old_name`,
+      `andrews_label`, `shanley_id`.
+      
+      Verified: `Rscript data-raw/cheysson_labels.R` runs clean, all 3 `stopifnot` checks pass;
+      reinstalled the package and confirmed `cheysson_labels` loads with the right 25x10
+      shape/content; spot-checked lookups by `name`, `andrews_label`, and `shanley_id` all resolve
+      correctly; confirmed every `name` resolves to both a `cheysson_palettes` and
+      `cheysson_patterns` entry. `R CMD check`: 0 errors, 1 WARNING ("Undocumented data sets:
+      'cheysson_labels'") - expected and not yet fixed; documenting it and deciding how it's
+      actually exposed/used (e.g. a `cheysson_lookup(label, from = "andrews")`-style accessor?) is
+      the "integrate it into the package" step the user flagged as separate, still open.
+      
 - [ ] Another post from Tom Shanley: https://observablehq.com/@tomshanley/cheysson-grid discusses
   "programmatically creating gridlines like those used these charts created by Émile Cheysson in
   1881", via clipping. It proposes a `CheyssonLineChart`, and includes the data `cheysson18818data` 
