@@ -163,10 +163,12 @@ even after another machine's `.git` has been moved out.
       pure reorg into `dev/colorpat/`, marked **ON HOLD** in `dev/README.md` ("too complex for
       current release") -> ~8.5 months dormant until the unrelated 2026-09-15 bug-fix pass above,
       filed in the same folder but conceptually separate.
+      
     - **Best starting point**: `prototype_colorpat.R` (1472 lines, working
       `cheysson_colorpat()`/`scale_colorpat_cheysson()`/`list_colorpat_palettes()`/print method,
       11/20 palettes) + `PROGRESS_UPDATE.md` (final-state summary) + `test_ten_palettes.R`/
       `test_ten_palettes_swatches.png` (best combined visual QA).
+      
     - **Important finding**: the shipped `data/cheysson_patterns.rda` (built by
       `data-raw/cheysson_patterns.R`) already stores positionally-paired fill+pattern data per
       palette element for all 20 palettes - matches `colorpat_extraction/1883_04.md`/`1881_03.md`
@@ -177,6 +179,7 @@ even after another machine's `.git` has been moved out.
       `cheysson_patterns` data (now that the two bugs above are fixed), not a from-scratch
       20-palette re-extraction. Worth checking the production data covers all 20 palettes (closing
       the 9/20 gap that stalled the prototype) before doing any new manual Rumsey-plate work.
+      
     - [x] 2026-09-16: checked. 6 of 20 palettes (`1882_04`, `1883_07`, `1886_04`, `1886_07`,
       `1887_06`, `1900_06`) have 15 total gap elements out of 98 - much smaller than the
       prototype's "9/20 need work" framing suggested. Root cause is more specific than "NA
@@ -195,6 +198,7 @@ even after another machine's `.git` has been moved out.
       `cheysson_pattern_params()`/the scale functions substitute a safe default (e.g. `"none"`
       pattern, `"grey50"` fill) instead of `NA` for a `NULL` element - the latter is a quick
       robustness fix but doesn't recover the actual missing historical color/pattern.
+      
     - **`UNIFIED_COLOR_PATTERN_PLAN.md` has a real API plan**: new data object
       `cheysson_colorpat_palettes` (list of palettes, each with `elements` =
       `{fill, pattern_type, pattern_fill, pattern_angle, pattern_density, label}`); accessor
@@ -202,18 +206,24 @@ even after another machine's `.git` has been moved out.
       aesthetics = "auto", reverse, ...)` that auto-detects and returns/applies multiple ggplot2
       scales at once; lister `list_colorpat_palettes(type)`; explicit stance to keep old
       `scale_fill_cheysson()`/`scale_pattern_*_cheysson()` working alongside the new ones.
-    - **Known dead ends / unresolved, don't repeat**: (1) `1883_04`'s neutral-midpoint color
+      
+    - **Known dead ends / unresolved, don't repeat**: 
+      (1) `1883_04`'s neutral-midpoint color
       (`#f5f5f5`) was invented, not extracted from the plate - `colorpat_extraction/1883_04.md`
-      still has it as an open question; (2) `scale_colorpat_cheysson()` returns a *list* of scale
+      still has it as an open question; 
+      (2) `scale_colorpat_cheysson()` returns a *list* of scale
       objects requiring manual `+` per aesthetic, not one addable object - unsolved, flagged in
       `PROTOTYPE_SUMMARY.md`; there's also a stray `+.gg` operator override near
       `prototype_colorpat.R:1358` that shadows ggplot2's own `+` - do not reuse, it's an abandoned,
       risky approach; (3) pattern interpolation for `n > palette size` was punted on in the plan
       ("recycle patterns, but warn") and never implemented/tested.
+      
     - **Safe to archive/delete** (all fully superseded, nothing orphaned - every PNG traced to its
-      generating script): `PROTOTYPE_SUMMARY.md`/`THREE_PALETTES_SUMMARY.md`/
+      generating script): 
+      `PROTOTYPE_SUMMARY.md`/`THREE_PALETTES_SUMMARY.md`/
       `FIVE_PALETTES_SUMMARY.md`/`TEN_PALETTES_SUMMARY.md` (four successive snapshots, superseded
-      by `PROGRESS_UPDATE.md`); `test_prototype_colorpat.R`/`test_all_prototypes.R`/
+      by `PROGRESS_UPDATE.md`); `
+      test_prototype_colorpat.R`/`test_all_prototypes.R`/
       `test_five_palettes.R` and their PNGs (`test_colorpat_old/new/comparison.png`,
       `test_1883_04_diverging.png`, `test_1881_03_sequential.png`, `test_1881_04_categorical.png`,
       `test_all_three_palettes.png`, `test_1891_07_sequential.png`, `test_1886_08_grouped.png`,
@@ -221,6 +231,7 @@ even after another machine's `.git` has been moved out.
       `test_ten_palettes_swatches.png`. `colorpat_extraction/` + `colorpat_extractions.RData` +
       `extract_colorpat_pairings.R` + `COLORPAT_EXTRACTION_TEMPLATE.md` are reference-only now
       (Rumsey-plate URLs, `NA`-gap list) given production data likely already covers this.
+      
     - Not yet decided with user: whether to actually delete/archive the superseded files, or just
       leave them and work from the "current" set identified above.
 
