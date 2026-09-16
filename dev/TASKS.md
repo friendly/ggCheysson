@@ -78,7 +78,8 @@ didn't need it (its `legend.title` uses `base_family`, not `axis_title_family`).
   Retried twice, same result both times - did not retry further or wait it out. Options for next
   time: wait longer and retry, or use `rhub::rhub_check(platforms = "windows")` (infrastructure
   already set up) as a substitute Windows check.
-- [ ] Actually submit (`devtools::submit_cran()` or equivalent) once the above is settled
+- [x] Submitted to CRAN 2026-09-15 (on desktop), at commit `ac60e4f`; `CRAN-SUBMISSION` confirms
+  Version 1.0.1. Awaiting CRAN's response.
 
 ## Git/Dropbox corruption (fixed 2026-09-14)
 
@@ -112,6 +113,20 @@ User agrees the real fix is moving R project folders out of Dropbox entirely, no
 but isn't ready to do that migration yet. Not planning to relocate just `.git` (the `gitdir:`
 pointer trick) either, since it's a partial fix superseded by the eventual full move. No action
 needed here until the user is ready - don't re-suggest the partial fix unprompted.
+
+2026-09-15, follow-up: user took `.git` out of Dropbox on the desktop machine (after submitting
+1.0.1 to CRAN there). This laptop's `.git` is still inside Dropbox, and hit the same corruption
+class again as a result: while the desktop was making its post-1.0.1-work commits (R-hub setup,
+Observable URL fix, cran-comments rewrite, the README pattern-example fix), Dropbox synced the
+*working-tree* files down to this laptop but left `.git/index` stale here (same "every tracked
+file shown as both staged-deleted and untracked" signature as before - `git fsck` showed no
+missing objects this time, so it was index-only, not object loss). Dropbox also created a
+`docs (Selective Sync Conflict)/` folder holding what turned out to be the *correct* (matching
+HEAD) `docs/` build, while the working `docs/` was a stale local one. Fixed via `git reset`
+(mixed) + `git checkout -- docs/` (restoring docs/ from HEAD, which matched the conflict copy
+modulo CRLF) + deleting the now-redundant conflict folder. Confirms the corruption risk isn't
+limited to one machine - any machine with `.git` still inside a synced Dropbox folder can hit it,
+even after another machine's `.git` has been moved out.
 
 ## Other loose ends
 
