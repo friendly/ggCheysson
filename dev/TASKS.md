@@ -127,6 +127,26 @@ modulo CRLF) + deleting the now-redundant conflict folder. Confirms the corrupti
 limited to one machine - any machine with `.git` still inside a synced Dropbox folder can hit it,
 even after another machine's `.git` has been moved out.
 
+2026-09-16, follow-up: desktop hit corruption again (this time `git log` failing with
+`fatal: bad object <sha>` - a ref claiming a commit whose object never actually landed) and fixed
+it there, then relayed a diagnosis playbook to this laptop's session since it suspected the same
+class of issue here. This laptop's actual symptom was different: `git fsck` was clean throughout
+(no missing/corrupt objects at any point) - instead `refs/remotes/origin/*` was completely empty
+and local `refs/heads/master` was gone entirely, while `refs/heads/colorpat` (the actively
+checked-out branch) survived. The reflog showed a `branch: Created from origin/colorpat` entry
+timestamped ~12h after the last real local commit, followed by a `reset: moving to HEAD` -
+neither of which this session had issued as commands. Best explanation: Dropbox synced *text*
+artifacts (ref/reflog files) from the desktop's own repair sequence over to this laptop before the
+desktop's freshly-rebuilt `refs/remotes` had fully landed, leaving this machine with the
+deletions but not yet the rebuild. Fixed with the same safe sequence the desktop suggested:
+`git fetch origin` (succeeded cleanly, no "did not send all necessary objects" error - repopulated
+`refs/remotes/origin/*` from scratch), `git ls-remote` to confirm GitHub's authoritative refs
+matched what the desktop reported, confirmed a clean working tree (nothing uncommitted to lose),
+then `git branch master origin/master` to recreate the missing local branch (pure pointer
+creation, no checkout/reset). No data lost; stale Dropbox "conflicted copy 2025-12-30" reflog
+files are still sitting in `.git/logs/` as clutter (harmless - reflogs aren't tracked/versioned
+by git itself) but weren't cleaned up.
+
 ## Other loose ends
 
 - `data-raw/albumColors-RJ.csv` added 2026-09-14 (RJ Andrews source metadata: album/plate/type/
