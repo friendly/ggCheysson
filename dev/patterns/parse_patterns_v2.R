@@ -2,6 +2,19 @@
 library(here)
 library(tidyverse)
 
+# Parse an SVG coordinate attribute value. A handful of source patterns
+# (e.g. dec01.txt) use percentage units like x2="100%" instead of a bare
+# number - valid SVG (relative to the pattern tile's own width/height), but
+# not what a plain as.numeric() expects. Since this parser only needs a
+# line's angle/direction, not exact pixel geometry, treating the numeric
+# part of a percentage as a plain unit value is sufficient - it preserves
+# the sign/relative magnitude that atan2() needs, even though it isn't the
+# true tile-relative pixel size.
+parse_coord <- function(val) {
+  if (is.na(val)) return(0)
+  as.numeric(str_remove(val, "%$"))
+}
+
 # Function to analyze line direction
 get_line_angle <- function(x1, y1, x2, y2) {
   dx <- x2 - x1
@@ -106,43 +119,53 @@ parse_svg_patterns <- function(svg_file) {
       if (str_detect(line, '<line')) {
         current_pattern$has_lines <- TRUE
 
-        # Extract stroke color
+        # Extract stroke color. Most sources use an inline style
+        # (style="stroke:#xxx;..."); dec01.txt instead uses a plain XML
+        # attribute (stroke="#xxx"). `stroke[:=]"?` matches either, and
+        # won't misfire on stroke-width/stroke-miterlimit since those have
+        # "-" (not ":" or "=") right after "stroke".
         if (is.na(current_pattern$line_color)) {
-          stroke_match <- str_match(line, 'stroke:(#[0-9a-fA-F]{3,6})')
+          stroke_match <- str_match(line, 'stroke[:=]"?(#[0-9a-fA-F]{3,6})')
           if (!is.na(stroke_match[1,2])) {
             current_pattern$line_color <- stroke_match[1,2]
           }
         }
 
-        # Extract stroke width
+        # Extract stroke width (same style-vs-attribute variation)
         if (is.na(current_pattern$line_width)) {
-          width_match <- str_match(line, 'stroke-width:([0-9.]+)')
+          width_match <- str_match(line, 'stroke-width[:=]"?([0-9.]+)')
           if (!is.na(width_match[1,2])) {
             current_pattern$line_width <- as.numeric(width_match[1,2])
           }
         }
 
-        # Extract coordinates
+        # Extract coordinates. SVG <line> defaults x1/y1/x2/y2 to 0 when the
+        # attribute is omitted (common for lines starting at the origin, e.g.
+        # a horizontal line just writes x2/y1/y2 and leaves out x1="0") - so
+        # a missing attribute means 0, not "unparseable". Previously this
+        # required all four to be explicitly present, silently dropping every
+        # line in patterns that rely on the SVG default; with 0-or-more lines
+        # then failing to be treated as a proper pattern, its overall `type`
+        # was left unset (NULL) - see PATTERN_SCALE_BUGS.md for how that NULL
+        # propagates downstream into cheysson_patterns.rda.
         x1 <- str_match(line, 'x1="([^"]+)"')[1,2]
         y1 <- str_match(line, 'y1="([^"]+)"')[1,2]
         x2 <- str_match(line, 'x2="([^"]+)"')[1,2]
         y2 <- str_match(line, 'y2="([^"]+)"')[1,2]
 
-        if (!any(is.na(c(x1, y1, x2, y2)))) {
-          x1 <- as.numeric(x1)
-          y1 <- as.numeric(y1)
-          x2 <- as.numeric(x2)
-          y2 <- as.numeric(y2)
+        x1 <- parse_coord(x1)
+        y1 <- parse_coord(y1)
+        x2 <- parse_coord(x2)
+        y2 <- parse_coord(y2)
 
-          angle <- get_line_angle(x1, y1, x2, y2)
-          direction <- classify_angle(angle)
+        angle <- get_line_angle(x1, y1, x2, y2)
+        direction <- classify_angle(angle)
 
-          current_pattern$lines[[length(current_pattern$lines) + 1]] <- list(
-            x1 = x1, y1 = y1, x2 = x2, y2 = y2,
-            angle = angle,
-            direction = direction
-          )
-        }
+        current_pattern$lines[[length(current_pattern$lines) + 1]] <- list(
+          x1 = x1, y1 = y1, x2 = x2, y2 = y2,
+          angle = angle,
+          direction = direction
+        )
       }
     }
   }

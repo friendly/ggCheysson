@@ -136,8 +136,11 @@ even after another machine's `.git` has been moved out.
 
 - [ ] Make a plan to incorporate "palettes" that combine color and pattern fills. There are a 
   bunch of attempts and tests in `dev/colorpat/`. Review this work. If useful, check with authors
-  of `ggpattern` on how best to do this. The goal would be to be able to use the palettes shown in
+  of `ggpattern` on how best to do this. 
+  
+  The goal would be to be able to use the palettes shown in
   C:\Dropbox\R\projects\ggCheysson\man\figures\RJ-Andrews-color-palettes.jpg
+  Consider this to be ground truth here.
 
   - [x] 2026-09-16: created the `colorpat` branch (pushed to origin).
 
@@ -198,6 +201,32 @@ even after another machine's `.git` has been moved out.
       `cheysson_pattern_params()`/the scale functions substitute a safe default (e.g. `"none"`
       pattern, `"grey50"` fill) instead of `NA` for a `NULL` element - the latter is a quick
       robustness fix but doesn't recover the actual missing historical color/pattern.
+
+    - [x] 2026-09-16: **root-caused and fixed all 15 gaps** - turned out to be neither of the two
+      options above. Checked which source SVG pattern block each gap position corresponds to
+      (`data-raw/observable/decNN.txt`, via `dec_day`): every single one is a `<line>`-based hatch
+      pattern where every `<line>` tag omits at least one of `x1`/`y1`/`x2`/`y2` (valid SVG - these
+      default to 0 - e.g. a horizontal line just omits `x1="0"`). `dev/patterns/parse_patterns_v2.R`
+      required all four attributes to be explicitly present before accepting a line
+      (`if (!any(is.na(c(x1,y1,x2,y2))))`), so every line in these patterns was silently dropped;
+      with zero parsed lines, the pattern's `type` was never set, propagating as `NULL` through
+      `data-raw/cheysson_patterns.R`'s `if (is.null(pat$type)) next`. Fixed by defaulting a missing
+      coordinate to 0 instead of treating it as unparseable. Also found and fixed a second, distinct
+      issue while re-running the parser: `dec01.txt` (`1883_07`) uses `x2="100%"` (percentage units)
+      and plain `stroke="#xxx"`/`stroke-width="Npx"` attributes instead of the `style="stroke:...`
+      syntax used elsewhere - added `parse_coord()` (strips a trailing `%`) and broadened the
+      stroke/width regexes to `stroke[:=]"?`/`stroke-width[:=]"?` to accept both syntaxes.
+      Regenerated `dev/svg_patterns.RData` and `data/cheysson_patterns.rda`. Verified: 0 gaps
+      remain across all 20 palettes (was 15 across 6); the 3 truncated arrays (`1882_04`,
+      `1886_04`, `1887_06`) now match their true source lengths; a regression check against 3
+      previously-good entries (`1880_07[1]`, `1881_04[1]`, `1883_06[1]`) shows byte-identical
+      fill/pattern_fill/pattern_angle values - fix is purely additive. `R CMD check` clean
+      (0/0/0). Note: `dev/colorpat/show_all_patterns.R`'s swatches never map `pattern_angle` (uses
+      ggpattern's default 30° for every swatch), so its rendered angles don't reflect the real
+      per-palette data even though the underlying data is now correct (e.g. `1882_04`'s recovered
+      entries are genuinely `pattern_angle = 0`/horizontal, confirmed via `str()`, despite
+      rendering diagonal in that script) - worth fixing when building the RJ-Andrews comparison
+      grid next.
       
     - **`UNIFIED_COLOR_PATTERN_PLAN.md` has a real API plan**: new data object
       `cheysson_colorpat_palettes` (list of palettes, each with `elements` =
@@ -244,4 +273,5 @@ even after another machine's `.git` has been moved out.
   each of the Cheysson palettes with a snip from an original figure. It would be useful to download 
   a couple of these and use in the README or elsewhere. Note that he uses different names than RJ 
   for the palettes.
+  Files: man/figures/cheysson1.png, man/figures/cheysson2.png are two examples
 
