@@ -177,6 +177,24 @@ even after another machine's `.git` has been moved out.
       `cheysson_patterns` data (now that the two bugs above are fixed), not a from-scratch
       20-palette re-extraction. Worth checking the production data covers all 20 palettes (closing
       the 9/20 gap that stalled the prototype) before doing any new manual Rumsey-plate work.
+    - [x] 2026-09-16: checked. 6 of 20 palettes (`1882_04`, `1883_07`, `1886_04`, `1886_07`,
+      `1887_06`, `1900_06`) have 15 total gap elements out of 98 - much smaller than the
+      prototype's "9/20 need work" framing suggested. Root cause is more specific than "NA
+      fields": those positions are literal `NULL` entries in `$patterns` (not list elements with
+      missing fields) - a genuine `data-raw/cheysson_patterns.R` extraction gap, one array slot
+      per missing color/pattern. This isn't just cosmetic: `cheysson_pattern_params()` returns
+      bare `NA` for any `NULL` element regardless of which param is asked for, and feeding that
+      `NA` to ggpattern's `pattern` aesthetic **hard-crashes** rendering ("missing value where
+      TRUE/FALSE needed" inside `ggpattern:::fill_default_params()`) - reproduced for all 6
+      palettes. So today, calling any `scale_pattern_*_cheysson()` on one of these 6 palettes
+      breaks, not just renders incompletely. Wrote `dev/colorpat/show_all_patterns.R` (supersedes
+      stale `dev/patterns/test_patterns.R`, which predates the aesthetic-name fix) to visualize
+      all 20 palettes at once, dropping `NULL` positions with a per-palette gap count in the
+      title; output at `dev/colorpat/all_patterns_overview.png`. Options for closing the gap:
+      manual Rumsey-plate color-picking (as the prototype started), or making
+      `cheysson_pattern_params()`/the scale functions substitute a safe default (e.g. `"none"`
+      pattern, `"grey50"` fill) instead of `NA` for a `NULL` element - the latter is a quick
+      robustness fix but doesn't recover the actual missing historical color/pattern.
     - **`UNIFIED_COLOR_PATTERN_PLAN.md` has a real API plan**: new data object
       `cheysson_colorpat_palettes` (list of palettes, each with `elements` =
       `{fill, pattern_type, pattern_fill, pattern_angle, pattern_density, label}`); accessor
