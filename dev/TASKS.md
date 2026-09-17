@@ -566,6 +566,40 @@ even after another machine's `.git` has been moved out.
   (`README-with-fonts-1.png`, `README-base-size-14-1.png`, `README-base-size-16-1.png`) came out
   byte-identical to the un-factored version. Rebuilt pkgdown - clean.
 
+- [x] 2026-09-17: **checked `vignettes/getting-started.Rmd` for the same title/axis-title
+  undersizing.** Two real, unrelated bugs found and fixed along the way: (1) two subtitle strings
+  still hardcoded the *old* pre-1.1.0 palette names (`"...1880_07"`, `"...1881_04"`) even though
+  the actual `scale_color_cheysson()` calls right above them already used the corrected names
+  (`"1880_21"`, `"1881_22"`) - a naming-fix propagation gap missed earlier; (2) the intro bullet
+  said "20 authentic palettes" (stale, now 25). Also: the hand-drawn Cheysson TTF fonts have no
+  underscore glyph at all (confirmed via `systemfonts::glyph_info("_", family = ...)`: `index = 0`,
+  `name = ".notdef"` for all 5 families) - any Cheysson-font text containing `_` renders as a
+  broken/tofu box, e.g. "1880▯21". Not fixable without editing the font files, so reworded both
+  subtitles to avoid a literal underscore instead (e.g. `"Using Sequential Palette 1880, Plate
+  21"`).
+
+  The actual "still tiny" complaint turned out not to be a sizing-proportion bug at all - verified
+  the `cheysson_font_size_adjust()` fix from the earlier task *is* correctly applied here (dumped a
+  full-page screenshot of the built `docs/articles/getting-started.html` via `webshot2` since the
+  Claude-in-Chrome browser extension wasn't connected this session; the plot displays at exactly
+  its declared width, title/axis-title proportions match `theme_minimal()`'s). It's an absolute-
+  scale mismatch instead: `base_size = 11` at the vignette's `fig.width = 7in` default reads small
+  next to a web page's normal heading/body text size - not a defect, just what an 11pt theme looks
+  like at that physical size. User confirmed by testing interactively in RStudio (resizing the
+  Plots pane): "at a large zoom size, the axis & legend labels look too small for the plot. When I
+  make the plot smaller, the text looks much better" - i.e. thin-stroke Cheysson glyphs read
+  better at a smaller *display* scale, even though the size is mathematically the same fraction of
+  the plot either way (likely a font-hinting/stroke-width floor effect common with light/thin
+  typefaces).
+
+  Simple one-line fix per user request (explicitly didn't want to spend more time on this):
+  added `out.width = "75%"` to the vignette's global `knitr::opts_chunk$set()` - shrinks every
+  figure's *displayed* size uniformly without touching any R/theme code or per-example chunks.
+  Verified visually via `webshot2` screenshots of the rebuilt `docs/articles/getting-started.html`
+  (scatterplot, categorical, and bar-chart-with-patterns examples) - all read better at the smaller
+  display size. Scoped to `getting-started.Rmd` only, as asked; `guerry-maps.Rmd` untouched.
+  `R CMD check` 0/0/0.
+
 - [ ] The way of specifying the combinations of colors and patterns used in examples seems unnecessarily
   complicated. E.g., in the README example, "Complete Cheysson Aesthetic", there are four calls to
   `scale_*()` functions. Perhaps this needs a `scale_cheysson()` wrapper to simplify this.
@@ -583,18 +617,28 @@ even after another machine's `.git` has been moved out.
   each of the Cheysson palettes with a snip from an original figure. It would be useful to download 
   a couple of these and use in the README or elsewhere. Note that he uses different names than RJ 
   for the palettes.
-  Files: man/figures/cheysson1.png, man/figures/cheysson2.png are two examples
+  Files: `man/figures/cheysson1.png`, `man/figures/cheysson2.png` are two examples
 
 - [ ] It would be nice to make a chart of the colors in the cheysson palettes in the form of a color
   wheel/circle -- points in their colors, with labels for the palette name.
   
-- [ ] Work on this would make a great blog post in my `friendly.github.io` series. Title: Emile Cheysson
-  Meets `ggplot2`. Scene: I've discovered that I can time-travel in my dreams... The _Albums de Statistique
+- [ ] Work on this would make a great blog post in my `friendly.github.io` series. It would be a kind of
+  a 'Making of ggCheysson' post, but with a more fanciful framing. It could use a lot of the package design
+  choices and dilemmas that were addressed in porting others' work to R. 
+  Should go in: `C:\R\Projects\friendly.github.io\blog\drafts\ggCheysson\`, with the useful figures from
+  this package.  Here's a sketch:
+  Title: Emile Cheysson Meets `ggplot2`. 
+  Scene: I've discovered that I can time-travel in my dreams... The _Albums de Statistique
   Graphique` have long been in my thoughts, so one night I book round-trip ticket, YYZ (2026) -> CDG (1896)
-  to meet with Emile and his team... I bring gifts: a bottle of Niagra ice-wine, CA maple syrup, ... AND
+  [Hey, do I need a visa?, Is my passport _down_-to-date? Does my time-travelling SKILL.md include provisions
+  to create airplanes and airports?]
+  to meet with Emile and his team... I bring gifts: a bottle of Niagara ice-wine, CA maple syrup, ... AND
   my laptop with R 4.6.1 and all my `ggplot2` related packages (each with a hex sticker) ...
   OK, Emile, "What can we learn from each other?", "How should I design an R package to allow my people to
-  craft beautiful graphics with Cheysson style?"
+  craft beautiful graphics with Cheysson style?", "What might be hard in this when I get back to Toronto?"
+  Examples: 
+    + Font-size issue: "Before going ahead with this, I still wonder why this might be necessary. I'm looking only 
+      at rendered results in HTML files. Perhaps I should look at a couple of examples in an RStudio plot window?"
   
 - [ ] Can we reproduce something like the samplers of the fonts in `man/figures/fonts{1,2}.png`
 
