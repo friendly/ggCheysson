@@ -663,23 +663,21 @@ even after another machine's `.git` has been moved out.
 - [ ] It would be nice to make a chart of the colors in the cheysson palettes in the form of a color
   wheel/circle -- points in their colors, with labels for the palette name.
   
-- [ ] Work on this would make a great blog post in my `friendly.github.io` series. It would be a kind of
-  a 'Making of ggCheysson' post, but with a more fanciful framing. It could use a lot of the package design
-  choices and dilemmas that were addressed in porting others' work to R. 
-  Should go in: `C:\R\Projects\friendly.github.io\blog\drafts\ggCheysson\`, with the useful figures from
-  this package.  Here's a sketch:
-  Title: Emile Cheysson Meets `ggplot2`. 
-  Scene: I've discovered that I can time-travel in my dreams... The _Albums de Statistique
-  Graphique` have long been in my thoughts, so one night I book round-trip ticket, YYZ (2026) -> CDG (1896)
-  [Hey, do I need a visa?, Is my passport _down_-to-date? Does my time-travelling SKILL.md include provisions
-  to create airplanes and airports?]
-  to meet with Emile and his team... I bring gifts: a bottle of Niagara ice-wine, CA maple syrup, ... AND
-  my laptop with R 4.6.1 and all my `ggplot2` related packages (each with a hex sticker) ...
-  OK, Emile, "What can we learn from each other?", "How should I design an R package to allow my people to
-  craft beautiful graphics with Cheysson style?", "What might be hard in this when I get back to Toronto?"
-  Examples: 
-    + Font-size issue: "Before going ahead with this, I still wonder why this might be necessary. I'm looking only 
-      at rendered results in HTML files. Perhaps I should look at a couple of examples in an RStudio plot window?"
+- [x] 2026-09-17: **started.** Work on this would make a great blog post in my `friendly.github.io`
+  series. It would be a kind of a 'Making of ggCheysson' post, but with a more fanciful framing. It
+  could use a lot of the package design choices and dilemmas that were addressed in porting
+  others' work to R. Title: Emile Cheysson Meets `ggplot2`; scene is a time-travel dream trip,
+  YYZ (2026) -> CDG (1896), to meet Emile and his team.
+
+  Wrote `C:\R\Projects\friendly.github.io\blog\drafts\ggCheysson\sketch.md` - the scene/framing as
+  given, plus 6 candidate dilemma-scenes actually mined from this session's `colorpat` work (the
+  three-different-names-for-25-plates crosswalk, the Album+Qty bug that silently dropped 5 plates,
+  the missing-underscore-glyph discovery, the static-HTML-vs-RStudio font-size investigation, the
+  Guerry-style dominant-title `theme_cheysson_map()` redesign, and an optional Dropbox-corruption
+  aside), each pointing back at the relevant `dev/TASKS.md` entry for full detail, plus a list of
+  figures worth pulling in and 3 open questions (code vs. pure narrative, title, how much of the
+  time-travel frame to keep). Not started as `index.qmd` yet - picking this up on another machine,
+  see the sketch file itself for where to resume.
   
 - [ ] Can we reproduce something like the samplers of the fonts in `man/figures/fonts{1,2}.png`
 
