@@ -159,7 +159,7 @@ load_cheysson_fonts(method = "showtext")
 # Enable showtext for rendering
 showtext::showtext_auto()
 
-ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
+p1 <- ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
   geom_point(size = 3) +
   scale_color_cheysson("1883_31") +
   labs(
@@ -167,8 +167,9 @@ ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
     subtitle = "Weight vs Fuel Economy",
     x = "Weight (1000 lbs)",
     y = "Miles per Gallon"
-  ) +
-  theme_cheysson()
+  )
+
+p1 + theme_cheysson()
 ```
 
 ### Scaling with `base_size`
@@ -180,29 +181,11 @@ rate as the rest of the theme, rather than reading undersized as `base_size`
 grows:
 
 ```{r base-size-14, fig.height=5, fig.width=7}
-ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
-  geom_point(size = 3) +
-  scale_color_cheysson("1883_31") +
-  labs(
-    title = "Automobile Efficiency",
-    subtitle = "Weight vs Fuel Economy",
-    x = "Weight (1000 lbs)",
-    y = "Miles per Gallon"
-  ) +
-  theme_cheysson(base_size = 14)
+p1 + theme_cheysson(base_size = 14)
 ```
 
 ```{r base-size-16, fig.height=5, fig.width=7}
-ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
-  geom_point(size = 3) +
-  scale_color_cheysson("1883_31") +
-  labs(
-    title = "Automobile Efficiency",
-    subtitle = "Weight vs Fuel Economy",
-    x = "Weight (1000 lbs)",
-    y = "Miles per Gallon"
-  ) +
-  theme_cheysson(base_size = 16)
+p1 + theme_cheysson(base_size = 16)
 ```
 
 ### Complete Cheysson Aesthetic (Colors + Patterns + Fonts)

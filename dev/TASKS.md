@@ -555,6 +555,17 @@ even after another machine's `.git` has been moved out.
   correctly reinstalled from the fix above, so no repeat of the stale-install gap); rebuilt
   pkgdown - clean, no new warnings.
 
+  Second follow-up, user style preference: refactored the three `base_size` example chunks to
+  build the shared `ggplot()`/`geom_point()`/`scale_color_cheysson()`/`labs()` call once as `p1`
+  (no `theme_cheysson()` attached), then `p1 + theme_cheysson()`,
+  `p1 + theme_cheysson(base_size = 14)`, `p1 + theme_cheysson(base_size = 16)` - rather than
+  repeating the full plot code three times with only the theme call differing. User: "this kind of
+  code-factoring is something I nearly always want to do in showing R examples in a collection of
+  related ones" - a general preference for future README/vignette examples, not just this one.
+  Verified the refactor is purely cosmetic: re-knitted, all 3 affected PNGs
+  (`README-with-fonts-1.png`, `README-base-size-14-1.png`, `README-base-size-16-1.png`) came out
+  byte-identical to the un-factored version. Rebuilt pkgdown - clean.
+
 - [ ] The way of specifying the combinations of colors and patterns used in examples seems unnecessarily
   complicated. E.g., in the README example, "Complete Cheysson Aesthetic", there are four calls to
   `scale_*()` functions. Perhaps this needs a `scale_cheysson()` wrapper to simplify this.
@@ -584,3 +595,9 @@ even after another machine's `.git` has been moved out.
   my laptop with R 4.6.1 and all my `ggplot2` related packages (each with a hex sticker) ...
   OK, Emile, "What can we learn from each other?", "How should I design an R package to allow my people to
   craft beautiful graphics with Cheysson style?"
+  
+- [ ] Can we reproduce something like the samplers of the fonts in `man/figures/fonts{1,2}.png`
+
+- [ ] `dev/complete_example.R` could be made into a `ggCheysson` Gallery vignette. A few small fictitious datasets
+  to show the various combinations of color/patterns in a small set of different chart types.
+  
