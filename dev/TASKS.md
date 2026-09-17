@@ -474,6 +474,14 @@ even after another machine's `.git` has been moved out.
       output (proving the itemize->bullet conversion is exactly equivalent), others reflowed
       cleanly with no semantic change. `R CMD check` 0/0/0 after.
 
+    - [x] 2026-09-17: fixed pkgdown's "Missing alt-text" accessibility warning on 5 `<img>` tags
+      in `README.Rmd` (2 uses of `maps.png`, plus `color-palettes.png`, `fonts1.png`, and
+      `RJ-Andrews-color-palettes.jpg`) - proposed alt text for each, user approved, added
+      `alt="..."` attributes, re-knitted `README.md`. Rebuilt pkgdown: "Checking for problems"
+      section now clean (was 5 items). Left knitr's auto-generated code-chunk figures alone
+      (they get `alt=""` from rmarkdown/knitr itself, not flagged by pkgdown's check, and fixing
+      would need `fig.alt` chunk options on every plot chunk - out of scope here).
+
 - [ ] Another post from Tom Shanley: https://observablehq.com/@tomshanley/cheysson-grid discusses
   "programmatically creating gridlines like those used these charts created by Émile Cheysson in
   1881", via clipping. It proposes a `CheyssonLineChart`, and includes the data `cheysson18818data` 

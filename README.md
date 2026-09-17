@@ -13,7 +13,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 # ggCheysson <img src="man/figures/logo.png" height="200" style="float:right; height:200px;"/>
 
-Version 1.0.1; documentation built 2026-09-16
+Version 1.0.1; documentation built 2026-09-17
 
 The `ggCheysson` package brings the graphical styles of the *Albums de
 Statistique Graphique* to R and ggplot2.
@@ -112,14 +112,14 @@ across the span of years in which the *Albums* were produced, shown
 below.
 
 <center>
-<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png" width=400>
+<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png" width=400 alt="Grid of original historical maps from the Albums de Statistique Graphique, showing the variety of colors and hatching patterns used">
 </center>
 
 From these, he abstracted the following combinations of color and
 pattern he thought characterized these maps:
 
 <center>
-<img src="man/figures/color-palettes.png" width=600>
+<img src="man/figures/color-palettes.png" width=600 alt="Swatches of the color and pattern combinations abstracted from the maps above">
 </center>
 
 ### New here
@@ -387,7 +387,7 @@ Five Cheysson font families are included:
 Here are some of these:
 
 <center>
-<img src="man/figures/fonts1.png" height = 400>
+<img src="man/figures/fonts1.png" height = 400 alt="Sample lettering in the five Cheysson font families: regular, italic, sans capitals, outline capitals, and title">
 </center>
 
 To use these:
@@ -469,12 +469,12 @@ theme(
 
 ## 🖼️ Gallery
 
-<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png" width="350">
+<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png" width="350" alt="Original maps from the Albums de Statistique Graphique showing the variety of colors and patterns">
 
 *Original maps from the Albums showing the variety of colors and
 patterns*
 
-<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/RJ-Andrews-color-palettes.jpg" width="600">
+<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/RJ-Andrews-color-palettes.jpg" width="600" alt="Grid of 25 color palettes extracted by RJ Andrews from the Albums de Statistique Graphique maps">
 
 *Extracted color palettes by RJ Andrews*
 
