@@ -364,18 +364,18 @@ theme_cheysson_map <- function(base_size = 11,
       # Legend
       legend.title = ggplot2::element_text(
         family = base_family,
-        size = base_size * 1.5
+        size = base_size * 1.8
       ),
 
       legend.text = ggplot2::element_text(
         family = base_family,
-        size = base_size * 1.3
+        size = base_size * 1.56
       ),
 
       # Caption
       plot.caption = ggplot2::element_text(
         family = base_family,
-        size = base_size * 1.1
+        size = base_size * 1.32
       ),
 
       # Background

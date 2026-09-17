@@ -636,6 +636,11 @@ even after another machine's `.git` has been moved out.
   readable (intentionally still the smallest element). `devtools::build_vignettes()` - both
   vignettes rebuild clean. `R CMD check` 0/0/0.
 
+  Follow-up: user still found `legend.title`/`legend.text`/`plot.caption` too small after seeing
+  the rebuilt vignette (title/subtitle were fine). Bumped all three ratios ~20%:
+  `legend.title` 1.5 -> 1.8, `legend.text` 1.3 -> 1.56, `plot.caption` 1.1 -> 1.32. Reinstalled,
+  force-rebuilt both articles, `R CMD check` 0/0/0.
+
 - [ ] The way of specifying the combinations of colors and patterns used in examples seems unnecessarily
   complicated. E.g., in the README example, "Complete Cheysson Aesthetic", there are four calls to
   `scale_*()` functions. Perhaps this needs a `scale_cheysson()` wrapper to simplify this.
