@@ -600,6 +600,42 @@ even after another machine's `.git` has been moved out.
   display size. Scoped to `getting-started.Rmd` only, as asked; `guerry-maps.Rmd` untouched.
   `R CMD check` 0/0/0.
 
+- [x] 2026-09-17: **checked `guerry-maps.Rmd` for the same issue - confirmed present, and a
+  proper redesign of `theme_cheysson_map()` rather than an `out.width` hack.** All 12 map
+  examples had an identical `theme(plot.title = element_text(size = 16, face = "bold"),
+  plot.subtitle = element_text(size = 11 or 12), legend.position = ...)` override, hardcoded a
+  long time ago - this completely bypassed both `base_size` scaling and the earlier
+  `cheysson_font_size_adjust()` title fix (a `+theme()` override wins over whatever
+  `theme_cheysson_map()` computed). User wanted these eliminated so `base_size` does the work,
+  ggplot2-idiomatically, but pointed out `plot.title` should be *much* bigger than either the
+  hardcoded 16 or what the existing ratio would give (base_size x 1.4) - Guerry's own maps had
+  titles nearly filling the map's width - while legend text/caption (not touched by the override
+  at all, so already governed by `theme_cheysson_map()`'s existing tiny ratios) needed to grow
+  too. A single shared ratio can't do both: reaching plot.title ~48-60 via the existing
+  base_size x 1.4 formula would need base_size ~35, which would blow up legend text (currently
+  base_size x 0.85) to ~30pt as a side effect.
+
+  Fix: redesigned `theme_cheysson_map()`'s internal ratios (default `base_size = 11` unchanged,
+  so nothing breaks for existing callers) to a deliberate poster-style hierarchy distinct from
+  `theme_cheysson()`'s: `plot.title` base_size x 5.0 x title_size_adjust (55 at base_size=11,
+  was x1.4 -> 15.4x1.10), `plot.subtitle` x3.2 (35, was x1.1), `legend.title` x1.5 (16.5, was
+  x0.95), `legend.text` x1.3 (14.3, was x0.85), and added `plot.caption` (x1.1 = 12.1, previously
+  unstyled - fell back to `theme_void()`'s tiny default). Then removed all 12 duplicated
+  `theme(plot.title = ..., plot.subtitle = ...)` blocks from `guerry-maps.Rmd`, keeping
+  `legend.position`/facet-specific styling (`strip.background`/`strip.text` on the one faceted
+  map) untouched - and simplified the one map whose `theme()` call became empty after removing
+  its title/subtitle lines to just `theme_cheysson_map()` alone. This also affects
+  `getting-started.Rmd`'s one `theme_cheysson_map()` example (had no override, so was already
+  fully governed by the theme's own ratios).
+
+  Verified via `webshot2` screenshots of the rebuilt articles (had to force both - pkgdown's
+  article-level lazy rebuild detection again didn't notice the source package had changed,
+  same gap as the earlier getting-started check; used `pkgdown::build_article(..., lazy =
+  FALSE)` directly for `getting-started`): title now genuinely dominates each map, comparable to
+  Guerry's originals; legend title/tick labels are clearly legible; caption is present and
+  readable (intentionally still the smallest element). `devtools::build_vignettes()` - both
+  vignettes rebuild clean. `R CMD check` 0/0/0.
+
 - [ ] The way of specifying the combinations of colors and patterns used in examples seems unnecessarily
   complicated. E.g., in the README example, "Complete Cheysson Aesthetic", there are four calls to
   `scale_*()` functions. Perhaps this needs a `scale_cheysson()` wrapper to simplify this.

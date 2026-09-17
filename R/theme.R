@@ -340,12 +340,15 @@ theme_cheysson_map <- function(base_size = 11,
   # See cheysson_font_size_adjust().
   title_size_adjust <- cheysson_font_size_adjust(title_family)
 
+  # A poster-style hierarchy in the spirit of Guerry's own maps, whose titles
+  # nearly filled the map's width - deliberately not the modest title/body
+  # ratio theme_cheysson() uses. All still scale together from base_size.
   ggplot2::theme_void(base_size = base_size, base_family = base_family) +
     ggplot2::theme(
       # Title
       plot.title = ggplot2::element_text(
         family = title_family,
-        size = base_size * 1.4 * title_size_adjust,
+        size = base_size * 5.0 * title_size_adjust,
         face = "plain",
         hjust = 0.5,
         margin = ggplot2::margin(b = base_size)
@@ -353,7 +356,7 @@ theme_cheysson_map <- function(base_size = 11,
 
       plot.subtitle = ggplot2::element_text(
         family = base_family,
-        size = base_size * 1.1,
+        size = base_size * 3.2,
         hjust = 0.5,
         margin = ggplot2::margin(b = base_size * 0.5)
       ),
@@ -361,12 +364,18 @@ theme_cheysson_map <- function(base_size = 11,
       # Legend
       legend.title = ggplot2::element_text(
         family = base_family,
-        size = base_size * 0.95
+        size = base_size * 1.5
       ),
 
       legend.text = ggplot2::element_text(
         family = base_family,
-        size = base_size * 0.85
+        size = base_size * 1.3
+      ),
+
+      # Caption
+      plot.caption = ggplot2::element_text(
+        family = base_family,
+        size = base_size * 1.1
       ),
 
       # Background
