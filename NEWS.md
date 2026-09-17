@@ -29,6 +29,13 @@
 * Added real (rendered) pattern examples to the README's Pattern Support section, which
   previously had none
 
+* Added `cheysson_name()`, a lookup function that translates a palette label from any of the
+  `cheysson_labels` naming schemes (Andrews' label, Shanley's ID, a Rumsey catalog number, the
+  old pre-fix name, or an advent day) into the current palette name, for direct use in calls like
+  `scale_color_cheysson(cheysson_name("Dec.01-1883.21"))`. When a label is ambiguous (only
+  possible via the old naming scheme, which had 4 real collisions), it warns and lists every
+  match; pass `advent_day` to disambiguate without a warning, or to assert a specific palette
+
 # ggCheysson 1.0.1
 
 * Fixed undersized axis and legend titles in `theme_cheysson()` (inherited by

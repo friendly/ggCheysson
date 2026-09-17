@@ -22,6 +22,7 @@ reference:
     - starts_with("scale_fill")
     - -scale_fill_cheysson_pattern
     - -starts_with("scale_pattern")
+    - cheysson_name
 
   - title: Hatching Patterns
     desc: >

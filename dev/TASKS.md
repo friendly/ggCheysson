@@ -437,7 +437,29 @@ even after another machine's `.git` has been moved out.
       134 pattern specs, was 83), the 15-gap SVG-parsing fix, the two `scale_pattern_*_cheysson()`
       bugs, the new `cheysson_labels` dataset, and the README pattern examples. `R CMD check`
       still 0/0/0 after the bump.
-      
+
+    - [x] 2026-09-17: added `cheysson_name(label, from = "auto", advent_day = NULL)` in the new
+      `R/cheysson_name.R` - the lookup function flagged as "still open" above. Design worked out
+      collaboratively over several turns: `from = "auto"` tries, in priority order, the always-
+      unique columns first (`name`, `andrews_label`, `shanley_id`, `rumsey_no`) and falls back to
+      `old_name` last, since that's the only column with real duplicates (4 collision groups from
+      the pre-1.1.0 naming bug). Explicit `from` values search only that one column. `advent_day`
+      is an optional disambiguator/assertion: if supplied and it contradicts what `label` resolves
+      to, errors; if supplied and consistent, returns that row silently (no warning even for an
+      otherwise-ambiguous `old_name`). If `advent_day` is *not* supplied and more than one
+      candidate matches (only possible via `old_name`), `warning()`s listing every candidate and
+      returns the one with `max(advent_day)` - verified this exactly matches what 1.0.1 actually
+      shipped under each colliding name, for all 4 real collision groups (`1880_07`->24,
+      `1881_04`->25, `1886_04`->19, `1886_08`->7). Verified via a standalone scratchpad script
+      covering all paths: each scheme's happy path, the ambiguous-`old_name` warning + winner
+      selection (all 4 groups), explicit-`advent_day` disambiguation with no warning,
+      `advent_day` contradicting an unambiguous label (errors), not-found (errors), invalid
+      `advent_day` (errors), and direct use as `scale_color_cheysson(cheysson_name(...))`. Hit one
+      `R CMD check` NOTE ("no visible binding for global variable 'cheysson_labels'") - fixed by
+      adding `cheysson_labels` to the existing `utils::globalVariables()` call in `R/globals.R`
+      alongside `cheysson_palettes`/`cheysson_patterns`. Added to `_pkgdown.yml`'s Color Palettes
+      section. `R CMD check` 0/0/0.
+
 - [ ] Another post from Tom Shanley: https://observablehq.com/@tomshanley/cheysson-grid discusses
   "programmatically creating gridlines like those used these charts created by Émile Cheysson in
   1881", via clipping. It proposes a `CheyssonLineChart`, and includes the data `cheysson18818data` 
