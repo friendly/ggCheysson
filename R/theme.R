@@ -1,3 +1,34 @@
+#' Correction factor for a Cheysson display font's undersized metrics
+#'
+#' The four non-body Cheysson font families (`CheyssonSansCaps`,
+#' `CheyssonTitle`, `CheyssonItalic`, `CheyssonOutlineCaps`) each measure
+#' smaller than a typical sans font (Arial) at the same nominal point size -
+#' a common trait of hand-drawn/all-caps/decorative designs, which have less
+#' ascender/descender space filling out the type's em box. Sizes for text set
+#' in one of these families are scaled up by this factor so they read at
+#' roughly the intended visual size, rather than shrinking further on top of
+#' an already-undersized glyph. Factors were derived from
+#' `systemfonts::font_info()` (`max_ascend`, `lineheight` vs Arial at size
+#' 11), landing between the ascent-ratio-implied and lineheight-ratio-implied
+#' corrections for each family; `CheyssonSansCaps` and `CheyssonTitle` were
+#' additionally checked against rendered comparisons (see
+#' `dev/fonts/test_title_size_fix.R`).
+#'
+#' @param family A font family name.
+#' @return A numeric scaling factor (1 if `family` isn't one of the four
+#'   known undersized display fonts).
+#' @keywords internal
+cheysson_font_size_adjust <- function(family) {
+  switch(family,
+    CheyssonSansCaps = 1.15,
+    CheyssonTitle = 1.10,
+    CheyssonItalic = 1.12,
+    CheyssonOutlineCaps = 1.30,
+    1
+  )
+}
+
+
 #' Cheysson theme for ggplot2
 #'
 #' A ggplot2 theme inspired by the visual style of the _Albums de Statistique
@@ -80,14 +111,12 @@ theme_cheysson <- function(base_size = 11,
     axis_title_family <- if (fonts_available) "CheyssonSansCaps" else base_family
   }
 
-  # CheyssonSansCaps measures ~12-20% smaller than a typical sans font at the
-  # same nominal point size (systemfonts::font_info(): max_ascend 8.8 vs
-  # Arial's 9.95; lineheight 10.1 vs 12.7) - a common trait of all-caps
-  # designs, which have no ascenders/descenders to fill out the type's em
-  # box. Scale text set in that family back up so axis/legend titles and
-  # facet strips read at roughly the same visual size as theme_minimal(),
-  # rather than shrinking further on top of an already-undersized glyph.
-  caps_size_adjust <- if (axis_title_family == "CheyssonSansCaps") 1.15 else 1
+  # See cheysson_font_size_adjust(): CheyssonSansCaps and CheyssonTitle both
+  # measure smaller than a typical sans font at the same nominal point size,
+  # so text set in either is scaled back up to read at roughly the intended
+  # visual size.
+  axis_title_size_adjust <- cheysson_font_size_adjust(axis_title_family)
+  title_size_adjust <- cheysson_font_size_adjust(title_family)
 
   # Base theme
   theme_bw(base_size = base_size, base_family = base_family) +
@@ -98,7 +127,7 @@ theme_cheysson <- function(base_size = 11,
       # Plot title
       plot.title = ggplot2::element_text(
         family = title_family,
-        size = base_size * 1.4,
+        size = base_size * 1.4 * title_size_adjust,
         face = "plain",
         hjust = 0,
         margin = ggplot2::margin(b = base_size * 0.8)
@@ -115,7 +144,7 @@ theme_cheysson <- function(base_size = 11,
       # Axis titles
       axis.title = ggplot2::element_text(
         family = axis_title_family,
-        size = base_size * 0.95 * caps_size_adjust
+        size = base_size * 0.95 * axis_title_size_adjust
       ),
 
       axis.title.x = ggplot2::element_text(
@@ -137,7 +166,7 @@ theme_cheysson <- function(base_size = 11,
       # Legend
       legend.title = ggplot2::element_text(
         family = axis_title_family,
-        size = base_size * 0.95 * caps_size_adjust
+        size = base_size * 0.95 * axis_title_size_adjust
       ),
 
       legend.text = ggplot2::element_text(
@@ -187,7 +216,7 @@ theme_cheysson <- function(base_size = 11,
 
       strip.text = ggplot2::element_text(
         family = axis_title_family,
-        size = base_size * 0.95 * caps_size_adjust,
+        size = base_size * 0.95 * axis_title_size_adjust,
         margin = ggplot2::margin(4, 4, 4, 4)
       ),
 
@@ -308,12 +337,15 @@ theme_cheysson_map <- function(base_size = 11,
     title_family <- if (fonts_available) "CheyssonTitle" else base_family
   }
 
+  # See cheysson_font_size_adjust().
+  title_size_adjust <- cheysson_font_size_adjust(title_family)
+
   ggplot2::theme_void(base_size = base_size, base_family = base_family) +
     ggplot2::theme(
       # Title
       plot.title = ggplot2::element_text(
         family = title_family,
-        size = base_size * 1.4,
+        size = base_size * 1.4 * title_size_adjust,
         face = "plain",
         hjust = 0.5,
         margin = ggplot2::margin(b = base_size)

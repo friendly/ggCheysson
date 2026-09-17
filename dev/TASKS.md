@@ -494,6 +494,67 @@ even after another machine's `.git` has been moved out.
       straight into `list_cheysson_pals()` output with no explanation. Rebuilt pkgdown - no new
       warnings.
 
+- [x] 2026-09-17: **The Cheysson font sizes for titles, axis labels, legends are still too small in
+  quite a few examples.** E.g., see the examples in the getting started vignette. Perhaps that is
+  just due to `base_size = 11` as the default, but maybe something more fundamental about the
+  fonts included here.
+
+  Investigated both hypotheses. `plot.title` (`CheyssonTitle`) turned out to have the same kind of
+  bug as the earlier `axis.title`/`legend.title`/`strip.text` fix (`theme_cheysson()`
+  axis/legend title task, above): it measures ~8% smaller than Arial at the same nominal size
+  (`systemfonts::font_info()`: lineheight 11.61 vs Arial's 12.66) but got *no* correction factor -
+  the earlier fix only touched the `CheyssonSansCaps`-based elements. Rendering a direct
+  `theme_minimal()` vs `theme_cheysson()` comparison (`compare_minimal.png`/`compare_cheysson.png`
+  in scratchpad) confirmed it visually: title and axis-title text read noticeably smaller/lighter
+  than the minimal version. Separately confirmed `plot.subtitle`/`axis.text`/`legend.text` (which
+  use the base `Cheysson` body font, not `title_family`/`axis_title_family`) are *not* undersized -
+  `Cheysson`'s own metrics are equal to or larger than Arial's - so those were correctly left alone
+  by the earlier fix and still are.
+
+  Generalized the fix rather than special-casing `CheyssonTitle` the same way `CheyssonSansCaps`
+  was: added `cheysson_font_size_adjust(family)` (new, internal, top of `R/theme.R`) - a lookup
+  table giving a correction factor for all 4 non-body display fonts, each derived the same way as
+  the original `CheyssonSansCaps` fix (landing between the ascent-ratio-implied and
+  lineheight-ratio-implied correction vs Arial): `CheyssonSansCaps` 1.15 (unchanged),
+  `CheyssonTitle` 1.10 (user's call, from visually comparing rendered output at this and the
+  metrics-implied ~1.07 - the "Automobile Efficiency" example in
+  `dev/fonts/test_fonts_themes.R` looked better at 1.10), `CheyssonItalic` 1.12,
+  `CheyssonOutlineCaps` 1.30 - the latter two aren't used as theme defaults anywhere today, so this
+  only matters if a user manually passes one of them via `title_family`/`axis_title_family`
+  (previously they'd have silently gotten no correction at all). Applied
+  `title_size_adjust <- cheysson_font_size_adjust(title_family)` to `plot.title` in *both*
+  `theme_cheysson()` and `theme_cheysson_map()` (which independently duplicates the same
+  `plot.title` styling); `theme_cheysson_minimal()` inherits both fixes via `theme_cheysson()`.
+  Renamed the old `caps_size_adjust` variable to `axis_title_size_adjust` for symmetry, no
+  behavior change there.
+
+  Verified: rendered `theme_cheysson()` at `base_size` 9/11/14/18 against `theme_minimal()` at the
+  same sizes (new `dev/fonts/test_title_size_fix.R`, saved as
+  `dev/fonts/title_size_fix_base{9,11,14,18}_{minimal,cheysson}.png`) - title/axis-title text now
+  reads at a comparable visual size to the minimal version across the whole range, not just at the
+  default. Re-knitted `README.md` (its "With Fonts and Theme" example uses this exact
+  "Automobile Efficiency" plot) and rebuilt both vignettes via `devtools::build_vignettes()` (the
+  `guerry-maps` vignette leans heavily on `theme_cheysson_map()`) - both build clean. `R CMD check`
+  0/0/0 (after removing a stray `Rplots.pdf` a scratchpad script left at the top level, unrelated
+  to this fix - a plot rendered without an explicit device open).
+
+  Caught a process gap while doing this: the first re-knit of `README.md` produced a byte-identical
+  `README-with-fonts-1.png` - because `README.Rmd` does `library(ggCheysson)`, which loads the
+  *installed* package, and the installed copy hadn't been rebuilt since editing `R/theme.R` (or,
+  it turned out, since the 1.1.0 version bump at all - `citation("ggCheysson")`'s README output was
+  still showing "1.0.1"). Reran `devtools::install()` before re-knitting; `README-with-fonts-1.png`
+  and `README-complete-aesthetic-1.png` (also uses `theme_cheysson()`) then updated correctly, and
+  the citation output now correctly reads 1.1.0. Worth remembering for future theme.R/similar
+  changes: re-knitting README.Rmd without an intervening install silently uses stale code.
+
+- [ ] The way of specifying the combinations of colors and patterns used in examples seems unnecesarily
+  complicated. E.g., in the README example, "Complete Cheysson Aesthetic", there are four calls to
+  `scale_*()` functions. Perhaps this needs a `scale_cheysson()` wrapper to simplify this.
+
+- [ ] Should get some feedback from the maintainer of `ggpattern` (Trevor Davis) regarding the
+  design of our pattern system. But how to raise an issue that gives examples and refers to the `colorpat`
+  branch?
+
 - [ ] Another post from Tom Shanley: https://observablehq.com/@tomshanley/cheysson-grid discusses
   "programmatically creating gridlines like those used these charts created by Émile Cheysson in
   1881", via clipping. It proposes a `CheyssonLineChart`, and includes the data `cheysson18818data` 
@@ -505,3 +566,7 @@ even after another machine's `.git` has been moved out.
   for the palettes.
   Files: man/figures/cheysson1.png, man/figures/cheysson2.png are two examples
 
+- [ ] It would be nice to make a chart of the colors in the cheysson palettes in the form of a color
+  wheel/circle -- points in their colors, with labels for the palette name.
+  
+  

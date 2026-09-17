@@ -36,6 +36,11 @@
   possible via the old naming scheme, which had 4 real collisions), it warns and lists every
   match; pass `advent_day` to disambiguate without a warning, or to assert a specific palette
 
+* Fixed `theme_cheysson()`'s/`theme_cheysson_map()`'s `plot.title` (set in `CheyssonTitle`)
+  rendering smaller than intended, the same underlying issue as the 1.0.1 axis/legend-title fix
+  below but previously missed for the plot title itself. The correction is now generalized
+  (`cheysson_font_size_adjust()`) to all four Cheysson display fonts instead of hardcoded to one
+
 # ggCheysson 1.0.1
 
 * Fixed undersized axis and legend titles in `theme_cheysson()` (inherited by
