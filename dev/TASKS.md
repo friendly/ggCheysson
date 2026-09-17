@@ -547,7 +547,15 @@ even after another machine's `.git` has been moved out.
   the citation output now correctly reads 1.1.0. Worth remembering for future theme.R/similar
   changes: re-knitting README.Rmd without an intervening install silently uses stale code.
 
-- [ ] The way of specifying the combinations of colors and patterns used in examples seems unnecesarily
+  Follow-up per user request: added a `### Scaling with base_size` section to `README.Rmd` (after
+  "With Fonts and Theme", before "Complete Cheysson Aesthetic") rendering the same Automobile
+  Efficiency plot at `base_size = 14` and `16`, to show the title/axis-title fix holds at larger
+  sizes, not just the default 11 - directly using the comparison the user had just been shown
+  (`dev/fonts/test_title_size_fix.R`'s renders). Re-knitted `README.md` (package was already
+  correctly reinstalled from the fix above, so no repeat of the stale-install gap); rebuilt
+  pkgdown - clean, no new warnings.
+
+- [ ] The way of specifying the combinations of colors and patterns used in examples seems unnecessarily
   complicated. E.g., in the README example, "Complete Cheysson Aesthetic", there are four calls to
   `scale_*()` functions. Perhaps this needs a `scale_cheysson()` wrapper to simplify this.
 
@@ -569,4 +577,10 @@ even after another machine's `.git` has been moved out.
 - [ ] It would be nice to make a chart of the colors in the cheysson palettes in the form of a color
   wheel/circle -- points in their colors, with labels for the palette name.
   
-  
+- [ ] Work on this would make a great blog post in my `friendly.github.io` series. Title: Emile Cheysson
+  Meets `ggplot2`. Scene: I've discovered that I can time-travel in my dreams... The _Albums de Statistique
+  Graphique` have long been in my thoughts, so one night I book round-trip ticket, YYZ (2026) -> CDG (1896)
+  to meet with Emile and his team... I bring gifts: a bottle of Niagra ice-wine, CA maple syrup, ... AND
+  my laptop with R 4.6.1 and all my `ggplot2` related packages (each with a hex sticker) ...
+  OK, Emile, "What can we learn from each other?", "How should I design an R package to allow my people to
+  craft beautiful graphics with Cheysson style?"

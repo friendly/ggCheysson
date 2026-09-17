@@ -51,7 +51,13 @@ these albums combined:
 - Clear hierarchical organization of information
 
 This package preserves these design elements for modern statistical
-graphics.
+graphics. Perhaps more interesting is the historical motivation that led
+to this project by me and the others mentioned above. Émile Cheysson and
+his draftspeople at the Ministry of Public Works drew all these plates
+by hand.
+
+- Did they have an “in-house” style guide?
+- How would graphic designers of today approach this task?
 
 ## 📂 Installation
 
@@ -179,6 +185,44 @@ ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
 ```
 
 <img src="man/figures/README-with-fonts-1.png" alt="" width="100%" />
+
+### Scaling with `base_size`
+
+Like other ggplot2 themes, `theme_cheysson()` takes a `base_size` for
+larger output (slides, posters). Title and axis-title text (set in the
+decorative `CheyssonTitle`/`CheyssonSansCaps` fonts) is corrected to
+scale at the same rate as the rest of the theme, rather than reading
+undersized as `base_size` grows:
+
+``` r
+ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
+  geom_point(size = 3) +
+  scale_color_cheysson("1883_31") +
+  labs(
+    title = "Automobile Efficiency",
+    subtitle = "Weight vs Fuel Economy",
+    x = "Weight (1000 lbs)",
+    y = "Miles per Gallon"
+  ) +
+  theme_cheysson(base_size = 14)
+```
+
+<img src="man/figures/README-base-size-14-1.png" alt="" width="100%" />
+
+``` r
+ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
+  geom_point(size = 3) +
+  scale_color_cheysson("1883_31") +
+  labs(
+    title = "Automobile Efficiency",
+    subtitle = "Weight vs Fuel Economy",
+    x = "Weight (1000 lbs)",
+    y = "Miles per Gallon"
+  ) +
+  theme_cheysson(base_size = 16)
+```
+
+<img src="man/figures/README-base-size-16-1.png" alt="" width="100%" />
 
 ### Complete Cheysson Aesthetic (Colors + Patterns + Fonts)
 
@@ -373,7 +417,8 @@ ggplot(data, aes(category, value, fill = category)) +
     aes(pattern = category, pattern_fill = category),
     pattern_density = 0.35, color = "black"
   ) +
-  scale_fill_cheysson_pattern("1886_24") +
+
+    scale_fill_cheysson_pattern("1886_24") +
   scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")[1:4]) +
   scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")[1:4]) +
   labs(title = "Statistical Comparison", x = "Category", y = "Value") +
@@ -394,10 +439,17 @@ Five Cheysson font families are included:
 | `CheyssonOutlineCaps` | Outlined caps  | Decorative titles |
 | `CheyssonTitle`       | Display font   | Main titles       |
 
-Here are some of these:
+Two of these, `CheyssonTitle` and `CheyssonOutlineCaps` are designed to
+be decorative, mainly used in titles
 
 <center>
-<img src="man/figures/fonts1.png" height = 400 alt="Sample lettering in the five Cheysson font families: regular, italic, sans capitals, outline capitals, and title">
+<img src="man/figures/fonts2.png" height = 200 alt="Sample lettering in the two Cheysson font families: outline capitals, and title">
+</center>
+
+Here are the others:
+
+<center>
+<img src="man/figures/fonts1.png" height = 400 alt="Sample lettering in the three Cheysson font families: regular, italic, sans capitals">
 </center>
 
 To use these:
