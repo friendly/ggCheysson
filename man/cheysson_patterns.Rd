@@ -48,6 +48,6 @@ cheysson_patterns$`1881_12`
 
 }
 \seealso{
-\code{\link{cheysson_pattern}}, \code{\link{scale_pattern_fill_cheysson}}
+\code{\link[=cheysson_pattern]{cheysson_pattern()}}, \code{\link[=scale_pattern_fill_cheysson]{scale_pattern_fill_cheysson()}}
 }
 \keyword{datasets}

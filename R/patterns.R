@@ -17,15 +17,13 @@
 #'
 #' @details
 #' Each pattern specification includes:
-#' \itemize{
-#'   \item \strong{type}: "solid", "stripe", or "crosshatch"
-#'   \item \strong{fill}: Base fill color
-#'   \item \strong{pattern_fill}: Color for pattern lines
-#'   \item \strong{pattern_angle}: Angle of stripes (in degrees)
-#'   \item \strong{pattern_density}: Density of pattern lines (0-1)
-#'   \item \strong{pattern_spacing}: Spacing between pattern lines
-#'   \item \strong{pattern_linewidth}: Width of pattern lines
-#' }
+#' - **type**: "solid", "stripe", or "crosshatch"
+#' - **fill**: Base fill color
+#' - **pattern_fill**: Color for pattern lines
+#' - **pattern_angle**: Angle of stripes (in degrees)
+#' - **pattern_density**: Density of pattern lines (0-1)
+#' - **pattern_spacing**: Spacing between pattern lines
+#' - **pattern_linewidth**: Width of pattern lines
 #'
 #' @source
 #' Pattern specifications digitized from the David Rumsey Map Collection
@@ -37,7 +35,7 @@
 #' # Get patterns from a specific palette
 #' cheysson_patterns$`1881_12`
 #'
-#' @seealso \code{\link{cheysson_pattern}}, \code{\link{scale_pattern_fill_cheysson}}
+#' @seealso [cheysson_pattern()], [scale_pattern_fill_cheysson()]
 "cheysson_patterns"
 
 

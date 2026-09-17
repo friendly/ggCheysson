@@ -20,19 +20,17 @@
 #' refers to plate 7 from the 1880 album.
 #'
 #' Palette types:
-#' \itemize{
-#'   \item \strong{Sequential} (7 palettes): Ordered colors for quantitative data
-#'   \item \strong{Diverging} (2 palettes): Two contrasting colors with neutral midpoint
-#'   \item \strong{Grouped} (10 palettes): Related colors for comparing groups
-#'   \item \strong{Category} (6 palettes): Distinct colors for categorical data
-#' }
+#' - **Sequential** (7 palettes): Ordered colors for quantitative data
+#' - **Diverging** (2 palettes): Two contrasting colors with neutral midpoint
+#' - **Grouped** (10 palettes): Related colors for comparing groups
+#' - **Category** (6 palettes): Distinct colors for categorical data
 #'
 #' @source
 #' Color patterns digitized by RJ Andrews from the David Rumsey Map Collection
-#' \url{https://github.com/infowetrust/albumcolors}
+#' <https://github.com/infowetrust/albumcolors>
 #'
 #' Observable implementation by Tom Shanley
-#' \url{https://web.archive.org/web/20210130125506/https://observablehq.com/@tomshanley/cheysson-color-palettes}
+#' <https://web.archive.org/web/20210130125506/https://observablehq.com/@tomshanley/cheysson-color-palettes>
 #'
 #' @examples
 #' # List available palettes
@@ -45,7 +43,7 @@
 #' sequential_pals <- Filter(function(x) x$type == "sequential", cheysson_palettes)
 #' names(sequential_pals)
 #'
-#' @seealso \code{\link{cheysson_pal}}, \code{\link{scale_color_cheysson}}
+#' @seealso [cheysson_pal()], [scale_color_cheysson()]
 "cheysson_palettes"
 
 

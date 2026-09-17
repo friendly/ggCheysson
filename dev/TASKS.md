@@ -460,6 +460,20 @@ even after another machine's `.git` has been moved out.
       alongside `cheysson_palettes`/`cheysson_patterns`. Added to `_pkgdown.yml`'s Color Palettes
       section. `R CMD check` 0/0/0.
 
+    - [x] 2026-09-17: cleaned up old-style Rd macros (`\code{}`, `\link{}`, `\link[]{}`, `\url{}`,
+      `\strong{}`, `\itemize{}`/`\item`) in roxygen prose across `R/data.R`, `R/fonts.R`,
+      `R/palettes.R`, `R/patterns.R`, `R/scale_patterns.R`, `R/theme.R`, converting to markdown
+      (`` `code` ``, `[fun()]`/`[obj]`, `<url>`, `**bold**`, `- ` bullets), per the user's global
+      convention (`Roxygen: list(markdown = TRUE)` is set, and prose should use markdown, not raw
+      Rd). Deliberately left `\describe{}`/`\item{}{}` alone in `@format` data-frame column lists
+      (`albumImages`, `cheysson_fonts`, `cheysson_palettes`, `cheysson_patterns`,
+      `cheysson_labels`) - there's no clean markdown equivalent for that definition-list structure,
+      it's the standard convention even in markdown-mode packages, and markdown still processes
+      fine *inside* the `\item{}{}` bodies (confirmed: backticks/links inside these render
+      correctly). Verified via `devtools::document()`: several files regenerated identical Rd
+      output (proving the itemize->bullet conversion is exactly equivalent), others reflowed
+      cleanly with no semantic change. `R CMD check` 0/0/0 after.
+
 - [ ] Another post from Tom Shanley: https://observablehq.com/@tomshanley/cheysson-grid discusses
   "programmatically creating gridlines like those used these charts created by Émile Cheysson in
   1881", via clipping. It proposes a `CheyssonLineChart`, and includes the data `cheysson18818data` 

@@ -56,6 +56,6 @@ names(sequential_pals)
 
 }
 \seealso{
-\code{\link{cheysson_pal}}, \code{\link{scale_color_cheysson}}
+\code{\link[=cheysson_pal]{cheysson_pal()}}, \code{\link[=scale_color_cheysson]{scale_color_cheysson()}}
 }
 \keyword{datasets}

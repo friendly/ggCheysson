@@ -9,9 +9,8 @@ A data frame with 25 rows and 10 variables:
 \describe{
 \item{name}{The package's current palette name (e.g. "1881_22") - pass
 this to \code{scale_color_cheysson()}, \code{cheysson_pal()},
-\code{cheysson_pattern()}, etc. Unique; matches
-\code{names(cheysson_palettes)} and \code{names(cheysson_patterns)}
-exactly}
+\code{cheysson_pattern()}, etc. Unique; matches \code{names(cheysson_palettes)}
+and \code{names(cheysson_patterns)} exactly}
 \item{advent_day}{Advent calendar day (1-25) from RJ Andrews' original
 digitization project, where he released one palette per day during
 December}
@@ -32,8 +31,8 @@ overwriting one another during data extraction until the fix}
 \item{andrews_label}{RJ Andrews' own label for this palette, in the form
 "Dec.DD-YYYY.PP" (Advent day - album year . plate)}
 \item{shanley_id}{Tom Shanley's Observable notebook ID for this palette:
-\code{type} followed directly by \code{rumsey_no}'s digits with the
-dot removed (e.g. "diverging12514021")}
+\code{type} followed directly by \code{rumsey_no}'s digits with the dot removed
+(e.g. "diverging12514021")}
 }
 }
 \source{
@@ -42,12 +41,13 @@ dot removed (e.g. "diverging12514021")}
 \item RJ Andrews Album Colors: \url{https://github.com/infowetrust/albumcolors} -
 see also \code{man/figures/RJ-Andrews-color-palettes.jpg} in the package
 sources for his own reference grid of all 25 labeled palettes
-\item Tom Shanley Observable: \url{https://web.archive.org/web/20210130125506/https://observablehq.com/@tomshanley/cheysson-color-palettes} -
-see also \code{man/figures/shanley-palettes.png} in the package sources
-for his own reference grid of all 25 labeled palettes
-\item \code{data-raw/observable/albumColors.csv} (this package) - the
-original Advent day / Rumsey number / album / type mapping everything
-else here is derived from
+\item Tom Shanley Observable:
+\url{https://web.archive.org/web/20210130125506/https://observablehq.com/@tomshanley/cheysson-color-palettes} -
+see also \code{man/figures/shanley-palettes.png} in the package sources for
+his own reference grid of all 25 labeled palettes
+\item \code{data-raw/observable/albumColors.csv} (this package) - the original
+Advent day / Rumsey number / album / type mapping everything else here
+is derived from
 }
 }
 \usage{
@@ -55,34 +55,35 @@ cheysson_labels
 }
 \description{
 A one-row-per-plate lookup table tying together every naming scheme used
-for these 25 palettes: the package's own \code{\link{cheysson_palettes}}/
-\code{\link{cheysson_patterns}} names, RJ Andrews' original Advent calendar
-labels, and Tom Shanley's Observable notebook IDs. Useful whenever you have
-a palette identified in someone else's terms - an Advent day, a David
+for these 25 palettes: the package's own \link{cheysson_palettes}/
+\link{cheysson_patterns} names, RJ Andrews' original Advent calendar labels,
+and Tom Shanley's Observable notebook IDs. Useful whenever you have a
+palette identified in someone else's terms - an Advent day, a David
 Rumsey catalog number, or a label copied from Andrews' or Shanley's own
 work - and need the package name to actually use it in
-\code{\link{scale_color_cheysson}()} and friends, or vice versa.
+\code{\link[=scale_color_cheysson]{scale_color_cheysson()}} and friends, or vice versa (see \code{\link[=cheysson_name]{cheysson_name()}}
+for a lookup function that does this translation for you).
 }
 \details{
-This table exists because the package's own \code{name} (Album + plate)
-is a convenient but package-internal convention - it isn't what you'll see
-if you're reading Andrews' or Shanley's original write-ups, or working
-from a Rumsey catalog reference. \code{andrews_label} and \code{shanley_id}
-are derived programmatically from the verified rule linking all three
-schemes (album year + plate, taken from \code{rumsey_no}'s decimal
-suffix), not scraped from either source - both were cross-checked against
-every legible label/ID in the reference images below and matched for all
-24/24 checked. (Two of Shanley's own ID \emph{strings} have isolated typos - a
-digit transposition and a missing trailing digit; his prose descriptions
-don't have these typos, and this table's \code{shanley_id} gives the
-corrected form, not the typo'd one.)
+This table exists because the package's own \code{name} (Album + plate) is a
+convenient but package-internal convention - it isn't what you'll see if
+you're reading Andrews' or Shanley's original write-ups, or working from a
+Rumsey catalog reference. \code{andrews_label} and \code{shanley_id} are derived
+programmatically from the verified rule linking all three schemes (album
+year + plate, taken from \code{rumsey_no}'s decimal suffix), not scraped from
+either source - both were cross-checked against every legible label/ID in
+the reference images below and matched for all 24/24 checked. (Two of
+Shanley's own ID \emph{strings} have isolated typos - a digit transposition and
+a missing trailing digit; his prose descriptions don't have these typos,
+and this table's \code{shanley_id} gives the corrected form, not the typo'd
+one.)
 
-\code{old_name} also documents a real bug this table helped uncover:
-before 2026-09-16, palette names were built from \code{qty} (a color
-count) instead of \code{plate} (the real per-plate identifier), causing 4
-collisions between genuinely different plates and silently dropping 5 of
-the original 25 palettes from the package. Comparing \code{name} to
-\code{old_name} shows exactly what changed for each plate.
+\code{old_name} also documents a real bug this table helped uncover: before
+2026-09-16, palette names were built from \code{qty} (a color count) instead of
+\code{plate} (the real per-plate identifier), causing 4 collisions between
+genuinely different plates and silently dropping 5 of the original 25
+palettes from the package. Comparing \code{name} to \code{old_name} shows exactly
+what changed for each plate.
 }
 \examples{
 # View the crosswalk
@@ -99,7 +100,7 @@ subset(cheysson_labels, name != old_name)[, c("name", "old_name")]
 
 }
 \seealso{
-\code{\link{cheysson_palettes}}, \code{\link{cheysson_patterns}},
-\code{\link{albumImages}}
+\link{cheysson_palettes}, \link{cheysson_patterns}, \link{albumImages},
+\code{\link[=cheysson_name]{cheysson_name()}}
 }
 \keyword{datasets}

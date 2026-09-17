@@ -13,19 +13,15 @@
 #'
 #' @details
 #' This theme applies the following styling:
-#' \itemize{
-#'   \item Cheysson fonts for all text elements
-#'   \item Minimal grid lines
-#'   \item Classic axis styling
-#'   \item Subtle colors matching historical aesthetics
-#' }
+#' - Cheysson fonts for all text elements
+#' - Minimal grid lines
+#' - Classic axis styling
+#' - Subtle colors matching historical aesthetics
 #'
 #' Font selection:
-#' \itemize{
-#'   \item Plot title: CheyssonTitle (decorative)
-#'   \item Axis titles: CheyssonSansCaps (capitals)
-#'   \item Body text: Cheysson (regular)
-#' }
+#' - Plot title: CheyssonTitle (decorative)
+#' - Axis titles: CheyssonSansCaps (capitals)
+#' - Body text: Cheysson (regular)
 #'
 #' @importFrom ggplot2 theme_bw
 #' @return A ggplot2 theme object

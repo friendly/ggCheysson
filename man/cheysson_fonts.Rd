@@ -28,20 +28,19 @@ describing their characteristics and recommended uses.
 The package includes five hand-drawn font families created by Kenneth Fields
 (ESRI) to match the lettering style of the original Albums de Statistique
 Graphique:
-
 \itemize{
-\item \strong{Cheysson}: Regular serif font suitable for body text, axis
-labels, and legends
+\item \strong{Cheysson}: Regular serif font suitable for body text, axis labels,
+and legends
 \item \strong{CheyssonItalic}: Italic variant for emphasis and annotations
-\item \strong{CheyssonSansCaps}: Sans-serif capitals for axis labels and
-category names
-\item \strong{CheyssonOutlineCaps}: Outlined capitals for decorative plot
-titles and headings
+\item \strong{CheyssonSansCaps}: Sans-serif capitals for axis labels and category
+names
+\item \strong{CheyssonOutlineCaps}: Outlined capitals for decorative plot titles
+and headings
 \item \strong{CheyssonTitle}: Decorative font for main plot titles
 }
 
-These fonts must be loaded before use with \code{\link{load_cheysson_fonts}}.
-The Cheysson themes (\code{\link{theme_cheysson}}, etc.) automatically select
+These fonts must be loaded before use with \code{\link[=load_cheysson_fonts]{load_cheysson_fonts()}}.
+The Cheysson themes (\code{\link[=theme_cheysson]{theme_cheysson()}}, etc.) automatically select
 appropriate fonts for different plot elements.
 }
 \examples{
@@ -56,7 +55,7 @@ subset(cheysson_fonts, grepl("title", use, ignore.case = TRUE))
 
 }
 \seealso{
-\code{\link{load_cheysson_fonts}}, \code{\link{cheysson_fonts_available}},
-\code{\link{theme_cheysson}}
+\code{\link[=load_cheysson_fonts]{load_cheysson_fonts()}}, \code{\link[=cheysson_fonts_available]{cheysson_fonts_available()}},
+\code{\link[=theme_cheysson]{theme_cheysson()}}
 }
 \keyword{datasets}

@@ -15,18 +15,16 @@
 #'
 #' @details
 #' These scales require the ggpattern package. Use with ggpattern geoms like
-#' \code{geom_col_pattern()}, \code{geom_bar_pattern()}, etc.
+#' `geom_col_pattern()`, `geom_bar_pattern()`, etc.
 #'
 #' The scales apply multiple pattern aesthetics simultaneously:
-#' \itemize{
-#'   \item \code{fill}: Base fill color
-#'   \item \code{pattern}: Type of pattern (none, stripe, crosshatch) - set via
-#'     \code{scale_pattern_type_cheysson()}, which targets ggpattern's \code{pattern}
-#'     aesthetic
-#'   \item \code{pattern_fill}: Color of pattern lines
-#'   \item \code{pattern_angle}: Angle of stripes
-#'   \item \code{pattern_density}: Density of pattern lines
-#' }
+#' - `fill`: Base fill color
+#' - `pattern`: Type of pattern (none, stripe, crosshatch) - set via
+#'   `scale_pattern_type_cheysson()`, which targets ggpattern's `pattern`
+#'   aesthetic
+#' - `pattern_fill`: Color of pattern lines
+#' - `pattern_angle`: Angle of stripes
+#' - `pattern_density`: Density of pattern lines
 #'
 #' @examples
 #' \donttest{

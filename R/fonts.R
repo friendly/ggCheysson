@@ -9,25 +9,22 @@
 #'
 #' @details
 #' The package includes five Cheysson font families:
-#' \itemize{
-#'   \item \strong{Cheysson}: Regular serif font for body text
-#'   \item \strong{CheyssonItalic}: Italic variant
-#'   \item \strong{CheyssonSansCaps}: Sans-serif capitals
-#'   \item \strong{CheyssonOutlineCaps}: Outlined capitals for titles
-#'   \item \strong{CheyssonTitle}: Decorative font for titles
-#' }
+#' - **Cheysson**: Regular serif font for body text
+#' - **CheyssonItalic**: Italic variant
+#' - **CheyssonSansCaps**: Sans-serif capitals
+#' - **CheyssonOutlineCaps**: Outlined capitals for titles
+#' - **CheyssonTitle**: Decorative font for titles
 #'
-#' When using showtext, you must call \code{showtext::showtext_auto()} before
-#' creating plots, and \code{showtext::showtext_auto(FALSE)} when done.
+#' When using showtext, you must call `showtext::showtext_auto()` before
+#' creating plots, and `showtext::showtext_auto(FALSE)` when done.
 #'
-#' \strong{Windows users}: The systemfonts method works for saved plots (with ragg)
+#' **Windows users**: The systemfonts method works for saved plots (with ragg)
 #' but custom fonts won't appear in the on-screen plot window. For on-screen
 #' preview with fonts:
-#' \itemize{
-#'   \item Use \code{method = "showtext"} instead, or
-#'   \item In RStudio: Tools > Global Options > General > Graphics > Backend: "AGG"
-#' }
-#' For saving plots with systemfonts, use \code{ggsave(..., device = ragg::agg_png)}.
+#' - Use `method = "showtext"` instead, or
+#' - In RStudio: Tools > Global Options > General > Graphics > Backend: "AGG"
+#'
+#' For saving plots with systemfonts, use `ggsave(..., device = ragg::agg_png)`.
 #'
 #' @return Invisibly returns a character vector of loaded font family names
 #'
