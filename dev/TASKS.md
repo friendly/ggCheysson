@@ -482,6 +482,18 @@ even after another machine's `.git` has been moved out.
       (they get `alt=""` from rmarkdown/knitr itself, not flagged by pkgdown's check, and fixing
       would need `fig.alt` chunk options on every plot chunk - out of scope here).
 
+    - [x] 2026-09-17: made the `## Available Palettes` section's full palette listing
+      (`list_cheysson_pals()` output) collapsible in `README.Rmd`, using the `<details>`/
+      `<summary>` trick from ggpattern's README
+      (<https://github.com/trevorld/ggpattern/blob/master/README.Rmd>) - raw HTML wrapping the
+      code chunk, blank lines on both sides so pandoc still parses the fenced code block inside
+      it. Verified by re-knitting: the chunk and its printed output land correctly nested between
+      `<details>`/`</details>` in `README.md`. Also added a one-sentence description of what
+      `cheysson_palettes` actually contains (25 named palettes, each with type, album year, plate
+      number, hex colors) right before the collapsible list, since the section previously jumped
+      straight into `list_cheysson_pals()` output with no explanation. Rebuilt pkgdown - no new
+      warnings.
+
 - [ ] Another post from Tom Shanley: https://observablehq.com/@tomshanley/cheysson-grid discusses
   "programmatically creating gridlines like those used these charts created by Émile Cheysson in
   1881", via clipping. It proposes a `CheyssonLineChart`, and includes the data `cheysson18818data` 

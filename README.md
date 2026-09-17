@@ -221,7 +221,15 @@ ggplot(data, aes(category, value, fill = category)) +
 
 ## 🌈 Available Palettes
 
-View all available palettes:
+`cheysson_palettes` provides 25 named color palettes, each with its type
+(sequential, diverging, grouped, or category), the album year and plate
+number it was extracted from, and its hex color codes.
+
+<details>
+<summary>
+<span style="color: blue;"> Click to show/hide the list of all palettes
+</span>
+</summary>
 
 ``` r
 library(ggCheysson)
@@ -266,6 +274,8 @@ list_cheysson_pals("sequential")
 #> 6 1895_16 sequential  1895    16        3
 #> 7 1900_28 sequential  1900    28        2
 ```
+
+</details>
 
 ``` r
 # View palette colors
