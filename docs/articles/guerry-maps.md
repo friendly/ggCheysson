@@ -129,8 +129,6 @@ p1 <- ggplot(france_data) +
   ) +
   theme_cheysson_map() +
   theme(
-    plot.title = element_text(size = 16, face = "bold"),
-    plot.subtitle = element_text(size = 12),
     legend.position = "right"
   )
 
@@ -153,8 +151,6 @@ p2 <- ggplot(france_data) +
   ) +
   theme_cheysson_map() +
   theme(
-    plot.title = element_text(size = 16, face = "bold"),
-    plot.subtitle = element_text(size = 12),
     legend.position = "right"
   )
 
@@ -186,8 +182,6 @@ p3 <- ggplot(france_data) +
   ) +
   theme_cheysson_map() +
   theme(
-    plot.title = element_text(size = 16, face = "bold"),
-    plot.subtitle = element_text(size = 11),
     legend.position = "right"
   )
 
@@ -223,8 +217,6 @@ p3b <- ggplot(france_data) +
   ) +
   theme_cheysson_map() +
   theme(
-    plot.title = element_text(size = 16, face = "bold"),
-    plot.subtitle = element_text(size = 11),
     legend.position = "right"
   ) +
   guides(
@@ -261,8 +253,6 @@ p4 <- ggplot(france_data) +
   ) +
   theme_cheysson_map() +
   theme(
-    plot.title = element_text(size = 16, face = "bold"),
-    plot.subtitle = element_text(size = 12),
     legend.position = "right"
   )
 
@@ -298,8 +288,6 @@ p4b <- ggplot(france_data) +
   ) +
   theme_cheysson_map() +
   theme(
-    plot.title = element_text(size = 16, face = "bold"),
-    plot.subtitle = element_text(size = 11),
     legend.position = "right"
   ) +
   guides(
@@ -327,8 +315,6 @@ p5 <- ggplot(france_data) +
   ) +
   theme_cheysson_map() +
   theme(
-    plot.title = element_text(size = 16, face = "bold"),
-    plot.subtitle = element_text(size = 12),
     legend.position = "right"
   )
 
@@ -351,8 +337,6 @@ p6 <- ggplot(france_data) +
   ) +
   theme_cheysson_map() +
   theme(
-    plot.title = element_text(size = 16, face = "bold"),
-    plot.subtitle = element_text(size = 12),
     legend.position = "right"
   )
 
@@ -395,8 +379,6 @@ p7 <- ggplot(crime_long) +
   ) +
   theme_cheysson_map() +
   theme(
-    plot.title = element_text(size = 16, face = "bold"),
-    plot.subtitle = element_text(size = 12),
     strip.background = element_rect(fill = "#edd493", color = "black"),
     strip.text = element_text(size = 10, face = "bold"),
     legend.position = "bottom",
@@ -435,8 +417,6 @@ p8 <- ggplot(france_data) +
   ) +
   theme_cheysson_map() +
   theme(
-    plot.title = element_text(size = 16, face = "bold"),
-    plot.subtitle = element_text(size = 12),
     legend.position = "right"
   )
 
@@ -472,8 +452,6 @@ p8b <- ggplot(france_data) +
   ) +
   theme_cheysson_map() +
   theme(
-    plot.title = element_text(size = 16, face = "bold"),
-    plot.subtitle = element_text(size = 11),
     legend.position = "right"
   ) +
   guides(
@@ -518,11 +496,7 @@ p9 <- ggplot(france_data) +
     subtitle = "Crime Against Persons (color) and Literacy (H=High, L=Low)",
     caption = "Data: André-Michel Guerry (1833)"
   ) +
-  theme_cheysson_map() +
-  theme(
-    plot.title = element_text(size = 16, face = "bold"),
-    plot.subtitle = element_text(size = 11)
-  )
+  theme_cheysson_map()
 
 print(p9)
 ```

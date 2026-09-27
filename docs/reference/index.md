@@ -18,6 +18,9 @@ grouped, category).
   [`scale_colour_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
   [`scale_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
   : Cheysson color scales for ggplot2
+- [`cheysson_name()`](https://friendly.github.io/ggCheysson/reference/cheysson_name.md)
+  : Translate a palette label from another naming scheme to the current
+  name
 
 ## Hatching Patterns
 

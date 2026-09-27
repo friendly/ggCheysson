@@ -2,15 +2,17 @@
 
 A one-row-per-plate lookup table tying together every naming scheme used
 for these 25 palettes: the package's own
-[`cheysson_palettes`](https://friendly.github.io/ggCheysson/reference/cheysson_palettes.md)/
-[`cheysson_patterns`](https://friendly.github.io/ggCheysson/reference/cheysson_patterns.md)
+[cheysson_palettes](https://friendly.github.io/ggCheysson/reference/cheysson_palettes.md)/
+[cheysson_patterns](https://friendly.github.io/ggCheysson/reference/cheysson_patterns.md)
 names, RJ Andrews' original Advent calendar labels, and Tom Shanley's
 Observable notebook IDs. Useful whenever you have a palette identified
 in someone else's terms - an Advent day, a David Rumsey catalog number,
 or a label copied from Andrews' or Shanley's own work - and need the
 package name to actually use it in
 [`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
-and friends, or vice versa.
+and friends, or vice versa (see
+[`cheysson_name()`](https://friendly.github.io/ggCheysson/reference/cheysson_name.md)
+for a lookup function that does this translation for you).
 
 ## Usage
 
@@ -120,9 +122,10 @@ what changed for each plate.
 
 ## See also
 
-[`cheysson_palettes`](https://friendly.github.io/ggCheysson/reference/cheysson_palettes.md),
-[`cheysson_patterns`](https://friendly.github.io/ggCheysson/reference/cheysson_patterns.md),
-[`albumImages`](https://friendly.github.io/ggCheysson/reference/albumImages.md)
+[cheysson_palettes](https://friendly.github.io/ggCheysson/reference/cheysson_palettes.md),
+[cheysson_patterns](https://friendly.github.io/ggCheysson/reference/cheysson_patterns.md),
+[albumImages](https://friendly.github.io/ggCheysson/reference/albumImages.md),
+[`cheysson_name()`](https://friendly.github.io/ggCheysson/reference/cheysson_name.md)
 
 ## Examples
 

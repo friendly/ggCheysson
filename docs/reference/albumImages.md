@@ -30,7 +30,7 @@ A data frame with 25 rows and 6 variables:
 
   Number of colors/pattern elements in the palette - not a plate
   identifier (see
-  [`cheysson_palettes`](https://friendly.github.io/ggCheysson/reference/cheysson_palettes.md)
+  [cheysson_palettes](https://friendly.github.io/ggCheysson/reference/cheysson_palettes.md)
   for the actual unique plate number, derived from `RumseyListNo`'s
   decimal suffix)
 
@@ -68,8 +68,8 @@ the palette and can repeat across genuinely different plates.
 
 ## See also
 
-[`cheysson_palettes`](https://friendly.github.io/ggCheysson/reference/cheysson_palettes.md),
-[`cheysson_patterns`](https://friendly.github.io/ggCheysson/reference/cheysson_patterns.md)
+[cheysson_palettes](https://friendly.github.io/ggCheysson/reference/cheysson_palettes.md),
+[cheysson_patterns](https://friendly.github.io/ggCheysson/reference/cheysson_patterns.md)
 
 ## Examples
 

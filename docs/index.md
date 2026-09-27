@@ -1,6 +1,6 @@
 # ggCheysson
 
-Version 1.0.1; documentation built 2026-09-16
+Version 1.1.0; documentation built 2026-09-17
 
 The `ggCheysson` package brings the graphical styles of the *Albums de
 Statistique Graphique* to R and ggplot2.
@@ -38,7 +38,13 @@ these albums combined:
 - Clear hierarchical organization of information
 
 This package preserves these design elements for modern statistical
-graphics.
+graphics. Perhaps more interesting is the historical motivation that led
+to this project by me and the others mentioned above. Émile Cheysson and
+his draftspeople at the Ministry of Public Works drew all these plates
+by hand.
+
+- Did they have an “in-house” style guide?
+- How would graphic designers of today approach this task?
 
 ## 📂 Installation
 
@@ -101,12 +107,15 @@ These were derived by RJ Andrews from a collection of 25 thematic maps
 across the span of years in which the *Albums* were produced, shown
 below.
 
-![](https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png)
+![Grid of original historical maps from the Albums de Statistique
+Graphique, showing the variety of colors and hatching patterns
+used](https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png)
 
 From these, he abstracted the following combinations of color and
 pattern he thought characterized these maps:
 
-![](reference/figures/color-palettes.png)
+![Swatches of the color and pattern combinations abstracted from the
+maps above](reference/figures/color-palettes.png)
 
 ### New here
 
@@ -154,7 +163,7 @@ load_cheysson_fonts(method = "showtext")
 # Enable showtext for rendering
 showtext::showtext_auto()
 
-ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
+p1 <- ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
   geom_point(size = 3) +
   scale_color_cheysson("1883_31") +
   labs(
@@ -162,11 +171,34 @@ ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
     subtitle = "Weight vs Fuel Economy",
     x = "Weight (1000 lbs)",
     y = "Miles per Gallon"
-  ) +
-  theme_cheysson()
+  )
+
+p1 + theme_cheysson()
 ```
 
 ![](reference/figures/README-with-fonts-1.png)
+
+### Scaling with `base_size`
+
+Like other ggplot2 themes,
+[`theme_cheysson()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson.md)
+takes a `base_size` for larger output (slides, posters). Title and
+axis-title text (set in the decorative
+`CheyssonTitle`/`CheyssonSansCaps` fonts) is corrected to scale at the
+same rate as the rest of the theme, rather than reading undersized as
+`base_size` grows:
+
+``` r
+p1 + theme_cheysson(base_size = 14)
+```
+
+![](reference/figures/README-base-size-14-1.png)
+
+``` r
+p1 + theme_cheysson(base_size = 16)
+```
+
+![](reference/figures/README-base-size-16-1.png)
 
 ### Complete Cheysson Aesthetic (Colors + Patterns + Fonts)
 
@@ -209,7 +241,11 @@ ggplot(data, aes(category, value, fill = category)) +
 
 ## 🌈 Available Palettes
 
-View all available palettes:
+`cheysson_palettes` provides 25 named color palettes, each with its type
+(sequential, diverging, grouped, or category), the album year and plate
+number it was extracted from, and its hex color codes.
+
+Click to show/hide the list of all palettes
 
 ``` r
 library(ggCheysson)
@@ -352,7 +388,8 @@ ggplot(data, aes(category, value, fill = category)) +
     aes(pattern = category, pattern_fill = category),
     pattern_density = 0.35, color = "black"
   ) +
-  scale_fill_cheysson_pattern("1886_24") +
+
+    scale_fill_cheysson_pattern("1886_24") +
   scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")[1:4]) +
   scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")[1:4]) +
   labs(title = "Statistical Comparison", x = "Category", y = "Value") +
@@ -373,9 +410,16 @@ Five Cheysson font families are included:
 | `CheyssonOutlineCaps` | Outlined caps  | Decorative titles |
 | `CheyssonTitle`       | Display font   | Main titles       |
 
-Here are some of these:
+Two of these, `CheyssonTitle` and `CheyssonOutlineCaps` are designed to
+be decorative, mainly used in titles
 
-![](reference/figures/fonts1.png)
+![Sample lettering in the two Cheysson font families: outline capitals,
+and title](reference/figures/fonts2.png)
+
+Here are the others:
+
+![Sample lettering in the three Cheysson font families: regular, italic,
+sans capitals](reference/figures/fonts1.png)
 
 To use these:
 
@@ -469,12 +513,16 @@ theme(
 
 ## 🖼️ Gallery
 
-![](https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png)
+![Original maps from the Albums de Statistique Graphique showing the
+variety of colors and
+patterns](https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png)
 
 *Original maps from the Albums showing the variety of colors and
 patterns*
 
-![](https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/RJ-Andrews-color-palettes.jpg)
+![Grid of 25 color palettes extracted by RJ Andrews from the Albums de
+Statistique Graphique
+maps](https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/RJ-Andrews-color-palettes.jpg)
 
 *Extracted color palettes by RJ Andrews*
 
@@ -506,7 +554,7 @@ citation("ggCheysson")
 #> To cite package 'ggCheysson' in publications use:
 #> 
 #>   Friendly M (2026). _ggCheysson: Graphic Styles of Emile Cheysson for
-#>   'ggplot2'_. R package version 1.0.1,
+#>   'ggplot2'_. R package version 1.1.0,
 #>   <https://github.com/friendly/ggCheysson>.
 #> 
 #> A BibTeX entry for LaTeX users is
@@ -515,7 +563,7 @@ citation("ggCheysson")
 #>     title = {ggCheysson: Graphic Styles of Emile Cheysson for 'ggplot2'},
 #>     author = {Michael Friendly},
 #>     year = {2026},
-#>     note = {R package version 1.0.1},
+#>     note = {R package version 1.1.0},
 #>     url = {https://github.com/friendly/ggCheysson},
 #>   }
 ```

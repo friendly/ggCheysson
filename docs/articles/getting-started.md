@@ -7,7 +7,7 @@ Cheysson’s *Albums de Statistique Graphique* (1879-1897) to modern R
 graphics. This vignette demonstrates how to use the package’s main
 features:
 
-- **Color palettes**: 20 authentic palettes from the original Albums
+- **Color palettes**: 25 authentic palettes from the original Albums
 - **Hatching patterns**: Historical fill patterns for ggpattern
 - **Fonts**: Five hand-drawn font families
 - **Themes**: Period-appropriate ggplot2 themes
@@ -77,7 +77,7 @@ p1 <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Petal.Length)) +
   scale_color_cheysson("1880_21", discrete = FALSE) +
   labs(
     title = "Iris Measurements",
-    subtitle = "Using Sequential Palette 1880_07",
+    subtitle = "Using Sequential Palette 1880, Plate 21",
     x = "Sepal Length (cm)",
     y = "Sepal Width (cm)",
     color = "Petal\nLength"
@@ -97,7 +97,7 @@ p2 <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   scale_color_cheysson("1881_22") +
   labs(
     title = "Iris Species Comparison",
-    subtitle = "Using Categorical Palette 1881_04",
+    subtitle = "Using Categorical Palette 1881, Plate 22",
     x = "Sepal Length (cm)",
     y = "Sepal Width (cm)"
   ) +

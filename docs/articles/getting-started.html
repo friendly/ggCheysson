@@ -68,7 +68,7 @@
                         <h4 data-toc-skip class="author">Michael
 Friendly</h4>
             
-            <h4 data-toc-skip class="date">2026-09-16</h4>
+            <h4 data-toc-skip class="date">2026-09-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/friendly/ggCheysson/blob/HEAD/vignettes/getting-started.Rmd" class="external-link"><code>vignettes/getting-started.Rmd</code></a></small>
       <div class="d-none name"><code>getting-started.Rmd</code></div>
@@ -85,7 +85,7 @@ style of Émile Cheysson’s <em>Albums de Statistique Graphique</em>
 the package’s main features:</p>
 <ul>
 <li>
-<strong>Color palettes</strong>: 20 authentic palettes from the
+<strong>Color palettes</strong>: 25 authentic palettes from the
 original Albums</li>
 <li>
 <strong>Hatching patterns</strong>: Historical fill patterns for
@@ -158,7 +158,7 @@ ggpattern</li>
 <span>  <span class="fu"><a href="../reference/scale_cheysson.html">scale_color_cheysson</a></span><span class="op">(</span><span class="st">"1880_21"</span>, discrete <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Iris Measurements"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"Using Sequential Palette 1880_07"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Using Sequential Palette 1880, Plate 21"</span>,</span>
 <span>    x <span class="op">=</span> <span class="st">"Sepal Length (cm)"</span>,</span>
 <span>    y <span class="op">=</span> <span class="st">"Sepal Width (cm)"</span>,</span>
 <span>    color <span class="op">=</span> <span class="st">"Petal\nLength"</span></span>
@@ -166,7 +166,7 @@ ggpattern</li>
 <span>  <span class="fu"><a href="../reference/theme_cheysson.html">theme_cheysson</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p1</span><span class="op">)</span></span></code></pre></div>
-<p><img src="getting-started_files/figure-html/scatterplot-sequential-1.png" class="r-plt" alt="" width="672" style="display: block; margin: auto;"></p>
+<p><img src="getting-started_files/figure-html/scatterplot-sequential-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="scatterplot-with-categorical-palette">Scatterplot with Categorical Palette<a class="anchor" aria-label="anchor" href="#scatterplot-with-categorical-palette"></a>
@@ -177,14 +177,14 @@ ggpattern</li>
 <span>  <span class="fu"><a href="../reference/scale_cheysson.html">scale_color_cheysson</a></span><span class="op">(</span><span class="st">"1881_22"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Iris Species Comparison"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"Using Categorical Palette 1881_04"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Using Categorical Palette 1881, Plate 22"</span>,</span>
 <span>    x <span class="op">=</span> <span class="st">"Sepal Length (cm)"</span>,</span>
 <span>    y <span class="op">=</span> <span class="st">"Sepal Width (cm)"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_cheysson.html">theme_cheysson</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p2</span><span class="op">)</span></span></code></pre></div>
-<p><img src="getting-started_files/figure-html/scatterplot-category-1.png" class="r-plt" alt="" width="672" style="display: block; margin: auto;"></p>
+<p><img src="getting-started_files/figure-html/scatterplot-category-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
@@ -211,7 +211,7 @@ Cheysson’s distinctive hatching patterns.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="getting-started_files/figure-html/barplot-simple-1.png" class="r-plt" alt="" width="672" style="display: block; margin: auto;"></p>
+<p><img src="getting-started_files/figure-html/barplot-simple-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Bar chart with patterns</span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ggpattern"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -244,7 +244,7 @@ Cheysson’s distinctive hatching patterns.</p>
 <span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p4</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p><img src="getting-started_files/figure-html/barplot-patterns-1.png" class="r-plt" alt="" width="672" style="display: block; margin: auto;"></p>
+<p><img src="getting-started_files/figure-html/barplot-patterns-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="line-graphs-time-series">Line Graphs: Time Series<a class="anchor" aria-label="anchor" href="#line-graphs-time-series"></a>
@@ -280,7 +280,7 @@ Cheysson’s distinctive hatching patterns.</p>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p5</span><span class="op">)</span></span></code></pre></div>
-<p><img src="getting-started_files/figure-html/line-graph-1.png" class="r-plt" alt="" width="768" style="display: block; margin: auto;"></p>
+<p><img src="getting-started_files/figure-html/line-graph-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="stacked-area-chart">Stacked Area Chart<a class="anchor" aria-label="anchor" href="#stacked-area-chart"></a>
@@ -312,7 +312,7 @@ Cheysson’s distinctive hatching patterns.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p6</span><span class="op">)</span></span></code></pre></div>
-<p><img src="getting-started_files/figure-html/area-chart-1.png" class="r-plt" alt="" width="768" style="display: block; margin: auto;"></p>
+<p><img src="getting-started_files/figure-html/area-chart-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="faceted-plots-small-multiples">Faceted Plots: Small Multiples<a class="anchor" aria-label="anchor" href="#faceted-plots-small-multiples"></a>
@@ -348,7 +348,7 @@ Cheysson’s distinctive hatching patterns.</p>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p7</span><span class="op">)</span></span></code></pre></div>
-<p><img src="getting-started_files/figure-html/faceted-1.png" class="r-plt" alt="" width="768" style="display: block; margin: auto;"></p>
+<p><img src="getting-started_files/figure-html/faceted-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="grouped-bar-chart-with-patterns">Grouped Bar Chart with Patterns<a class="anchor" aria-label="anchor" href="#grouped-bar-chart-with-patterns"></a>
@@ -392,7 +392,7 @@ Cheysson’s distinctive hatching patterns.</p>
 <span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p8</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p><img src="getting-started_files/figure-html/grouped-bars-1.png" class="r-plt" alt="" width="768" style="display: block; margin: auto;"></p>
+<p><img src="getting-started_files/figure-html/grouped-bars-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="map-style-visualization">Map-Style Visualization<a class="anchor" aria-label="anchor" href="#map-style-visualization"></a>
@@ -420,7 +420,7 @@ Cheysson’s distinctive hatching patterns.</p>
 <span>  <span class="fu"><a href="../reference/theme_cheysson_map.html">theme_cheysson_map</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p9</span><span class="op">)</span></span></code></pre></div>
-<p><img src="getting-started_files/figure-html/map-style-1.png" class="r-plt" alt="" width="768" style="display: block; margin: auto;"></p>
+<p><img src="getting-started_files/figure-html/map-style-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="exploring-different-palette-types">Exploring Different Palette Types<a class="anchor" aria-label="anchor" href="#exploring-different-palette-types"></a>
@@ -458,7 +458,7 @@ Cheysson’s distinctive hatching patterns.</p>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p10</span><span class="op">)</span></span></code></pre></div>
-<p><img src="getting-started_files/figure-html/diverging-palette-1.png" class="r-plt" alt="" width="672" style="display: block; margin: auto;"></p>
+<p><img src="getting-started_files/figure-html/diverging-palette-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">

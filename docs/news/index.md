@@ -39,6 +39,37 @@
 - Added real (rendered) pattern examples to the README’s Pattern Support
   section, which previously had none
 
+- Added
+  [`cheysson_name()`](https://friendly.github.io/ggCheysson/reference/cheysson_name.md),
+  a lookup function that translates a palette label from any of the
+  `cheysson_labels` naming schemes (Andrews’ label, Shanley’s ID, a
+  Rumsey catalog number, the old pre-fix name, or an advent day) into
+  the current palette name, for direct use in calls like
+  `scale_color_cheysson(cheysson_name("Dec.01-1883.21"))`. When a label
+  is ambiguous (only possible via the old naming scheme, which had 4
+  real collisions), it warns and lists every match; pass `advent_day` to
+  disambiguate without a warning, or to assert a specific palette
+
+- Fixed
+  [`theme_cheysson()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson.md)’s/[`theme_cheysson_map()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson_map.md)’s
+  `plot.title` (set in `CheyssonTitle`) rendering smaller than intended,
+  the same underlying issue as the 1.0.1 axis/legend-title fix below but
+  previously missed for the plot title itself. The correction is now
+  generalized
+  ([`cheysson_font_size_adjust()`](https://friendly.github.io/ggCheysson/reference/cheysson_font_size_adjust.md))
+  to all four Cheysson display fonts instead of hardcoded to one
+
+- **[`theme_cheysson_map()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson_map.md)
+  text sizing redesigned**: `plot.title`, `plot.subtitle`,
+  `legend.title`, and `legend.text` now scale from `base_size` using a
+  deliberate poster-style hierarchy (a much larger title relative to the
+  rest, in the spirit of Guerry’s own maps) instead of the modest ratios
+  [`theme_cheysson()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson.md)
+  uses; `plot.caption` is now styled too (previously unstyled and tiny).
+  `base_size` alone now controls this - no need for the
+  `theme(plot.title = element_text(size = ...))` overrides the
+  `guerry-maps` vignette previously needed on every map
+
 ## ggCheysson 1.0.1
 
 - Fixed undersized axis and legend titles in

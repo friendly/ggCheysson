@@ -68,7 +68,7 @@
 <img src="logo.png" class="logo" alt=""><h1 id="ggcheysson-">ggCheysson <a class="anchor" aria-label="anchor" href="#ggcheysson-"></a>
 </h1>
 </div>
-<p>Version 1.0.1; documentation built 2026-09-16</p>
+<p>Version 1.1.0; documentation built 2026-09-17</p>
 <p>The <code>ggCheysson</code> package brings the graphical styles of the <em>Albums de Statistique Graphique</em> to R and ggplot2.</p>
 <p>The <em>Albums</em> were produced by the Ministry of Public Works in France under the direction of <a href="https://en.wikipedia.org/wiki/%C3%89mile_Cheysson" class="external-link">Émile Cheysson</a> from 1879-1897. They represent the “pinnacle of the Golden Age of Statistical Graphics” (Friendly, 2008) for their innovation in visualization techniques, graphic design and beauty.</p>
 <p>The package is based on work by:</p>
@@ -92,7 +92,11 @@
 <li>Hand-lettered text with distinctive character</li>
 <li>Clear hierarchical organization of information</li>
 </ul>
-<p>This package preserves these design elements for modern statistical graphics.</p>
+<p>This package preserves these design elements for modern statistical graphics. Perhaps more interesting is the historical motivation that led to this project by me and the others mentioned above. Émile Cheysson and his draftspeople at the Ministry of Public Works drew all these plates by hand.</p>
+<ul>
+<li>Did they have an “in-house” style guide?</li>
+<li>How would graphic designers of today approach this task?</li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="id_-installation">📂 Installation<a class="anchor" aria-label="anchor" href="#id_-installation"></a>
@@ -163,11 +167,11 @@
 </ul>
 <p>These were derived by RJ Andrews from a collection of 25 thematic maps across the span of years in which the <em>Albums</em> were produced, shown below.</p>
 <center>
-<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png" width="400">
+<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png" width="400" alt="Grid of original historical maps from the Albums de Statistique Graphique, showing the variety of colors and hatching patterns used">
 </center>
 <p>From these, he abstracted the following combinations of color and pattern he thought characterized these maps:</p>
 <center>
-<img src="reference/figures/color-palettes.png" width="600">
+<img src="reference/figures/color-palettes.png" width="600" alt="Swatches of the color and pattern combinations abstracted from the maps above">
 </center>
 </div>
 <div class="section level3">
@@ -206,7 +210,7 @@
 <span><span class="co"># Enable showtext for rendering</span></span>
 <span><span class="fu">showtext</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_auto.html" class="external-link">showtext_auto</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">wt</span>, <span class="va">mpg</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">wt</span>, <span class="va">mpg</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="reference/scale_cheysson.html">scale_color_cheysson</a></span><span class="op">(</span><span class="st">"1883_31"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
@@ -214,14 +218,27 @@
 <span>    subtitle <span class="op">=</span> <span class="st">"Weight vs Fuel Economy"</span>,</span>
 <span>    x <span class="op">=</span> <span class="st">"Weight (1000 lbs)"</span>,</span>
 <span>    y <span class="op">=</span> <span class="st">"Miles per Gallon"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="reference/theme_cheysson.html">theme_cheysson</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="reference/theme_cheysson.html">theme_cheysson</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-with-fonts-1.png" alt="" width="100%"></p>
+</div>
+<div class="section level3">
+<h3 id="scaling-with-base_size">Scaling with <code>base_size</code>
+<a class="anchor" aria-label="anchor" href="#scaling-with-base_size"></a>
+</h3>
+<p>Like other ggplot2 themes, <code><a href="reference/theme_cheysson.html">theme_cheysson()</a></code> takes a <code>base_size</code> for larger output (slides, posters). Title and axis-title text (set in the decorative <code>CheyssonTitle</code>/<code>CheyssonSansCaps</code> fonts) is corrected to scale at the same rate as the rest of the theme, rather than reading undersized as <code>base_size</code> grows:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="reference/theme_cheysson.html">theme_cheysson</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-base-size-14-1.png" alt="" width="100%"></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="reference/theme_cheysson.html">theme_cheysson</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">16</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-base-size-16-1.png" alt="" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="complete-cheysson-aesthetic-colors--patterns--fonts">Complete Cheysson Aesthetic (Colors + Patterns + Fonts)<a class="anchor" aria-label="anchor" href="#complete-cheysson-aesthetic-colors--patterns--fonts"></a>
 </h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trevorld/ggpattern" class="external-link">ggpattern</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
@@ -260,8 +277,9 @@
 <div class="section level2">
 <h2 id="id_-available-palettes">🌈 Available Palettes<a class="anchor" aria-label="anchor" href="#id_-available-palettes"></a>
 </h2>
-<p>View all available palettes:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p><code>cheysson_palettes</code> provides 25 named color palettes, each with its type (sequential, diverging, grouped, or category), the album year and plate number it was extracted from, and its hex color codes.</p>
+<details><summary><span style="color: blue;"> Click to show/hide the list of all palettes </span>
+</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/friendly/ggCheysson" class="external-link">ggCheysson</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># List all palettes</span></span>
@@ -303,7 +321,7 @@
 <span><span class="co">#&gt; 5 1891_25 sequential  1891    25        2</span></span>
 <span><span class="co">#&gt; 6 1895_16 sequential  1895    16        3</span></span>
 <span><span class="co">#&gt; 7 1900_28 sequential  1900    28        2</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+</details><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># View palette colors</span></span>
 <span><span class="fu"><a href="reference/cheysson_pal.html">cheysson_pal</a></span><span class="op">(</span><span class="st">"1880_21"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "#d9636c" "#869e80" "#dec367" "#85aab1" "#aea9a4" "#ed8238" "#ab90a4"</span></span></code></pre></div>
@@ -311,19 +329,19 @@
 <h3 id="visualizing-palettes">Visualizing Palettes<a class="anchor" aria-label="anchor" href="#visualizing-palettes"></a>
 </h3>
 <p>Use <code><a href="reference/show_palette.html">show_palette()</a></code> to display a palette with color swatches and hex codes:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Display a single palette with metadata</span></span>
 <span><span class="fu"><a href="reference/show_palette.html">show_palette</a></span><span class="op">(</span><span class="st">"1895_16"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-show-palette-1.png" alt="" width="100%"></p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Display multiple palettes at once</span></span>
 <span><span class="fu"><a href="reference/show_palettes.html">show_palettes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1880_21"</span>, <span class="st">"1881_12"</span>, <span class="st">"1895_16"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-show-palette-multi-1.png" alt="" width="100%"></p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Display four palettes in a 2x2 grid</span></span>
 <span><span class="fu"><a href="reference/show_palettes.html">show_palettes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1880_21"</span>, <span class="st">"1881_12"</span>, <span class="st">"1895_16"</span>, <span class="st">"1906_06"</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-show-palette-grid-1.png" alt="" width="100%"></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Display all palettes of a specific type</span></span>
 <span><span class="fu"><a href="reference/show_palettes.html">show_palettes</a></span><span class="op">(</span><span class="st">"category"</span><span class="op">)</span></span></code></pre></div>
 <p>Palette types:</p>
@@ -343,7 +361,7 @@
 <h2 id="id_-pattern-support">📐 Pattern Support<a class="anchor" aria-label="anchor" href="#id_-pattern-support"></a>
 </h2>
 <p>With ggpattern, recreate the distinctive hatching styles - each palette pairs colors with historically accurate patterns (solid fills, stripes, crosshatching):</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trevorld/ggpattern" class="external-link">ggpattern</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># List available pattern palettes</span></span>
@@ -358,7 +376,7 @@
 <span></span>
 <span><span class="co"># Get pattern specifications for one palette</span></span>
 <span><span class="va">patterns</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cheysson_pattern.html">cheysson_pattern</a></span><span class="op">(</span><span class="st">"1886_24"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Display the palette's patterns as swatches</span></span>
 <span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">patterns</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">i</span>, <span class="fl">1</span>, fill <span class="op">=</span> <span class="va">i</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -374,7 +392,7 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-pattern-swatches-1.png" alt="" width="100%"></p>
 <p>Use the pattern scales directly in a plot, alongside the matching fill scale:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>category <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">23</span>, <span class="fl">18</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">category</span>, <span class="va">value</span>, fill <span class="op">=</span> <span class="va">category</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -382,7 +400,8 @@
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="va">category</span>, pattern_fill <span class="op">=</span> <span class="va">category</span><span class="op">)</span>,</span>
 <span>    pattern_density <span class="op">=</span> <span class="fl">0.35</span>, color <span class="op">=</span> <span class="st">"black"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="reference/scale_fill_cheysson_pattern.html">scale_fill_cheysson_pattern</a></span><span class="op">(</span><span class="st">"1886_24"</span><span class="op">)</span> <span class="op">+</span></span>
+<span></span>
+<span>    <span class="fu"><a href="reference/scale_fill_cheysson_pattern.html">scale_fill_cheysson_pattern</a></span><span class="op">(</span><span class="st">"1886_24"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/scale_pattern_manual.html" class="external-link">scale_pattern_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="reference/cheysson_pattern_params.html">cheysson_pattern_params</a></span><span class="op">(</span><span class="va">patterns</span>, <span class="st">"pattern_type"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/scale_pattern_manual.html" class="external-link">scale_pattern_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="reference/cheysson_pattern_params.html">cheysson_pattern_params</a></span><span class="op">(</span><span class="va">patterns</span>, <span class="st">"pattern_fill"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Statistical Comparison"</span>, x <span class="op">=</span> <span class="st">"Category"</span>, y <span class="op">=</span> <span class="st">"Value"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -427,12 +446,16 @@
 </tr>
 </tbody>
 </table>
-<p>Here are some of these:</p>
+<p>Two of these, <code>CheyssonTitle</code> and <code>CheyssonOutlineCaps</code> are designed to be decorative, mainly used in titles</p>
 <center>
-<img src="reference/figures/fonts1.png" height="400">
+<img src="reference/figures/fonts2.png" height="200" alt="Sample lettering in the two Cheysson font families: outline capitals, and title">
+</center>
+<p>Here are the others:</p>
+<center>
+<img src="reference/figures/fonts1.png" height="400" alt="Sample lettering in the three Cheysson font families: regular, italic, sans capitals">
 </center>
 <p>To use these:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load fonts</span></span>
 <span><span class="fu"><a href="reference/load_cheysson_fonts.html">load_cheysson_fonts</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"showtext"</span><span class="op">)</span></span>
 <span><span class="fu">showtext</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_auto.html" class="external-link">showtext_auto</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -542,9 +565,9 @@
 <div class="section level2">
 <h2 id="id_️-gallery">🖼️ Gallery<a class="anchor" aria-label="anchor" href="#id_%EF%B8%8F-gallery"></a>
 </h2>
-<p><img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png" width="350"></p>
+<p><img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png" width="350" alt="Original maps from the Albums de Statistique Graphique showing the variety of colors and patterns"></p>
 <p><em>Original maps from the Albums showing the variety of colors and patterns</em></p>
-<p><img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/RJ-Andrews-color-palettes.jpg" width="600"></p>
+<p><img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/RJ-Andrews-color-palettes.jpg" width="600" alt="Grid of 25 color palettes extracted by RJ Andrews from the Albums de Statistique Graphique maps"></p>
 <p><em>Extracted color palettes by RJ Andrews</em></p>
 </div>
 <div class="section level2">
@@ -573,12 +596,12 @@
 <h2 id="id_-citation">📖 Citation<a class="anchor" aria-label="anchor" href="#id_-citation"></a>
 </h2>
 <p>To cite <code>ggCheysson</code>, please use:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"ggCheysson"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; To cite package 'ggCheysson' in publications use:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Friendly M (2026). _ggCheysson: Graphic Styles of Emile Cheysson for</span></span>
-<span><span class="co">#&gt;   'ggplot2'_. R package version 1.0.1,</span></span>
+<span><span class="co">#&gt;   'ggplot2'_. R package version 1.1.0,</span></span>
 <span><span class="co">#&gt;   &lt;https://github.com/friendly/ggCheysson&gt;.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
@@ -587,7 +610,7 @@
 <span><span class="co">#&gt;     title = {ggCheysson: Graphic Styles of Emile Cheysson for 'ggplot2'},</span></span>
 <span><span class="co">#&gt;     author = {Michael Friendly},</span></span>
 <span><span class="co">#&gt;     year = {2026},</span></span>
-<span><span class="co">#&gt;     note = {R package version 1.0.1},</span></span>
+<span><span class="co">#&gt;     note = {R package version 1.1.0},</span></span>
 <span><span class="co">#&gt;     url = {https://github.com/friendly/ggCheysson},</span></span>
 <span><span class="co">#&gt;   }</span></span></code></pre></div>
 <p>To cite the original <em>Albums de Statistique Graphique</em>:</p>
