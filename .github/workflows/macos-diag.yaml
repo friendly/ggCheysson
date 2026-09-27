@@ -26,7 +26,7 @@ jobs:
           for v in getting-started guerry-maps; do git show v1.0.1:vignettes/$v.Rmd > old-vignettes/$v.Rmd; done
           Rscript -e "install.packages('ggCheysson', lib = 'lib101', repos = 'https://cloud.r-project.org', dependencies = FALSE)"
       - name: Run diagnostics
-        run: Rscript .github/diag/run-all.R
+        run: Rscript .github/diag/round2.R
       - uses: actions/upload-artifact@v4
         if: always()
         with:
