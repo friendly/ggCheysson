@@ -15,11 +15,15 @@ if (st == "on") {
 
 make_plot <- function(id) {
   if (id == "grid_mask") return(NULL)
-  if (id %in% c("sf_plain", "sf_pattern")) {
+  if (startsWith(id, "sf_")) {
     data(gfrance85, package = "Guerry"); data(Guerry, package = "Guerry")
-    fr <- merge(st_as_sf(gfrance85), Guerry, by = "Department", all.x = TRUE)
-    fr$q <- cut(fr$Literacy, quantile(fr$Literacy, 0:5 / 5, na.rm = TRUE),
-                include.lowest = TRUE, labels = paste0("Q", 1:5))
+    # Quintile before merging: gfrance85 carries its own Guerry columns, so
+    # merge() suffixes the shared names (Literacy.x/.y)
+    g <- Guerry[, c("Department", "Literacy")]
+    g$q <- cut(g$Literacy, quantile(g$Literacy, 0:5 / 5, na.rm = TRUE),
+               include.lowest = TRUE, labels = paste0("Q", 1:5))
+    fr <- merge(st_as_sf(gfrance85), g[, c("Department", "q")],
+                by = "Department", all.x = TRUE)
   }
   switch(id,
     sf_plain = ggplot(fr) + geom_sf(aes(fill = q)) +
@@ -30,6 +34,12 @@ make_plot <- function(id) {
       scale_fill_cheysson_pattern("1881_22") +
       scale_pattern_fill_cheysson("1881_22") +
       scale_pattern_type_cheysson("1881_22") + theme_cheysson_map(),
+    # As in the 1.0.1 vignette that segfaulted on CRAN: stripes on every polygon
+    sf_stripe = ggplot(fr) +
+      geom_sf_pattern(aes(fill = q, pattern_fill = q), pattern = "stripe",
+                      pattern_density = 0.3, pattern_spacing = 0.02) +
+      scale_fill_cheysson_pattern("1881_22") +
+      scale_pattern_fill_cheysson("1881_22") + theme_cheysson_map(),
     col_pattern = ggplot(data.frame(x = letters[1:4], y = 1:4),
                          aes(x, y, fill = x)) +
       geom_col_pattern(aes(pattern = x, pattern_fill = x),

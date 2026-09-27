@@ -10,7 +10,7 @@ print(capabilities()[c("aqua", "cairo", "png")])
 for (p in c("ggplot2", "ggpattern", "gridpattern", "showtext", "sysfonts", "ragg", "sf", "knitr"))
   cat(sprintf("%-12s %s\n", p, as.character(packageVersion(p))))
 
-cases <- expand.grid(plot = c("grid_mask", "sf_plain", "col_pattern", "sf_pattern"),
+cases <- expand.grid(plot = c("grid_mask", "sf_plain", "col_pattern", "sf_pattern", "sf_stripe"),
                      device = c("quartz", "cairo", "ragg"),
                      showtext = c("off", "on"), stringsAsFactors = FALSE)
 cases$status <- NA_integer_
@@ -27,10 +27,26 @@ cat("\n== Summary (status by device x showtext) ==\n")
 print(xtabs(status ~ plot + paste(device, showtext), cases))
 
 cat("\n== Full vignette renders (knitr default device) ==\n")
-for (v in list.files("vignettes", "\.Rmd$", full.names = TRUE)) {
+for (v in list.files("vignettes", "[.]Rmd$", full.names = TRUE)) {
   expr <- sprintf("rmarkdown::render('%s', output_dir = '%s', quiet = TRUE)", v, outdir)
   log <- file.path(outdir, paste0(basename(v), ".log"))
   st <- system2(rscript, c("-e", shQuote(expr)), stdout = log, stderr = log)
   cat(sprintf("%-25s -> %s\n", basename(v), if (st == 0) "OK" else paste("FAIL", st)))
   if (st != 0) cat(tail(readLines(log), 25), sep = "\n")
+}
+
+cat("\n== 1.0.1 vignettes, as checked on CRAN, with CRAN's ggCheysson 1.0.1 ==\n")
+lib101 <- normalizePath("lib101", mustWork = FALSE)
+if (dir.exists("old-vignettes") && dir.exists(lib101)) {
+  for (v in list.files("old-vignettes", "[.]Rmd$", full.names = TRUE)) {
+    rf <- tempfile(fileext = ".R")
+    writeLines(c(sprintf(".libPaths(c('%s', .libPaths()))", lib101),
+                 "cat('ggCheysson', as.character(packageVersion('ggCheysson')), '\n')",
+                 sprintf("rmarkdown::render('%s', output_dir = '%s', quiet = TRUE)", v, outdir)), rf)
+    log <- file.path(outdir, paste0("v101-", basename(v), ".log"))
+    st <- system2(rscript, rf, stdout = log, stderr = log)
+    cat(sprintf("%-25s -> %s\n", basename(v), if (st == 0) "OK" else paste("FAIL", st)))
+    cat(head(readLines(log), 1), sep = "\n")
+    if (st != 0) cat(tail(readLines(log), 25), sep = "\n")
+  }
 }
