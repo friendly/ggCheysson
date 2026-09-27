@@ -2,6 +2,7 @@
 
 export(cheysson_font)
 export(cheysson_fonts_available)
+export(cheysson_name)
 export(cheysson_pal)
 export(cheysson_pattern)
 export(cheysson_pattern_params)

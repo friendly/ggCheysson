@@ -6,14 +6,19 @@ This folder contains development scripts, tests, and notes for the ggCheysson pa
 
 The `dev/` directory is organized into the following subfolders:
 
-### **colorpat/** - Unified Color-Pattern Palettes (ON HOLD)
-Experimental work on unified color-pattern palette system. **This feature is too complex for the current release and has been paused.**
+### **colorpat/** - Unified Color-Pattern Palettes
+Experimental work on a unified color-pattern palette system, paused since early 2026-01 as too
+complex for the 1.0.0 release. **Resumed 2026-09-16 on the `colorpat` git branch** - see
+`dev/TASKS.md` for current status (a real palette-naming bug got fixed there along the way; the
+unified-palette work itself is still open). Cleaned up 2026-09-16: superseded prototype snapshots
+moved to `colorpat/old/` (see its own `README.md`) rather than deleted, since none of it was
+"truly not useful" - just superseded, narrative/historical value only.
 
-- Documentation: `*_SUMMARY.md`, `UNIFIED_COLOR_PATTERN_PLAN.md`, `COLORPAT_ISSUE_SUMMARY.md`
-- Code: `prototype_colorpat.R`, `extract_colorpat_pairings.R`
-- Tests: `test_*.R` scripts
-- Data: `colorpat_extractions.RData`, `colorpat_extraction/` directory
-- Images: Test outputs (`test_*.png`)
+- Current: `PROGRESS_UPDATE.md`, `prototype_colorpat.R`, `test_ten_palettes.R`/`.png` (best
+  starting point if resumed - but predates the naming fix, needs a rename pass),
+  `UNIFIED_COLOR_PATTERN_PLAN.md`, `COLORPAT_ISSUE_SUMMARY.md`, `COLORPAT_EXTRACTION_TEMPLATE.md`,
+  `extract_colorpat_pairings.R`, `colorpat_extractions.RData`, `colorpat_extraction/` directory
+- Superseded (historical record only): `colorpat/old/`
 
 ### **fonts/** - Font Integration
 Font-related development for Windows and cross-platform support.
@@ -196,11 +201,11 @@ ggplot(data, aes(x, y, pattern_type = category)) +
 - **Documentation**: `vignettes/VIGNETTES_SUMMARY.md`, `vignettes/GUERRY_VIGNETTE_INFO.md`
 - **Fixes**: `vignettes/GUERRY_VIGNETTE_FIXES.md`, `vignettes/REGION_COLUMN_FIX.md`
 
-### Color-Pattern Work (ON HOLD)
+### Color-Pattern Work (resumed 2026-09-16 on the `colorpat` branch)
 - **Prototype**: `colorpat/prototype_colorpat.R`
 - **Extraction**: `colorpat/extract_colorpat_pairings.R`
 - **Documentation**: `colorpat/UNIFIED_COLOR_PATTERN_PLAN.md`
-- **Status**: Too complex for current release
+- **Status**: see `dev/TASKS.md` for current status
 
 ## Package Status
 
@@ -213,7 +218,7 @@ See `PACKAGE_STATUS.md` for overall package development status.
 - Pattern information has been extracted and is available through pattern scales
 - Palette names use the album year and plate number for clarity
   - Original "dec01" through "dec25" naming from Advent calendar is preserved in metadata
-- **Unified color-pattern palette system** is on hold - too complex for this release
+- **Unified color-pattern palette system**: resumed 2026-09-16 on the `colorpat` branch, see `dev/TASKS.md`
 
 ## Completed Features
 
@@ -226,4 +231,5 @@ See `PACKAGE_STATUS.md` for overall package development status.
 
 ## Features On Hold
 
-⏸️ Unified color-pattern palette system (`colorpat/`) - deferred to future release
+⏸️ ~~Unified color-pattern palette system~~ - resumed 2026-09-16 on the `colorpat` branch, see
+`dev/TASKS.md`

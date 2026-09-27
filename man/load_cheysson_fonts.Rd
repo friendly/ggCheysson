@@ -38,6 +38,7 @@ preview with fonts:
 \item Use \code{method = "showtext"} instead, or
 \item In RStudio: Tools > Global Options > General > Graphics > Backend: "AGG"
 }
+
 For saving plots with systemfonts, use \code{ggsave(..., device = ragg::agg_png)}.
 }
 \examples{

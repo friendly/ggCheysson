@@ -4,10 +4,10 @@
 \alias{show_palette}
 \title{Display a Cheysson palette with color swatches and hex codes}
 \usage{
-show_palette(palette = "1880_07", n = NULL, show_info = TRUE, cex = 1)
+show_palette(palette = "1880_21", n = NULL, show_info = TRUE, cex = 1)
 }
 \arguments{
-\item{palette}{Name of palette (e.g., "1880_07"), or palette type
+\item{palette}{Name of palette (e.g., "1880_21"), or palette type
 ("sequential", "diverging", "grouped", "category").}
 
 \item{n}{Number of colors to display. If NULL (default), shows all colors in
@@ -29,13 +29,13 @@ the available palettes.
 }
 \examples{
 # Display a specific palette
-show_palette("1880_07")
+show_palette("1880_21")
 
 # Display palette without metadata
-show_palette("1881_03", show_info = FALSE)
+show_palette("1881_12", show_info = FALSE)
 
 # Display 10 interpolated colors
-show_palette("1895_04", n = 10)
+show_palette("1895_16", n = 10)
 
 # Display first sequential palette
 show_palette("sequential")

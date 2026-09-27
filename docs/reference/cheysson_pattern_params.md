@@ -28,7 +28,7 @@ Vector of parameter values
 ## Examples
 
 ``` r
-patterns <- cheysson_pattern("1881_03")
+patterns <- cheysson_pattern("1881_12")
 cheysson_pattern_params(patterns, "fill")
 #> [1] "transparent" "transparent" "transparent"
 cheysson_pattern_params(patterns, "pattern_angle")

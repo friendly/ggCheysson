@@ -1,7 +1,7 @@
 Package: ggCheysson
 Title: Graphic Styles of Emile Cheysson for 'ggplot2'
-Version: 1.0.1
-Date: 2026-09-14
+Version: 1.1.0
+Date: 2026-09-16
 Authors@R: 
     c(person(given = "Michael", family = "Friendly", 
              email = "friendly@yorku.ca", role = c("aut", "cre"),

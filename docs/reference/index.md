@@ -18,6 +18,9 @@ grouped, category).
   [`scale_colour_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
   [`scale_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
   : Cheysson color scales for ggplot2
+- [`cheysson_name()`](https://friendly.github.io/ggCheysson/reference/cheysson_name.md)
+  : Translate a palette label from another naming scheme to the current
+  name
 
 ## Hatching Patterns
 
@@ -77,3 +80,5 @@ font metadata, and metadata linking to the original Albums.
   : Cheysson Font Families
 - [`albumImages`](https://friendly.github.io/ggCheysson/reference/albumImages.md)
   : Album Images Metadata
+- [`cheysson_labels`](https://friendly.github.io/ggCheysson/reference/cheysson_labels.md)
+  : Cheysson Palette Naming Crosswalk

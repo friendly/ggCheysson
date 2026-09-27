@@ -7,21 +7,21 @@ both colors and hatching patterns.
 ## Usage
 
 ``` r
-scale_pattern_fill_cheysson(palette = "1881_03", reverse = FALSE, ...)
+scale_pattern_fill_cheysson(palette = "1881_12", reverse = FALSE, ...)
 
-scale_pattern_type_cheysson(palette = "1881_03", reverse = FALSE, ...)
+scale_pattern_type_cheysson(palette = "1881_12", reverse = FALSE, ...)
 
-scale_pattern_angle_cheysson(palette = "1881_03", reverse = FALSE, ...)
+scale_pattern_angle_cheysson(palette = "1881_12", reverse = FALSE, ...)
 
-scale_pattern_density_cheysson(palette = "1881_03", reverse = FALSE, ...)
+scale_pattern_density_cheysson(palette = "1881_12", reverse = FALSE, ...)
 ```
 
 ## Arguments
 
 - palette:
 
-  Name of palette (e.g., "1881_03") or palette type ("sequential",
-  "diverging", "grouped", "category"). Default is "1881_03".
+  Name of palette (e.g., "1881_12") or palette type ("sequential",
+  "diverging", "grouped", "category"). Default is "1881_12".
 
 - reverse:
 
@@ -34,9 +34,8 @@ scale_pattern_density_cheysson(palette = "1881_03", reverse = FALSE, ...)
 ## Value
 
 A ggplot2 discrete scale object for the specified pattern aesthetic
-(pattern_fill, pattern_type, pattern_angle, or pattern_density). These
-scales apply the historically accurate Cheysson patterns to ggpattern
-geoms.
+(pattern_fill, pattern, pattern_angle, or pattern_density). These scales
+apply the historically accurate Cheysson patterns to ggpattern geoms.
 
 ## Details
 
@@ -50,7 +49,9 @@ The scales apply multiple pattern aesthetics simultaneously:
 
 - `fill`: Base fill color
 
-- `pattern_type`: Type of pattern (none, stripe, crosshatch)
+- `pattern`: Type of pattern (none, stripe, crosshatch) - set via
+  `scale_pattern_type_cheysson()`, which targets ggpattern's `pattern`
+  aesthetic
 
 - `pattern_fill`: Color of pattern lines
 
@@ -76,11 +77,10 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
   ggplot(data, aes(category, value, fill = category)) +
     geom_col_pattern(
       aes(
-        pattern_type = category,
+        pattern = category,
         pattern_fill = category,
         pattern_angle = category
       ),
-      pattern = "stripe",
       pattern_density = 0.3,
       color = "black"
     ) +

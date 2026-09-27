@@ -7,28 +7,28 @@ Statistique Graphique.
 
 ``` r
 scale_color_cheysson(
-  palette = "1880_07",
+  palette = "1880_21",
   discrete = TRUE,
   reverse = FALSE,
   ...
 )
 
 scale_colour_cheysson(
-  palette = "1880_07",
+  palette = "1880_21",
   discrete = TRUE,
   reverse = FALSE,
   ...
 )
 
-scale_fill_cheysson(palette = "1880_07", discrete = TRUE, reverse = FALSE, ...)
+scale_fill_cheysson(palette = "1880_21", discrete = TRUE, reverse = FALSE, ...)
 ```
 
 ## Arguments
 
 - palette:
 
-  Name of palette (e.g., "1880_07") or palette type ("sequential",
-  "diverging", "grouped", "category"). Default is "1880_07".
+  Name of palette (e.g., "1880_21") or palette type ("sequential",
+  "diverging", "grouped", "category"). Default is "1880_21".
 
 - discrete:
 
@@ -63,7 +63,7 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
 # Use a specific palette
 ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   geom_point() +
-  scale_color_cheysson(palette = "1881_04")
+  scale_color_cheysson(palette = "1881_22")
 
 
 # Use a sequential palette for continuous data

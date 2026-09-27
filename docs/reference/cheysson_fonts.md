@@ -54,17 +54,17 @@ Statistique Graphique:
 - **CheyssonTitle**: Decorative font for main plot titles
 
 These fonts must be loaded before use with
-[`load_cheysson_fonts`](https://friendly.github.io/ggCheysson/reference/load_cheysson_fonts.md).
+[`load_cheysson_fonts()`](https://friendly.github.io/ggCheysson/reference/load_cheysson_fonts.md).
 The Cheysson themes
-([`theme_cheysson`](https://friendly.github.io/ggCheysson/reference/theme_cheysson.md),
+([`theme_cheysson()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson.md),
 etc.) automatically select appropriate fonts for different plot
 elements.
 
 ## See also
 
-[`load_cheysson_fonts`](https://friendly.github.io/ggCheysson/reference/load_cheysson_fonts.md),
-[`cheysson_fonts_available`](https://friendly.github.io/ggCheysson/reference/cheysson_fonts_available.md),
-[`theme_cheysson`](https://friendly.github.io/ggCheysson/reference/theme_cheysson.md)
+[`load_cheysson_fonts()`](https://friendly.github.io/ggCheysson/reference/load_cheysson_fonts.md),
+[`cheysson_fonts_available()`](https://friendly.github.io/ggCheysson/reference/cheysson_fonts_available.md),
+[`theme_cheysson()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson.md)
 
 ## Examples
 

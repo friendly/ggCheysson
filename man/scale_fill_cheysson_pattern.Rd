@@ -4,11 +4,11 @@
 \alias{scale_fill_cheysson_pattern}
 \title{Apply Cheysson patterns to fill aesthetic}
 \usage{
-scale_fill_cheysson_pattern(palette = "1881_03", reverse = FALSE, ...)
+scale_fill_cheysson_pattern(palette = "1881_12", reverse = FALSE, ...)
 }
 \arguments{
-\item{palette}{Name of palette (e.g., "1881_03") or palette type
-("sequential", "diverging", "grouped", "category"). Default is "1881_03".}
+\item{palette}{Name of palette (e.g., "1881_12") or palette type
+("sequential", "diverging", "grouped", "category"). Default is "1881_12".}
 
 \item{reverse}{Whether to reverse the pattern order. Default is FALSE.}
 
@@ -35,7 +35,7 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
   )
 
   ggplot(data, aes(category, value, fill = category)) +
-    geom_col_pattern(aes(pattern_type = category), pattern = "stripe") +
+    geom_col_pattern(aes(pattern = category)) +
     scale_fill_cheysson_pattern("category") +
     scale_pattern_type_cheysson("category") +
     theme_minimal()

@@ -2,8 +2,10 @@
 library(here)
 library(tidyverse)
 
-# Read the CSV mapping file
-album_info <- read_csv(here("data-raw/observable/albumColors.csv"))
+# Read the CSV mapping file. RumseyListNo is read as character to avoid
+# float-precision issues when splitting off its decimal suffix below.
+album_info <- read_csv(here("data-raw/observable/albumColors.csv"),
+                        col_types = cols(RumseyListNo = "c", .default = col_guess()))
 
 # Load parsed patterns
 load(here("dev/svg_patterns.RData"))
@@ -18,9 +20,16 @@ for (dec_day in names(all_patterns)) {
 
   if (nrow(info) == 0) next
 
-  # Create palette name
+  # Create a meaningful, *unique* palette name. Plate = RumseyListNo's
+  # decimal suffix (e.g. "12514.021" -> 21), the real per-plate identifier -
+  # see the comment in data-raw/cheysson_palettes.R and
+  # dev/colorpat/palette_id_crosswalk.R for the full reasoning; Qty (used
+  # here previously) is not a plate discriminator and collided for 4
+  # Album+Qty combinations, silently overwriting 5 of the 25 source
+  # palettes.
   album_year <- info$Album[1]
-  album_plate <- sprintf("%02d", info$Qty[1])
+  plate <- as.integer(sub("^[0-9]+\\.", "", info$RumseyListNo[1]))
+  album_plate <- sprintf("%02d", plate)
   palette_name <- paste0(album_year, "_", album_plate)
 
   # Get patterns for this palette
@@ -87,7 +96,7 @@ for (dec_day in names(all_patterns)) {
     patterns = pattern_specs,
     type = tolower(info$Type[1]),
     album = album_year,
-    plate = info$Qty[1],
+    plate = plate,
     rumsey_no = info$RumseyListNo[1],
     dec_day = as.numeric(dec_day),
     n_patterns = length(pattern_specs)

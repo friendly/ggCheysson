@@ -10,7 +10,9 @@ A data frame with 25 rows and 6 variables:
 \item{adventDay}{Advent calendar day number (1-25) from original digitization}
 \item{RumseyListNo}{David Rumsey Map Collection list number}
 \item{Album}{Year of the album (1880-1906)}
-\item{Qty}{Plate number within the album}
+\item{Qty}{Number of colors/pattern elements in the palette - not a plate
+identifier (see \link{cheysson_palettes} for the actual unique plate number,
+derived from \code{RumseyListNo}'s decimal suffix)}
 \item{Type}{Palette type: "Sequential", "Diverging", "Grouped", or "Category"}
 \item{link}{URL to the digitized image in the David Rumsey Map Collection}
 }
@@ -19,7 +21,8 @@ A data frame with 25 rows and 6 variables:
 \itemize{
 \item David Rumsey Map Collection: \url{https://www.davidrumsey.com/}
 \item RJ Andrews Album Colors: \url{https://github.com/infowetrust/albumcolors}
-\item Tom Shanley Observable: \url{https://web.archive.org/web/20210130125506/https://observablehq.com/@tomshanley/cheysson-color-palettes}
+\item Tom Shanley Observable:
+\url{https://web.archive.org/web/20210130125506/https://observablehq.com/@tomshanley/cheysson-color-palettes}
 }
 }
 \usage{
@@ -38,7 +41,11 @@ and plate numbers from the \emph{Albums de Statistique Graphique}.
 The naming convention "adventDay" comes from RJ Andrews' original digitization
 project where he released one palette per day during December as an Advent
 calendar. The package uses the Album year and plate number for more intuitive
-palette naming (e.g., "1880_07" instead of "dec06").
+palette naming (e.g., "1880_07" instead of "dec06"). The plate number is
+derived from \code{RumseyListNo}'s decimal suffix (e.g. "12511.007" -> 7), which
+is the real unique per-plate identifier - not \code{Qty}, which is a count of
+colors/pattern elements in the palette and can repeat across genuinely
+different plates.
 }
 \examples{
 # View the dataset
@@ -55,6 +62,6 @@ albumImages[albumImages$Album == 1881 & albumImages$Qty == 3, "link"]
 
 }
 \seealso{
-\code{\link{cheysson_palettes}}, \code{\link{cheysson_patterns}}
+\link{cheysson_palettes}, \link{cheysson_patterns}
 }
 \keyword{datasets}

@@ -52,7 +52,12 @@ The _Albums de Statistique Graphique_ were published annually by France's Minist
 - Hand-lettered text with distinctive character
 - Clear hierarchical organization of information
 
-This package preserves these design elements for modern statistical graphics.
+This package preserves these design elements for modern statistical graphics. Perhaps more interesting is the historical motivation that led to this project by me and the others mentioned above. Émile Cheysson and his draftspeople at the Ministry of Public Works drew all these plates
+by hand. 
+
+* Did they have an "in-house" style guide?
+* How would graphic designers of today approach this task?
+
 
 ## 📂 Installation
 
@@ -79,13 +84,13 @@ install.packages(c("ggpattern", "systemfonts"))
 This package provides a complete aesthetic system for creating visualizations in Cheysson's distinctive style:
 
 ### 🎨 Color Palettes
-- **20 authentic color palettes** extracted from the original Albums
+- **25 authentic color palettes** extracted from the original Albums
 - Sequential, diverging, grouped, and categorical palette types
-- Named by album year and plate number (e.g., `1880_07`, `1881_03`)
+- Named by album year and plate number (e.g., `1880_07`, `1881_12`)
 - Compatible with standard ggplot2 color scales
 
 ### 📐 Hatching Patterns
-- **83 pattern specifications** including solid fills, stripes, and crosshatching
+- **134 pattern specifications** including solid fills, stripes, and crosshatching
 - Line angles (0°, 45°, 90°, 135°) matching historical diagrams
 - Variable densities and line widths
 - Full integration with [ggpattern](https://coolbutuseless.github.io/package/ggpattern/)
@@ -104,19 +109,28 @@ This package provides a complete aesthetic system for creating visualizations in
 These were derived by RJ Andrews from a collection of 25 thematic maps across the span of years in which the _Albums_ were produced, shown below.
 
 <center>
-<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png" width=400>
+<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png" width=400 alt="Grid of original historical maps from the Albums de Statistique Graphique, showing the variety of colors and hatching patterns used">
 </center>
 
 From these, he abstracted the following combinations of color and pattern he thought characterized these maps:
 
 <center>
-<img src="man/figures/color-palettes.png" width=600>
+<img src="man/figures/color-palettes.png" width=600 alt="Swatches of the color and pattern combinations abstracted from the maps above">
 </center>
 
-### Not Yet
+### New here
 
-This initial version of the package defines separate functions and `ggplot2` scales for color palettes and
-shading patterns. Their combination into Cheysson "color - pattern" features is planned.
+This initial version (1.0.1) of the package defined separate functions and `ggplot2` scales for
+color palettes and shading patterns.
+
+Combining them correctly in one plot took real fixing: the pattern scales
+(`scale_pattern_type_cheysson()`, `scale_pattern_fill_cheysson()`) had bugs that silently
+prevented pattern type and color from varying by category at all - now fixed, so colors and
+patterns can be layered together as shown below. 
+
+A fully unified API that applies Cheysson's
+actual *designed* color-pattern pairings in a single call, matching the combined look of the
+original Albums, is still in development.
 
 
 ## 🚀 Quick Start
@@ -132,7 +146,7 @@ library(ggCheysson)
 
 ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   geom_point(size = 3) +
-  scale_color_cheysson("1881_04") +
+  scale_color_cheysson("1881_22") +
   labs(title = "Iris Dataset") +
   theme_minimal()
 ```
@@ -145,16 +159,33 @@ load_cheysson_fonts(method = "showtext")
 # Enable showtext for rendering
 showtext::showtext_auto()
 
-ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
+p1 <- ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
   geom_point(size = 3) +
-  scale_color_cheysson("1883_04") +
+  scale_color_cheysson("1883_31") +
   labs(
     title = "Automobile Efficiency",
     subtitle = "Weight vs Fuel Economy",
     x = "Weight (1000 lbs)",
     y = "Miles per Gallon"
-  ) +
-  theme_cheysson()
+  )
+
+p1 + theme_cheysson()
+```
+
+### Scaling with `base_size`
+
+Like other ggplot2 themes, `theme_cheysson()` takes a `base_size` for larger
+output (slides, posters). Title and axis-title text (set in the decorative
+`CheyssonTitle`/`CheyssonSansCaps` fonts) is corrected to scale at the same
+rate as the rest of the theme, rather than reading undersized as `base_size`
+grows:
+
+```{r base-size-14, fig.height=5, fig.width=7}
+p1 + theme_cheysson(base_size = 14)
+```
+
+```{r base-size-16, fig.height=5, fig.width=7}
+p1 + theme_cheysson(base_size = 16)
 ```
 
 ### Complete Cheysson Aesthetic (Colors + Patterns + Fonts)
@@ -169,7 +200,7 @@ data <- data.frame(
 
 # Pull the palette's pattern specs directly, so pattern type and hatch
 # color follow the actual data rather than a single fixed pattern
-patterns <- cheysson_pattern("1883_06")
+patterns <- cheysson_pattern("1883_13")
 
 ggplot(data, aes(category, value, fill = category)) +
   geom_col_pattern(
@@ -181,10 +212,10 @@ ggplot(data, aes(category, value, fill = category)) +
     pattern_density = 0.35,
     color = "black"
   ) +
-  scale_fill_cheysson_pattern("1883_06") +
+  scale_fill_cheysson_pattern("1883_13") +
   scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")) +
   scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")) +
-  scale_pattern_angle_cheysson("1883_06") +
+  scale_pattern_angle_cheysson("1883_13") +
   labs(
     title = "Statistical Comparison",
     x = "Category",
@@ -196,7 +227,12 @@ ggplot(data, aes(category, value, fill = category)) +
 
 ## 🌈 Available Palettes
 
-View all available palettes:
+`cheysson_palettes` provides 25 named color palettes, each with its type
+(sequential, diverging, grouped, or category), the album year and plate
+number it was extracted from, and its hex color codes.
+
+<details>
+<summary> <span style="color: blue;"> Click to show/hide the list of all palettes </span> </summary>
 
 ```{r list-palettes, message=FALSE}
 library(ggCheysson)
@@ -208,9 +244,11 @@ list_cheysson_pals()
 list_cheysson_pals("sequential")
 ```
 
+</details>
+
 ```{r palette-colors}
 # View palette colors
-cheysson_pal("1880_07")
+cheysson_pal("1880_21")
 ```
 
 ### Visualizing Palettes
@@ -219,17 +257,17 @@ Use `show_palette()` to display a palette with color swatches and hex codes:
 
 ```{r show-palette, fig.height=2, fig.width=8}
 # Display a single palette with metadata
-show_palette("1895_04")
+show_palette("1895_16")
 ```
 
 ```{r show-palette-multi, fig.height=6, fig.width=8}
 # Display multiple palettes at once
-show_palettes(c("1880_07", "1881_03", "1895_04"))
+show_palettes(c("1880_21", "1881_12", "1895_16"))
 ```
 
 ```{r show-palette-grid, fig.height=4, fig.width=10}
 # Display four palettes in a 2x2 grid
-show_palettes(c("1880_07", "1881_03", "1895_04", "1906_06"), ncol = 2)
+show_palettes(c("1880_21", "1881_12", "1895_16", "1906_06"), ncol = 2)
 ```
 
 ```{r show-palette-type, fig.height=8, fig.width=8, eval=FALSE}
@@ -241,24 +279,56 @@ Palette types:
 
 - **Sequential** (7 palettes): For ordered quantitative data
 - **Diverging** (2 palettes): For data with neutral midpoint
-- **Grouped** (5 palettes): For comparing related groups
+- **Grouped** (10 palettes): For comparing related groups
 - **Category** (6 palettes): For categorical data
 
 ## 📐 Pattern Support
 
-With ggpattern, recreate the distinctive hatching styles:
+With ggpattern, recreate the distinctive hatching styles - each palette pairs colors with
+historically accurate patterns (solid fills, stripes, crosshatching):
 
-```{r patterns, eval=FALSE}
+```{r patterns, message=FALSE}
+library(ggpattern)
+
 # List available pattern palettes
-list_cheysson_patterns()
+head(list_cheysson_patterns())
 
-# Get pattern specifications
-patterns <- cheysson_pattern("1883_06")
+# Get pattern specifications for one palette
+patterns <- cheysson_pattern("1886_24")
+```
 
-# Use in plots with pattern scales
-scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type"))
-scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill"))
-scale_pattern_angle_cheysson("1883_06")
+```{r pattern-swatches, fig.height=2, fig.width=8}
+# Display the palette's patterns as swatches
+n <- length(patterns)
+ggplot(data.frame(i = factor(seq_len(n))), aes(i, 1, fill = i)) +
+  geom_col_pattern(
+    aes(pattern = i, pattern_fill = i),
+    pattern_density = 0.35, pattern_spacing = 0.03,
+    color = "black", width = 0.95
+  ) +
+  scale_fill_manual(values = cheysson_pattern_params(patterns, "fill")) +
+  scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")) +
+  scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")) +
+  theme_void() +
+  theme(legend.position = "none")
+```
+
+Use the pattern scales directly in a plot, alongside the matching fill scale:
+
+```{r pattern-bars, fig.height=4, fig.width=6}
+data <- data.frame(category = LETTERS[1:4], value = c(15, 23, 18, 20))
+
+ggplot(data, aes(category, value, fill = category)) +
+  geom_col_pattern(
+    aes(pattern = category, pattern_fill = category),
+    pattern_density = 0.35, color = "black"
+  ) +
+
+    scale_fill_cheysson_pattern("1886_24") +
+  scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")[1:4]) +
+  scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")[1:4]) +
+  labs(title = "Statistical Comparison", x = "Category", y = "Value") +
+  theme_minimal()
 ```
 
 ## ✍️ Font Families
@@ -273,10 +343,18 @@ Five Cheysson font families are included:
 | `CheyssonOutlineCaps` | Outlined caps | Decorative titles |
 | `CheyssonTitle` | Display font | Main titles |
 
-Here are some of these:
+Two of these, `CheyssonTitle` and `CheyssonOutlineCaps` are designed to be decorative,
+mainly used in titles
 
 <center>
-<img src="man/figures/fonts1.png" height = 400>
+<img src="man/figures/fonts2.png" height = 200 alt="Sample lettering in the two Cheysson font families: outline capitals, and title">
+</center>
+
+
+Here are the others:
+
+<center>
+<img src="man/figures/fonts1.png" height = 400 alt="Sample lettering in the three Cheysson font families: regular, italic, sans capitals">
 </center>
 
 To use these: 
@@ -299,8 +377,8 @@ theme(
 ## 📦 Package Contents
 
 ### Data
-- `cheysson_palettes` - Color palette specifications (20 palettes)
-- `cheysson_patterns` - Pattern/hatching specifications (83 patterns)
+- `cheysson_palettes` - Color palette specifications (25 palettes)
+- `cheysson_patterns` - Pattern/hatching specifications (134 patterns)
 - `cheysson_fonts` - Font family metadata (5 fonts)
 - `albumImages` - Metadata linking palettes to original album plates
 
@@ -344,11 +422,11 @@ theme(
 
 ## 🖼️ Gallery
 
-<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png" width="350">
+<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/maps.png" width="350" alt="Original maps from the Albums de Statistique Graphique showing the variety of colors and patterns">
 
 *Original maps from the Albums showing the variety of colors and patterns*
 
-<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/RJ-Andrews-color-palettes.jpg" width="600">
+<img src="https://raw.githubusercontent.com/friendly/ggCheysson/master/man/figures/RJ-Andrews-color-palettes.jpg" width="600" alt="Grid of 25 color palettes extracted by RJ Andrews from the Albums de Statistique Graphique maps">
 
 *Extracted color palettes by RJ Andrews*
 
