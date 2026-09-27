@@ -1,151 +1,84 @@
 # ggCheysson — development tasks
 
-Not yet broken out from anywhere — `TASKS-all.md` has no entry for this package. Started
-2026-09-14 at Claude's suggestion, after enough back-and-forth in one session that it was worth
-keeping a record.
+Started 2026-09-14. Completed tasks from the run-up to the first CRAN release (1.0.1) - the
+`theme_cheysson()` title-size fix, the CRAN (re)submission checklist, and the Git/Dropbox
+corruption incident log - are archived in [`dev/TASKS-v1.0.1.md`](TASKS-v1.0.1.md).
 
-Version 1.0.0. Previously believed submitted to CRAN; as of 2026-09-14 the user says it either
-wasn't submitted or wasn't accepted. Working towards a clean (re)submission.
+## Status (2026-09-27)
 
-## `theme_cheysson()` axis/legend title text too small — DONE
+- **CRAN**: 1.0.1 accepted, published 2026-09-26 (<https://CRAN.R-project.org/package=ggCheysson>).
+- **GitHub**: tagged `v1.0.1` at `ccc4646` (master as submitted, plus 2 `dev/TASKS.md`-only
+  commits) and published as the first GitHub release, with master's NEWS.md (1.0.1 + 1.0.0) as
+  release notes: <https://github.com/friendly/ggCheysson/releases/tag/v1.0.1>.
+- **`colorpat` merged**: PR #2 (<https://github.com/friendly/ggCheysson/pull/2>) merged into
+  `master` 2026-09-27 as a merge commit (`0c36df0`); `colorpat` branch then deleted locally and on
+  GitHub. `master` is now **1.1.0** (DESCRIPTION/NEWS.md). References to "the `colorpat` branch"
+  below are historical.
+- **Git/Dropbox**: this repo's `.git` is still inside Dropbox on at least one machine and has hit
+  ref/index corruption 3 times (details in `TASKS-v1.0.1.md`). If `git status`/`git log` look
+  wrong, run `git fsck` and `git fetch origin` before doing anything destructive.
 
-2026-09-14: User noticed axis labels render smaller in the README's `theme_cheysson()` example
-than in the earlier `theme_minimal()` example. Measured with `systemfonts::font_info()` /
-`string_metrics_dev()`: not a uniform problem. `axis.text` (body font `Cheysson`, size
-`base_size * 0.85`) is fine - that multiplier already exceeds `theme_minimal()`'s default
-`rel(0.8)`, and `Cheysson`'s glyphs measure slightly *taller* than Arial's at the same nominal
-size (max_ascend 10.4 vs 9.95, size 11). The real problem is `axis.title`/`legend.title`/
-`strip.text`, which use `CheyssonSansCaps` (an all-caps font) at `base_size * 0.95` - already
-below `theme_bw()`'s default `rel(1)`, and `CheyssonSansCaps` itself measures ~12-20% smaller
-than Arial at the same nominal size (max_ascend 8.8 vs 9.95; lineheight 10.1 vs 12.7). The two
-effects compound.
+## CRAN check ERROR on 1.0.1: macOS x86_64 vignette segfault — release-blocking
 
-Fix: multiply the three affected sizes by a `caps_size_adjust` factor of 1.15 (applied only when
-`axis_title_family == "CheyssonSansCaps"`, so a user-supplied family isn't double-corrected) -
-landing between the ascent-ratio-implied correction (1.13) and the lineheight-ratio-implied one
-(1.26). `theme_cheysson_minimal()` inherits it via `theme_cheysson()`; `theme_cheysson_map()`
-didn't need it (its `legend.title` uses `base_family`, not `axis_title_family`).
+Found 2026-09-27 on <https://cloud.r-project.org/web/checks/check_results_ggCheysson.html>
+(last updated 2026-09-27): OK on fedora-clang/gcc (r-devel) and macos-arm64 (release/oldrel), but
+**ERROR on `r-release-macos-x86_64` and `r-oldrel-macos-x86_64`**, in "re-building of vignette
+outputs":
 
-- [x] Applied to `R/theme.R`
-- [x] Visually confirmed: knitr's README render uses `ragg`, not the plain `pdf()` device that
-  crashes with "invalid font type" on this machine (see `\dontrun{}` notes in `R/theme.R`), so
-  the "With Fonts and Theme" example actually rendered - axis titles now read at a comparable
-  scale to the earlier `theme_minimal()` example. `1.15` looked right, no further tuning needed.
-- [x] Regenerated docs/README, rebuilt pkgdown; commit pending
+- `guerry-maps.Rmd` segfaults (`memory not mapped`) at `print(p3b)` - the
+  `geom_sf_pattern()` literacy map. Traceback bottoms out in grid's
+  `.setMask(mask$f, mask$ref)` <- `resolveMask.GridMask` <- `pushViewport`, i.e. inside the
+  graphics device's mask support, which ggpattern uses for pattern fills.
+- `getting-started.Rmd` finished re-building but its R process then also segfaulted
+  (`Segmentation fault: 11`); it too has `geom_col_pattern()` chunks.
 
-## CRAN (re)submission
+ggpattern 1.3.1's own CRAN checks are **OK** on both macOS x86_64 flavors, so this isn't a
+generic ggpattern-on-Intel-Mac problem. Unverified hypothesis: an interaction between grid masks
+and something specific to our vignettes - most likely `showtext::showtext_auto()`'s device hooks
+(our custom fonts), or the default bitmap device knitr gets there (Quartz `png()`).
 
-- [x] `R CMD check --as-cran --run-donttest`: 0 errors, 0 warnings, 0 notes (2026-09-14)
-- [x] win-builder R-devel: clean modulo 2 known-benign NOTEs (Cheysson spelling; Observable URL
-  429 from bot-blocking, documented in `cran-comments.md`)
-- [x] Cleaned up unnecessary `\dontrun{}`/`\donttest{}` wrapping (commit `89b81c9`)
-- [x] roxygen2 bumped to 8.1.0 (`Config/roxygen2/version`, was pinned `RoxygenNote: 7.3.3`)
-- [x] Resolve the axis-title-size task above first (visible in generated docs/vignettes)
-- [x] pkgdown site rebuilt and committed (`f53d0e9`, 2026-09-14) - see git-corruption note below
-- [x] Version bumped 1.0.0 -> 1.0.1, Date -> 2026-09-14 (`55eb244`, 2026-09-14); NEWS.md, README.md
-  (re-knit via `devtools::build_readme()`), and cran-comments.md updated to note this is a
-  resubmission of the version rejected 2026-01-08
-- [x] Ran `ry check` (static type checker for R) across `R/` - flagged 4 real length-safety
-  warnings, all fixed (`7b93765`, 2026-09-14): `cheysson_fonts_available()`'s `method == "..."`
-  checks replaced with `identical()` (avoids R 4.3+'s `||`/`&&` length>1 error), and
-  `cheysson_pal()`/`cheysson_pattern()` now validate `n` is a single positive number before
-  comparing it to the palette/pattern length. `ry check` clean afterward.
-  
-- [x] R-hub Ubuntu check (2026-09-15): set up `rhub::rhub_setup()` (new
-  `.github/workflows/rhub.yaml`, `workflow_dispatch`-only, commit `c5edc2f`) - needed a `gh auth
-  refresh --scopes workflow` first, user's `gh` token lacked `workflow` scope. Ran
-  `rhub::rhub_check(platforms = "linux")`: Ubuntu 24.04.5 LTS, R-devel (2026-09-14 r90539),
-  24m18s, 0 errors/0 warnings/1 NOTE ("hidden files and directories: .github" - caused by the
-  workflow file itself, not a real problem). Fixed by adding `.github` to `.Rbuildignore`;
-  confirmed clean in a subsequent local `--as-cran` run. Not yet re-verified clean on R-hub
-  itself (would need another ~24min run) - `cran-comments.md` documents the found-and-fixed NOTE
-  rather than claiming an unverified 0/0/0 on that specific platform.
-  
-- [x] Eliminated the Observable URL NOTE (2026-09-15) rather than just explaining it: found a
-  working Wayback Machine snapshot (`web.archive.org/web/20210130125506/...`, verified real
-  content via its og:title/og:description, not a blank JS shell, and 200s reliably across 3
-  attempts) and swapped it in everywhere the live observablehq.com URL appeared (`R/data.R`,
-  `R/palettes.R`, `README.Rmd` x2). `urlchecker::url_check()` and local `--as-cran` both confirm
-  it's gone - down to the single benign "Cheysson" spelling NOTE.
-- [x] `cran-comments.md` rewritten (2026-09-15): reframed as "new submission" (1.0.0 was never
-  accepted, so nothing to resubmit over) instead of "resubmission"; added full NEWS.md text for
-  1.0.1 and 1.0.0, per user request.
-  
-- [X] Fresh win-builder R-devel run -- clean now except for New submission / Cheysson spelling
-- [x] Submitted to CRAN 2026-09-15 (on desktop), at commit `ac60e4f`; `CRAN-SUBMISSION` confirms
-  Version 1.0.1. Awaiting CRAN's response.
-- [x] 2026-09-16: win-builder incoming pretest matched our own local/win-builder results (same
-  NOTEs, nothing new) -
-  https://win-builder.r-project.org/incoming_pretest/ggCheysson_1.0.1_20260915_174459/. Package
-  has moved into CRAN's newbie queue for manual review:
-  https://cran.r-project.org/incoming/newbies/?C=M;O=D. Still awaiting a human reviewer.
+- [ ] Reproduce: R-hub's Intel macOS runner (`rhub::rhub_check(platforms = "macos")` - the
+  `.github/workflows/rhub.yaml` workflow already exists). mac-builder is arm64-only, which passes.
+- [ ] Narrow down: pattern chunk with vs. without `showtext_auto()`; knitr `dev = "png"` vs.
+  `dev = "ragg_png"` (would add `ragg` to Suggests; check ragg's mask support first).
+- [ ] Fix options, in order of preference: (a) whatever the narrowing shows is the real trigger;
+  (b) switch vignettes to a device that doesn't crash; (c) as a last resort, skip evaluating the
+  pattern chunks on Intel macOS and show pre-rendered PNGs there.
+- [ ] Mention the fix in `cran-comments.md` - it's the main justification for an update this soon
+  after 1.0.1 (CRAN asks for updates no more often than every 1-2 months, except to fix check
+  problems). Check the user's email for a CRAN notice/deadline about this.
 
-## Git/Dropbox corruption (fixed 2026-09-14)
+## Toward a 1.1.0 CRAN release
 
-The repo lives inside a Dropbox-synced folder, and Dropbox corrupted `.git` mid-session: the
-4 most recent commits' objects went missing from `.git/objects` (loose files never landed, or
-were removed post-write) even though `refs/heads/master` and the reflog still pointed to them,
-and `.git/index` was left stale/wrong - `git status` failed outright (`fatal: bad object HEAD`),
-and after that, showed every tracked file as both staged-deleted and untracked.
+What's already on `master` for 1.1.0 (see NEWS.md): the breaking palette rename (20 -> 25
+palettes, 134 pattern specs), the 15 missing hatch-pattern elements, the two
+`scale_pattern_*_cheysson()` bugs (`scale_pattern_type_cheysson()` never varied the pattern;
+6 palettes hard-crashed ggpattern), `cheysson_labels`/`cheysson_name()`, the title-size fix
+(`cheysson_font_size_adjust()`), and the `theme_cheysson_map()` text redesign. That already
+justifies a release on its own - the pattern-scale bugs mean the 1.0.1 pattern API is largely
+broken on CRAN today.
 
-Fixed via `git fetch origin` (recovered the missing commit objects - they'd already been pushed,
-so nothing was lost) + `git reset` (mixed, resynced the index to HEAD without touching the
-working tree). Confirmed no source work was lost: R/, DESCRIPTION, NAMESPACE, man/, vignettes/
-were already identical to HEAD and to `origin/master`.
+Suggested scope: ship 1.1.0 as a **fix + rename release**. Add only the segfault fix and the
+migration aids below, and defer the new-API items in "New development" (the `scale_cheysson()`
+wrapper, color+pattern combination palettes, gallery vignette) to 1.2.0, once there's ggpattern
+feedback on the pattern-system design. The combined scale wrapper in particular is a public API
+that's hard to change once on CRAN.
 
-Also hit two more Dropbox-lock symptoms while rebuilding pkgdown: a transient
-`cannot open the connection ... Invalid argument` on `docs/articles/guerry-maps.html` (cleared on
-retry), and `pkgdown::clean_site()` hit `[EBUSY] resource busy or locked` on
-`docs/deps/JetBrains_Mono-0.4.10` partway through deleting `docs/`, leaving it half-gone (fixed
-via `git checkout -- docs/` to restore from the index, then a plain `build_site()` without
-`clean_site()`).
-
-**Takeaway: this repo should not live in a continuously-syncing Dropbox folder.** Recommend
-moving it out of Dropbox (or adding it to Dropbox's ignore list) before the next session - the
-same class of corruption can recur, and this time it happened to be recoverable only because
-`origin` had already received the missing commits.
-
-2026-09-14, follow-up: user confirmed Dropbox's per-folder "Ignore" flag doesn't reliably stop
-sync of newly-created files (checked via File Info - showed excluded, but `.git` kept syncing
-anyway), which tracks with `.git/objects` constantly gaining new loose files as git writes them.
-User agrees the real fix is moving R project folders out of Dropbox entirely, not just `.git`,
-but isn't ready to do that migration yet. Not planning to relocate just `.git` (the `gitdir:`
-pointer trick) either, since it's a partial fix superseded by the eventual full move. No action
-needed here until the user is ready - don't re-suggest the partial fix unprompted.
-
-2026-09-15, follow-up: user took `.git` out of Dropbox on the desktop machine (after submitting
-1.0.1 to CRAN there). This laptop's `.git` is still inside Dropbox, and hit the same corruption
-class again as a result: while the desktop was making its post-1.0.1-work commits (R-hub setup,
-Observable URL fix, cran-comments rewrite, the README pattern-example fix), Dropbox synced the
-*working-tree* files down to this laptop but left `.git/index` stale here (same "every tracked
-file shown as both staged-deleted and untracked" signature as before - `git fsck` showed no
-missing objects this time, so it was index-only, not object loss). Dropbox also created a
-`docs (Selective Sync Conflict)/` folder holding what turned out to be the *correct* (matching
-HEAD) `docs/` build, while the working `docs/` was a stale local one. Fixed via `git reset`
-(mixed) + `git checkout -- docs/` (restoring docs/ from HEAD, which matched the conflict copy
-modulo CRLF) + deleting the now-redundant conflict folder. Confirms the corruption risk isn't
-limited to one machine - any machine with `.git` still inside a synced Dropbox folder can hit it,
-even after another machine's `.git` has been moved out.
-
-2026-09-16, follow-up: desktop hit corruption again (this time `git log` failing with
-`fatal: bad object <sha>` - a ref claiming a commit whose object never actually landed) and fixed
-it there, then relayed a diagnosis playbook to this laptop's session since it suspected the same
-class of issue here. This laptop's actual symptom was different: `git fsck` was clean throughout
-(no missing/corrupt objects at any point) - instead `refs/remotes/origin/*` was completely empty
-and local `refs/heads/master` was gone entirely, while `refs/heads/colorpat` (the actively
-checked-out branch) survived. The reflog showed a `branch: Created from origin/colorpat` entry
-timestamped ~12h after the last real local commit, followed by a `reset: moving to HEAD` -
-neither of which this session had issued as commands. Best explanation: Dropbox synced *text*
-artifacts (ref/reflog files) from the desktop's own repair sequence over to this laptop before the
-desktop's freshly-rebuilt `refs/remotes` had fully landed, leaving this machine with the
-deletions but not yet the rebuild. Fixed with the same safe sequence the desktop suggested:
-`git fetch origin` (succeeded cleanly, no "did not send all necessary objects" error - repopulated
-`refs/remotes/origin/*` from scratch), `git ls-remote` to confirm GitHub's authoritative refs
-matched what the desktop reported, confirmed a clean working tree (nothing uncommitted to lose),
-then `git branch master origin/master` to recreate the missing local branch (pure pointer
-creation, no checkout/reset). No data lost; stale Dropbox "conflicted copy 2025-12-30" reflog
-files are still sitting in `.git/logs/` as clutter (harmless - reflogs aren't tracked/versioned
-by git itself) but weren't cleaned up.
+- [ ] Fix the macOS x86_64 segfault (above).
+- [ ] **Migration aid for the palette rename.** A 1.0.1 user's old palette name now either:
+  - errors with `Palette '1883_06' not found. Available palettes: ...` (18 of 20 old names) -
+    improve this to detect an old name via `cheysson_labels$old_name` and suggest
+    `cheysson_name("1883_06", from = "old_name")` / the new name directly; or
+  - **silently selects a different palette**: `"1880_07"` meant advent day 24 in 1.0.1, and now
+    means advent day 6 (checked 2026-09-27 against `cheysson_labels`). Only `"1906_06"` still
+    means the same palette. At minimum, call out `1880_07` explicitly in NEWS.md; consider a
+    once-per-session message when `"1880_07"` is used.
+- [ ] NEWS.md: set the release date; move the "Breaking change" note to the top as a short
+  summary with a pointer to `cheysson_name()`.
+- [ ] Usual pre-submission checks: `R CMD check --as-cran`, win-builder (devel + release),
+  R-hub incl. Intel macOS, `urlchecker::url_check()`, `spelling::spell_check_package()`,
+  update `cran-comments.md` (now an update, not a new submission; no reverse dependencies).
+- [ ] After acceptance: tag `v1.1.0` + GitHub release from NEWS.md, as for `v1.0.1`.
 
 ## Other loose ends
 
@@ -154,8 +87,9 @@ by git itself) but weren't cleaned up.
   unconfirmed with user. 
   - Could this be useful in the package?
   
-- `dev/colorpat/` (unified color-pattern palette system) - explicitly on hold, deferred past this
-  release (`dev/README.md`).
+- `dev/colorpat/` (unified color-pattern palette system) - was on hold for 1.0.1; the bug fixes it
+  led to are now merged (1.1.0), but the combined color+pattern palette API itself is still open -
+  see "New development" below.
 
 ## New development
 
