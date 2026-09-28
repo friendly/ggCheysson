@@ -150,7 +150,14 @@ that's hard to change once on CRAN.
     diverging and grouped ones against the Albums plates). Options: an `order =` argument on the
     five `scale_*_cheysson*()` pattern scales (small, additive API), and/or documenting each
     palette's intended order. Decide whether this goes in 1.1.0.
-- [ ] **Migration aid for the palette rename.** A 1.0.1 user's old palette name now either:
+- [x] 2026-09-28: done in new `R/migration.R` (internal helpers, called from `cheysson_pal()`,
+  `cheysson_pattern()`, `show_palette()` - which every `scale_*_cheysson()` goes through):
+  `palette_not_found()` turns an old name into "renamed in 1.1.0: ... is now '<new>'" (for a
+  collided old name, the palette 1.0.1 actually shipped, as `cheysson_name()` picks);
+  `note_renamed_palette()` gives a once-per-session `message()` for `"1880_07"`. NEWS.md bullet
+  added. Verified all 20 old names map to `cheysson_name(from = "old_name")`; `R CMD check`
+  0/0/0. No `tests/` dir yet - checks were a scratchpad script.
+  **Migration aid for the palette rename.** A 1.0.1 user's old palette name now either:
   - errors with `Palette '1883_06' not found. Available palettes: ...` (18 of 20 old names) -
     improve this to detect an old name via `cheysson_labels$old_name` and suggest
     `cheysson_name("1883_06", from = "old_name")` / the new name directly; or

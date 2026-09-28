@@ -64,6 +64,7 @@
 cheysson_pattern <- function(palette = "1881_12", n = NULL, type = 1) {
   # Check if palette exists directly
   if (palette %in% names(cheysson_patterns)) {
+    note_renamed_palette(palette)
     pal <- cheysson_patterns[[palette]]
   } else {
     # Check if it's a type name
@@ -79,8 +80,7 @@ cheysson_pattern <- function(palette = "1881_12", n = NULL, type = 1) {
       }
       pal <- type_palettes[[type]]
     } else {
-      available <- paste(names(cheysson_patterns), collapse = ", ")
-      stop(sprintf("Palette '%s' not found. Available: %s", palette, available))
+      palette_not_found(palette, names(cheysson_patterns))
     }
   }
 

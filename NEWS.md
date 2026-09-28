@@ -10,6 +10,13 @@
   with 134 pattern specifications (was 83). See the new `cheysson_labels` dataset (below) to map
   an old name to its new one
 
+* Migration aids for the rename: an old (1.0.1) palette name that no longer exists now errors
+  with the palette's new name, e.g. `"1883_06"` -> `"1883_13"`, instead of just "not found".
+  **Watch out for `"1880_07"`**: it is still a valid name, but now refers to a *different*
+  palette (grouped, 1880 plate 7). The palette called `"1880_07"` in 1.0.1 is now `"1880_21"`.
+  Using `"1880_07"` gives a once-per-session message saying so. (`"1906_06"` is the only old name
+  that still means the same palette.)
+
 * Fixed 15 missing pattern elements across 6 palettes (`1882_04`, `1883_07`, `1886_04`,
   `1886_07`, `1887_06`, `1900_06`, in their old names): an SVG-parsing bug silently dropped
   hatch-line patterns whose coordinates relied on SVG's implicit default of 0 for an omitted

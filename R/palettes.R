@@ -82,6 +82,7 @@
 cheysson_pal <- function(palette = "1880_21", n = NULL, type = 1) {
   # Check if palette exists directly
   if (palette %in% names(cheysson_palettes)) {
+    note_renamed_palette(palette)
     pal <- cheysson_palettes[[palette]]
   } else {
     # Check if it's a type name
@@ -97,8 +98,7 @@ cheysson_pal <- function(palette = "1880_21", n = NULL, type = 1) {
       }
       pal <- type_palettes[[type]]
     } else {
-      available <- paste(names(cheysson_palettes), collapse = ", ")
-      stop(sprintf("Palette '%s' not found. Available palettes: %s", palette, available))
+      palette_not_found(palette, names(cheysson_palettes))
     }
   }
 
@@ -215,7 +215,7 @@ show_palette <- function(palette = "1880_21", n = NULL, show_info = TRUE, cex = 
       pal <- type_palettes[[1]]
       pal_name <- names(type_palettes)[1]
     } else {
-      stop(sprintf("Palette '%s' not found", palette))
+      palette_not_found(palette, names(cheysson_palettes))
     }
   }
 
