@@ -37,11 +37,45 @@ generic ggpattern-on-Intel-Mac problem. Unverified hypothesis: an interaction be
 and something specific to our vignettes - most likely `showtext::showtext_auto()`'s device hooks
 (our custom fonts), or the default bitmap device knitr gets there (Quartz `png()`).
 
-- [ ] Reproduce: R-hub's Intel macOS runner (`rhub::rhub_check(platforms = "macos")` - the
+**Progress 2026-09-27 (handoff - resume here):**
+- **Reproduced** with the temporary workflow `.github/workflows/macos-diag.yaml` (scripts in
+  `.github/diag/`; delete both when done) on GitHub's `macos-15-intel` runner (R 4.6.1, x86_64):
+  both the 1.0.1 vignette (with CRAN's 1.0.1 package) and master's `guerry-maps.Rmd` segfault at
+  `print(p3b)` with CRAN's exact traceback. On `macos-latest` (arm64) everything passes, as on CRAN.
+- **Standalone, the same plot does NOT crash** on Intel: `p3b`-like maps (plain, all-solid
+  patterns, stripes on every department) and a bare grid mask all render fine under Quartz `png`
+  and `ragg`, with showtext on or off (run 36349573202). So the trigger is something about the
+  knitr context. (Cairo `png` fails on the runner only because it has no XQuartz; ignore that.)
+- **Round 2 (run 36356927380, `.github/diag/round2.R`) - cause found**: standalone `p3b` on
+  Quartz `png` is OK at 72 dpi but **segfaults at 96 and 192 dpi** (round 1's standalone tests
+  passed only because they ran at 72 dpi); ragg at 96 dpi is OK. `dev.control(displaylist)` makes
+  no difference. Knitr vignette variants: as-is, showtext off, `dpi = 192`, and `print(p1..p3)`
+  removed all segfault; **`dev = "ragg_png"` passes**. So it's the Quartz `png()` device drawing
+  grid masks at >= 96 dpi, nothing to do with showtext.
+- **Fix applied 2026-09-27 (laptop)**: both vignettes' `opts_chunk` now set
+  `dev = if (requireNamespace("ragg", quietly = TRUE)) "ragg_png" else "png"` (`ragg` is in
+  Suggests; the fallback keeps no-Suggests builds working). Both render locally on Windows.
+  **Still to do**: re-run `macos-diag` on `macos-15-intel` against the fixed vignettes to confirm,
+  then delete `.github/workflows/macos-diag.yaml` and `.github/diag/`.
+- R-hub `macos` check (run 36349053684) finished as **failure** - not yet looked at (could be
+  the same segfault, or a runner problem; check `uname -m` in its platform-info step).
+- Separately fixed on master (`7f989f2`): the literacy pattern map used `1881_22` (all-solid,
+  4 colors - no hatching, Q5 recycled Q1's color); now sequential hatching palette `1888_27`
+  with `pattern_spacing` mapped. Also fixed the vignette's "Departments with data: 0" count.
+- **New issue found, not yet fixed - map titles too big in the real vignette**: pkgdown renders
+  figures at retina (1536px, dpi 192) but showtext stays at 96 dpi, so all text in the pkgdown
+  figures is drawn at *half* size. `theme_cheysson_map()`'s 2026-09-17 redesign (title =
+  5 x `base_size`) was tuned by looking at those pkgdown figures; in a plain `html_vignette`
+  build (768px, what CRAN builds) "LITERACY RATES WITH CHEYSSON PATTERNS" overflows both edges.
+  Likely fix: set knitr's `fig.showtext = TRUE` so showtext uses the real dpi, then re-tune the
+  map text ratios against correctly scaled output. The same effect may explain the earlier
+  "text too small" impression in getting-started (and its `out.width = "75%"` workaround).
+
+- [x] Reproduce: R-hub's Intel macOS runner (`rhub::rhub_check(platforms = "macos")` - the
   `.github/workflows/rhub.yaml` workflow already exists). mac-builder is arm64-only, which passes.
-- [ ] Narrow down: pattern chunk with vs. without `showtext_auto()`; knitr `dev = "png"` vs.
+- [x] Narrow down: pattern chunk with vs. without `showtext_auto()`; knitr `dev = "png"` vs.
   `dev = "ragg_png"` (would add `ragg` to Suggests; check ragg's mask support first).
-- [ ] Fix options, in order of preference: (a) whatever the narrowing shows is the real trigger;
+- [x] (ragg_png, see above; confirm on Intel runner) Fix options, in order of preference: (a) whatever the narrowing shows is the real trigger;
   (b) switch vignettes to a device that doesn't crash; (c) as a last resort, skip evaluating the
   pattern chunks on Intel macOS and show pre-rendered PNGs there.
 - [ ] Mention the fix in `cran-comments.md` - it's the main justification for an update this soon
