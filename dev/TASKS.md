@@ -4,18 +4,26 @@ Started 2026-09-14. Completed tasks from the run-up to the first CRAN release (1
 `theme_cheysson()` title-size fix, the CRAN (re)submission checklist, and the Git/Dropbox
 corruption incident log - are archived in [`dev/TASKS-v1.0.1.md`](TASKS-v1.0.1.md).
 
-## Handoff (2026-09-27 evening, laptop -> desktop) - resume here
+## Handoff (2026-09-28, desktop -> laptop) - resume here
 
-- (2026-09-28) Project moved out of Dropbox on the desktop - see "Git/Dropbox" under Status.
-  On the laptop, clone fresh into `C:\R\Projects` rather than using the Dropbox copy.
-- Done 2026-09-27 on the laptop (all pushed): macOS segfault fixed (`ragg_png`) and confirmed on the
-  Intel runner, diag workflow removed; `theme_cheysson_map()` text now sized at true scale with
-  `fig.showtext = TRUE` (sizes left as-is for now - user's call); plain Guerry-style map titles;
-  Donations pattern map fixed (solid extremes, hatched middle); pkgdown site rebuilt.
-- Next candidates for 1.1.0 (see "Toward a 1.1.0 CRAN release"): decide on an `order =`
-  argument for the pattern scales / audit other palettes' stored order; migration aid for the
-  palette rename; the "Regions of France" pattern map shows no hatching; `cran-comments.md`;
-  NEWS.md release date; pre-submission checks (R-hub only then - not during active development).
+- **Laptop first**: `git clone https://github.com/friendly/ggCheysson.git` into `C:\R\Projects`,
+  repoint shortcut/RStudio; then rename the Dropbox copy to `ggCheysson-old` (see "Git/Dropbox"
+  under Status). Everything below is pushed.
+- Done 2026-09-28 on the desktop (details in the sections below):
+  - migration aid for the palette rename (`R/migration.R`); Regions of France pattern map fixed.
+  - palette order: sequential stored light -> dark, diverging end to end
+    (`data-raw/palette_order.R`); `n` < length picks spread over the palette. No `order =` arg.
+  - data checked against the Rumsey plates (IIIF API): `1883_13` renamed `1883_30` (Rumsey no.
+    typo); two-color crosshatches -> `pattern_fill2` + `scale_pattern_fill2_cheysson()`.
+  - **new, experimental**: `scale_cheysson()` + `aes_cheysson()`, only in the new vignette
+    "Combining Colors and Patterns" (README/other vignettes deliberately keep individual
+    scales). NA data in pattern scales no longer crashes ggpattern.
+  - `cran-comments.md` drafted; win-builder (1 NOTE, days since update) and R-hub (4 platforms
+    incl. Intel macOS, all OK) were run **before** the wrapper commits.
+- **Next**: re-run win-builder + R-hub on current master and update `cran-comments.md`;
+  `urlchecker::url_check()`, `spelling::spell_check_package()`; NEWS.md: release date + move a
+  short breaking-change summary to the top; then submit 1.1.0. Deferred to 1.2.0: `1891_25`'s
+  white-dot fills; feedback from ggpattern's maintainer on the pattern API.
 
 ## Status (2026-09-27)
 
