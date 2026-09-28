@@ -1,51 +1,37 @@
+## Update submission (1.1.0)
+
+This update fixes the ERROR in the CRAN checks of 1.0.1 on `r-release-macos-x86_64` and
+`r-oldrel-macos-x86_64`, which is why it follows 1.0.1 (published 2026-09-26) so closely.
+
+Re-building `guerry-maps.Rmd` segfaulted ("memory not mapped", in grid's `.setMask()` under
+`pushViewport()`), and the R process that built `getting-started.Rmd` also segfaulted after
+finishing. I reproduced this on GitHub's Intel macOS runner and narrowed it down to the
+Quartz `png()` device drawing the grid masks that 'ggpattern' uses for pattern fills at >= 96
+dpi; the same plots render fine with 'ragg'. Both vignettes now use
+`dev = "ragg_png"` when 'ragg' (in Suggests) is available, and fall back to `png` otherwise. Both vignettes then build and exit cleanly on Intel and arm64 macOS.
+
+The update also fixes several bugs in the package's pattern scales (e.g.
+`scale_pattern_type_cheysson()` did not vary the pattern, and 6 palettes made ggpattern fail),
+and corrects the palette data: a naming bug had silently dropped 5 of the 25 source palettes.
+Restoring them required renaming palettes; old names now give an informative error with the
+new name. Details are in NEWS.md.
+
 ## Test environments
-* local Windows 11 install, R 4.6.1 (2026-06-24 ucrt), `--as-cran` and `--run-donttest`
-* win-builder R Under development (unstable) (2026-09-13 r90534 ucrt)
-* R-hub (GitHub Actions), Ubuntu 24.04.5 LTS, R Under development (unstable) (2026-09-14 r90539),
-  x86_64 - 0 errors, 0 warnings; found and fixed 1 NOTE ("hidden files and directories: .github",
-  from adding the R-hub workflow file itself - `.github` added to `.Rbuildignore`, confirmed
-  clean in a subsequent local `--as-cran` run)
+
+* local Windows 11, R 4.6.1 (2026-06-24 ucrt), `R CMD check --as-cran`
+* TODO: win-builder, R-devel and R-release
+* TODO: R-hub (GitHub Actions): linux (R-devel), macos (arm64), macos-x86_64 (Intel), windows
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 0 notes (local)
 
-**NOTE 1:** Possibly misspelled words in DESCRIPTION:
-  Cheysson (2:32, 14:3)
+TODO: confirm against win-builder. Expected NOTEs on CRAN's incoming checks:
 
-This is a proper name (Émile Cheysson) and is spelled correctly. I even put it in quotes, but to no effect on triggering a NOTE.
+* Days since last update: this update fixes the check ERROR described above.
+* Possibly misspelled words in DESCRIPTION: Cheysson. This is a proper name (Émile Cheysson)
+  and is spelled correctly.
 
-* This is a new submission. An earlier version (1.0.0) was submitted on 2026-01-08 but was never
-  accepted, so there is no ggCheysson release currently on CRAN.
+## Reverse dependencies
 
-## Changes since the 2026-01-08 submission (from NEWS.md)
-
-### ggCheysson 1.0.1
-
-* The Tom Shanley Observable notebook citation (`R/data.R`, `R/palettes.R`, `README.md`) previously
-  linked directly to `observablehq.com`, which returns HTTP 429 to automated, non-browser requests
-  and was flagged as a possibly-invalid URL. Replaced with a Wayback Machine snapshot of the same
-  page, which resolves reliably; no more URL NOTE.
-
-* Fixed undersized axis and legend titles in `theme_cheysson()` (inherited by
-  `theme_cheysson_minimal()`): `CheyssonSansCaps` renders visibly smaller than other package
-  fonts at the same nominal size, so title text is now scaled up to match
-* Bumped `roxygen2` to 8.1.0 (`Config/roxygen2/version`)
-* Removed unnecessary `\dontrun{}`/`\donttest{}` wrapping from examples that run cleanly
-  (`show_palette()`, `show_palettes()`, the `scale_*_cheysson()` family); kept `\donttest{}` only
-  where custom-font grid text rendering can crash on some devices
-* Added R-universe badge and installation instructions to README
-* Hardened `cheysson_fonts_available()`, `cheysson_pal()`, and `cheysson_pattern()` against
-  non-length-1 arguments (`method`, `n`) that could otherwise trigger opaque errors
-
-### ggCheysson 1.0.0
-
-* Initial version, implementing Cheysson color palettes, patterns and fonts
-* Fixed problem with fonts, requiring `showtext::showtext_auto()`
-* Added Getting started vignette
-* Added Guerry maps vignette
-* Added `show_palette()` functions
-* Fixed problems from the initial CRAN submission:
-  * `@return` tags for all functions
-  * `list_cheysson_fonts()` function converted to `cheysson_fonts` data object
-  * `\dontrun{}` examples unwrapped, or changed to `\donttest{}` if they depend on system features
+There are no reverse dependencies.
