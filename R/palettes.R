@@ -193,7 +193,7 @@ list_cheysson_pals <- function(type = NULL) {
 #' show_palette("1880_21")
 #'
 #' # Display palette without metadata
-#' show_palette("1881_12", show_info = FALSE)
+#' show_palette("1881_30", show_info = FALSE)
 #'
 #' # Display 10 interpolated colors
 #' show_palette("1895_16", n = 10)
@@ -283,7 +283,7 @@ show_palette <- function(palette = "1880_21", n = NULL, show_info = TRUE, cex = 
 #' show_palettes("sequential", ncol = 2)
 #'
 #' # Show specific palettes
-#' show_palettes(c("1880_21", "1881_12", "1895_16"))
+#' show_palettes(c("1880_21", "1883_21", "1895_16"))
 #'
 #' @export
 show_palettes <- function(palettes = NULL, ncol = 1, cex = 0.8) {
