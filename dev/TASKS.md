@@ -108,6 +108,15 @@ and something specific to our vignettes - most likely `showtext::showtext_auto()
   Follow-ups: getting-started's `out.width = "75%"` workaround was probably compensating for the
   same half-size text and may no longer be wanted; the "Regions of France with Cheysson
   Patterns" map shows solid fills only, no visible hatching - check.
+  - [x] 2026-09-28: fixed. It used palette `"category"`, which resolves to the *first* category
+    palette, `1880_21` - all 7 elements solid, so every region got pattern `"none"`. Only
+    `1883_13` (4 hatched + solid black, 5 elements = 5 regions) and `1886_28` (3 + 3) have
+    hatching. Vignette now uses `1883_13`, also maps `pattern_angle` (the plate's 135/45 degree
+    stripes), `pattern_colour = NA`, and merges the legends via `labs()` instead of
+    `guides(pattern_fill = "none")`. Rendered and checked visually.
+    Latent API issue: a type name like `"category"` passed to a `scale_pattern_*_cheysson()`
+    silently gives no hatching for 4 of 6 category palettes (and the pattern-scale roxygen
+    examples use `"category"` too) - consider documenting, or preferring a hatched palette.
 
 - [x] Reproduce: R-hub's Intel macOS runner (`rhub::rhub_check(platforms = "macos")` - the
   `.github/workflows/rhub.yaml` workflow already exists). mac-builder is arm64-only, which passes.
