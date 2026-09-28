@@ -221,7 +221,7 @@ p3b <- ggplot(france_data) +
   scale_pattern_type_cheysson("1888_27") +
   scale_pattern_spacing_manual(values = 0.3 * lit_spacing) +
   labs(
-    title = "Literacy Rates with Cheysson Patterns",
+    title = "Literacy Rates",
     subtitle = "Sequential hatching, sparse to solid (quintiles)",
     caption = "Data: André-Michel Guerry (1833)"
   ) +
@@ -288,7 +288,7 @@ p4b <- ggplot(france_data) +
   scale_pattern_fill_cheysson("1883_31", na.value = "grey90") +
   scale_pattern_type_cheysson("1883_31") +
   labs(
-    title = "Charitable Donations\nwith Hatching Patterns",
+    title = "Charitable Donations",
     subtitle = "Authentic Cheysson-style patterns and colors (quartiles)",
     caption = "Data: André-Michel Guerry (1833)"
   ) +
@@ -441,7 +441,7 @@ p8b <- ggplot(france_data) +
   scale_pattern_fill_cheysson("category") +
   scale_pattern_type_cheysson("category") +
   labs(
-    title = "Regions of France with Cheysson Patterns",
+    title = "Regions of France",
     subtitle = "Distinctive hatching patterns for each region - authentic Albums style",
     caption = "Source: Guerry package"
   ) +

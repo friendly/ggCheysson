@@ -69,10 +69,14 @@ and something specific to our vignettes - most likely `showtext::showtext_auto()
   CRAN's `html_vignette` build gets) titles were ~2x too wide. Fix: `fig.showtext = TRUE` in both
   vignettes (knitr then sets showtext's dpi per chunk), and all `theme_cheysson_map()` text
   multipliers halved (title 5.0 -> 2.5, subtitle 3.2 -> 1.6, legend 1.8/1.56 -> 0.9/0.78,
-  caption 1.32 -> 0.66), which reproduces exactly the look tuned on pkgdown. Title 2.5x is about
-  the max: the longest single-line title ("Regions of France with Cheysson Patterns") just fits
-  8in; `plot.title.position = "plot"` added so a right legend doesn't shift titles off-center.
-  "Charitable Donations with Hatching Patterns" is now split over 2 lines.
+  caption 1.32 -> 0.66), which reproduces exactly the look tuned on pkgdown.
+  `plot.title.position = "plot"` added so a right legend doesn't shift titles off-center.
+  Vignette pattern-map titles shortened Guerry-style to the plain topic ("Charitable Donations",
+  "Literacy Rates", "Regions of France"); the subtitles already describe the hatching. With short
+  titles there's headroom: the widest 8in-map title ("Crimes Against Property") is 4.3in at 2.5x,
+  so the vignette could go to ~3.9x (limited by the 10in faceted map's "Social Statistics of
+  France, 1830s") - either raise the theme default or pass a bigger `base_size`-independent
+  title size in the vignette; user to decide after viewing the rebuilt site.
   Follow-ups: getting-started's `out.width = "75%"` workaround was probably compensating for the
   same half-size text and may no longer be wanted; the "Regions of France with Cheysson
   Patterns" map shows solid fills only, no visible hatching - check.
