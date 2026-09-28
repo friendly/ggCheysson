@@ -103,7 +103,10 @@ get_pattern_param <- function(pattern_spec, param, default = NA) {
 #'
 #' @param patterns List of pattern specifications from cheysson_pattern()
 #' @param param Which parameter to extract: "type", "fill", "pattern_fill",
-#'   "pattern_angle", "pattern_density", "pattern_spacing", or "pattern_type"
+#'   "pattern_fill2", "pattern_angle", "pattern_density", "pattern_spacing",
+#'   or "pattern_type". `"pattern_fill2"` is the color of a crosshatch's
+#'   second set of lines; it equals `"pattern_fill"` except for the two-color
+#'   crosshatches in `1883_30` and `1886_17`.
 #'
 #' @return Vector of parameter values
 #'
@@ -120,6 +123,7 @@ cheysson_pattern_params <- function(patterns, param = "fill") {
     switch(param,
            "fill" = p$fill %||% "transparent",
            "pattern_fill" = p$pattern_fill %||% p$fill %||% "grey50",
+           "pattern_fill2" = p$pattern_fill2 %||% p$pattern_fill %||% p$fill %||% "grey50",
            "pattern_color" = p$pattern_color %||% p$pattern_fill %||% "grey50",
            "pattern_angle" = p$pattern_angle %||% 45,
            "pattern_density" = p$pattern_density %||% 0.3,

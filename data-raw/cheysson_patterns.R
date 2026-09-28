@@ -89,6 +89,10 @@ for (dec_day in names(all_patterns)) {
         pattern_spacing = pat$spacing / 100,
         pattern_linewidth = pat$line_width %||% 1
       )
+      # Second line direction in its own color (ggpattern's pattern_fill2)
+      if (!is.null(pat$line_color2) && !is.na(pat$line_color2)) {
+        spec$pattern_fill2 <- pat$line_color2
+      }
     }
 
     pattern_specs[[i]] <- spec

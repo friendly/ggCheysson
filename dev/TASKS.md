@@ -230,6 +230,14 @@ that's hard to change once on CRAN.
     sources wrote (`Dec.22-1881.13`, `category12512013` - the derived label had been
     `Dec.22-1883.13`, matching nobody). `1883_06` (1.0.1) now migrates to `1883_30`. README,
     Regions map, NEWS updated.
+  - [x] 2026-09-28: **two-color crosshatches**: `dev/patterns/parse_patterns_v2.R` now records
+    a second line color (`line_color2`); only `dec04.txt` (`1886_17`[3], orange + `#5c7982`)
+    and `dec22.txt` (`1883_30`[3], red + `#365178`) have one. Stored as `pattern_fill2`
+    (other fields byte-identical), `cheysson_pattern_params(param = "pattern_fill2")`, new
+    exported `scale_pattern_fill2_cheysson()`. ggpattern's `pattern_fill2` defaults to `NA` =
+    same as `pattern_fill`, so nothing changes unless it's mapped. Regions map and README
+    "Complete Cheysson Aesthetic" now map it. `R CMD check` 0/0/0.
+  - [ ] Not done for 1.1.0 (proposed for 1.2.0): `1891_25`'s two white-dot fills.
 - [x] 2026-09-28: done in new `R/migration.R` (internal helpers, called from `cheysson_pal()`,
   `cheysson_pattern()`, `show_palette()` - which every `scale_*_cheysson()` goes through):
   `palette_not_found()` turns an old name into "renamed in 1.1.0: ... is now '<new>'" (for a

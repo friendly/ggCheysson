@@ -10,7 +10,7 @@
 #' @param ... Additional arguments passed to ggplot2 scale functions
 #'
 #' @returns A ggplot2 discrete scale object for the specified pattern aesthetic
-#'   (pattern_fill, pattern, pattern_angle, or pattern_density). These
+#'   (pattern_fill, pattern_fill2, pattern, pattern_angle, or pattern_density). These
 #'   scales apply the historically accurate Cheysson patterns to ggpattern geoms.
 #'
 #' @details
@@ -23,6 +23,9 @@
 #'   `scale_pattern_type_cheysson()`, which targets ggpattern's `pattern`
 #'   aesthetic
 #' - `pattern_fill`: Color of pattern lines
+#' - `pattern_fill2`: Color of a crosshatch's second set of lines (differs
+#'   from `pattern_fill` only in the two-color crosshatches of `1883_30` and
+#'   `1886_17`)
 #' - `pattern_angle`: Angle of stripes
 #' - `pattern_density`: Density of pattern lines
 #'
@@ -69,6 +72,13 @@ NULL
 #' @export
 scale_pattern_fill_cheysson <- function(palette = "1881_12", reverse = FALSE, ...) {
   cheysson_pattern_scale(palette, reverse, "pattern_fill", "cheysson_pattern_fill", "pattern_fill", ...)
+}
+
+
+#' @rdname scale_pattern_cheysson
+#' @export
+scale_pattern_fill2_cheysson <- function(palette = "1881_12", reverse = FALSE, ...) {
+  cheysson_pattern_scale(palette, reverse, "pattern_fill2", "cheysson_pattern_fill2", "pattern_fill2", ...)
 }
 
 

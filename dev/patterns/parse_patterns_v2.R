@@ -59,6 +59,7 @@ parse_svg_patterns <- function(svg_file) {
           id = id_match[1,2],
           fill_color = NA,
           line_color = NA,
+          line_color2 = NA,
           line_width = NA,
           lines = list(),
           has_rect = FALSE,
@@ -124,10 +125,16 @@ parse_svg_patterns <- function(svg_file) {
         # attribute (stroke="#xxx"). `stroke[:=]"?` matches either, and
         # won't misfire on stroke-width/stroke-miterlimit since those have
         # "-" (not ":" or "=") right after "stroke".
-        if (is.na(current_pattern$line_color)) {
-          stroke_match <- str_match(line, 'stroke[:=]"?(#[0-9a-fA-F]{3,6})')
-          if (!is.na(stroke_match[1,2])) {
+        # A crosshatch can draw its two directions in different colors
+        # (dec04.txt, dec22.txt): keep the first color that differs from the
+        # first line's as line_color2.
+        stroke_match <- str_match(line, 'stroke[:=]"?(#[0-9a-fA-F]{3,6})')
+        if (!is.na(stroke_match[1,2])) {
+          if (is.na(current_pattern$line_color)) {
             current_pattern$line_color <- stroke_match[1,2]
+          } else if (is.na(current_pattern$line_color2) &&
+                     stroke_match[1,2] != current_pattern$line_color) {
+            current_pattern$line_color2 <- stroke_match[1,2]
           }
         }
 

@@ -10,7 +10,10 @@ cheysson_pattern_params(patterns, param = "fill")
 \item{patterns}{List of pattern specifications from cheysson_pattern()}
 
 \item{param}{Which parameter to extract: "type", "fill", "pattern_fill",
-"pattern_angle", "pattern_density", "pattern_spacing", or "pattern_type"}
+"pattern_fill2", "pattern_angle", "pattern_density", "pattern_spacing",
+or "pattern_type". \code{"pattern_fill2"} is the color of a crosshatch's
+second set of lines; it equals \code{"pattern_fill"} except for the two-color
+crosshatches in \verb{1883_30} and \verb{1886_17}.}
 }
 \value{
 Vector of parameter values

@@ -3,12 +3,15 @@
 \name{scale_pattern_cheysson}
 \alias{scale_pattern_cheysson}
 \alias{scale_pattern_fill_cheysson}
+\alias{scale_pattern_fill2_cheysson}
 \alias{scale_pattern_type_cheysson}
 \alias{scale_pattern_angle_cheysson}
 \alias{scale_pattern_density_cheysson}
 \title{Cheysson pattern scales for ggpattern}
 \usage{
 scale_pattern_fill_cheysson(palette = "1881_12", reverse = FALSE, ...)
+
+scale_pattern_fill2_cheysson(palette = "1881_12", reverse = FALSE, ...)
 
 scale_pattern_type_cheysson(palette = "1881_12", reverse = FALSE, ...)
 
@@ -26,7 +29,7 @@ scale_pattern_density_cheysson(palette = "1881_12", reverse = FALSE, ...)
 }
 \value{
 A ggplot2 discrete scale object for the specified pattern aesthetic
-(pattern_fill, pattern, pattern_angle, or pattern_density). These
+(pattern_fill, pattern_fill2, pattern, pattern_angle, or pattern_density). These
 scales apply the historically accurate Cheysson patterns to ggpattern geoms.
 }
 \description{
@@ -45,6 +48,9 @@ The scales apply multiple pattern aesthetics simultaneously:
 \code{scale_pattern_type_cheysson()}, which targets ggpattern's \code{pattern}
 aesthetic
 \item \code{pattern_fill}: Color of pattern lines
+\item \code{pattern_fill2}: Color of a crosshatch's second set of lines (differs
+from \code{pattern_fill} only in the two-color crosshatches of \verb{1883_30} and
+\verb{1886_17})
 \item \code{pattern_angle}: Angle of stripes
 \item \code{pattern_density}: Density of pattern lines
 }

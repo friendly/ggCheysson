@@ -207,6 +207,7 @@ ggplot(data, aes(category, value, fill = category)) +
     aes(
       pattern = category,
       pattern_fill = category,
+      pattern_fill2 = category,
       pattern_angle = category
     ),
     pattern_density = 0.35,
@@ -215,6 +216,7 @@ ggplot(data, aes(category, value, fill = category)) +
   scale_fill_cheysson_pattern("1883_30") +
   scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")) +
   scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")) +
+  scale_pattern_fill2_cheysson("1883_30") +
   scale_pattern_angle_cheysson("1883_30") +
   labs(
     title = "Statistical Comparison",

@@ -33,6 +33,11 @@
   against the original plate. `cheysson_labels` keeps RJ Andrews' and Tom Shanley's labels for
   it (`Dec.22-1881.13`, `category12512013`), which were built from the bad number.
 
+* Two-color crosshatches: the crosshatches in `1883_30` and `1886_17` draw their two sets of
+  lines in different colors (red and blue; orange and blue-grey). These are now stored as
+  `pattern_fill2`, returned by `cheysson_pattern_params(param = "pattern_fill2")`, and applied by
+  the new `scale_pattern_fill2_cheysson()`; map ggpattern's `pattern_fill2` aesthetic to use them
+
 * Fixed 15 missing pattern elements across 6 palettes (`1882_04`, `1883_07`, `1886_04`,
   `1886_07`, `1887_06`, `1900_06`, in their old names): an SVG-parsing bug silently dropped
   hatch-line patterns whose coordinates relied on SVG's implicit default of 0 for an omitted
