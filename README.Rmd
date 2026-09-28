@@ -200,7 +200,7 @@ data <- data.frame(
 
 # Pull the palette's pattern specs directly, so pattern type and hatch
 # color follow the actual data rather than a single fixed pattern
-patterns <- cheysson_pattern("1883_13")
+patterns <- cheysson_pattern("1883_30")
 
 ggplot(data, aes(category, value, fill = category)) +
   geom_col_pattern(
@@ -212,10 +212,10 @@ ggplot(data, aes(category, value, fill = category)) +
     pattern_density = 0.35,
     color = "black"
   ) +
-  scale_fill_cheysson_pattern("1883_13") +
+  scale_fill_cheysson_pattern("1883_30") +
   scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")) +
   scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")) +
-  scale_pattern_angle_cheysson("1883_13") +
+  scale_pattern_angle_cheysson("1883_30") +
   labs(
     title = "Statistical Comparison",
     x = "Category",

@@ -93,6 +93,16 @@ cheysson_labels <- do.call(rbind, cheysson_labels)
 cheysson_labels$shanley_id <- paste0(tolower(cheysson_labels$type),
                                       gsub("\\.", "", cheysson_labels$rumsey_no))
 
+# Advent day 22: the source CSV's RumseyListNo was 12512.013, a typo for
+# 12514.030 (1883 album, plate 30 - the plate's title block says 1883, and its
+# Luna record id 309191 = 309161 + 30, the constant for all 12514 plates; see
+# dev/TASKS.md). data-raw/observable/albumColors.csv now has the corrected
+# number. Andrews and Shanley built their labels from the bad number, so keep
+# those as the sources wrote them - they are lookup keys for their labels.
+day22 <- cheysson_labels$advent_day == 22
+cheysson_labels$andrews_label[day22] <- "Dec.22-1881.13"
+cheysson_labels$shanley_id[day22] <- "category12512013"
+
 cheysson_labels <- cheysson_labels[order(cheysson_labels$advent_day), ]
 row.names(cheysson_labels) <- NULL
 

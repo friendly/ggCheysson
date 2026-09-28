@@ -429,7 +429,7 @@ print(p8)
 ### Regions with Patterns: Classic Cheysson Cartography
 
 One of Cheysson's most distinctive techniques was using varied hatching patterns to distinguish regions.
-Most category palettes are solid colors only, so we pick one that has hatching: `1883_13` has
+Most category palettes are solid colors only, so we pick one that has hatching: `1883_30` has
 red and blue stripes, a red crosshatch, black stripes and solid black - one for each of the five regions.
 Mapping `pattern_angle` as well draws the stripes at the angles used in the original plate.
 
@@ -447,10 +447,10 @@ p8b <- ggplot(france_data) +
     color = "black",
     linewidth = 0.5
   ) +
-  scale_fill_cheysson_pattern("1883_13") +
-  scale_pattern_fill_cheysson("1883_13") +
-  scale_pattern_type_cheysson("1883_13") +
-  scale_pattern_angle_cheysson("1883_13") +
+  scale_fill_cheysson_pattern("1883_30") +
+  scale_pattern_fill_cheysson("1883_30") +
+  scale_pattern_type_cheysson("1883_30") +
+  scale_pattern_angle_cheysson("1883_30") +
   labs(
     title = "Regions of France",
     subtitle = "Distinctive hatching patterns for each region - authentic Albums style",

@@ -11,7 +11,7 @@
   an old name to its new one
 
 * Migration aids for the rename: an old (1.0.1) palette name that no longer exists now errors
-  with the palette's new name, e.g. `"1883_06"` -> `"1883_13"`, instead of just "not found".
+  with the palette's new name, e.g. `"1883_06"` -> `"1883_30"`, instead of just "not found".
   **Watch out for `"1880_07"`**: it is still a valid name, but now refers to a *different*
   palette (grouped, 1880 plate 7). The palette called `"1880_07"` in 1.0.1 is now `"1880_21"`.
   Using `"1880_07"` gives a once-per-session message saying so. (`"1906_06"` is the only old name
@@ -27,6 +27,11 @@
   `cheysson_pattern(n = )` and all the `scale_*_cheysson()` scales now pick elements spread
   over the whole palette, keeping both ends, instead of the first `n` - which could drop one
   end of a diverging palette entirely (e.g. `1883_21` with 5 classes)
+
+* The 1883 category palette of Advent day 22 is named `1883_30`: the source data's Rumsey
+  number for it (`12512.013`) was a typo for `12514.030`, the 1883 album's plate 30, as checked
+  against the original plate. `cheysson_labels` keeps RJ Andrews' and Tom Shanley's labels for
+  it (`Dec.22-1881.13`, `category12512013`), which were built from the bad number.
 
 * Fixed 15 missing pattern elements across 6 palettes (`1882_04`, `1883_07`, `1886_04`,
   `1886_07`, `1887_06`, `1900_06`, in their old names): an SVG-parsing bug silently dropped

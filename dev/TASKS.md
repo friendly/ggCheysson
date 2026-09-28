@@ -201,6 +201,35 @@ that's hard to change once on CRAN.
     swatches, we have 5. Used by the Regions of France pattern map.
   - `1891_25`: Andrews shows solid, dotted, diagonal dots, ...; we have no dot pattern type, so
     the first three elements are identical solids.
+  - **Checked 2026-09-28** against Andrews' repo (`infowetrust/albumcolors`: its CSV is identical
+    to `data-raw/albumColors-RJ.csv`; per-swatch SVGs in `SVG/`) and the plates, fetched via
+    Rumsey's IIIF API (`https://www.davidrumsey.com/luna/servlet/iiif/m/<RUMSEY~8~1~id~id>/manifest`
+    works; the HTML record pages are behind a bot check; images via
+    `.../iiif/<id>/<region>/<width>,/0/default.jpg`, slow for full plates):
+    - Days 8/9: **our data is right**. Day 8 (12518.022, "Mouvement maritime du commerce
+      exterieur... 1837 et 1886", Album de 1887) is blue (1837) / yellow (1886), solid + hatched =
+      our `1887_22`. Day 9 (12519.027, "Acceleration des traversees maritimes") is brown tints
+      darkening toward France, black for 1887 = our `1888_27` (and confirms light -> dark).
+      Andrews' SVG file names and image labels swap the two; his CSV Qty/Type agree with ours.
+      His `Dec.09-1888.27-1.svg` is also wrong (`#947f67`, `1882_18`'s brown).
+    - Day 22: the plate is "Carte figurative du mouvement des combustibles mineraux... en 1881",
+      Ministere des Travaux Publics, **1883** - the 1883 album. The CSV's `RumseyListNo`
+      `12512.013` is the typo: Luna record ids are (album constant + plate) - 309098 for all
+      1881 (12512) plates, 309161 for 1883 (12514), 309226 for 1886 - and day 22's record 309191
+      = 309161 + 30, i.e. **12514.030**. So the palette should be `1883_30`, not `1883_13`
+      (Andrews' `1881.13` file names come from the same bad number). Palette content confirmed:
+      red hatching, blue hatching, a red+blue two-color crosshatch ("Cabotage"; we keep only the
+      red), black hatching, solid black.
+    - Day 12 (`1891_25`, "Routes nationales, prix moyen de la journee... 1889"): legend high ->
+      low is solid violet, violet + white dots, violet + diagonal rows of white dots, fine white
+      grid on violet, stripes, sparser stripes, sparse dashed stripes. Stored order (light ->
+      dark) confirmed; the two white-dot fills are missing (could be ggpattern `"circle"`).
+  - [x] 2026-09-28: **renamed `1883_13` -> `1883_30`**: fixed day 22's `RumseyListNo` in our
+    `data-raw/observable/albumColors.csv` (Andrews' verbatim copy `albumColors-RJ.csv` left as
+    is); `data-raw/cheysson_labels.R` pins day 22's `andrews_label`/`shanley_id` to what those
+    sources wrote (`Dec.22-1881.13`, `category12512013` - the derived label had been
+    `Dec.22-1883.13`, matching nobody). `1883_06` (1.0.1) now migrates to `1883_30`. README,
+    Regions map, NEWS updated.
 - [x] 2026-09-28: done in new `R/migration.R` (internal helpers, called from `cheysson_pal()`,
   `cheysson_pattern()`, `show_palette()` - which every `scale_*_cheysson()` goes through):
   `palette_not_found()` turns an old name into "renamed in 1.1.0: ... is now '<new>'" (for a
