@@ -27,6 +27,9 @@ knitr::opts_chunk$set(
   # ragg, not the default png(): on Intel macOS the Quartz png() device
   # segfaults drawing ggpattern's grid masks at >= 96 dpi (CRAN check ERROR on 1.0.1)
   dev = if (requireNamespace("ragg", quietly = TRUE)) "ragg_png" else "png",
+  # draw showtext fonts at the device's real dpi (pkgdown renders retina at 2x;
+  # without this, text there comes out at half size)
+  fig.showtext = TRUE,
   warning = FALSE,
   message = FALSE
 )

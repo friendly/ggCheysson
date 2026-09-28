@@ -343,12 +343,18 @@ theme_cheysson_map <- function(base_size = 11,
   # A poster-style hierarchy in the spirit of Guerry's own maps, whose titles
   # nearly filled the map's width - deliberately not the modest title/body
   # ratio theme_cheysson() uses. All still scale together from base_size.
+  # Sized at true scale (showtext dpi matching the device): at the default
+  # base_size, a ~40-character title just fits an 8in-wide figure. Titles are
+  # centered on the whole plot, not the panel, so a side legend doesn't push
+  # a long title off the left edge.
   ggplot2::theme_void(base_size = base_size, base_family = base_family) +
     ggplot2::theme(
+      plot.title.position = "plot",
+
       # Title
       plot.title = ggplot2::element_text(
         family = title_family,
-        size = base_size * 5.0 * title_size_adjust,
+        size = base_size * 2.5 * title_size_adjust,
         face = "plain",
         hjust = 0.5,
         margin = ggplot2::margin(b = base_size)
@@ -356,7 +362,7 @@ theme_cheysson_map <- function(base_size = 11,
 
       plot.subtitle = ggplot2::element_text(
         family = base_family,
-        size = base_size * 3.2,
+        size = base_size * 1.6,
         hjust = 0.5,
         margin = ggplot2::margin(b = base_size * 0.5)
       ),
@@ -364,18 +370,18 @@ theme_cheysson_map <- function(base_size = 11,
       # Legend
       legend.title = ggplot2::element_text(
         family = base_family,
-        size = base_size * 1.8
+        size = base_size * 0.9
       ),
 
       legend.text = ggplot2::element_text(
         family = base_family,
-        size = base_size * 1.56
+        size = base_size * 0.78
       ),
 
       # Caption
       plot.caption = ggplot2::element_text(
         family = base_family,
-        size = base_size * 1.32
+        size = base_size * 0.66
       ),
 
       # Background

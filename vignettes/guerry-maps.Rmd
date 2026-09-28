@@ -22,6 +22,9 @@ knitr::opts_chunk$set(
   # ragg, not the default png(): on Intel macOS the Quartz png() device
   # segfaults drawing ggpattern's grid masks at >= 96 dpi (CRAN check ERROR on 1.0.1)
   dev = if (requireNamespace("ragg", quietly = TRUE)) "ragg_png" else "png",
+  # draw showtext fonts at the device's real dpi (pkgdown renders retina at 2x;
+  # without this, text there comes out at half size)
+  fig.showtext = TRUE,
   warning = FALSE,
   message = FALSE
 )
@@ -285,7 +288,7 @@ p4b <- ggplot(france_data) +
   scale_pattern_fill_cheysson("1883_31", na.value = "grey90") +
   scale_pattern_type_cheysson("1883_31") +
   labs(
-    title = "Charitable Donations with Hatching Patterns",
+    title = "Charitable Donations\nwith Hatching Patterns",
     subtitle = "Authentic Cheysson-style patterns and colors (quartiles)",
     caption = "Data: André-Michel Guerry (1833)"
   ) +

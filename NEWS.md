@@ -47,7 +47,14 @@
   of the modest ratios `theme_cheysson()` uses; `plot.caption` is now styled too (previously
   unstyled and tiny). `base_size` alone now controls this - no need for the
   `theme(plot.title = element_text(size = ...))` overrides the `guerry-maps` vignette previously
-  needed on every map
+  needed on every map. Sizes are calibrated at true scale (a ~40-character title just fits an
+  8in-wide figure), and titles are now centered on the whole plot rather than the panel, so a
+  side legend no longer pushes a long title off the left edge
+
+* Vignettes now render figures with `ragg` (fixes a segfault on CRAN's Intel macOS check
+  machines, where the Quartz `png()` device crashes drawing ggpattern's masks) and set
+  `fig.showtext = TRUE`, so showtext text is drawn at the device's real dpi and figures look the
+  same in the package vignettes and on the pkgdown site
 
 # ggCheysson 1.0.1
 

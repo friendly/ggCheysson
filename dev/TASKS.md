@@ -55,21 +55,27 @@ and something specific to our vignettes - most likely `showtext::showtext_auto()
 - **Fix applied 2026-09-27 (laptop)**: both vignettes' `opts_chunk` now set
   `dev = if (requireNamespace("ragg", quietly = TRUE)) "ragg_png" else "png"` (`ragg` is in
   Suggests; the fallback keeps no-Suggests builds working). Both render locally on Windows.
-  **Still to do**: re-run `macos-diag` on `macos-15-intel` against the fixed vignettes to confirm,
-  then delete `.github/workflows/macos-diag.yaml` and `.github/diag/`.
-- R-hub `macos` check (run 36349053684) finished as **failure** - not yet looked at (could be
-  the same segfault, or a runner problem; check `uname -m` in its platform-info step).
+  **Confirmed** on `macos-15-intel` and `macos-latest` (run 36361943806, `round3.R`): both
+  vignettes render and exit cleanly. The temporary `macos-diag` workflow and `.github/diag/` were
+  then deleted (recoverable from git history, last at `1cee94d`).
+- R-hub `macos` check (run 36349053684) finished as **failure** - not looked at; the user doesn't
+  chase R-hub during active development. Re-run R-hub (incl. Intel macOS) before submitting 1.1.0.
 - Separately fixed on master (`7f989f2`): the literacy pattern map used `1881_22` (all-solid,
   4 colors - no hatching, Q5 recycled Q1's color); now sequential hatching palette `1888_27`
   with `pattern_spacing` mapped. Also fixed the vignette's "Departments with data: 0" count.
-- **New issue found, not yet fixed - map titles too big in the real vignette**: pkgdown renders
-  figures at retina (1536px, dpi 192) but showtext stays at 96 dpi, so all text in the pkgdown
-  figures is drawn at *half* size. `theme_cheysson_map()`'s 2026-09-17 redesign (title =
-  5 x `base_size`) was tuned by looking at those pkgdown figures; in a plain `html_vignette`
-  build (768px, what CRAN builds) "LITERACY RATES WITH CHEYSSON PATTERNS" overflows both edges.
-  Likely fix: set knitr's `fig.showtext = TRUE` so showtext uses the real dpi, then re-tune the
-  map text ratios against correctly scaled output. The same effect may explain the earlier
-  "text too small" impression in getting-started (and its `out.width = "75%"` workaround).
+- **Map titles too big - fixed 2026-09-27**: pkgdown renders figures at retina (dpi 192) but
+  showtext stayed at 96 dpi, so all text in the pkgdown figures was drawn at *half* size, and
+  `theme_cheysson_map()`'s 2026-09-17 redesign had been tuned against those. At true scale (what
+  CRAN's `html_vignette` build gets) titles were ~2x too wide. Fix: `fig.showtext = TRUE` in both
+  vignettes (knitr then sets showtext's dpi per chunk), and all `theme_cheysson_map()` text
+  multipliers halved (title 5.0 -> 2.5, subtitle 3.2 -> 1.6, legend 1.8/1.56 -> 0.9/0.78,
+  caption 1.32 -> 0.66), which reproduces exactly the look tuned on pkgdown. Title 2.5x is about
+  the max: the longest single-line title ("Regions of France with Cheysson Patterns") just fits
+  8in; `plot.title.position = "plot"` added so a right legend doesn't shift titles off-center.
+  "Charitable Donations with Hatching Patterns" is now split over 2 lines.
+  Follow-ups: getting-started's `out.width = "75%"` workaround was probably compensating for the
+  same half-size text and may no longer be wanted; the "Regions of France with Cheysson
+  Patterns" map shows solid fills only, no visible hatching - check.
 
 - [x] Reproduce: R-hub's Intel macOS runner (`rhub::rhub_check(platforms = "macos")` - the
   `.github/workflows/rhub.yaml` workflow already exists). mac-builder is arm64-only, which passes.
