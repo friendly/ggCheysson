@@ -144,6 +144,9 @@ migration aids below, and defer the new-API items in "New development" (the `sca
 wrapper, color+pattern combination palettes, gallery vignette) to 1.2.0, once there's ggpattern
 feedback on the pattern-system design. The combined scale wrapper in particular is a public API
 that's hard to change once on CRAN.
+**Revised 2026-09-28 (user):** `scale_cheysson()` + `aes_cheysson()` go into 1.1.0 after all,
+marked experimental (CRAN's concern is release frequency, not content; one release instead of
+two). No CRAN deadline applies (package too new). See the entry under "New development".
 
 - [x] Fix the macOS x86_64 segfault (above) - `ragg_png` in both vignettes, confirmed on Intel.
 - [x] **Donations pattern map (guerry-maps) was backwards** - fixed 2026-09-27 in the vignette
@@ -780,9 +783,38 @@ that's hard to change once on CRAN.
   `legend.title` 1.5 -> 1.8, `legend.text` 1.3 -> 1.56, `plot.caption` 1.1 -> 1.32. Reinstalled,
   force-rebuilt both articles, `R CMD check` 0/0/0.
 
-- [ ] The way of specifying the combinations of colors and patterns used in examples seems unnecessarily
+- [x] The way of specifying the combinations of colors and patterns used in examples seems unnecessarily
   complicated. E.g., in the README example, "Complete Cheysson Aesthetic", there are four calls to
   `scale_*()` functions. Perhaps this needs a `scale_cheysson()` wrapper to simplify this.
+  - Done 2026-09-28 (1.1.0, experimental), new `R/scale_cheysson.R`:
+    `scale_cheysson(palette, reverse, aesthetics, na.value = "grey80", ...)` returns a *list* of
+    the pattern scales (fill, pattern, pattern_fill, pattern_fill2, pattern_angle) - ggplot2
+    adds a list with one `+`, so the old prototype's "list needs manual `+`" problem (and its
+    `+.gg` override) was never real. `aes_cheysson(x, ...)` maps `x` to all five aesthetics;
+    needed because a scale for an unmapped aesthetic does nothing (ggpattern then draws grey
+    hatching - checked). `...` goes to every scale, so one `name` keeps legends merged.
+    Excluded on purpose: `pattern_density` (stored value is just `1 - spacing/100`, ~0.95,
+    meaningless), `pattern_spacing` (measured on swatches, needs rescaling), continuous
+    scales, non-pattern geoms (use `scale_fill_cheysson()`; `cheysson_palettes$colors` differs
+    in length/order from the pattern elements).
+  - Found while converting the literacy map: NA data in a mapped `pattern` crashed ggpattern
+    (and `na.value = "grey90"` passed to all scales broke `pattern_angle`). Fixed for all pattern
+    scales in `cheysson_pattern_scale()`: per-aesthetic NA defaults (`pattern` "none", angle and
+    density 0, colors NA); `scale_cheysson(na.value =)` applies only to the colors.
+  - Old `?scale_cheysson` help topic (color/fill scales) renamed `?scale_color_cheysson`.
+  - README and both existing vignettes were first converted to the wrapper, then reverted (user:
+    it's experimental, so it lives only in its own vignette). Kept from the conversion, done
+    with the individual scales: README swatches now map `pattern_angle` (real angles); Literacy
+    map legend keys were grey (`guides(pattern_fill = "none")`) - now merged; getting-started
+    export bars used `1881_12` (3 elements) over 4 countries -> `1886_28`; its "kilometers x
+    100" label drew a box for the missing `×` glyph -> "hundreds of km", and it had two legends
+    (`pattern_fill` untitled) -> merged via `labs(pattern_fill = "Type")`.
+    Explained in a new vignette, `vignettes/combining-colors-patterns.Rmd` ("Combining Colors
+    and Patterns", marked experimental): per-element bundle of properties -> one aesthetic each, each
+    needing a mapping *and* a scale; long form vs short form (their PNGs are byte-identical);
+    partial mapping -> grey hatching; merged legends; sequential/diverging order; `na.value`;
+    `aesthetics =` subset; what's not included. All chunks `eval` only if ggpattern is installed.
+    `R CMD check` 0/0/0, all figures checked.
 
 - [ ] Should get some feedback from the maintainer of `ggpattern` (Trevor Davis) regarding the
   design of our pattern system. But how to raise an issue that gives examples and refers to the `colorpat`

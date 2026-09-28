@@ -12,12 +12,12 @@ reference:
   - title: Color Palettes
     desc: >
       Authentic color palettes extracted from the Albums de Statistique Graphique.
-      20 palettes organized by type (sequential, diverging, grouped, category).
+      25 palettes organized by type (sequential, diverging, grouped, category).
     contents:
     - cheysson_pal
     - list_cheysson_pals
     - starts_with("show_palette")
-    - scale_cheysson
+    - scale_color_cheysson
     - starts_with("scale_color")
     - starts_with("scale_fill")
     - -scale_fill_cheysson_pattern
@@ -33,6 +33,7 @@ reference:
     - cheysson_pattern_params
     - list_cheysson_patterns
     - get_pattern_param
+    - scale_cheysson
     - scale_fill_cheysson_pattern
     - scale_pattern_cheysson
     - starts_with("scale_pattern_")
@@ -72,4 +73,5 @@ articles:
     contents:
     - getting-started
     - guerry-maps
+    - combining-colors-patterns
 

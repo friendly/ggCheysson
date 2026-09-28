@@ -37,12 +37,12 @@
 #'   geom_boxplot() +
 #'   scale_fill_cheysson(palette = "category")
 #'
-#' @name scale_cheysson
-#' @rdname scale_cheysson
+#' @name scale_color_cheysson
+#' @rdname scale_color_cheysson
 NULL
 
 
-#' @rdname scale_cheysson
+#' @rdname scale_color_cheysson
 #' @export
 scale_color_cheysson <- function(palette = "1880_21", discrete = TRUE, reverse = FALSE, ...) {
   pal <- get_palette(palette, cheysson_palettes)
@@ -61,12 +61,12 @@ scale_color_cheysson <- function(palette = "1880_21", discrete = TRUE, reverse =
 }
 
 
-#' @rdname scale_cheysson
+#' @rdname scale_color_cheysson
 #' @export
 scale_colour_cheysson <- scale_color_cheysson
 
 
-#' @rdname scale_cheysson
+#' @rdname scale_color_cheysson
 #' @export
 scale_fill_cheysson <- function(palette = "1880_21", discrete = TRUE, reverse = FALSE, ...) {
   pal <- get_palette(palette, cheysson_palettes)

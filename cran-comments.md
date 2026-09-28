@@ -14,7 +14,8 @@ The update also fixes several bugs in the package's pattern scales (e.g.
 `scale_pattern_type_cheysson()` did not vary the pattern, and 6 palettes made ggpattern fail),
 and corrects the palette data: a naming bug had silently dropped 5 of the 25 source palettes.
 Restoring them required renaming palettes; old names now give an informative error with the
-new name. Details are in NEWS.md.
+new name. It also adds an experimental convenience function, `scale_cheysson()`, that
+applies a whole color-and-pattern palette in one step. Details are in NEWS.md.
 
 ## Test environments
 

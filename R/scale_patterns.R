@@ -141,14 +141,26 @@ scale_fill_cheysson_pattern <- function(palette = "1881_12", reverse = FALSE, ..
 
 # Shared body of the scale_*_cheysson() pattern scales: a discrete scale for
 # `aesthetic` whose values are parameter `param` of the palette's patterns,
-# chosen for n levels by select_values()
-cheysson_pattern_scale <- function(palette, reverse, aesthetic, scale_name, param, ...) {
+# chosen for n levels by select_values(). Missing data gets no pattern: an NA
+# `pattern` (or angle, density) makes ggpattern fail, so those default to
+# "none"/0; colors default to NA.
+cheysson_pattern_scale <- function(palette, reverse, aesthetic, scale_name, param,
+                                   na.value = pattern_na_value(aesthetic), ...) {
   pal <- get_palette(palette, cheysson_patterns)
   values <- cheysson_pattern_params(pal$patterns, param)
   ggplot2::discrete_scale(
     aesthetics = aesthetic,
     scale_name = scale_name,
     palette = function(n) select_values(values, n, pal$type, reverse = reverse),
+    na.value = na.value,
     ...
   )
+}
+
+pattern_na_value <- function(aesthetic) {
+  switch(aesthetic,
+         pattern = "none",
+         pattern_angle = 0,
+         pattern_density = 0,
+         NA)
 }
