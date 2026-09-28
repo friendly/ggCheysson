@@ -6,9 +6,9 @@ corruption incident log - are archived in [`dev/TASKS-v1.0.1.md`](TASKS-v1.0.1.m
 
 ## Handoff (2026-09-27 evening, laptop -> desktop) - resume here
 
-- First: `git fetch origin` and check `git log origin/master` - master is at `c158237` (or later).
-  This laptop's `.git` had lagged behind Dropbox's synced files again; the desktop's may too.
-- Done today on the laptop (all pushed): macOS segfault fixed (`ragg_png`) and confirmed on the
+- (2026-09-28) Project moved out of Dropbox on the desktop - see "Git/Dropbox" under Status.
+  On the laptop, clone fresh into `C:\R\Projects` rather than using the Dropbox copy.
+- Done 2026-09-27 on the laptop (all pushed): macOS segfault fixed (`ragg_png`) and confirmed on the
   Intel runner, diag workflow removed; `theme_cheysson_map()` text now sized at true scale with
   `fig.showtext = TRUE` (sizes left as-is for now - user's call); plain Guerry-style map titles;
   Donations pattern map fixed (solid extremes, hatched middle); pkgdown site rebuilt.
@@ -27,9 +27,20 @@ corruption incident log - are archived in [`dev/TASKS-v1.0.1.md`](TASKS-v1.0.1.m
   `master` 2026-09-27 as a merge commit (`0c36df0`); `colorpat` branch then deleted locally and on
   GitHub. `master` is now **1.1.0** (DESCRIPTION/NEWS.md). References to "the `colorpat` branch"
   below are historical.
-- **Git/Dropbox**: this repo's `.git` is still inside Dropbox on at least one machine and has hit
-  ref/index corruption 3 times (details in `TASKS-v1.0.1.md`). If `git status`/`git log` look
-  wrong, run `git fsck` and `git fetch origin` before doing anything destructive.
+- **Git/Dropbox - project moved out of Dropbox (2026-09-28)**: the repo now lives at
+  `C:\R\Projects\ggCheysson`, a fresh `git clone` from GitHub, like the user's other R packages.
+  Why: the `.git` inside `C:\Dropbox\R\projects\ggCheysson` was shared by both machines via
+  Dropbox, and after 3 earlier ref/index corruptions (details in `TASKS-v1.0.1.md`) it lost real
+  objects on 2026-09-28 - several commits missing, two packfiles with `.idx` but no `.pack`
+  (a laptop repack half-synced), so `git fetch` failed. Nothing was lost: everything had been
+  pushed, and the working tree matched GitHub except a stale (never-synced) `docs/` build and a
+  4-line TASKS.md edit, which was carried over. Also carried over: `.Rhistory` and
+  `.Rproj.user` (open-tab paths rewritten to the new location). RStudio's recent-projects list
+  and the desktop's `ggCheysson.lnk` shortcut were repointed.
+  - [ ] Laptop: `git clone https://github.com/friendly/ggCheysson.git` into `C:\R\Projects`,
+    repoint its shortcut/RStudio list; stop using the Dropbox copy there.
+  - [ ] Then retire the Dropbox copy (rename to e.g. `ggCheysson-OLD-dropbox`; the rename syncs
+    to the laptop, so only after the laptop has its own clone). Delete after a week or two.
 
 ## CRAN check ERROR on 1.0.1: macOS x86_64 vignette segfault — release-blocking
 
@@ -55,22 +66,26 @@ and something specific to our vignettes - most likely `showtext::showtext_auto()
   `.github/diag/`; delete both when done) on GitHub's `macos-15-intel` runner (R 4.6.1, x86_64):
   both the 1.0.1 vignette (with CRAN's 1.0.1 package) and master's `guerry-maps.Rmd` segfault at
   `print(p3b)` with CRAN's exact traceback. On `macos-latest` (arm64) everything passes, as on CRAN.
+  
 - **Standalone, the same plot does NOT crash** on Intel: `p3b`-like maps (plain, all-solid
   patterns, stripes on every department) and a bare grid mask all render fine under Quartz `png`
   and `ragg`, with showtext on or off (run 36349573202). So the trigger is something about the
   knitr context. (Cairo `png` fails on the runner only because it has no XQuartz; ignore that.)
+  
 - **Round 2 (run 36356927380, `.github/diag/round2.R`) - cause found**: standalone `p3b` on
   Quartz `png` is OK at 72 dpi but **segfaults at 96 and 192 dpi** (round 1's standalone tests
   passed only because they ran at 72 dpi); ragg at 96 dpi is OK. `dev.control(displaylist)` makes
   no difference. Knitr vignette variants: as-is, showtext off, `dpi = 192`, and `print(p1..p3)`
   removed all segfault; **`dev = "ragg_png"` passes**. So it's the Quartz `png()` device drawing
   grid masks at >= 96 dpi, nothing to do with showtext.
+  
 - **Fix applied 2026-09-27 (laptop)**: both vignettes' `opts_chunk` now set
   `dev = if (requireNamespace("ragg", quietly = TRUE)) "ragg_png" else "png"` (`ragg` is in
   Suggests; the fallback keeps no-Suggests builds working). Both render locally on Windows.
   **Confirmed** on `macos-15-intel` and `macos-latest` (run 36361943806, `round3.R`): both
   vignettes render and exit cleanly. The temporary `macos-diag` workflow and `.github/diag/` were
   then deleted (recoverable from git history, last at `1cee94d`).
+  
 - R-hub `macos` check (run 36349053684) finished as **failure** - not looked at; the user doesn't
   chase R-hub during active development. Re-run R-hub (incl. Intel macOS) before submitting 1.1.0.
 - Separately fixed on master (`7f989f2`): the literacy pattern map used `1881_22` (all-solid,
