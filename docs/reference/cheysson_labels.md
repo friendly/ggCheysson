@@ -9,7 +9,7 @@ Observable notebook IDs. Useful whenever you have a palette identified
 in someone else's terms - an Advent day, a David Rumsey catalog number,
 or a label copied from Andrews' or Shanley's own work - and need the
 package name to actually use it in
-[`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+[`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md)
 and friends, or vice versa (see
 [`cheysson_name()`](https://friendly.github.io/ggCheysson/reference/cheysson_name.md)
 for a lookup function that does this translation for you).
@@ -27,7 +27,7 @@ A data frame with 25 rows and 10 variables:
 - name:
 
   The package's current palette name (e.g. "1881_22") - pass this to
-  [`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md),
+  [`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md),
   [`cheysson_pal()`](https://friendly.github.io/ggCheysson/reference/cheysson_pal.md),
   [`cheysson_pattern()`](https://friendly.github.io/ggCheysson/reference/cheysson_pattern.md),
   etc. Unique; matches `names(cheysson_palettes)` and

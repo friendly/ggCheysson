@@ -1,5 +1,6 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://friendly.github.io/ggCheysson/404.html</loc></url>
+<url><loc>https://friendly.github.io/ggCheysson/articles/combining-colors-patterns.html</loc></url>
 <url><loc>https://friendly.github.io/ggCheysson/articles/getting-started.html</loc></url>
 <url><loc>https://friendly.github.io/ggCheysson/articles/guerry-maps.html</loc></url>
 <url><loc>https://friendly.github.io/ggCheysson/articles/index.html</loc></url>
@@ -25,6 +26,7 @@
 <url><loc>https://friendly.github.io/ggCheysson/reference/list_cheysson_patterns.html</loc></url>
 <url><loc>https://friendly.github.io/ggCheysson/reference/load_cheysson_fonts.html</loc></url>
 <url><loc>https://friendly.github.io/ggCheysson/reference/scale_cheysson.html</loc></url>
+<url><loc>https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.html</loc></url>
 <url><loc>https://friendly.github.io/ggCheysson/reference/scale_fill_cheysson_pattern.html</loc></url>
 <url><loc>https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.html</loc></url>
 <url><loc>https://friendly.github.io/ggCheysson/reference/show_palette.html</loc></url>

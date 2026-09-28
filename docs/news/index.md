@@ -2,6 +2,24 @@
 
 ## ggCheysson 1.1.0
 
+- New (experimental)
+  [`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+  applies a whole color-and-pattern palette - fill, hatch type, line
+  colors and angle - with one `+`, in place of four or five separate
+  `scale_*_cheysson()` calls; `aes_cheysson(x)` maps a variable to all
+  of those aesthetics. See the new vignette “Combining Colors and
+  Patterns”. The individual scales remain.
+
+- Missing values in a mapped pattern aesthetic no longer make ggpattern
+  fail: the pattern scales now give missing data no hatching
+  (`pattern = "none"`) by default.
+
+- The help topic for
+  [`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md)/[`scale_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md)
+  is now
+  [`?scale_color_cheysson`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md)
+  (the name `scale_cheysson` belongs to the new function).
+
 - **Breaking change**: fixed a palette-naming collision bug. Palette
   names were built from `Album + Qty` (e.g. `"1880_07"`), but `Qty` is
   not a unique plate identifier - it’s a colors/pattern-element count

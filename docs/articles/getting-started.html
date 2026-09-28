@@ -43,6 +43,7 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started with ggCheysson</a></li>
     <li><a class="dropdown-item" href="../articles/guerry-maps.html">Mapping Guerry's Moral Statistics with Cheysson Palettes</a></li>
+    <li><a class="dropdown-item" href="../articles/combining-colors-patterns.html">Combining Colors and Patterns</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -155,7 +156,7 @@ ggpattern</li>
 <span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span>, color <span class="op">=</span> <span class="va">Petal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span>, alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/scale_cheysson.html">scale_color_cheysson</a></span><span class="op">(</span><span class="st">"1880_21"</span>, discrete <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/scale_color_cheysson.html">scale_color_cheysson</a></span><span class="op">(</span><span class="st">"1880_21"</span>, discrete <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Iris Measurements"</span>,</span>
 <span>    subtitle <span class="op">=</span> <span class="st">"Using Sequential Palette 1880, Plate 21"</span>,</span>
@@ -174,7 +175,7 @@ ggpattern</li>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span>, color <span class="op">=</span> <span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span>, alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/scale_cheysson.html">scale_color_cheysson</a></span><span class="op">(</span><span class="st">"1881_22"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/scale_color_cheysson.html">scale_color_cheysson</a></span><span class="op">(</span><span class="st">"1881_22"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Iris Species Comparison"</span>,</span>
 <span>    subtitle <span class="op">=</span> <span class="st">"Using Categorical Palette 1881, Plate 22"</span>,</span>
@@ -200,7 +201,7 @@ Cheysson’s distinctive hatching patterns.</p>
 <span></span>
 <span><span class="va">p3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">cyl_summary</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">mpg</span>, fill <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span>, linewidth <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/scale_cheysson.html">scale_fill_cheysson</a></span><span class="op">(</span><span class="st">"1883_31"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/scale_color_cheysson.html">scale_fill_cheysson</a></span><span class="op">(</span><span class="st">"1883_31"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Automobile Efficiency by Cylinder Count"</span>,</span>
 <span>    subtitle <span class="op">=</span> <span class="st">"Average Miles per Gallon"</span>,</span>
@@ -230,9 +231,9 @@ Cheysson’s distinctive hatching patterns.</p>
 <span>      color <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>      linewidth <span class="op">=</span> <span class="fl">0.8</span></span>
 <span>    <span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="../reference/scale_fill_cheysson_pattern.html">scale_fill_cheysson_pattern</a></span><span class="op">(</span><span class="st">"1881_12"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="../reference/scale_pattern_cheysson.html">scale_pattern_fill_cheysson</a></span><span class="op">(</span><span class="st">"1881_12"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="../reference/scale_pattern_cheysson.html">scale_pattern_type_cheysson</a></span><span class="op">(</span><span class="st">"1881_12"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="../reference/scale_fill_cheysson_pattern.html">scale_fill_cheysson_pattern</a></span><span class="op">(</span><span class="st">"1886_28"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="../reference/scale_pattern_cheysson.html">scale_pattern_fill_cheysson</a></span><span class="op">(</span><span class="st">"1886_28"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="../reference/scale_pattern_cheysson.html">scale_pattern_type_cheysson</a></span><span class="op">(</span><span class="st">"1886_28"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
 <span>      title <span class="op">=</span> <span class="st">"Export Statistics by Nation"</span>,</span>
 <span>      subtitle <span class="op">=</span> <span class="st">"Annual Trade Volume (1885)"</span>,</span>
@@ -265,7 +266,7 @@ Cheysson’s distinctive hatching patterns.</p>
 <span><span class="va">p5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">railway_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">volume</span>, color <span class="op">=</span> <span class="va">type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/scale_cheysson.html">scale_color_cheysson</a></span><span class="op">(</span><span class="st">"1883_31"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/scale_color_cheysson.html">scale_color_cheysson</a></span><span class="op">(</span><span class="st">"1883_31"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Railway Traffic Development"</span>,</span>
 <span>    subtitle <span class="op">=</span> <span class="st">"Transportation Volume Index (1880-1900)"</span>,</span>
@@ -300,7 +301,7 @@ Cheysson’s distinctive hatching patterns.</p>
 <span></span>
 <span><span class="va">p6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">industry_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">value</span>, fill <span class="op">=</span> <span class="va">sector</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="external-link">geom_area</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.85</span>, color <span class="op">=</span> <span class="st">"black"</span>, linewidth <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/scale_cheysson.html">scale_fill_cheysson</a></span><span class="op">(</span><span class="st">"1881_22"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/scale_color_cheysson.html">scale_fill_cheysson</a></span><span class="op">(</span><span class="st">"1881_22"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Industrial Production by Sector"</span>,</span>
 <span>    subtitle <span class="op">=</span> <span class="st">"Economic Output Distribution (1880-1895)"</span>,</span>
@@ -383,9 +384,10 @@ Cheysson’s distinctive hatching patterns.</p>
 <span>      title <span class="op">=</span> <span class="st">"Transportation Network Comparison"</span>,</span>
 <span>      subtitle <span class="op">=</span> <span class="st">"Infrastructure Development by Region (1890)"</span>,</span>
 <span>      x <span class="op">=</span> <span class="st">"Region"</span>,</span>
-<span>      y <span class="op">=</span> <span class="st">"Network Extent (kilometers × 100)"</span>,</span>
+<span>      y <span class="op">=</span> <span class="st">"Network Extent (hundreds of km)"</span>,</span>
 <span>      fill <span class="op">=</span> <span class="st">"Type"</span>,</span>
-<span>      pattern <span class="op">=</span> <span class="st">"Type"</span></span>
+<span>      pattern <span class="op">=</span> <span class="st">"Type"</span>,</span>
+<span>      pattern_fill <span class="op">=</span> <span class="st">"Type"</span></span>
 <span>    <span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="../reference/theme_cheysson.html">theme_cheysson</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span>
@@ -410,7 +412,7 @@ Cheysson’s distinctive hatching patterns.</p>
 <span><span class="va">p9</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">departments</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, fill <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span>, linewidth <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">dept</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">3.5</span>, fontface <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/scale_cheysson.html">scale_fill_cheysson</a></span><span class="op">(</span><span class="st">"1880_21"</span>, discrete <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/scale_color_cheysson.html">scale_fill_cheysson</a></span><span class="op">(</span><span class="st">"1880_21"</span>, discrete <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_equal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Regional Statistics Map"</span>,</span>
@@ -486,8 +488,8 @@ needs</li>
 </h3>
 <ul>
 <li>
-<code><a href="../reference/scale_cheysson.html">scale_color_cheysson()</a></code> /
-<code><a href="../reference/scale_cheysson.html">scale_fill_cheysson()</a></code> - Apply color palettes</li>
+<code><a href="../reference/scale_color_cheysson.html">scale_color_cheysson()</a></code> /
+<code><a href="../reference/scale_color_cheysson.html">scale_fill_cheysson()</a></code> - Apply color palettes</li>
 <li>
 <code>scale_pattern_*_cheysson()</code> - Apply pattern fills</li>
 <li>

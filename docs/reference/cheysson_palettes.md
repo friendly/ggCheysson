@@ -76,7 +76,7 @@ are in the hatching, see
 ## See also
 
 [`cheysson_pal()`](https://friendly.github.io/ggCheysson/reference/cheysson_pal.md),
-[`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+[`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md)
 
 ## Examples
 

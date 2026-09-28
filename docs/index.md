@@ -372,13 +372,14 @@ patterns <- cheysson_pattern("1886_24")
 n <- length(patterns)
 ggplot(data.frame(i = factor(seq_len(n))), aes(i, 1, fill = i)) +
   geom_col_pattern(
-    aes(pattern = i, pattern_fill = i),
+    aes(pattern = i, pattern_fill = i, pattern_angle = i),
     pattern_density = 0.35, pattern_spacing = 0.03,
     color = "black", width = 0.95
   ) +
   scale_fill_manual(values = cheysson_pattern_params(patterns, "fill")) +
   scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")) +
   scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")) +
+  scale_pattern_angle_manual(values = cheysson_pattern_params(patterns, "pattern_angle")) +
   theme_void() +
   theme(legend.position = "none")
 ```
@@ -460,9 +461,9 @@ theme(
 
 - [`cheysson_pal()`](https://friendly.github.io/ggCheysson/reference/cheysson_pal.md) -
   Get colors from a palette
-- [`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+- [`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md)
   /
-  [`scale_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md) -
+  [`scale_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md) -
   ggplot2 color scales
 - [`list_cheysson_pals()`](https://friendly.github.io/ggCheysson/reference/list_cheysson_pals.md) -
   List available palettes

@@ -3,7 +3,7 @@
 ## Color Palettes
 
 Authentic color palettes extracted from the Albums de Statistique
-Graphique. 20 palettes organized by type (sequential, diverging,
+Graphique. 25 palettes organized by type (sequential, diverging,
 grouped, category).
 
 - [`cheysson_pal()`](https://friendly.github.io/ggCheysson/reference/cheysson_pal.md)
@@ -14,9 +14,9 @@ grouped, category).
   : Display a Cheysson palette with color swatches and hex codes
 - [`show_palettes()`](https://friendly.github.io/ggCheysson/reference/show_palettes.md)
   : Display multiple Cheysson palettes
-- [`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
-  [`scale_colour_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
-  [`scale_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+- [`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md)
+  [`scale_colour_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md)
+  [`scale_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md)
   : Cheysson color scales for ggplot2
 - [`cheysson_name()`](https://friendly.github.io/ggCheysson/reference/cheysson_name.md)
   : Translate a palette label from another naming scheme to the current
@@ -35,6 +35,9 @@ hatching and fill styles used in Cheysson’s maps and diagrams.
   : List available Cheysson pattern palettes
 - [`get_pattern_param()`](https://friendly.github.io/ggCheysson/reference/get_pattern_param.md)
   : Extract pattern parameters for ggpattern
+- [`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+  [`aes_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+  : Apply a Cheysson color-and-pattern palette in one step
 - [`scale_fill_cheysson_pattern()`](https://friendly.github.io/ggCheysson/reference/scale_fill_cheysson_pattern.md)
   : Apply Cheysson patterns to fill aesthetic
 - [`scale_pattern_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)

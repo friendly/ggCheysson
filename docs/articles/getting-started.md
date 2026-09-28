@@ -154,9 +154,9 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
       color = "black",
       linewidth = 0.8
     ) +
-    scale_fill_cheysson_pattern("1881_12") +
-    scale_pattern_fill_cheysson("1881_12") +
-    scale_pattern_type_cheysson("1881_12") +
+    scale_fill_cheysson_pattern("1886_28") +
+    scale_pattern_fill_cheysson("1886_28") +
+    scale_pattern_type_cheysson("1886_28") +
     labs(
       title = "Export Statistics by Nation",
       subtitle = "Annual Trade Volume (1885)",
@@ -311,9 +311,10 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
       title = "Transportation Network Comparison",
       subtitle = "Infrastructure Development by Region (1890)",
       x = "Region",
-      y = "Network Extent (kilometers × 100)",
+      y = "Network Extent (hundreds of km)",
       fill = "Type",
-      pattern = "Type"
+      pattern = "Type",
+      pattern_fill = "Type"
     ) +
     theme_cheysson() +
     theme(legend.position = "right")
@@ -406,9 +407,9 @@ The ggCheysson package provides:
 
 ### Key Functions
 
-- [`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+- [`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md)
   /
-  [`scale_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md) -
+  [`scale_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md) -
   Apply color palettes
 - `scale_pattern_*_cheysson()` - Apply pattern fills
 - [`theme_cheysson()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson.md) -

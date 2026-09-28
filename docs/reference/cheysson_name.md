@@ -4,7 +4,7 @@ Looks up a palette by whichever label you have it in - the package's own
 (possibly outdated) name, RJ Andrews' Advent-calendar label, Tom
 Shanley's Observable notebook ID, a David Rumsey catalog number, or an
 advent day - and returns the current name to pass to
-[`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md),
+[`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md),
 [`cheysson_pal()`](https://friendly.github.io/ggCheysson/reference/cheysson_pal.md),
 [`cheysson_pattern()`](https://friendly.github.io/ggCheysson/reference/cheysson_pattern.md),
 and friends.
