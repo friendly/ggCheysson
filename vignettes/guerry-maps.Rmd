@@ -273,14 +273,11 @@ print(p4)
 The combination of colors and patterns was a hallmark of the Albums. Palette `1883_31` is one
 of Cheysson's diverging schemes: two hues, each used both solid and hatched. As in his maps,
 the solid fills mark the extremes and the hatched versions the milder classes on each side.
-The palette's patterns are listed in the order RJ Andrews gave them (hatched blue, solid blue,
-solid orange, hatched orange), so we reorder them from low to high and apply them with
-ggplot2's and ggpattern's manual scales:
+Diverging palettes are stored in that low-to-high order, so the Cheysson pattern scales apply
+it directly:
 
 ```{r map-donations-pattern, fig.height=7, fig.width=8}
 # Donations: solid at the extremes, hatched in the middle
-don_pats <- cheysson_pattern("1883_31")[c(2, 1, 4, 3)]
-
 p4b <- ggplot(france_data) +
   geom_sf_pattern(
     aes(fill = Donations_cat,
@@ -292,11 +289,9 @@ p4b <- ggplot(france_data) +
     color = "black",
     linewidth = 0.4
   ) +
-  scale_fill_manual(values = cheysson_pattern_params(don_pats, "fill"),
-                    na.value = "grey90") +
-  scale_pattern_fill_manual(values = cheysson_pattern_params(don_pats, "pattern_fill"),
-                            na.value = "grey90") +
-  scale_pattern_manual(values = cheysson_pattern_params(don_pats, "pattern_type")) +
+  scale_fill_cheysson_pattern("1883_31", na.value = "grey90") +
+  scale_pattern_fill_cheysson("1883_31", na.value = "grey90") +
+  scale_pattern_type_cheysson("1883_31") +
   labs(
     title = "Charitable Donations",
     subtitle = "Authentic Cheysson-style patterns and colors (quartiles)",

@@ -364,12 +364,15 @@ temp_data <- data.frame(
               0.1, 0.3, -0.2, 0.4, 0.2, -0.3, 0.5, 0.3, 0.6)
 )
 
+# Diverging palette 1883_21: one extreme, neutral middle, other extreme
+div_pal <- cheysson_pal("1883_21")
+
 p10 <- ggplot(temp_data, aes(year, 1, fill = anomaly)) +
   geom_tile(height = 0.5) +
   scale_fill_gradient2(
-    low = cheysson_pal("diverging")[[1]][1],
-    mid = "#f5f5f5",
-    high = cheysson_pal("diverging")[[1]][5],
+    low = div_pal[1],
+    mid = div_pal[2],
+    high = div_pal[3],
     midpoint = 0
   ) +
   labs(
@@ -377,7 +380,7 @@ p10 <- ggplot(temp_data, aes(year, 1, fill = anomaly)) +
     subtitle = "Using Diverging Palette",
     x = "Year",
     y = "",
-    fill = "Anomaly (°C)"
+    fill = "Anomaly (C)"
   ) +
   theme_cheysson() +
   theme(

@@ -10,7 +10,10 @@ cheysson_pattern(palette = "1881_12", n = NULL, type = 1)
 \item{palette}{Name of palette (e.g., "1881_12") or palette type
 ("sequential", "diverging", "grouped", "category").}
 
-\item{n}{Number of patterns to return. If NULL, returns all patterns.}
+\item{n}{Number of patterns to return. If NULL, returns all patterns. If
+\code{n} is smaller than the palette, sequential and diverging palettes return
+patterns spread over the whole palette, keeping both ends; other types
+return the first \code{n}. If \code{n} is larger, patterns are recycled.}
 
 \item{type}{If palette is a type name, which palette of that type to use (default 1).}
 }

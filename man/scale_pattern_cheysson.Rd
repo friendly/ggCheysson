@@ -48,6 +48,10 @@ aesthetic
 \item \code{pattern_angle}: Angle of stripes
 \item \code{pattern_density}: Density of pattern lines
 }
+
+For a sequential or diverging palette with more patterns than the data has
+levels, the scales use patterns spread over the whole palette (keeping both
+ends), not the first ones. See \link{cheysson_patterns} for the stored order.
 }
 \examples{
 \donttest{

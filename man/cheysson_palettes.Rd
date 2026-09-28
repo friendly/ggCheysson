@@ -42,6 +42,15 @@ Palette types:
 \item \strong{Grouped} (10 palettes): Related colors for comparing groups
 \item \strong{Category} (6 palettes): Distinct colors for categorical data
 }
+
+Palette order: sequential palettes are stored from low to high (light to
+dark), and diverging palettes from one extreme through the neutral middle
+to the other, so \code{reverse = TRUE} in the scales flips the direction the
+same way for every palette. Category and grouped palettes keep the order
+of RJ Andrews' swatches. (\verb{1886_26}, typed "sequential" in the source, has
+two hues and no single light-to-dark order.) Some sequential palettes, such
+as \verb{1881_12}, have a single color: their steps are in the hatching, see
+\link{cheysson_patterns}.
 }
 \examples{
 # List available palettes

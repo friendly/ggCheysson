@@ -7,6 +7,9 @@ library(tidyverse)
 album_info <- read_csv(here("data-raw/observable/albumColors.csv"),
                         col_types = cols(RumseyListNo = "c", .default = col_guess()))
 
+# palette_order, apply_order(): data order for sequential/diverging palettes
+source(here("data-raw/palette_order.R"))
+
 # Load parsed patterns
 load(here("dev/svg_patterns.RData"))
 
@@ -90,6 +93,8 @@ for (dec_day in names(all_patterns)) {
 
     pattern_specs[[i]] <- spec
   }
+
+  pattern_specs <- apply_order(pattern_specs, palette_order$patterns[[palette_name]])
 
   # Store with metadata
   cheysson_patterns[[palette_name]] <- list(

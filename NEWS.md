@@ -17,6 +17,17 @@
   Using `"1880_07"` gives a once-per-session message saying so. (`"1906_06"` is the only old name
   that still means the same palette.)
 
+* Palette order is now consistent: sequential palettes are stored from low to high (light to
+  dark) and diverging palettes end to end, so `reverse = TRUE` means the same for every palette.
+  Previously palettes kept RJ Andrews' swatch order, so `1891_19`, `1891_25` and `1900_28` ran
+  dark to light, and `1883_31` put its hatched patterns at the extremes; these are now
+  reordered. Category and grouped palettes are unchanged.
+
+* When a sequential or diverging palette has more elements than needed, `cheysson_pal(n = )`,
+  `cheysson_pattern(n = )` and all the `scale_*_cheysson()` scales now pick elements spread
+  over the whole palette, keeping both ends, instead of the first `n` - which could drop one
+  end of a diverging palette entirely (e.g. `1883_21` with 5 classes)
+
 * Fixed 15 missing pattern elements across 6 palettes (`1882_04`, `1883_07`, `1886_04`,
   `1886_07`, `1887_06`, `1900_06`, in their old names): an SVG-parsing bug silently dropped
   hatch-line patterns whose coordinates relied on SVG's implicit default of 0 for an omitted

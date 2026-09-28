@@ -12,8 +12,10 @@ cheysson_pal(palette = "1880_21", n = NULL, type = 1)
 the first palette of that type is returned.}
 
 \item{n}{Number of colors to return. If NULL, returns all colors in the palette.
-If n is greater than the number of colors in the palette, colors will be
-interpolated.}
+If \code{n} is smaller than the palette, sequential and diverging palettes
+return colors spread over the whole palette, keeping both ends; other
+types return the first \code{n}. If \code{n} is greater than the number of colors
+in the palette, colors will be interpolated.}
 
 \item{type}{If palette is a type name, optionally specify which palette of
 that type to use (default is 1 for the first).}

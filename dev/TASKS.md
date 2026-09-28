@@ -154,11 +154,53 @@ that's hard to change once on CRAN.
   as in Cheysson) and uses `scale_fill_manual()` / `scale_pattern_fill_manual()` /
   `scale_pattern_manual()`. Also fixed there: legend keys drew grey stripes (the `pattern_fill`
   guide was `"none"`) and stripes had dark outlines (`pattern_colour = NA` now).
-  - [ ] **Underlying issue, still open**: the pattern scales only offer `reverse`, and other
+  - [ ] **Underlying issue**: the pattern scales only offer `reverse`, and other
     palettes may also be stored in swatch order rather than a meaningful data order (check the
     diverging and grouped ones against the Albums plates). Options: an `order =` argument on the
     five `scale_*_cheysson*()` pattern scales (small, additive API), and/or documenting each
     palette's intended order. Decide whether this goes in 1.1.0.
+    - **Reviewed 2026-09-28** (all 25 vs `man/figures/RJ-Andrews-color-palettes.jpg`): every
+      palette is stored in Andrews' swatch order (`1883_21` mirrored). Fine for category/grouped;
+      for the others:
+      - Sequential directions are mixed: light->dark `1881_12`, `1888_27`, `1895_16`;
+        dark->light `1891_19`, `1891_25`, `1900_28`; `1886_26` is two hues (red solid/stripe,
+        blue solid/stripe), not really sequential. So `reverse` means different things.
+      - Diverging: `1883_21` is correctly end-to-end; `1883_31` has hatched extremes (Donations).
+      - Bigger: for `n` < palette length, `cheysson_pal()`/`cheysson_pattern()`/the pattern
+        scales take elements `1:n`. `1883_21` with n = 5 loses the whole yellow end; `1900_28`
+        with n = 4 never reaches the light end.
+    - **Decision (user, 2026-09-28)**: no `order =` argument (arbitrary orders are already
+      possible via `cheysson_pattern()[idx]` + `scale_*_manual()`). Instead, for 1.1.0:
+      - [x] (1) Store sequential palettes light->dark and diverging end-to-end in `data-raw/`
+        (`1883_31` -> `[c(2, 1, 4, 3)]`), document the convention, drop the vignette's manual
+        reorder.
+      - [x] (2) For sequential/diverging, pick `n` < length elements spread over the palette
+        (keeping both ends) instead of the first `n`.
+      - Done 2026-09-28. (1): new `data-raw/palette_order.R` (reorder table + `apply_order()`,
+        sourced by both build scripts); reorders `1883_31` (patterns), `1891_19` (patterns),
+        `1891_25` and `1900_28` (colors + patterns). Rebuilt `.rda`s verified identical to the
+        old ones up to exactly these permutations. `1886_26` (two hues) left as is. Convention
+        documented in `?cheysson_palettes`/`?cheysson_patterns`. (2): internal `get_palette()`
+        (one lookup, replacing 3 copies) + `select_values()` (`round(seq(1, N, length.out = n))`
+        for sequential/diverging, first `n` otherwise; interpolate colors / recycle patterns
+        for `n` > N) in `R/palettes.R`; `cheysson_pal()`, `cheysson_pattern()`, both color
+        scales and all 5 pattern scales (now via internal `cheysson_pattern_scale()`) use them.
+        Category `reverse` semantics unchanged (reverse, then first `n`). Vignettes: Donations
+        pattern map now uses the Cheysson scales; getting-started's diverging tile had
+        `high = cheysson_pal("diverging")[[1]][5]` = `NA` (pre-existing bug) - now uses
+        `1883_21`'s three colors; the Illegitimate Births map (`1891_25`, continuous) now runs
+        light = low rank. Full `R CMD check` (with vignettes) 0/0/0; figures checked visually.
+- [ ] **Data discrepancies found in the order review (2026-09-28)** - verify against the Rumsey
+  plates before release:
+  - `1887_22` (day 8) is blue/yellow and `1888_27` (day 9) brown in our data; Andrews' image
+    shows the reverse (`Dec.08-1887.22` brown). `albumColors.csv` types/Qty and the SVGs agree
+    with our data, so either Andrews' labels or the source files are wrong. The literacy map
+    uses `1888_27`.
+  - `1883_13` (day 22) has Rumsey no. `12512.013` - 12512 is the 1881 album everywhere else -
+    and Andrews labels it `1881.13`; only the CSV's `Album` column says 1883. Andrews shows 3
+    swatches, we have 5. Used by the Regions of France pattern map.
+  - `1891_25`: Andrews shows solid, dotted, diagonal dots, ...; we have no dot pattern type, so
+    the first three elements are identical solids.
 - [x] 2026-09-28: done in new `R/migration.R` (internal helpers, called from `cheysson_pal()`,
   `cheysson_pattern()`, `show_palette()` - which every `scale_*_cheysson()` goes through):
   `palette_not_found()` turns an old name into "renamed in 1.1.0: ... is now '<new>'" (for a

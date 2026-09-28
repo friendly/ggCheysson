@@ -25,6 +25,10 @@
 #' - **pattern_spacing**: Spacing between pattern lines
 #' - **pattern_linewidth**: Width of pattern lines
 #'
+#' Patterns are stored in the same order as [cheysson_palettes]: sequential
+#' palettes from low to high (lightest hatching to solid), diverging palettes
+#' end to end with the solid fills at the extremes.
+#'
 #' @source
 #' Pattern specifications digitized from the David Rumsey Map Collection
 #'
@@ -45,7 +49,10 @@
 #'
 #' @param palette Name of palette (e.g., "1881_12") or palette type
 #'   ("sequential", "diverging", "grouped", "category").
-#' @param n Number of patterns to return. If NULL, returns all patterns.
+#' @param n Number of patterns to return. If NULL, returns all patterns. If
+#'   `n` is smaller than the palette, sequential and diverging palettes return
+#'   patterns spread over the whole palette, keeping both ends; other types
+#'   return the first `n`. If `n` is larger, patterns are recycled.
 #' @param type If palette is a type name, which palette of that type to use (default 1).
 #'
 #' @return A list of pattern specifications suitable for ggpattern
@@ -62,46 +69,11 @@
 #'
 #' @export
 cheysson_pattern <- function(palette = "1881_12", n = NULL, type = 1) {
-  # Check if palette exists directly
-  if (palette %in% names(cheysson_patterns)) {
-    note_renamed_palette(palette)
-    pal <- cheysson_patterns[[palette]]
-  } else {
-    # Check if it's a type name
-    palette_type <- tolower(palette)
-    if (palette_type %in% c("sequential", "diverging", "grouped", "category")) {
-      # Get palettes of this type
-      type_palettes <- Filter(function(x) x$type == palette_type, cheysson_patterns)
-      if (length(type_palettes) == 0) {
-        stop(sprintf("No palettes of type '%s' found", palette_type))
-      }
-      if (type > length(type_palettes)) {
-        stop(sprintf("Only %d palettes of type '%s' available", length(type_palettes), palette_type))
-      }
-      pal <- type_palettes[[type]]
-    } else {
-      palette_not_found(palette, names(cheysson_patterns))
-    }
-  }
-
-  patterns <- pal$patterns
-
-  # Return patterns
+  pal <- get_palette(palette, cheysson_patterns, type)
   if (is.null(n)) {
-    return(patterns)
+    return(pal$patterns)
   }
-
-  # If n is specified, return first n patterns
-  if (length(n) != 1 || !is.numeric(n) || n < 1) {
-    stop("`n` must be a single positive number")
-  }
-  if (n <= length(patterns)) {
-    return(patterns[1:n])
-  } else {
-    # Repeat if needed
-    rep_patterns <- rep(patterns, length.out = n)
-    return(rep_patterns)
-  }
+  select_values(pal$patterns, n, pal$type)
 }
 
 

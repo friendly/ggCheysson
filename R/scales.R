@@ -45,24 +45,18 @@ NULL
 #' @rdname scale_cheysson
 #' @export
 scale_color_cheysson <- function(palette = "1880_21", discrete = TRUE, reverse = FALSE, ...) {
-  pal_colors <- cheysson_pal(palette)
-
-  if (reverse) {
-    pal_colors <- rev(pal_colors)
-  }
+  pal <- get_palette(palette, cheysson_palettes)
 
   if (discrete) {
     ggplot2::discrete_scale("colour", "cheysson",
                            palette = function(n) {
-                             if (n <= length(pal_colors)) {
-                               pal_colors[1:n]
-                             } else {
-                               grDevices::colorRampPalette(pal_colors)(n)
-                             }
+                             select_values(pal$colors, n, pal$type,
+                                           reverse = reverse, interpolate = TRUE)
                            },
                            ...)
   } else {
-    ggplot2::scale_color_gradientn(colours = pal_colors, ...)
+    colors <- if (reverse) rev(pal$colors) else pal$colors
+    ggplot2::scale_color_gradientn(colours = colors, ...)
   }
 }
 
@@ -75,23 +69,17 @@ scale_colour_cheysson <- scale_color_cheysson
 #' @rdname scale_cheysson
 #' @export
 scale_fill_cheysson <- function(palette = "1880_21", discrete = TRUE, reverse = FALSE, ...) {
-  pal_colors <- cheysson_pal(palette)
-
-  if (reverse) {
-    pal_colors <- rev(pal_colors)
-  }
+  pal <- get_palette(palette, cheysson_palettes)
 
   if (discrete) {
     ggplot2::discrete_scale("fill", "cheysson",
                            palette = function(n) {
-                             if (n <= length(pal_colors)) {
-                               pal_colors[1:n]
-                             } else {
-                               grDevices::colorRampPalette(pal_colors)(n)
-                             }
+                             select_values(pal$colors, n, pal$type,
+                                           reverse = reverse, interpolate = TRUE)
                            },
                            ...)
   } else {
-    ggplot2::scale_fill_gradientn(colours = pal_colors, ...)
+    colors <- if (reverse) rev(pal$colors) else pal$colors
+    ggplot2::scale_fill_gradientn(colours = colors, ...)
   }
 }

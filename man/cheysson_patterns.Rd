@@ -38,6 +38,10 @@ Each pattern specification includes:
 \item \strong{pattern_spacing}: Spacing between pattern lines
 \item \strong{pattern_linewidth}: Width of pattern lines
 }
+
+Patterns are stored in the same order as \link{cheysson_palettes}: sequential
+palettes from low to high (lightest hatching to solid), diverging palettes
+end to end with the solid fills at the extremes.
 }
 \examples{
 # List available pattern palettes

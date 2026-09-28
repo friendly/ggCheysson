@@ -8,6 +8,9 @@ library(tidyverse)
 album_info <- read_csv(here("data-raw/observable/albumColors.csv"),
                         col_types = cols(RumseyListNo = "c", .default = col_guess()))
 
+# palette_order, apply_order(): data order for sequential/diverging palettes
+source(here("data-raw/palette_order.R"))
+
 # Function to extract colors from an SVG file
 extract_colors_from_svg <- function(svg_file) {
   content <- read_lines(svg_file)
@@ -61,6 +64,7 @@ for (svg_file in svg_files) {
 
     # Extract colors
     colors <- extract_colors_from_svg(svg_file)
+    colors <- apply_order(colors, palette_order$colors[[palette_name]])
 
     # Store palette with metadata
     cheysson_palettes[[palette_name]] <- list(

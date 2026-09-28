@@ -25,6 +25,15 @@
 #' - **Grouped** (10 palettes): Related colors for comparing groups
 #' - **Category** (6 palettes): Distinct colors for categorical data
 #'
+#' Palette order: sequential palettes are stored from low to high (light to
+#' dark), and diverging palettes from one extreme through the neutral middle
+#' to the other, so `reverse = TRUE` in the scales flips the direction the
+#' same way for every palette. Category and grouped palettes keep the order
+#' of RJ Andrews' swatches. (`1886_26`, typed "sequential" in the source, has
+#' two hues and no single light-to-dark order.) Some sequential palettes, such
+#' as `1881_12`, have a single color: their steps are in the hatching, see
+#' [cheysson_patterns].
+#'
 #' @source
 #' Color patterns digitized by RJ Andrews from the David Rumsey Map Collection
 #' <https://github.com/infowetrust/albumcolors>
@@ -56,8 +65,10 @@
 #'   ("sequential", "diverging", "grouped", "category"). If a type is specified,
 #'   the first palette of that type is returned.
 #' @param n Number of colors to return. If NULL, returns all colors in the palette.
-#'   If n is greater than the number of colors in the palette, colors will be
-#'   interpolated.
+#'   If `n` is smaller than the palette, sequential and diverging palettes
+#'   return colors spread over the whole palette, keeping both ends; other
+#'   types return the first `n`. If `n` is greater than the number of colors
+#'   in the palette, colors will be interpolated.
 #' @param type If palette is a type name, optionally specify which palette of
 #'   that type to use (default is 1 for the first).
 #'
@@ -80,45 +91,59 @@
 #'
 #' @export
 cheysson_pal <- function(palette = "1880_21", n = NULL, type = 1) {
-  # Check if palette exists directly
-  if (palette %in% names(cheysson_palettes)) {
-    note_renamed_palette(palette)
-    pal <- cheysson_palettes[[palette]]
-  } else {
-    # Check if it's a type name
-    palette_type <- tolower(palette)
-    if (palette_type %in% c("sequential", "diverging", "grouped", "category")) {
-      # Get palettes of this type
-      type_palettes <- Filter(function(x) x$type == palette_type, cheysson_palettes)
-      if (length(type_palettes) == 0) {
-        stop(sprintf("No palettes of type '%s' found", palette_type))
-      }
-      if (type > length(type_palettes)) {
-        stop(sprintf("Only %d palettes of type '%s' available", length(type_palettes), palette_type))
-      }
-      pal <- type_palettes[[type]]
-    } else {
-      palette_not_found(palette, names(cheysson_palettes))
-    }
-  }
-
-  colors <- pal$colors
-
-  # Return colors
+  pal <- get_palette(palette, cheysson_palettes, type)
   if (is.null(n)) {
-    return(colors)
+    return(pal$colors)
   }
+  select_values(pal$colors, n, pal$type, interpolate = TRUE)
+}
 
-  # If n is specified
+
+# Look up a palette in `palettes` (cheysson_palettes or cheysson_patterns) by
+# name, or by type name ("sequential", ...) taking the `type`-th of that type.
+# Returns the palette's list element (including its `type`), plus its `name`.
+get_palette <- function(palette, palettes, type = 1) {
+  if (palette %in% names(palettes)) {
+    note_renamed_palette(palette)
+    return(c(palettes[[palette]], name = palette))
+  }
+  palette_type <- tolower(palette)
+  if (!palette_type %in% c("sequential", "diverging", "grouped", "category")) {
+    palette_not_found(palette, names(palettes))
+  }
+  type_palettes <- Filter(function(x) x$type == palette_type, palettes)
+  if (length(type_palettes) == 0) {
+    stop(sprintf("No palettes of type '%s' found", palette_type))
+  }
+  if (type > length(type_palettes)) {
+    stop(sprintf("Only %d palettes of type '%s' available", length(type_palettes), palette_type))
+  }
+  c(type_palettes[[type]], name = names(type_palettes)[type])
+}
+
+
+# Choose `n` values from a palette's values `x`. Sequential and diverging
+# palettes are stored low -> high (see ?cheysson_palettes), so for n < length
+# the picks are spread over the whole palette, keeping both ends; category and
+# grouped palettes take the first n. For n > length, colors are interpolated
+# (`interpolate = TRUE`) and anything else is recycled.
+select_values <- function(x, n, type, reverse = FALSE, interpolate = FALSE) {
   if (length(n) != 1 || !is.numeric(n) || n < 1) {
     stop("`n` must be a single positive number")
   }
-  if (n <= length(colors)) {
-    # Return first n colors
-    return(colors[1:n])
+  if (reverse) {
+    x <- rev(x)
+  }
+  if (n > length(x)) {
+    if (interpolate) {
+      return(grDevices::colorRampPalette(x)(n))
+    }
+    return(rep(x, length.out = n))
+  }
+  if (type %in% c("sequential", "diverging")) {
+    x[round(seq(1, length(x), length.out = n))]
   } else {
-    # Interpolate colors if n > length(colors)
-    grDevices::colorRampPalette(colors)(n)
+    x[seq_len(n)]
   }
 }
 
@@ -204,23 +229,11 @@ list_cheysson_pals <- function(type = NULL) {
 #' @export
 show_palette <- function(palette = "1880_21", n = NULL, show_info = TRUE, cex = 1) {
   # Get palette information
-  if (palette %in% names(cheysson_palettes)) {
-    pal <- cheysson_palettes[[palette]]
-    pal_name <- palette
-  } else {
-    # Check if it's a type name
-    palette_type <- tolower(palette)
-    if (palette_type %in% c("sequential", "diverging", "grouped", "category")) {
-      type_palettes <- Filter(function(x) x$type == palette_type, cheysson_palettes)
-      pal <- type_palettes[[1]]
-      pal_name <- names(type_palettes)[1]
-    } else {
-      palette_not_found(palette, names(cheysson_palettes))
-    }
-  }
+  pal <- get_palette(palette, cheysson_palettes)
+  pal_name <- pal$name
 
   # Get colors
-  colors <- cheysson_pal(pal_name, n = n)
+  colors <- if (is.null(n)) pal$colors else select_values(pal$colors, n, pal$type, interpolate = TRUE)
   n_colors <- length(colors)
 
   # Save old par settings (only the ones we'll change)
