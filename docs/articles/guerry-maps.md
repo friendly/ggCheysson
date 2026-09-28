@@ -23,6 +23,7 @@ What if Guerry could have re-done his maps using Cheysson’s style?
 ## Required Packages
 
 ``` r
+
 library(ggCheysson)
 library(ggplot2)
 library(Guerry)      # Historical data on France
@@ -33,6 +34,7 @@ library(ggpattern)   # For Cheysson-style hatching patterns
 ## Loading Fonts
 
 ``` r
+
 # Load Cheysson fonts
 load_cheysson_fonts(method = "showtext")
 showtext::showtext_auto()
@@ -43,6 +45,7 @@ showtext::showtext_auto()
 ### Load and Examine Guerry’s Data
 
 ``` r
+
 # Load the dataset
 data(Guerry, package = "Guerry")
 
@@ -69,6 +72,7 @@ The `gfrance85` object is a SpatialPolygonsDataFrame. We’ll convert it
 to an sf object for modern spatial handling.
 
 ``` r
+
 # Load the map
 data(gfrance85, package = "Guerry")
 
@@ -94,6 +98,7 @@ head(france_sf[, c("Department", "Region")])
 ### Join Data with Map
 
 ``` r
+
 # Convert variables to ranks (since they're on different scales)
 guerry_ranked <- Guerry
 for (var in vars_of_interest) {
@@ -108,8 +113,8 @@ france_data <- merge(france_sf, guerry_ranked,
 # Check the join
 cat("Departments in map:", nrow(france_sf), "\n")
 #> Departments in map: 85
-cat("Departments with data:", sum(!is.na(france_data$Crime_pers)), "\n")
-#> Departments with data: 0
+cat("Departments with data:", sum(!is.na(france_data$Crime_pers_rank)), "\n")
+#> Departments with data: 85
 ```
 
 ## Creating Choropleth Maps
@@ -117,6 +122,7 @@ cat("Departments with data:", sum(!is.na(france_data$Crime_pers)), "\n")
 ### Crime Against Persons (Sequential Palette)
 
 ``` r
+
 # Map of crimes against persons
 p1 <- ggplot(france_data) +
   geom_sf(aes(fill = Crime_pers_rank), color = "black", linewidth = 0.3) +
@@ -140,6 +146,7 @@ print(p1)
 ### Property Crime (Different Sequential Palette)
 
 ``` r
+
 p2 <- ggplot(france_data) +
   geom_sf(aes(fill = Crime_prop_rank), color = "black", linewidth = 0.3) +
   scale_fill_cheysson("1895_16", discrete = FALSE,
@@ -162,6 +169,7 @@ print(p2)
 ### Literacy (Grouped Palette)
 
 ``` r
+
 # Create quintiles for discrete display
 france_data$Literacy_quint <- cut(france_data$Literacy_rank,
                                   breaks = quantile(france_data$Literacy_rank,
@@ -193,26 +201,36 @@ print(p3)
 ### Literacy with Cheysson Patterns
 
 Now let’s recreate the literacy map using Cheysson’s signature hatching
-patterns combined with colors:
+patterns. Palette `1888_27` is one of his sequential hatching scales:
+diagonal stripes that get progressively denser, ending in a solid fill.
+Mapping `pattern_spacing` as well as `pattern` reproduces that
+light-to-dark progression across the five quintiles. The palette’s
+spacings were measured on Cheysson’s small swatches, so they are scaled
+down here to suit a full-page map:
 
 ``` r
+
 # Literacy with patterns - quintessential Cheysson style
+lit_spacing <- cheysson_pattern_params(cheysson_pattern("1888_27"), "pattern_spacing")
+
 p3b <- ggplot(france_data) +
   geom_sf_pattern(
     aes(fill = Literacy_quint,
         pattern = Literacy_quint,
-        pattern_fill = Literacy_quint),
+        pattern_fill = Literacy_quint,
+        pattern_spacing = Literacy_quint),
     pattern_density = 0.3,
-    pattern_spacing = 0.02,
+    pattern_colour = NA,
     color = "black",
     linewidth = 0.4
   ) +
-  scale_fill_cheysson_pattern("1881_22", na.value = "grey90") +
-  scale_pattern_fill_cheysson("1881_22", na.value = "grey90") +
-  scale_pattern_type_cheysson("1881_22") +
+  scale_fill_cheysson_pattern("1888_27", na.value = "grey90") +
+  scale_pattern_fill_cheysson("1888_27", na.value = "grey90") +
+  scale_pattern_type_cheysson("1888_27") +
+  scale_pattern_spacing_manual(values = 0.3 * lit_spacing) +
   labs(
-    title = "Literacy Rates with Cheysson Patterns",
-    subtitle = "Combining colors and hatching patterns (quintiles)",
+    title = "Literacy Rates",
+    subtitle = "Sequential hatching, sparse to solid (quintiles)",
     caption = "Data: André-Michel Guerry (1833)"
   ) +
   theme_cheysson_map() +
@@ -222,6 +240,7 @@ p3b <- ggplot(france_data) +
   guides(
     fill = guide_legend(title = "Literacy\nQuintile"),
     pattern = guide_legend(title = "Literacy\nQuintile"),
+    pattern_spacing = guide_legend(title = "Literacy\nQuintile"),
     pattern_fill = "none"
   )
 
@@ -233,6 +252,7 @@ print(p3b)
 ### Charitable Donations (Category Palette)
 
 ``` r
+
 # Create categories
 france_data$Donations_cat <- cut(france_data$Donations_rank,
                                  breaks = quantile(france_data$Donations_rank,
@@ -267,6 +287,7 @@ The combination of colors and patterns was a hallmark of the Albums.
 Here’s the donations map in authentic Cheysson style:
 
 ``` r
+
 # Donations with varied pattern types
 p4b <- ggplot(france_data) +
   geom_sf_pattern(
@@ -282,7 +303,7 @@ p4b <- ggplot(france_data) +
   scale_pattern_fill_cheysson("1883_31", na.value = "grey90") +
   scale_pattern_type_cheysson("1883_31") +
   labs(
-    title = "Charitable Donations with Hatching Patterns",
+    title = "Charitable Donations",
     subtitle = "Authentic Cheysson-style patterns and colors (quartiles)",
     caption = "Data: André-Michel Guerry (1833)"
   ) +
@@ -304,6 +325,7 @@ print(p4b)
 ### Illegitimate Births (Sequential Palette)
 
 ``` r
+
 p5 <- ggplot(france_data) +
   geom_sf(aes(fill = Infants_rank), color = "black", linewidth = 0.3) +
   scale_fill_cheysson("1891_25", discrete = FALSE,
@@ -326,6 +348,7 @@ print(p5)
 ### Suicides (Different Sequential Palette)
 
 ``` r
+
 p6 <- ggplot(france_data) +
   geom_sf(aes(fill = Suicides_rank), color = "black", linewidth = 0.3) +
   scale_fill_cheysson("1887_22", discrete = FALSE,
@@ -350,6 +373,7 @@ print(p6)
 Create a faceted map showing multiple variables at once:
 
 ``` r
+
 # Prepare data in long format for faceting
 library(tidyr)
 library(dplyr)
@@ -395,6 +419,7 @@ print(p7)
 Let’s also examine regional patterns using discrete categories:
 
 ``` r
+
 # Map showing regions
 # Note: After merge, Region column may be duplicated as Region.x or Region.y
 # We'll use the spatial data version (Region.x) or check which exists
@@ -431,6 +456,7 @@ One of Cheysson’s most distinctive techniques was using varied hatching
 patterns to distinguish regions:
 
 ``` r
+
 # Regions with distinctive patterns - very characteristic of Cheysson
 p8b <- ggplot(france_data) +
   geom_sf_pattern(
@@ -446,7 +472,7 @@ p8b <- ggplot(france_data) +
   scale_pattern_fill_cheysson("category") +
   scale_pattern_type_cheysson("category") +
   labs(
-    title = "Regions of France with Cheysson Patterns",
+    title = "Regions of France",
     subtitle = "Distinctive hatching patterns for each region - authentic Albums style",
     caption = "Source: Guerry package"
   ) +
@@ -470,6 +496,7 @@ print(p8b)
 Compare two variables using different visual encodings:
 
 ``` r
+
 # Create categories for both variables
 france_data$Crime_cat <- cut(france_data$Crime_pers_rank,
                              breaks = 3,
@@ -539,6 +566,7 @@ The ggCheysson package includes multiple palettes suitable for
 choropleth maps:
 
 ``` r
+
 # Sequential palettes (good for continuous rankings)
 list_cheysson_pals("sequential")
 #>      name       type album plate n_colors
