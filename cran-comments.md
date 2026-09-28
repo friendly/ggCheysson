@@ -19,18 +19,16 @@ new name. Details are in NEWS.md.
 ## Test environments
 
 * local Windows 11, R 4.6.1 (2026-06-24 ucrt), `R CMD check --as-cran`
-* TODO: win-builder, R-devel and R-release
-* TODO: R-hub (GitHub Actions): linux (R-devel), macos (arm64), macos-x86_64 (Intel), windows
+* win-builder, R Under development (unstable) (2026-09-25 r90590 ucrt)
+* R-hub (GitHub Actions), R-devel (4.7.0): linux (Ubuntu 24.04), windows (Server 2022),
+  macos (macOS 15.7, x86_64 - the platform of the 1.0.1 ERROR), macos-arm64 (macOS 26.6):
+  all Status OK, vignettes re-built
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes (local)
+0 errors | 0 warnings | 1 note (win-builder; 0 notes locally)
 
-TODO: confirm against win-builder. Expected NOTEs on CRAN's incoming checks:
-
-* Days since last update: this update fixes the check ERROR described above.
-* Possibly misspelled words in DESCRIPTION: Cheysson. This is a proper name (Émile Cheysson)
-  and is spelled correctly.
+* Days since last update: 2. This update fixes the check ERROR described above.
 
 ## Reverse dependencies
 
