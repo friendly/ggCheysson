@@ -1,6 +1,6 @@
 # ggCheysson
 
-Version 1.1.0; documentation built 2026-09-17
+Version 1.1.0; documentation built 2026-09-28
 
 The `ggCheysson` package brings the graphical styles of the *Albums de
 Statistique Graphique* to R and ggplot2.
@@ -312,17 +312,23 @@ show_palette("1895_16")
 
 ``` r
 # Display multiple palettes at once
-show_palettes(c("1880_21", "1881_12", "1895_16"))
+show_palettes(c("1880_21", "1906_06", "1881_30"))
 ```
 
 ![](reference/figures/README-show-palette-multi-1.png)
 
 ``` r
-# Display four palettes in a 2x2 grid
-show_palettes(c("1880_21", "1881_12", "1895_16", "1906_06"), ncol = 2)
+# One palette of each type in a 2x2 grid: category, sequential, diverging, grouped
+show_palettes(c("1880_21", "1895_16", "1883_21", "1881_30"), ncol = 2)
 ```
 
 ![](reference/figures/README-show-palette-grid-1.png)
+
+Some palettes, such as the sequential `1881_12`, have only one color:
+Cheysson made the steps with hatching of increasing density rather than
+with shades. Their swatches here show a single color; use
+`cheysson_pattern("1881_12")` to get the full palette (see Pattern
+Support, below).
 
 ``` r
 # Display all palettes of a specific type

@@ -18,7 +18,10 @@ cheysson_pattern(palette = "1881_12", n = NULL, type = 1)
 
 - n:
 
-  Number of patterns to return. If NULL, returns all patterns.
+  Number of patterns to return. If NULL, returns all patterns. If `n` is
+  smaller than the palette, sequential and diverging palettes return
+  patterns spread over the whole palette, keeping both ends; other types
+  return the first `n`. If `n` is larger, patterns are recycled.
 
 - type:
 

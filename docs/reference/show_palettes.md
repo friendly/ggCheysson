@@ -40,6 +40,6 @@ show_palettes("sequential", ncol = 2)
 
 
 # Show specific palettes
-show_palettes(c("1880_21", "1881_12", "1895_16"))
+show_palettes(c("1880_21", "1883_21", "1895_16"))
 
 ```

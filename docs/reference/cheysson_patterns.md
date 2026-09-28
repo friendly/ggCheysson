@@ -65,6 +65,11 @@ Each pattern specification includes:
 
 - **pattern_linewidth**: Width of pattern lines
 
+Patterns are stored in the same order as
+[cheysson_palettes](https://friendly.github.io/ggCheysson/reference/cheysson_palettes.md):
+sequential palettes from low to high (lightest hatching to solid),
+diverging palettes end to end with the solid fills at the extremes.
+
 ## See also
 
 [`cheysson_pattern()`](https://friendly.github.io/ggCheysson/reference/cheysson_pattern.md),

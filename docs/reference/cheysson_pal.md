@@ -21,8 +21,10 @@ cheysson_pal(palette = "1880_21", n = NULL, type = 1)
 - n:
 
   Number of colors to return. If NULL, returns all colors in the
-  palette. If n is greater than the number of colors in the palette,
-  colors will be interpolated.
+  palette. If `n` is smaller than the palette, sequential and diverging
+  palettes return colors spread over the whole palette, keeping both
+  ends; other types return the first `n`. If `n` is greater than the
+  number of colors in the palette, colors will be interpolated.
 
 - type:
 

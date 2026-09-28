@@ -63,6 +63,16 @@ Palette types:
 
 - **Category** (6 palettes): Distinct colors for categorical data
 
+Palette order: sequential palettes are stored from low to high (light to
+dark), and diverging palettes from one extreme through the neutral
+middle to the other, so `reverse = TRUE` in the scales flips the
+direction the same way for every palette. Category and grouped palettes
+keep the order of RJ Andrews' swatches. (`1886_26`, typed "sequential"
+in the source, has two hues and no single light-to-dark order.) Some
+sequential palettes, such as `1881_12`, have a single color: their steps
+are in the hatching, see
+[cheysson_patterns](https://friendly.github.io/ggCheysson/reference/cheysson_patterns.md).
+
 ## See also
 
 [`cheysson_pal()`](https://friendly.github.io/ggCheysson/reference/cheysson_pal.md),

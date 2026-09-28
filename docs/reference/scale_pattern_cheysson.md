@@ -59,6 +59,12 @@ The scales apply multiple pattern aesthetics simultaneously:
 
 - `pattern_density`: Density of pattern lines
 
+For a sequential or diverging palette with more patterns than the data
+has levels, the scales use patterns spread over the whole palette
+(keeping both ends), not the first ones. See
+[cheysson_patterns](https://friendly.github.io/ggCheysson/reference/cheysson_patterns.md)
+for the stored order.
+
 ## Examples
 
 ``` r

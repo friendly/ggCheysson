@@ -68,7 +68,7 @@
 <img src="logo.png" class="logo" alt=""><h1 id="ggcheysson-">ggCheysson <a class="anchor" aria-label="anchor" href="#ggcheysson-"></a>
 </h1>
 </div>
-<p>Version 1.1.0; documentation built 2026-09-17</p>
+<p>Version 1.1.0; documentation built 2026-09-28</p>
 <p>The <code>ggCheysson</code> package brings the graphical styles of the <em>Albums de Statistique Graphique</em> to R and ggplot2.</p>
 <p>The <em>Albums</em> were produced by the Ministry of Public Works in France under the direction of <a href="https://en.wikipedia.org/wiki/%C3%89mile_Cheysson" class="external-link">Émile Cheysson</a> from 1879-1897. They represent the “pinnacle of the Golden Age of Statistical Graphics” (Friendly, 2008) for their innovation in visualization techniques, graphic design and beauty.</p>
 <p>The package is based on work by:</p>
@@ -335,12 +335,13 @@
 <p><img src="reference/figures/README-show-palette-1.png" alt="" width="100%"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Display multiple palettes at once</span></span>
-<span><span class="fu"><a href="reference/show_palettes.html">show_palettes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1880_21"</span>, <span class="st">"1881_12"</span>, <span class="st">"1895_16"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/show_palettes.html">show_palettes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1880_21"</span>, <span class="st">"1906_06"</span>, <span class="st">"1881_30"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-show-palette-multi-1.png" alt="" width="100%"></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Display four palettes in a 2x2 grid</span></span>
-<span><span class="fu"><a href="reference/show_palettes.html">show_palettes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1880_21"</span>, <span class="st">"1881_12"</span>, <span class="st">"1895_16"</span>, <span class="st">"1906_06"</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># One palette of each type in a 2x2 grid: category, sequential, diverging, grouped</span></span>
+<span><span class="fu"><a href="reference/show_palettes.html">show_palettes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1880_21"</span>, <span class="st">"1895_16"</span>, <span class="st">"1883_21"</span>, <span class="st">"1881_30"</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-show-palette-grid-1.png" alt="" width="100%"></p>
+<p>Some palettes, such as the sequential <code>1881_12</code>, have only one color: Cheysson made the steps with hatching of increasing density rather than with shades. Their swatches here show a single color; use <code>cheysson_pattern("1881_12")</code> to get the full palette (see Pattern Support, below).</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Display all palettes of a specific type</span></span>
 <span><span class="fu"><a href="reference/show_palettes.html">show_palettes</a></span><span class="op">(</span><span class="st">"category"</span><span class="op">)</span></span></code></pre></div>

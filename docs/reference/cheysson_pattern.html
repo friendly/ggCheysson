@@ -56,7 +56,10 @@
 
 
 <dt id="arg-n">n<a class="anchor" aria-label="anchor" href="#arg-n"></a></dt>
-<dd><p>Number of patterns to return. If NULL, returns all patterns.</p></dd>
+<dd><p>Number of patterns to return. If NULL, returns all patterns. If
+<code>n</code> is smaller than the palette, sequential and diverging palettes return
+patterns spread over the whole palette, keeping both ends; other types
+return the first <code>n</code>. If <code>n</code> is larger, patterns are recycled.</p></dd>
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>

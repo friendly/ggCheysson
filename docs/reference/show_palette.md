@@ -44,7 +44,7 @@ show_palette("1880_21")
 
 
 # Display palette without metadata
-show_palette("1881_12", show_info = FALSE)
+show_palette("1881_30", show_info = FALSE)
 
 
 # Display 10 interpolated colors
