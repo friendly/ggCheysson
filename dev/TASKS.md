@@ -4,6 +4,19 @@ Started 2026-09-14. Completed tasks from the run-up to the first CRAN release (1
 `theme_cheysson()` title-size fix, the CRAN (re)submission checklist, and the Git/Dropbox
 corruption incident log - are archived in [`dev/TASKS-v1.0.1.md`](TASKS-v1.0.1.md).
 
+## Handoff (2026-09-27 evening, laptop -> desktop) - resume here
+
+- First: `git fetch origin` and check `git log origin/master` - master is at `c158237` (or later).
+  This laptop's `.git` had lagged behind Dropbox's synced files again; the desktop's may too.
+- Done today on the laptop (all pushed): macOS segfault fixed (`ragg_png`) and confirmed on the
+  Intel runner, diag workflow removed; `theme_cheysson_map()` text now sized at true scale with
+  `fig.showtext = TRUE` (sizes left as-is for now - user's call); plain Guerry-style map titles;
+  Donations pattern map fixed (solid extremes, hatched middle); pkgdown site rebuilt.
+- Next candidates for 1.1.0 (see "Toward a 1.1.0 CRAN release"): decide on an `order =`
+  argument for the pattern scales / audit other palettes' stored order; migration aid for the
+  palette rename; the "Regions of France" pattern map shows no hatching; `cran-comments.md`;
+  NEWS.md release date; pre-submission checks (R-hub only then - not during active development).
+
 ## Status (2026-09-27)
 
 - **CRAN**: 1.0.1 accepted, published 2026-09-26 (<https://CRAN.R-project.org/package=ggCheysson>).
@@ -37,7 +50,7 @@ generic ggpattern-on-Intel-Mac problem. Unverified hypothesis: an interaction be
 and something specific to our vignettes - most likely `showtext::showtext_auto()`'s device hooks
 (our custom fonts), or the default bitmap device knitr gets there (Quartz `png()`).
 
-**Progress 2026-09-27 (handoff - resume here):**
+**Progress 2026-09-27 (desktop, then laptop):**
 - **Reproduced** with the temporary workflow `.github/workflows/macos-diag.yaml` (scripts in
   `.github/diag/`; delete both when done) on GitHub's `macos-15-intel` runner (R 4.6.1, x86_64):
   both the 1.0.1 vignette (with CRAN's 1.0.1 package) and master's `guerry-maps.Rmd` segfault at
