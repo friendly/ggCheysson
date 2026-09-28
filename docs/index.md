@@ -51,7 +51,6 @@ by hand.
 Install the development version from GitHub or R-universe:
 
 ``` r
-
 # install.packages("remotes")
 remotes::install_github("friendly/ggCheysson")
 
@@ -64,7 +63,6 @@ install.packages("ggCheysson", repos = c("https://friendly.r-universe.dev"))
 For full functionality, install these packages:
 
 ``` r
-
 install.packages(c("ggpattern", "systemfonts"))
 ```
 
@@ -145,7 +143,6 @@ Here are a few examples to get you started.
 Use the color palette of the 1881 Album, plate 4
 
 ``` r
-
 library(ggplot2)
 library(ggCheysson)
 
@@ -161,7 +158,6 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
 ### With Fonts and Theme
 
 ``` r
-
 # Load Cheysson fonts (once per session)
 load_cheysson_fonts(method = "showtext")
 # Enable showtext for rendering
@@ -193,14 +189,12 @@ same rate as the rest of the theme, rather than reading undersized as
 `base_size` grows:
 
 ``` r
-
 p1 + theme_cheysson(base_size = 14)
 ```
 
 ![](reference/figures/README-base-size-14-1.png)
 
 ``` r
-
 p1 + theme_cheysson(base_size = 16)
 ```
 
@@ -209,7 +203,6 @@ p1 + theme_cheysson(base_size = 16)
 ### Complete Cheysson Aesthetic (Colors + Patterns + Fonts)
 
 ``` r
-
 library(ggpattern)
 
 data <- data.frame(
@@ -255,7 +248,6 @@ number it was extracted from, and its hex color codes.
 Click to show/hide the list of all palettes
 
 ``` r
-
 library(ggCheysson)
 
 # List all palettes
@@ -300,7 +292,6 @@ list_cheysson_pals("sequential")
 ```
 
 ``` r
-
 # View palette colors
 cheysson_pal("1880_21")
 #> [1] "#d9636c" "#869e80" "#dec367" "#85aab1" "#aea9a4" "#ed8238" "#ab90a4"
@@ -313,7 +304,6 @@ Use
 to display a palette with color swatches and hex codes:
 
 ``` r
-
 # Display a single palette with metadata
 show_palette("1895_16")
 ```
@@ -321,7 +311,6 @@ show_palette("1895_16")
 ![](reference/figures/README-show-palette-1.png)
 
 ``` r
-
 # Display multiple palettes at once
 show_palettes(c("1880_21", "1881_12", "1895_16"))
 ```
@@ -329,7 +318,6 @@ show_palettes(c("1880_21", "1881_12", "1895_16"))
 ![](reference/figures/README-show-palette-multi-1.png)
 
 ``` r
-
 # Display four palettes in a 2x2 grid
 show_palettes(c("1880_21", "1881_12", "1895_16", "1906_06"), ncol = 2)
 ```
@@ -337,7 +325,6 @@ show_palettes(c("1880_21", "1881_12", "1895_16", "1906_06"), ncol = 2)
 ![](reference/figures/README-show-palette-grid-1.png)
 
 ``` r
-
 # Display all palettes of a specific type
 show_palettes("category")
 ```
@@ -356,7 +343,6 @@ pairs colors with historically accurate patterns (solid fills, stripes,
 crosshatching):
 
 ``` r
-
 library(ggpattern)
 
 # List available pattern palettes
@@ -374,7 +360,6 @@ patterns <- cheysson_pattern("1886_24")
 ```
 
 ``` r
-
 # Display the palette's patterns as swatches
 n <- length(patterns)
 ggplot(data.frame(i = factor(seq_len(n))), aes(i, 1, fill = i)) +
@@ -396,7 +381,6 @@ Use the pattern scales directly in a plot, alongside the matching fill
 scale:
 
 ``` r
-
 data <- data.frame(category = LETTERS[1:4], value = c(15, 23, 18, 20))
 
 ggplot(data, aes(category, value, fill = category)) +
@@ -440,7 +424,6 @@ sans capitals](reference/figures/fonts1.png)
 To use these:
 
 ``` r
-
 # Load fonts
 load_cheysson_fonts(method = "showtext")
 showtext::showtext_auto()
@@ -567,7 +550,6 @@ GPL (\>= 3)
 To cite `ggCheysson`, please use:
 
 ``` r
-
 citation("ggCheysson")
 #> To cite package 'ggCheysson' in publications use:
 #> 
