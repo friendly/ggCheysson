@@ -108,7 +108,20 @@ wrapper, color+pattern combination palettes, gallery vignette) to 1.2.0, once th
 feedback on the pattern-system design. The combined scale wrapper in particular is a public API
 that's hard to change once on CRAN.
 
-- [ ] Fix the macOS x86_64 segfault (above).
+- [x] Fix the macOS x86_64 segfault (above) - `ragg_png` in both vignettes, confirmed on Intel.
+- [x] **Donations pattern map (guerry-maps) was backwards** - fixed 2026-09-27 in the vignette
+  only: `1883_31` is stored in RJ Andrews' swatch order (hatched blue, solid blue, solid orange,
+  hatched orange), which is faithful to his image but not low -> high, so mapping it to the
+  quartiles put the hatching on the *extremes*. The vignette now reorders the specs
+  (`cheysson_pattern("1883_31")[c(2, 1, 4, 3)]`: solid at the extremes, hatched in the middle,
+  as in Cheysson) and uses `scale_fill_manual()` / `scale_pattern_fill_manual()` /
+  `scale_pattern_manual()`. Also fixed there: legend keys drew grey stripes (the `pattern_fill`
+  guide was `"none"`) and stripes had dark outlines (`pattern_colour = NA` now).
+  - [ ] **Underlying issue, still open**: the pattern scales only offer `reverse`, and other
+    palettes may also be stored in swatch order rather than a meaningful data order (check the
+    diverging and grouped ones against the Albums plates). Options: an `order =` argument on the
+    five `scale_*_cheysson*()` pattern scales (small, additive API), and/or documenting each
+    palette's intended order. Decide whether this goes in 1.1.0.
 - [ ] **Migration aid for the palette rename.** A 1.0.1 user's old palette name now either:
   - errors with `Palette '1883_06' not found. Available palettes: ...` (18 of 20 old names) -
     improve this to detect an old name via `cheysson_labels$old_name` and suggest
