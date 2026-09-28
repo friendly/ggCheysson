@@ -233,7 +233,7 @@ p3b <- ggplot(france_data) +
     fill = guide_legend(title = "Literacy\nQuintile"),
     pattern = guide_legend(title = "Literacy\nQuintile"),
     pattern_spacing = guide_legend(title = "Literacy\nQuintile"),
-    pattern_fill = "none"
+    pattern_fill = guide_legend(title = "Literacy\nQuintile")
   )
 
 print(p3b)
