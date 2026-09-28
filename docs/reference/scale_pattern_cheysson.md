@@ -9,6 +9,8 @@ both colors and hatching patterns.
 ``` r
 scale_pattern_fill_cheysson(palette = "1881_12", reverse = FALSE, ...)
 
+scale_pattern_fill2_cheysson(palette = "1881_12", reverse = FALSE, ...)
+
 scale_pattern_type_cheysson(palette = "1881_12", reverse = FALSE, ...)
 
 scale_pattern_angle_cheysson(palette = "1881_12", reverse = FALSE, ...)
@@ -34,8 +36,9 @@ scale_pattern_density_cheysson(palette = "1881_12", reverse = FALSE, ...)
 ## Value
 
 A ggplot2 discrete scale object for the specified pattern aesthetic
-(pattern_fill, pattern, pattern_angle, or pattern_density). These scales
-apply the historically accurate Cheysson patterns to ggpattern geoms.
+(pattern_fill, pattern_fill2, pattern, pattern_angle, or
+pattern_density). These scales apply the historically accurate Cheysson
+patterns to ggpattern geoms.
 
 ## Details
 
@@ -54,6 +57,10 @@ The scales apply multiple pattern aesthetics simultaneously:
   aesthetic
 
 - `pattern_fill`: Color of pattern lines
+
+- `pattern_fill2`: Color of a crosshatch's second set of lines (differs
+  from `pattern_fill` only in the two-color crosshatches of `1883_30`
+  and `1886_17`)
 
 - `pattern_angle`: Angle of stripes
 

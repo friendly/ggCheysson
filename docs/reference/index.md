@@ -38,6 +38,7 @@ hatching and fill styles used in Cheysson’s maps and diagrams.
 - [`scale_fill_cheysson_pattern()`](https://friendly.github.io/ggCheysson/reference/scale_fill_cheysson_pattern.md)
   : Apply Cheysson patterns to fill aesthetic
 - [`scale_pattern_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
+  [`scale_pattern_fill2_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
   [`scale_pattern_type_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
   [`scale_pattern_angle_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
   [`scale_pattern_density_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)

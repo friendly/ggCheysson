@@ -444,10 +444,11 @@ print(p8)
 
 One of Cheysson’s most distinctive techniques was using varied hatching
 patterns to distinguish regions. Most category palettes are solid colors
-only, so we pick one that has hatching: `1883_13` has red and blue
-stripes, a red crosshatch, black stripes and solid black - one for each
-of the five regions. Mapping `pattern_angle` as well draws the stripes
-at the angles used in the original plate.
+only, so we pick one that has hatching: `1883_30` has red and blue
+stripes, a red-and-blue crosshatch, black stripes and solid black - one
+for each of the five regions. Mapping `pattern_angle` as well draws the
+stripes at the angles used in the original plate, and `pattern_fill2`
+gives the crosshatch its second color.
 
 ``` r
 # Regions with distinctive patterns - very characteristic of Cheysson
@@ -456,6 +457,7 @@ p8b <- ggplot(france_data) +
     aes(fill = .data[[region_col]],
         pattern = .data[[region_col]],
         pattern_fill = .data[[region_col]],
+        pattern_fill2 = .data[[region_col]],
         pattern_angle = .data[[region_col]]),
     pattern_colour = NA,
     pattern_density = 0.3,
@@ -463,15 +465,17 @@ p8b <- ggplot(france_data) +
     color = "black",
     linewidth = 0.5
   ) +
-  scale_fill_cheysson_pattern("1883_13") +
-  scale_pattern_fill_cheysson("1883_13") +
-  scale_pattern_type_cheysson("1883_13") +
-  scale_pattern_angle_cheysson("1883_13") +
+  scale_fill_cheysson_pattern("1883_30") +
+  scale_pattern_fill_cheysson("1883_30") +
+  scale_pattern_fill2_cheysson("1883_30") +
+  scale_pattern_type_cheysson("1883_30") +
+  scale_pattern_angle_cheysson("1883_30") +
   labs(
     title = "Regions of France",
     subtitle = "Distinctive hatching patterns for each region - authentic Albums style",
     caption = "Source: Guerry package",
-    fill = "Region", pattern = "Region", pattern_fill = "Region", pattern_angle = "Region"
+    fill = "Region", pattern = "Region", pattern_fill = "Region",
+    pattern_fill2 = "Region", pattern_angle = "Region"
   ) +
   theme_cheysson_map() +
   theme(
@@ -587,7 +591,7 @@ list_cheysson_pals("category")
 #>      name     type album plate n_colors
 #> 1 1880_21 category  1880    21        7
 #> 2 1881_22 category  1881    22        4
-#> 3 1883_13 category  1883    13        4
+#> 3 1883_30 category  1883    30        4
 #> 4 1886_28 category  1886    28        3
 #> 5 1906_06 category  1906     6        6
 #> 6 1906_50 category  1906    50        4

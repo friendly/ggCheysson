@@ -32,8 +32,8 @@ list_cheysson_patterns()
 #> 5  1881_22   category  1881    22          4
 #> 6  1881_30    grouped  1881    30          8
 #> 7  1882_18    grouped  1882    18          4
-#> 8  1883_13   category  1883    13          5
-#> 9  1883_21  diverging  1883    21          7
+#> 8  1883_21  diverging  1883    21          7
+#> 9  1883_30   category  1883    30          5
 #> 10 1883_31  diverging  1883    31          4
 #> 11 1886_11    grouped  1886    11          8
 #> 12 1886_17    grouped  1886    17          4

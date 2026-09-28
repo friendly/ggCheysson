@@ -212,22 +212,24 @@ data <- data.frame(
 
 # Pull the palette's pattern specs directly, so pattern type and hatch
 # color follow the actual data rather than a single fixed pattern
-patterns <- cheysson_pattern("1883_13")
+patterns <- cheysson_pattern("1883_30")
 
 ggplot(data, aes(category, value, fill = category)) +
   geom_col_pattern(
     aes(
       pattern = category,
       pattern_fill = category,
+      pattern_fill2 = category,
       pattern_angle = category
     ),
     pattern_density = 0.35,
     color = "black"
   ) +
-  scale_fill_cheysson_pattern("1883_13") +
+  scale_fill_cheysson_pattern("1883_30") +
   scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")) +
   scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")) +
-  scale_pattern_angle_cheysson("1883_13") +
+  scale_pattern_fill2_cheysson("1883_30") +
+  scale_pattern_angle_cheysson("1883_30") +
   labs(
     title = "Statistical Comparison",
     x = "Category",
@@ -260,8 +262,8 @@ list_cheysson_pals()
 #> 5  1881_22   category  1881    22        4
 #> 6  1881_30    grouped  1881    30        5
 #> 7  1882_18    grouped  1882    18        2
-#> 8  1883_13   category  1883    13        4
-#> 9  1883_21  diverging  1883    21        3
+#> 8  1883_21  diverging  1883    21        3
+#> 9  1883_30   category  1883    30        4
 #> 10 1883_31  diverging  1883    31        2
 #> 11 1886_11    grouped  1886    11        4
 #> 12 1886_17    grouped  1886    17        3
@@ -625,6 +627,7 @@ hatching and fill styles used in Cheysson’s maps and diagrams.
 - [`scale_fill_cheysson_pattern()`](https://friendly.github.io/ggCheysson/reference/scale_fill_cheysson_pattern.md)
   : Apply Cheysson patterns to fill aesthetic
 - [`scale_pattern_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
+  [`scale_pattern_fill2_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
   [`scale_pattern_type_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
   [`scale_pattern_angle_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
   [`scale_pattern_density_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
