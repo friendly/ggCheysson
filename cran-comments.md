@@ -5,9 +5,9 @@ This update fixes the ERROR in the CRAN checks of 1.0.1 on `r-release-macos-x86_
 
 Re-building `guerry-maps.Rmd` segfaulted ("memory not mapped", in grid's `.setMask()` under
 `pushViewport()`), and the R process that built `getting-started.Rmd` also segfaulted after
-finishing. I reproduced this on GitHub's Intel macOS runner and narrowed it down to the
+finishing. (Reproduced this on GitHub's Intel macOS runner and narrowed down to the
 Quartz `png()` device drawing the grid masks that 'ggpattern' uses for pattern fills at >= 96
-dpi; the same plots render fine with 'ragg'. Both vignettes now use
+dpi; the same plots render fine with 'ragg'.) Both vignettes now use
 `dev = "ragg_png"` when 'ragg' (in Suggests) is available, and fall back to `png` otherwise. Both vignettes then build and exit cleanly on Intel and arm64 macOS.
 
 The update also fixes several bugs in the package's pattern scales (e.g.
