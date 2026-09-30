@@ -21,8 +21,7 @@ corruption incident log - are archived in [`dev/TASKS-v1.0.1.md`](TASKS-v1.0.1.m
   - `cran-comments.md` drafted; win-builder (1 NOTE, days since update) and R-hub (4 platforms
     incl. Intel macOS, all OK) were run **before** the wrapper commits.
 - **Next**: re-run win-builder + R-hub on current master and update `cran-comments.md`;
-  `urlchecker::url_check()`, `spelling::spell_check_package()`; NEWS.md: release date + move a
-  short breaking-change summary to the top; then submit 1.1.0. Deferred to 1.2.0: `1891_25`'s
+  `urlchecker::url_check()`, `spelling::spell_check_package()`; then submit 1.1.0. Deferred to 1.2.0: `1891_25`'s
   white-dot fills; feedback from ggpattern's maintainer on the pattern API.
 
 ## Status (2026-09-27)
@@ -264,8 +263,9 @@ two). No CRAN deadline applies (package too new). See the entry under "New devel
     means advent day 6 (checked 2026-09-27 against `cheysson_labels`). Only `"1906_06"` still
     means the same palette. At minimum, call out `1880_07` explicitly in NEWS.md; consider a
     once-per-session message when `"1880_07"` is used.
-- [ ] NEWS.md: set the release date; move the "Breaking change" note to the top as a short
-  summary with a pointer to `cheysson_name()`.
+- [x] NEWS.md: 2026-09-30 regrouped into Breaking changes / New features / Bug fixes / Other
+  (breaking items first; heading levels fixed so `news()` parses all versions). No release
+  date in NEWS.md (user: one more thing to maintain).
 - [ ] Usual pre-submission checks: `R CMD check --as-cran`, win-builder (devel + release),
   R-hub incl. Intel macOS, `urlchecker::url_check()`, `spelling::spell_check_package()`,
   update `cran-comments.md` (now an update, not a new submission; no reverse dependencies).
