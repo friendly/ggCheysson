@@ -2,36 +2,19 @@
 
 ## ggCheysson 1.1.0
 
-- New (experimental)
-  [`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
-  applies a whole color-and-pattern palette - fill, hatch type, line
-  colors and angle - with one `+`, in place of four or five separate
-  `scale_*_cheysson()` calls; `aes_cheysson(x)` maps a variable to all
-  of those aesthetics. See the new vignette “Combining Colors and
-  Patterns”. The individual scales remain.
+### Breaking changes
 
-- Missing values in a mapped pattern aesthetic no longer make ggpattern
-  fail: the pattern scales now give missing data no hatching
-  (`pattern = "none"`) by default.
-
-- The help topic for
-  [`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md)/[`scale_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md)
-  is now
-  [`?scale_color_cheysson`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md)
-  (the name `scale_cheysson` belongs to the new function).
-
-- **Breaking change**: fixed a palette-naming collision bug. Palette
-  names were built from `Album + Qty` (e.g. `"1880_07"`), but `Qty` is
-  not a unique plate identifier - it’s a colors/pattern-element count
-  that happened to repeat across genuinely different plates. 4 such
-  collisions silently overwrote 5 of the original 25 palettes during
-  data extraction. Names are now built from the real, unique plate
-  identifier (`RumseyListNo`’s decimal suffix) instead: 19 of the 20
-  previously-shipped palettes have a new name, and all 5
-  previously-missing palettes are now included -
+- Fixed a palette-naming collision bug. Palette names were built from
+  `Album + Qty` (e.g. `"1880_07"`), but `Qty` is not a unique plate
+  identifier - it’s a colors/pattern-element count that happened to
+  repeat across genuinely different plates. 4 such collisions silently
+  overwrote 5 of the original 25 palettes during data extraction. Names
+  are now built from the real, unique plate identifier (`RumseyListNo`’s
+  decimal suffix) instead: 19 of the 20 previously-shipped palettes have
+  a new name, and all 5 previously-missing palettes are now included -
   `cheysson_palettes`/`cheysson_patterns` now have **25** palettes (was
   20), with 134 pattern specifications (was 83). See the new
-  `cheysson_labels` dataset (below) to map an old name to its new one
+  `cheysson_labels` dataset (below) to map an old name to its new one.
 
 - Migration aids for the rename: an old (1.0.1) palette name that no
   longer exists now errors with the palette’s new name, e.g. `"1883_06"`
@@ -55,14 +38,17 @@
   `scale_*_cheysson()` scales now pick elements spread over the whole
   palette, keeping both ends, instead of the first `n` - which could
   drop one end of a diverging palette entirely (e.g. `1883_21` with 5
-  classes)
+  classes).
 
-- The 1883 category palette of Advent day 22 is named `1883_30`: the
-  source data’s Rumsey number for it (`12512.013`) was a typo for
-  `12514.030`, the 1883 album’s plate 30, as checked against the
-  original plate. `cheysson_labels` keeps RJ Andrews’ and Tom Shanley’s
-  labels for it (`Dec.22-1881.13`, `category12512013`), which were built
-  from the bad number.
+### New features
+
+- New (experimental)
+  [`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+  applies a whole color-and-pattern palette - fill, hatch type, line
+  colors and angle - with one `+`, in place of four or five separate
+  `scale_*_cheysson()` calls; `aes_cheysson(x)` maps a variable to all
+  of those aesthetics. See the new vignette “Combining Colors and
+  Patterns”. The individual scales remain.
 
 - Two-color crosshatches: the crosshatches in `1883_30` and `1886_17`
   draw their two sets of lines in different colors (red and blue; orange
@@ -70,31 +56,13 @@
   `cheysson_pattern_params(param = "pattern_fill2")`, and applied by the
   new
   [`scale_pattern_fill2_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md);
-  map ggpattern’s `pattern_fill2` aesthetic to use them
-
-- Fixed 15 missing pattern elements across 6 palettes (`1882_04`,
-  `1883_07`, `1886_04`, `1886_07`, `1887_06`, `1900_06`, in their old
-  names): an SVG-parsing bug silently dropped hatch-line patterns whose
-  coordinates relied on SVG’s implicit default of 0 for an omitted
-  `x1`/`y1`/`x2`/`y2` attribute
-
-- Fixed two `scale_pattern_*_cheysson()` bugs:
-  [`scale_pattern_type_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
-  targeted the wrong ggpattern aesthetic (`pattern_type` instead of
-  `pattern`) and so never actually varied the rendered pattern shape by
-  category;
-  [`scale_pattern_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
-  read the wrong parameter (`fill` instead of `pattern_fill`) and always
-  returned `"transparent"` regardless of palette
+  map ggpattern’s `pattern_fill2` aesthetic to use them.
 
 - Added `cheysson_labels`, a new dataset mapping every palette’s current
   name to its previous (pre-fix) name, RJ Andrews’ original
   Advent-calendar label, Tom Shanley’s Observable notebook ID, and the
   underlying David Rumsey catalog number - useful for looking up a
-  palette by whichever naming scheme you encountered it in
-
-- Added real (rendered) pattern examples to the README’s Pattern Support
-  section, which previously had none
+  palette by whichever naming scheme you encountered it in.
 
 - Added
   [`cheysson_name()`](https://friendly.github.io/ggCheysson/reference/cheysson_name.md),
@@ -105,7 +73,42 @@
   `scale_color_cheysson(cheysson_name("Dec.01-1883.21"))`. When a label
   is ambiguous (only possible via the old naming scheme, which had 4
   real collisions), it warns and lists every match; pass `advent_day` to
-  disambiguate without a warning, or to assert a specific palette
+  disambiguate without a warning, or to assert a specific palette.
+
+### Bug fixes
+
+- Vignettes now render figures with `ragg`. This fixes a segfault on
+  CRAN’s Intel macOS check machines, where the Quartz
+  [`png()`](https://rdrr.io/r/grDevices/png.html) device crashes drawing
+  ggpattern’s masks. Also, set `fig.showtext = TRUE`, so showtext text
+  is drawn at the device’s real dpi and figures look the same in the
+  package vignettes and on the pkgdown site.
+
+- Missing values in a mapped pattern aesthetic no longer make ggpattern
+  fail: the pattern scales now give missing data no hatching
+  (`pattern = "none"`) by default.
+
+- The 1883 category palette of Advent day 22 is named `1883_30`: the
+  source data’s Rumsey number for it (`12512.013`) was a typo for
+  `12514.030`, the 1883 album’s plate 30, as checked against the
+  original plate. `cheysson_labels` keeps RJ Andrews’ and Tom Shanley’s
+  labels for it (`Dec.22-1881.13`, `category12512013`), which were built
+  from the bad number.
+
+- Fixed 15 missing pattern elements across 6 palettes (`1882_04`,
+  `1883_07`, `1886_04`, `1886_07`, `1887_06`, `1900_06`, in their old
+  names): an SVG-parsing bug silently dropped hatch-line patterns whose
+  coordinates relied on SVG’s implicit default of 0 for an omitted
+  `x1`/`y1`/`x2`/`y2` attribute.
+
+- Fixed two `scale_pattern_*_cheysson()` bugs:
+  [`scale_pattern_type_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
+  targeted the wrong ggpattern aesthetic (`pattern_type` instead of
+  `pattern`) and so never actually varied the rendered pattern shape by
+  category;
+  [`scale_pattern_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
+  read the wrong parameter (`fill` instead of `pattern_fill`) and always
+  returned `"transparent"` regardless of palette.
 
 - Fixed
   [`theme_cheysson()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson.md)’s/[`theme_cheysson_map()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson_map.md)’s
@@ -114,7 +117,18 @@
   previously missed for the plot title itself. The correction is now
   generalized
   ([`cheysson_font_size_adjust()`](https://friendly.github.io/ggCheysson/reference/cheysson_font_size_adjust.md))
-  to all four Cheysson display fonts instead of hardcoded to one
+  to all four Cheysson display fonts instead of hardcoded to one.
+
+### Other changes
+
+- The help topic for
+  [`scale_color_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md)/[`scale_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md)
+  is now
+  [`?scale_color_cheysson`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md)
+  (the name `scale_cheysson` belongs to the new function).
+
+- Added real (rendered) pattern examples to the README’s Pattern Support
+  section, which previously had none.
 
 - **[`theme_cheysson_map()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson_map.md)
   text sizing redesigned**: `plot.title`, `plot.subtitle`,
@@ -129,14 +143,7 @@
   calibrated at true scale (a ~40-character title just fits an 8in-wide
   figure), and titles are now centered on the whole plot rather than the
   panel, so a side legend no longer pushes a long title off the left
-  edge
-
-- Vignettes now render figures with `ragg` (fixes a segfault on CRAN’s
-  Intel macOS check machines, where the Quartz
-  [`png()`](https://rdrr.io/r/grDevices/png.html) device crashes drawing
-  ggpattern’s masks) and set `fig.showtext = TRUE`, so showtext text is
-  drawn at the device’s real dpi and figures look the same in the
-  package vignettes and on the pkgdown site
+  edge.
 
 ## ggCheysson 1.0.1
 
