@@ -20,8 +20,8 @@ corruption incident log - are archived in [`dev/TASKS-v1.0.1.md`](TASKS-v1.0.1.m
     scales). NA data in pattern scales no longer crashes ggpattern.
   - `cran-comments.md` drafted; win-builder (1 NOTE, days since update) and R-hub (4 platforms
     incl. Intel macOS, all OK) were run **before** the wrapper commits.
-- **Next**: re-run win-builder + R-hub on current master and update `cran-comments.md`;
-  `urlchecker::url_check()`, `spelling::spell_check_package()`; then submit 1.1.0. Deferred to 1.2.0: `1891_25`'s
+- 2026-09-30: pre-submission checks done (see "Toward a 1.1.0 CRAN release"). **Next**: submit
+  1.1.0; after acceptance, tag `v1.1.0` + GitHub release. Deferred to 1.2.0: `1891_25`'s
   white-dot fills; feedback from ggpattern's maintainer on the pattern API.
 
 ## Status (2026-09-27)
@@ -266,9 +266,14 @@ two). No CRAN deadline applies (package too new). See the entry under "New devel
 - [x] NEWS.md: 2026-09-30 regrouped into Breaking changes / New features / Bug fixes / Other
   (breaking items first; heading levels fixed so `news()` parses all versions). No release
   date in NEWS.md (user: one more thing to maintain).
-- [ ] Usual pre-submission checks: `R CMD check --as-cran`, win-builder (devel + release),
+- [x] Usual pre-submission checks: `R CMD check --as-cran`, win-builder (devel + release),
   R-hub incl. Intel macOS, `urlchecker::url_check()`, `spelling::spell_check_package()`,
   update `cran-comments.md` (now an update, not a new submission; no reverse dependencies).
+  - Done 2026-09-28/30: local `--as-cran` 0/0/0; win-builder on current code: 1 NOTE (days
+    since last update: 4), which also covers CRAN's URL check; R-hub (4 platforms incl.
+    Intel macOS, all OK) ran on the commit before the `scale_cheysson()` addition - user
+    chose not to re-run; spelling clean after `spelling::update_wordlist()` (26 words, all
+    correct or intentional, incl. "grey"); `cran-comments.md` updated, 1.1.0 NEWS appended.
 - [ ] After acceptance: tag `v1.1.0` + GitHub release from NEWS.md, as for `v1.0.1`.
 
 ## Other loose ends
