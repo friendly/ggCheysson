@@ -2,6 +2,8 @@
 
 ## ggCheysson 1.1.0
 
+CRAN release: 2026-10-01
+
 ### Breaking changes
 
 - Fixed a palette-naming collision bug. Palette names were built from

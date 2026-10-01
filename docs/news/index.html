@@ -38,7 +38,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.1.0" id="ggcheysson-110">ggCheysson 1.1.0<a class="anchor" aria-label="anchor" href="#ggcheysson-110"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.1.0" id="ggcheysson-110">ggCheysson 1.1.0<a class="anchor" aria-label="anchor" href="#ggcheysson-110"></a></h2><p class="text-muted">CRAN release: 2026-10-01</p>
 <div class="section level3">
 <h3 id="breaking-changes-1-1-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-1-1-0"></a></h3>
 <ul><li><p>Fixed a palette-naming collision bug. Palette names were built from <code>Album + Qty</code> (e.g. <code>"1880_07"</code>), but <code>Qty</code> is not a unique plate identifier - it’s a colors/pattern-element count that happened to repeat across genuinely different plates. 4 such collisions silently overwrote 5 of the original 25 palettes during data extraction. Names are now built from the real, unique plate identifier (<code>RumseyListNo</code>’s decimal suffix) instead: 19 of the 20 previously-shipped palettes have a new name, and all 5 previously-missing palettes are now included - <code>cheysson_palettes</code>/<code>cheysson_patterns</code> now have <strong>25</strong> palettes (was 20), with 134 pattern specifications (was 83). See the new <code>cheysson_labels</code> dataset (below) to map an old name to its new one.</p></li>
