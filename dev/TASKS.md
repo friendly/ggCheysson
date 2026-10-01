@@ -832,9 +832,51 @@ two). No CRAN deadline applies (package too new). See the entry under "New devel
     `aesthetics =` subset; what's not included. All chunks `eval` only if ggpattern is installed.
     `R CMD check` 0/0/0, all figures checked.
 
-- [ ] Should get some feedback from the maintainer of `ggpattern` (Trevor Davis) regarding the
+- [x] Should get some feedback from the maintainer of `ggpattern` (Trevor Davis) regarding the
   design of our pattern system. But how to raise an issue that gives examples and refers to the `colorpat`
   branch?
+  - 2026-10-01: asked in <https://github.com/trevorld/ggpattern/issues/154> (draft in
+    `dev/ggpattern-issue.md`). Trevor's reply: (1) define our own ggpattern *pattern* that hard-codes
+    several attributes at once (<https://trevorldavis.com/R/ggpattern/dev/articles/developing-patterns.html>;
+    model: gridpattern's `hatch` pattern, <https://trevorldavis.com/R/gridpattern/dev/articles/hatching.html>,
+    which looks up a named spec - lines, dots, solid - from `pattern_type`); (2) maybe a
+    `geom_cheysson()` taking the data and a `geom` argument, setting up the ggpattern geom and scales.
+
+- [ ] **1.2.0: a custom `cheysson` ggpattern pattern** (Trevor's idea 1). Proof of concept works:
+  `dev/custom-pattern/poc_custom_pattern.R` (+ its two PNGs). ~20-line geometry pattern registered via
+  `options(ggpattern_geometry_funcs = list(cheysson = ...))`; `pattern_type` carries a swatch name
+  `"<palette>:<element>"`, looked up in `cheysson_patterns`; draws the background fill, then delegates
+  lines to gridpattern `stripe`/`crosshatch` (incl. `fill2`). Result: **one mapping and one scale**,
+  `geom_col_pattern(aes(pattern_type = x), pattern = "cheysson", fill = NA) +
+  scale_pattern_type_manual(values = paste0("1886_28:", 1:4))`; legend keys show full swatches;
+  1883_30's two-color crosshatch correct. Plan:
+  - [ ] (1) Package the pattern: `R/pattern_cheysson.R`; register in `.onLoad`, *appending* to any
+    user-set `ggpattern_geometry_funcs`; handle an `NA` / unknown swatch name (nullGrob + scale
+    `na.value`). gridpattern is in Suggests already.
+  - [ ] (2) Spacing: multiply the geom's `pattern_spacing` by each swatch's *relative* spacing, so
+    sequential palettes like `1888_27` (denser hatching per step) draw right at any size - removes the
+    Literacy map's `scale_pattern_spacing_manual()` workaround.
+  - [ ] (3) Dots / dashes the aesthetics can't express: `1891_25`'s white-dot fills (cf. `hatch`'s
+    `circle` special) and dashed stripes - needs the extraction to record them first.
+  - [ ] (4) Rewrite `scale_cheysson()` as a single scale returning swatch names, keeping
+    `select_values()` (light -> dark spread, reverse). Deprecate `aes_cheysson()` (experimental, so
+    allowed).
+  - **Simpler still - POC 2, `dev/custom-pattern/poc_simplified.R`** (user wanted no geom arguments
+    at all; works, PNGs alongside): register **each swatch as its own pattern** (134 names
+    `"<palette>:<element>"`, one shared drawing function that reads `params$pattern`), so the
+    ordinary `pattern` aesthetic carries the swatch and (4) becomes a `pattern` scale; the pattern
+    paints its own paper background (no `fill = NA`) and uses built-in density/spacing, reading the
+    geom's `pattern_density`/`pattern_spacing` only as relative adjustments (ggpattern defaults = 1x).
+    Target usage works for bars and an sf map:
+    `ggplot(d, aes(x, y, pattern = g)) + geom_col_pattern() + scale_cheysson("1886_28")`.
+    To document: mapped `pattern_fill`, `pattern_angle` etc. are ignored for Cheysson swatches.
+    This makes (6) `geom_cheysson()` unnecessary.
+  - [ ] (5) Rewrite the "Combining Colors and Patterns" vignette around it; try `geom_sf_pattern` maps.
+  - [ ] (6) Later, maybe: `geom_cheysson(mapping, palette, geom = "col")` (Trevor's idea 2) to set
+    `pattern = "cheysson"`, `fill = NA`, density/spacing defaults and the scale. Convenient, but a
+    `geom_*()` that also adds a scale is unidiomatic in ggplot2 (clashes with a user's own scale) - only
+    if the remaining boilerplate still feels heavy.
+  - [ ] Reply to Trevor on #154 with thanks + the POC result.
 
 - [ ] Another post from Tom Shanley: https://observablehq.com/@tomshanley/cheysson-grid discusses
   "programmatically creating gridlines like those used these charts created by Émile Cheysson in
