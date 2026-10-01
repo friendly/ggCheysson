@@ -20,8 +20,8 @@ corruption incident log - are archived in [`dev/TASKS-v1.0.1.md`](TASKS-v1.0.1.m
     scales). NA data in pattern scales no longer crashes ggpattern.
   - `cran-comments.md` drafted; win-builder (1 NOTE, days since update) and R-hub (4 platforms
     incl. Intel macOS, all OK) were run **before** the wrapper commits.
-- 2026-09-30: pre-submission checks done (see "Toward a 1.1.0 CRAN release"). **Next**: submit
-  1.1.0; after acceptance, tag `v1.1.0` + GitHub release. Deferred to 1.2.0: `1891_25`'s
+- 2026-10-01: **1.1.0 accepted on CRAN**; tagged `v1.1.0` and released on GitHub. Next work is
+  1.2.0 (see "New development"). Deferred to 1.2.0: `1891_25`'s
   white-dot fills; feedback from ggpattern's maintainer on the pattern API.
 
 ## Status (2026-09-27)
@@ -274,7 +274,10 @@ two). No CRAN deadline applies (package too new). See the entry under "New devel
     Intel macOS, all OK) ran on the commit before the `scale_cheysson()` addition - user
     chose not to re-run; spelling clean after `spelling::update_wordlist()` (26 words, all
     correct or intentional, incl. "grey"); `cran-comments.md` updated, 1.1.0 NEWS appended.
-- [ ] After acceptance: tag `v1.1.0` + GitHub release from NEWS.md, as for `v1.0.1`.
+- [x] After acceptance: tag `v1.1.0` + GitHub release from NEWS.md, as for `v1.0.1`.
+  - 2026-10-01: 1.1.0 accepted on CRAN. Annotated tag `v1.1.0` at `ccf3f91` (the submitted SHA
+    from `CRAN-SUBMISSION`); release <https://github.com/friendly/ggCheysson/releases/tag/v1.1.0>
+    with the 1.1.0 NEWS section as notes.
 
 ## Other loose ends
 
