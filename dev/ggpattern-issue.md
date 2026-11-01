@@ -119,3 +119,107 @@ Since these functions are marked experimental, I can still change the interface,
 welcome.
 
 Michael Friendly
+
+---
+
+# Replies from Trevor (updated 2026-11-01)
+
+The text above is the question as posted in
+[trevorld/ggpattern#154](https://github.com/trevorld/ggpattern/issues/154). My follow-up questions are
+in `dev/ggpattern-reply.md` (commit
+[1337f53](https://github.com/friendly/ggCheysson/commit/1337f5388f289f80d1fdbaac72a71882841f3a0b)), and
+Trevor answered them in comments on that commit. The current plan is in `dev/TASKS.md`, "1.2.0: a custom
+`cheysson` ggpattern pattern"; the proof of concept is `dev/custom-pattern/poc_simplified.R`.
+
+## In the issue (2026-10-01)
+
+- [Define our own patterns](https://github.com/trevorld/ggpattern/issues/154#issuecomment-5933995708) that
+  reuse existing patterns and hard-code several attributes at once
+  ([developing patterns](https://trevorldavis.com/R/ggpattern/dev/articles/developing-patterns.html)).
+  This is what the proof of concept does.
+- Perhaps a `geom_cheysson()` that takes the Cheysson data frame and a `geom` argument, and sets up the
+  ggpattern geom and scale calls. The proof of concept makes this unnecessary.
+- [Model to follow](https://github.com/trevorld/ggpattern/issues/154#issuecomment-5934119493): gridpattern's
+  [`hatching` pattern](https://trevorldavis.com/R/gridpattern/dev/articles/hatching.html).
+
+## On my three follow-up questions
+
+**Q1. Is registering about 130 names in `options(ggpattern_geometry_funcs = ...)` reasonable, or is there
+a better way?** ([2026-10-10](https://github.com/friendly/ggCheysson/commit/1337f5388f289f80d1fdbaac72a71882841f3a0b#commitcomment-204381902))
+Use gridpattern's new `register_pattern()`, still "a bit experimental (and open for feedback)", in
+`.onLoad()`, falling back to the option for older versions:
+
+```r
+.onLoad <- function(libname, pkgname) {
+  rlang::on_package_load("gridpattern", {
+    if (exists("register_pattern", envir = asNamespace("gridpattern"), inherits = FALSE)) {
+      gridpattern::register_pattern("brick", create_pattern_brick)
+    } else {
+      funcs <- getOption("ggpattern_geometry_funcs", list())
+      funcs[["brick"]] <- create_pattern_brick
+      options(ggpattern_geometry_funcs = funcs)
+    }
+  })
+}
+```
+
+**Q2. Can I rely on `params$pattern` being the pattern's name inside a geometry pattern function?**
+"This appears to be true."
+
+**Q3. Can I tell whether the user actually set `pattern_spacing` / `pattern_density`, as opposed to getting
+the defaults?** First answer: no straightforward way, as ggplot2 aesthetics can't be `NULL`, `NA` often means
+"transparent", and patterns may also be called from `patternGrob()` / `patternFill()` without ggplot2.
+
+[Newer answer (2026-11-01)](https://github.com/friendly/ggCheysson/commit/1337f5388f289f80d1fdbaac72a71882841f3a0b#commitcomment-207580653):
+**the development versions now solve this, so there's no need to detect it.** Set the defaults in
+`register_pattern()`; they can be functions of other pattern aesthetics. ggpattern's aesthetics now default to
+"unset", so a value the user doesn't set comes from the pattern's registered default, and failing that from
+gridpattern's fallback default. If working with `pattern_spacing` and `pattern_density`, also be aware of
+`pattern_units`.
+
+## Versions
+
+| Package | Installed here | CRAN | Development |
+|---|---|---|---|
+| gridpattern | 1.4.2 (no `register_pattern()`) | 1.5.1, 2026-10-28 (has `register_pattern()`) | 1.6.0-4 (`NaN` = unset) |
+| ggpattern | 1.3.1 | 1.3.1, 2026-03-07 | 1.4.0-2 (aesthetics unset by default) |
+
+Trevor expects the development versions on CRAN no sooner than about a month after 2026-11-01. To try them:
+
+```r
+remotes::install_github("trevorld/gridpattern")
+remotes::install_github("trevorld/ggpattern")
+```
+
+## Notes from the gridpattern and ggpattern sources (development versions, 2026-11-01)
+
+Not from Trevor directly, so check these against the current docs.
+
+- **Our swatch names won't work as they are.** `register_pattern()` documents that `name` "must not contain
+  `":"`", and the code aborts if it does, because `"owner::name"` is the qualified form. The proof of concept uses `"<palette>:<element>"`, so
+  use another separator, e.g. `"1886_28-1"` (which doesn't start with a letter either; I haven't checked
+  whether that matters).
+- **Signature:** `register_pattern(name, fn, kind = "geometry", defaults, unprefixed, env)`. A geometry
+  `fn` is `function(params, boundary_df, aspect_ratio, legend)`.
+- **`defaults`** is a named list of `pattern_`-prefixed values, or functions `function(params, gp)`, e.g.
+  `list(pattern_amplitude = function(params, gp) 0.5 * params$pattern_spacing)`. They're applied in order, so
+  one can use an earlier one. `unprefixed` allows others, e.g.
+  `defaults = list(fill = "black"), unprefixed = "fill"`.
+- **Unset is `NaN` internally:** a length-one `NaN` means unset. `NA` keeps its meaning (e.g. transparent).
+- **Name conflicts:** a bare name is an error if two owners have it, unless `prefer_pattern()` resolves it.
+  Packages should refer to patterns by qualified name, e.g. `"gridpattern::stripe"`, including when the
+  drawing function delegates lines to `stripe` / `crosshatch`.
+- **Legend keys:** in ggpattern 1.4.0 these are scaled by gridpattern, so relative lengths scale together.
+  Re-check the swatch legend keys.
+
+## What this means for 1.2.0 (my reading)
+
+1. Register each swatch with `register_pattern()`, using the `.onLoad()` code above, under a name without `":"`.
+2. Give each swatch its spacing and density as registered `defaults`, and use those values directly in place
+   of today's relative scaling against ggpattern's 0.05 and 0.2. A user's `pattern_spacing` then overrides the
+   swatch, rather than adjusting it, which is a behaviour change to decide on and document.
+3. Until the development versions reach CRAN, ggpattern 1.3.1 still supplies its own values, so the registered
+   defaults won't apply through it. Either wait to release 1.2.0, or keep the relative scaling as a fallback
+   and require newer versions in `DESCRIPTION` once they're out.
+4. Check how `pattern_units` affects the built-in spacing.
+5. Tell Trevor how `register_pattern()` works for a family of 134 patterns, since he asked for feedback.
