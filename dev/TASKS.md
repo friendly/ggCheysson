@@ -6,7 +6,7 @@ corruption incident log - are archived in [`dev/TASKS-v1.0.1.md`](TASKS-v1.0.1.m
 
 ## Handoff (2026-11-03) - resume here
 
-Everything below is pushed (`master` at `a69adc7` or later). Done 2026-11-03:
+Everything below is pushed (`master` at `a233011` or later). Done 2026-11-03:
 
 - **Version bumped to 1.2.0** in `DESCRIPTION` (Date 2026-11-03), with a NEWS 1.2.0 section ("New features" +
   "Bug fixes").
@@ -25,9 +25,18 @@ Everything below is pushed (`master` at `a69adc7` or later). Done 2026-11-03:
   Tests: `tests/testthat/test-scale_cheysson.R`.
 - **Guerry maps vignette (`a69adc7`):** the Donations (`1883_31`) and Regions (`1883_30`) pattern maps now use
   `aes(pattern = ...) + geom_sf_pattern() + scale_cheysson()`. Donations now draws the palette's own stripe angles;
-  Regions' stripes are a little wider apart (0.025 vs the 0.02 it set). **The Literacy map (`1888_27`) keeps the
-  individual scales:** with `scale_cheysson()` its four striped quintiles look identical, since all swatches share
-  one spacing; the vignette says so. Needs per-swatch spacing, item (2) under the 1.2.0 item.
+  Regions' stripes are a little wider apart (0.025 vs the 0.02 it set). The Literacy map (`1888_27`) followed once
+  the swatches had per-swatch spacing (`a233011`, next bullet).
+- **Per-swatch spacing (`a233011`):** a hatched swatch's spacing is a base spacing (0.025, or 0.3 cm in absolute
+  units) times its measured spacing relative to the median hatched swatch of its palette
+  (`swatch_spacing_ratios()` in `R/swatches.R`). Within-palette ratios because the measurements aren't comparable
+  across palettes (differently scaled images). Measured crosshatch spacings are doubled first (they're consistently
+  half the stripe values: both directions counted). Ratios limited to [0.5, 2]: only 3 are clamped, all in
+  `1891_19`. `pattern_spacing` sets the base in both modes, so a palette keeps its progression. Density stays 0.3
+  for all (the data's `pattern_density` is just `1 - spacing`, no information). `1888_27` ratios: 1.45, 1.11, 0.89,
+  0.57, then solid. The Guerry Literacy map now uses `scale_cheysson()` (a little coarser overall than the old
+  hand-scaled 0.3 x measured version); `1881_12`'s third step is now denser than its second. Checked by rendering;
+  no new tests (user's choice).
 - **ggplot2 `scale_name` deprecation:** all the package's discrete scales go through `cheysson_discrete_scale()`
   (`R/utils.R`), which passes `scale_name` only to ggplot2 < 3.5.0 (where it's required; no minimum ggplot2 version
   is declared).
@@ -99,8 +108,13 @@ Two-mode plan for 1.2.0 (see the 1.2.0 item under "New development" for the desi
   registration and drawing are tested with whatever is installed. All pass with both version sets (run with the CRAN
   versions first on `.libPaths()` for relative mode). `R CMD check --as-cran`: 1 NOTE (pandoc).
 - [ ] Mention the swatches / new `scale_cheysson()` in the README and the "Getting Started" vignette. Done:
-  "Combining Colors and Patterns" (`62f3337`), and the Guerry maps vignette's Donations and Regions maps
-  (`a69adc7`); its Literacy map waits for per-swatch spacing (item (2) below).
+  "Combining Colors and Patterns" (`62f3337`), and all three pattern maps in the Guerry maps vignette
+  (`a69adc7`, `a233011`).
+- [ ] **`1891_19` draws unfaithfully:** it trades spacing against line width (thin lines, width ~2, about 0.006
+  apart, up to very thick lines, width 54, 0.2 apart), which one density for all swatches can't reproduce; its
+  spacing ratios look backwards and 3 are clamped. The vignette notes it. Proper fix: use the specs'
+  `pattern_linewidth` (per-swatch density). Also check its stored order against the plate
+  (`data-raw/palette_order.R` reverses it).
 - [ ] Once the new versions are on CRAN: require them in a later release and drop the old mode.
 
 ## Handoff (2026-09-28, desktop -> laptop)
@@ -954,12 +968,11 @@ two). No CRAN deadline applies (package too new). See the entry under "New devel
     `ggpattern_geometry_funcs`. `NA` data is handled by the scale's `na.value = "none"` (see (4)). An unknown swatch
     name can only come from the user (e.g. via `scale_pattern_manual()`), and gives gridpattern's "Unknown pattern"
     error, which seems clear enough.
-  - [ ] (2) Spacing: multiply the geom's `pattern_spacing` by each swatch's *relative* spacing, so
+  - [x] (2) Spacing: multiply the geom's `pattern_spacing` by each swatch's *relative* spacing, so
     sequential palettes like `1888_27` (denser hatching per step) draw right at any size - removes the
-    Literacy map's `scale_pattern_spacing_manual()` workaround. **Next step (2026-11-03):** confirmed needed; the
-    Literacy map can't use `scale_cheysson()` without it. With registered defaults this means a different default
-    spacing per swatch, from the specs' own `pattern_spacing` (rescaled: the vignette uses 0.3 x the measured values).
-    Decide how it combines with a user's `pattern_spacing` in each mode.
+    Literacy map's `scale_pattern_spacing_manual()` workaround. **Done 2026-11-03 (`a233011`)**, as relative spacing
+    within each palette, with `pattern_spacing` as the base; see the 2026-11-03 handoff. Open: line widths
+    (`1891_19`).
   - [ ] (3) Dots / dashes the aesthetics can't express: `1891_25`'s white-dot fills (cf. `hatch`'s
     `circle` special) and dashed stripes - needs the extraction to record them first.
   - [x] (4) Rewrite `scale_cheysson()` as a single scale returning swatch names, keeping
