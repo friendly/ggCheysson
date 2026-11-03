@@ -1,13 +1,15 @@
 # ggCheysson 1.2.0
 
-## In development
+## New features
 
-* Work has started on making each Cheysson swatch a ggpattern pattern of its own, registered with
-  gridpattern's new `register_pattern()`. A whole color-and-pattern palette would then need only
-  `aes(pattern = x)` and one scale: no `aes_cheysson()`, and no `pattern_spacing` /
-  `pattern_density` arguments, because each swatch carries its own defaults. A proof of concept
-  (`dev/custom-pattern/poc_register.R`) works with the development versions of gridpattern
-  (1.6.0) and ggpattern (1.4.0), which aren't on CRAN yet. Nothing in the package has changed so far.
+* Experimental: each element of each pattern palette is now a ggpattern pattern of its own, a
+  *swatch*, named `"<palette>-<element>"` (e.g. `"1886_28-1"`), that draws its fill, hatch type, line
+  colors and angle together. A whole color-and-pattern palette then needs only `aes(pattern = x)`
+  and a pattern scale, e.g. `scale_pattern_manual(values = paste0("1886_28-", 1:6))`: no
+  `aes_cheysson()`, and no `pattern_spacing` / `pattern_density` arguments. The swatches are
+  registered when gridpattern loads, with `gridpattern::register_pattern()` where available.
+  What setting `pattern_spacing` / `pattern_density` means depends on the ggpattern version; see
+  `?cheysson_swatches`. A single scale for them is still to come.
 
 ## Bug fixes
 
@@ -16,6 +18,9 @@
   (or `'cheysson_patterns'`, `'cheysson_labels'`) unless ggCheysson was attached with `library()`, e.g.
   when called as `ggCheysson::scale_fill_cheysson()` or from another package. They now find the
   palette data either way.
+
+* `cheysson_pattern_params()` used `%||%`, which base R has only from 4.4.0, so it failed on the
+  earlier R versions the package supports (R >= 3.5). The package now has its own.
 
 # ggCheysson 1.1.0
 

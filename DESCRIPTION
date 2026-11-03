@@ -14,7 +14,8 @@ Description: Implements for 'ggplot2' the stylistic elements (fonts, hatched pat
   Cheysson' in the 'Albums de Statistique Graphique', sometimes called the pinnacle of the
   Golden Age of Statistical Graphics. 
 Imports:
-    ggplot2
+    ggplot2,
+    rlang (>= 1.0.0)
 Suggests:
     ggpattern,
     ggthemes,
@@ -41,5 +42,5 @@ Depends:
     R (>= 3.5)
 LazyData: true
 VignetteBuilder: knitr
-Config/roxygen2/version: 8.1.0
+Config/roxygen2/version: 8.1.1
 Config/testthat/edition: 3
