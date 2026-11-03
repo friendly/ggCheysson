@@ -120,17 +120,12 @@ From these, he abstracted the following combinations of color and pattern he tho
 
 ### New here
 
-This initial version (1.0.1) of the package defined separate functions and `ggplot2` scales for
-color palettes and shading patterns.
-
-Combining them correctly in one plot took real fixing: the pattern scales
-(`scale_pattern_type_cheysson()`, `scale_pattern_fill_cheysson()`) had bugs that silently
-prevented pattern type and color from varying by category at all - now fixed, so colors and
-patterns can be layered together as shown below. 
-
-A fully unified API that applies Cheysson's
-actual *designed* color-pattern pairings in a single call, matching the combined look of the
-original Albums, is still in development.
+In the development version (1.2.0), `scale_cheysson()` (experimental) applies Cheysson's
+actual *designed* color-pattern pairings in a single call. Each element of a palette is a
+*swatch*, a `ggpattern` pattern that draws its fill color, hatch type, line colors, angle and
+line spacing together, so a plot needs only `aes(pattern = x)` and one scale (see the examples
+below, and `vignette("combining-colors-patterns")`). The individual pattern scales,
+`scale_pattern_type_cheysson()` and the rest, remain for control over each property.
 
 
 ## 🚀 Quick Start
@@ -198,26 +193,10 @@ data <- data.frame(
   value = c(15, 23, 18, 20)
 )
 
-# Pull the palette's pattern specs directly, so pattern type and hatch
-# color follow the actual data rather than a single fixed pattern
-patterns <- cheysson_pattern("1883_30")
-
-ggplot(data, aes(category, value, fill = category)) +
-  geom_col_pattern(
-    aes(
-      pattern = category,
-      pattern_fill = category,
-      pattern_fill2 = category,
-      pattern_angle = category
-    ),
-    pattern_density = 0.35,
-    color = "black"
-  ) +
-  scale_fill_cheysson_pattern("1883_30") +
-  scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")) +
-  scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")) +
-  scale_pattern_fill2_cheysson("1883_30") +
-  scale_pattern_angle_cheysson("1883_30") +
+# One scale applies the palette's colors, hatch types, angles and spacings together
+ggplot(data, aes(category, value, pattern = category)) +
+  geom_col_pattern(color = "black") +
+  scale_cheysson("1883_30") +
   labs(
     title = "Statistical Comparison",
     x = "Category",
@@ -299,44 +278,36 @@ library(ggpattern)
 # List available pattern palettes
 head(list_cheysson_patterns())
 
-# Get pattern specifications for one palette
+# Each element of a palette is a bundle of properties
 patterns <- cheysson_pattern("1886_24")
+str(patterns[[2]])
 ```
 
 ```{r pattern-swatches, fig.height=2, fig.width=8}
-# Display the palette's patterns as swatches
+# Display the palette's elements as swatches
 n <- length(patterns)
-ggplot(data.frame(i = factor(seq_len(n))), aes(i, 1, fill = i)) +
-  geom_col_pattern(
-    aes(pattern = i, pattern_fill = i, pattern_angle = i),
-    pattern_density = 0.35, pattern_spacing = 0.03,
-    color = "black", width = 0.95
-  ) +
-  scale_fill_manual(values = cheysson_pattern_params(patterns, "fill")) +
-  scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")) +
-  scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")) +
-  scale_pattern_angle_manual(values = cheysson_pattern_params(patterns, "pattern_angle")) +
+ggplot(data.frame(i = factor(seq_len(n))), aes(i, 1, pattern = i)) +
+  geom_col_pattern(color = "black", width = 0.95) +
+  scale_cheysson("1886_24") +
   theme_void() +
   theme(legend.position = "none")
 ```
 
-Use the pattern scales directly in a plot, alongside the matching fill scale:
+Use `scale_cheysson()` in a plot to give each category a swatch:
 
 ```{r pattern-bars, fig.height=4, fig.width=6}
 data <- data.frame(category = LETTERS[1:4], value = c(15, 23, 18, 20))
 
-ggplot(data, aes(category, value, fill = category)) +
-  geom_col_pattern(
-    aes(pattern = category, pattern_fill = category),
-    pattern_density = 0.35, color = "black"
-  ) +
-
-    scale_fill_cheysson_pattern("1886_24") +
-  scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")[1:4]) +
-  scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")[1:4]) +
+ggplot(data, aes(category, value, pattern = category)) +
+  geom_col_pattern(color = "black") +
+  scale_cheysson("1886_24") +
   labs(title = "Statistical Comparison", x = "Category", y = "Value") +
   theme_minimal()
 ```
+
+For control over each property separately, use the individual pattern scales
+(`scale_fill_cheysson_pattern()`, `scale_pattern_type_cheysson()`,
+`scale_pattern_fill_cheysson()`, ...), mapping each aesthetic yourself.
 
 ## ✍️ Font Families
 
@@ -397,8 +368,9 @@ theme(
 - `show_palettes()` - Display multiple palettes for comparison
 
 ### Pattern Functions
+- `scale_cheysson()` - Apply a color-and-pattern palette in one step (experimental)
 - `cheysson_pattern()` - Get pattern specifications
-- `scale_pattern_*_cheysson()` - ggpattern scales for fills, types, angles, densities
+- `scale_pattern_*_cheysson()` - ggpattern scales for single properties: fills, types, angles, densities
 - `list_cheysson_patterns()` - List available pattern palettes
 
 ### Font Functions
