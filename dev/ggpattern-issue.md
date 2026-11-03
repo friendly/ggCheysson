@@ -243,8 +243,22 @@ gridpattern 1.6.0.4 and ggpattern 1.4.0.2, installed from GitHub. The script is 
 ## What this means for 1.2.0 (my reading)
 
 1. Register each swatch with `register_pattern()`, using the `.onLoad()` code above, under a name without `":"`.
-   **Shown to work (2026-11-03)** with names like `"1886_28-1"`, in `poc_register.R`. That script registers at
-   top level, so the `.onLoad()` / `rlang::on_package_load()` wrapper is still untested.
+   **Shown to work (2026-11-03)** with names like `"1886_28-1"`, in `poc_register.R`.
+   **The `.onLoad()` wrapper was also tested (2026-11-03)**, in a throwaway package that registers all 134 swatches
+   with Trevor's code (scripts not kept). Like ggCheysson, it has gridpattern in `Suggests` only. Each case ran in a
+   fresh R process:
+   - **gridpattern loaded after the package** (ggCheysson's usual case). `library(ggpattern)` doesn't load gridpattern
+     in 1.4.0.2: it loads when the first plot draws. `on_package_load()` registers the swatches at that point, and the
+     plot draws correctly. The swatches don't show in `registered_patterns()` until then.
+   - **gridpattern already loaded:** registered at once.
+   - **Owner:** both ways, all 134 swatches are owned by the package (not `R_GlobalEnv`), so the default
+     `env = caller_env()` is right inside the hook. The qualified name `"<pkg>::1883_30-3"` draws.
+   - **Unload and reload:** `unloadNamespace()` removes the package's swatches by itself, and loading again
+     re-registers them cleanly. No `.onUnload()` is needed. After unloading, a swatch name gives "Unknown pattern".
+   - **Fallback branch** (forced, via the option): draws, but with the generic 0.05 / 0.2 spacing and density, since
+     registered defaults don't exist on that route. The fallback needs the old relative scaling (see step 3).
+   - For ggCheysson: `rlang` would have to move into `Imports` (only `ggplot2` is there now); gridpattern can stay
+     in `Suggests`.
 2. Give each swatch its spacing and density as registered `defaults`, and use those values directly in place
    of today's relative scaling against ggpattern's 0.05 and 0.2. A user's `pattern_spacing` then overrides the
    swatch, rather than adjusting it, which is a behaviour change to decide on and document.
