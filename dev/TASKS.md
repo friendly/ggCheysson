@@ -6,7 +6,7 @@ corruption incident log - are archived in [`dev/TASKS-v1.0.1.md`](TASKS-v1.0.1.m
 
 ## Handoff (2026-11-03) - resume here
 
-Everything below is pushed (`master` at `a4f202d` or later). Done 2026-11-03:
+Everything below is pushed (`master` at `e92a934` or later). Done 2026-11-03:
 
 - **Version bumped to 1.2.0** in `DESCRIPTION` (Date 2026-11-03), with a NEWS 1.2.0 section ("New features" +
   "Bug fixes").
@@ -115,8 +115,11 @@ Two-mode plan for 1.2.0 (see the 1.2.0 item under "New development" for the desi
 - [ ] Small: Getting Started's grouped bar chart maps a character `type` to sequential `1881_12`, so the levels
   take the palette in alphabetical order (Canal, Rail, Road: Road gets the densest hatching). Pre-existing; a
   factor with meaningful levels would fix it.
+- [x] **pkgdown site rebuilt 2026-11-03** (`e92a934`) with all of the above, after adding the new
+  `cheysson_swatches` topic to the reference index in `_pkgdown.yml` (`4fde487`; pkgdown errors on unlisted
+  topics). Rebuild again before submitting if anything changes.
 - [ ] Before submitting 1.2.0: run `R CMD check --as-cran` again (last full check was before the README/Getting
-  Started change), win-builder and R-hub; update `cran-comments.md`; rebuild the pkgdown site.
+  Started change), win-builder and R-hub; update `cran-comments.md`.
 - [ ] **`1891_19` draws unfaithfully:** it trades spacing against line width (thin lines, width ~2, about 0.006
   apart, up to very thick lines, width 54, 0.2 apart), which one density for all swatches can't reproduce; its
   spacing ratios look backwards and 3 are clamped. The vignette notes it. Proper fix: use the specs'
