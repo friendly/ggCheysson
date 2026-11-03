@@ -1,3 +1,14 @@
+# ggCheysson 1.2.0
+
+## In development
+
+* Work has started on making each Cheysson swatch a ggpattern pattern of its own, registered with
+  gridpattern's new `register_pattern()`. A whole color-and-pattern palette would then need only
+  `aes(pattern = x)` and one scale: no `aes_cheysson()`, and no `pattern_spacing` /
+  `pattern_density` arguments, because each swatch carries its own defaults. A proof of concept
+  (`dev/custom-pattern/poc_register.R`) works with the development versions of gridpattern
+  (1.6.0) and ggpattern (1.4.0), which aren't on CRAN yet. Nothing in the package has changed so far.
+
 # ggCheysson 1.1.0
 
 ## Breaking changes
