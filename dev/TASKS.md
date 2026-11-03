@@ -6,16 +6,26 @@ corruption incident log - are archived in [`dev/TASKS-v1.0.1.md`](TASKS-v1.0.1.m
 
 ## Handoff (2026-11-03) - resume here
 
-Everything below is pushed (`master` at `e16b468` or later). Done 2026-11-03:
+Everything below is pushed (`master` at `62f3337` or later). Done 2026-11-03:
 
 - **Version bumped to 1.2.0** in `DESCRIPTION` (Date 2026-11-03), with a NEWS 1.2.0 section ("New features" +
   "Bug fixes").
 - **Swatch registration is in the package (`e16b468`), experimental:** `R/swatches.R`, `?cheysson_swatches`,
   `tests/testthat/test-swatches.R`. All 134 palette elements are registered as patterns named
   `"<palette>-<element>"`, in two modes (see "Two-mode plan" below). Usable now as
-  `aes(pattern = x) + geom_col_pattern() + scale_pattern_manual(values = paste0("1886_28-", 1:6))`; no
-  ggCheysson scale for them yet. Also: `rlang` in Imports, and a local `%||%` (`R/utils.R`), which fixes
-  `cheysson_pattern_params()` on R < 4.4.
+  `aes(pattern = x) + geom_col_pattern() + scale_pattern_manual(values = paste0("1886_28-", 1:6))`.
+  Also: `rlang` in Imports, and a local `%||%` (`R/utils.R`), which fixes `cheysson_pattern_params()` on R < 4.4.
+- **`scale_cheysson()` is now a single swatch scale (`62f3337`), experimental:** one discrete `pattern` scale giving
+  swatch names, keeping `select_values()`'s spread and `reverse`; usage is
+  `aes(pattern = x) + geom_col_pattern() + scale_cheysson("1886_28")`. `aesthetics` is ignored with a warning;
+  `na.value` is a pattern (default `"none"`: missing values show the geom's `fill`, which swatches cover, so
+  `fill = "grey90"` in the geom sets the NA color). `aes_cheysson(x)` is deprecated, now `aes(pattern = x)` with a
+  once-per-session note, so old code keeps working. The "Combining Colors and Patterns" vignette is updated (new
+  "Line spacing and density" section; "Why both are needed" removed; subsetting now via the individual scales).
+  Tests: `tests/testthat/test-scale_cheysson.R`.
+- **ggplot2 `scale_name` deprecation:** all the package's discrete scales go through `cheysson_discrete_scale()`
+  (`R/utils.R`), which passes `scale_name` only to ggplot2 < 3.5.0 (where it's required; no minimum ggplot2 version
+  is declared).
 - **`register_pattern()` tried with the development versions** (gridpattern 1.6.0.4, ggpattern 1.4.0.2, installed
   here from GitHub): POC 3, `dev/custom-pattern/poc_register.R`. Registered defaults now reach ggpattern, user values
   override them, and `pattern_units` is handled. The `.onLoad()` wrapper was tested in a throwaway package and works
@@ -83,7 +93,9 @@ Two-mode plan for 1.2.0 (see the 1.2.0 item under "New development" for the desi
 - [x] Tests for both modes: the spacing logic is tested directly for both, so it runs with any installed ggpattern;
   registration and drawing are tested with whatever is installed. All pass with both version sets (run with the CRAN
   versions first on `.libPaths()` for relative mode). `R CMD check --as-cran`: 1 NOTE (pandoc).
-- [ ] Mention the swatches in the vignettes/README once there's a scale for them (item (4) below).
+- [ ] Mention the swatches / new `scale_cheysson()` in the README and the other vignettes ("Combining Colors and
+  Patterns" is done, `62f3337`). The Guerry maps vignette still uses the individual scales; try
+  `geom_sf_pattern()` + `scale_cheysson()` there.
 - [ ] Once the new versions are on CRAN: require them in a later release and drop the old mode.
 
 ## Handoff (2026-09-28, desktop -> laptop)
@@ -934,16 +946,17 @@ two). No CRAN deadline applies (package too new). See the entry under "New devel
   1883_30's two-color crosshatch correct. Plan:
   - [x] (1) Package the pattern. **Done 2026-11-03 (`e16b468`)** as one pattern per swatch (POC 3), in
     `R/swatches.R`; see "Two-mode plan" in the 2026-11-03 handoff. The option fallback appends to any user-set
-    `ggpattern_geometry_funcs`. Not done: an `NA` / unknown swatch name (nullGrob + scale `na.value`); that belongs
-    with the scale in (4).
+    `ggpattern_geometry_funcs`. `NA` data is handled by the scale's `na.value = "none"` (see (4)). An unknown swatch
+    name can only come from the user (e.g. via `scale_pattern_manual()`), and gives gridpattern's "Unknown pattern"
+    error, which seems clear enough.
   - [ ] (2) Spacing: multiply the geom's `pattern_spacing` by each swatch's *relative* spacing, so
     sequential palettes like `1888_27` (denser hatching per step) draw right at any size - removes the
     Literacy map's `scale_pattern_spacing_manual()` workaround.
   - [ ] (3) Dots / dashes the aesthetics can't express: `1891_25`'s white-dot fills (cf. `hatch`'s
     `circle` special) and dashed stripes - needs the extraction to record them first.
-  - [ ] (4) Rewrite `scale_cheysson()` as a single scale returning swatch names, keeping
+  - [x] (4) Rewrite `scale_cheysson()` as a single scale returning swatch names, keeping
     `select_values()` (light -> dark spread, reverse). Deprecate `aes_cheysson()` (experimental, so
-    allowed).
+    allowed). **Done 2026-11-03 (`62f3337`)**; see the 2026-11-03 handoff.
   - **Simpler still - POC 2, `dev/custom-pattern/poc_simplified.R`** (user wanted no geom arguments
     at all; works, PNGs alongside): register **each swatch as its own pattern** (134 names
     `"<palette>:<element>"`, one shared drawing function that reads `params$pattern`), so the
@@ -968,6 +981,8 @@ two). No CRAN deadline applies (package too new). See the entry under "New devel
     - The option-based fallback gets the generic 0.05 / 0.2, so it still needs the old relative scaling.
     - Open: legend keys draw nearly solid with large user overrides (`poc_register_bars_override.png`); asked Trevor.
   - [ ] (5) Rewrite the "Combining Colors and Patterns" vignette around it; try `geom_sf_pattern` maps.
+    **Vignette done 2026-11-03 (`62f3337`)**, for bar charts. Still to do: a `geom_sf_pattern()` map with
+    `scale_cheysson()` (here or in the Guerry maps vignette).
   - [ ] (6) Later, maybe: `geom_cheysson(mapping, palette, geom = "col")` (Trevor's idea 2) to set
     `pattern = "cheysson"`, `fill = NA`, density/spacing defaults and the scale. Convenient, but a
     `geom_*()` that also adds a scale is unidiomatic in ggplot2 (clashes with a user's own scale) - only
