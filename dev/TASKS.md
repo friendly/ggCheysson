@@ -26,11 +26,31 @@ Everything below is pushed (`master` at `8e0aa21` or later). Done 2026-11-03:
 - **Note:** this machine's R library now has the development build of ggCheysson (1.2.0) and the GitHub versions of
   gridpattern and ggpattern, not the CRAN ones.
 
-Open decisions:
-- [ ] **Patch release 1.1.1** for the data lookup bug, rather than waiting for 1.2.0? If yes, set the version back to
-  1.1.1 for now, and move the NEWS bug-fix entry to a 1.1.1 section.
-- [ ] Does 1.2.0 wait for the new gridpattern/ggpattern on CRAN (Trevor said no sooner than about a month after
-  2026-11-01), or ship with the option-based fallback?
+Decisions (2026-11-03, user):
+- **No 1.1.1 patch release.** The data lookup fix ships with 1.2.0; the version stays 1.2.0.
+- **1.2.0 doesn't wait** for the new gridpattern/ggpattern to reach CRAN. It has to work with the CRAN versions
+  (gridpattern 1.5.1, ggpattern 1.3.1) and the development ones (gridpattern >= 1.6.0, ggpattern >= 1.4.0).
+
+Two-mode plan for 1.2.0 (see the 1.2.0 item under "New development" for the design):
+- **Why two modes:** ggpattern 1.3.1 passes its own default spacing and density (0.05 / 0.2) to every pattern, so
+  registered defaults never reach a swatch, whichever way it was registered. Only ggpattern >= 1.4.0 leaves them
+  unset.
+- **New mode** (ggpattern >= 1.4.0): swatches have registered `defaults`, used as they arrive, as in
+  `poc_register.R`. A user's `pattern_spacing` replaces the swatch's value, in `pattern_units`.
+- **Old mode** (ggpattern 1.3.1): the swatch function scales relative to 0.05 / 0.2, as in `poc_simplified.R`. A
+  user's `pattern_spacing` is a relative adjustment (0.1 = twice as wide).
+- **Registration:** `register_pattern()` whenever gridpattern has it (CRAN's 1.5.1 does), else the
+  `ggpattern_geometry_funcs` option, inside `rlang::on_package_load()` (tested; see the 1.2.0 item).
+- [ ] Decide how the swatch function picks the mode. Simplest: `utils::packageVersion("ggpattern") >= "1.4.0"`,
+  checked once when the swatches are registered. Also decide what grid-only use (`patternGrob()`,
+  no ggpattern) does.
+- [ ] **Untested:** the CRAN combination (gridpattern 1.5.1 + ggpattern 1.3.1). Install it in a separate library and
+  run both proofs of concept against it. Does `register_pattern()` in 1.5.1 accept `defaults`, and do they apply in
+  grid-only use?
+- [ ] Document that `pattern_spacing` / `pattern_density` mean different things in the two modes (absolute vs relative),
+  and recommend setting them only when needed. Add tests for both modes (the new one is skipped unless ggpattern
+  >= 1.4.0 is installed).
+- [ ] Once the new versions are on CRAN: require them in a later release and drop the old mode.
 
 ## Handoff (2026-09-28, desktop -> laptop)
 
