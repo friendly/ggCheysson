@@ -257,5 +257,70 @@ gridpattern 1.6.0.4 and ggpattern 1.4.0.2, installed from GitHub. The script is 
    (`poc_simplified.R`).
 4. Check how `pattern_units` affects the built-in spacing. **Not yet checked.**
 5. Tell Trevor how `register_pattern()` works for a family of 134 patterns, since he asked for feedback.
-   **Not yet sent.** Points to include: it worked for all 134 swatches; the help text about ggpattern defaults is
-   out of date; legend keys are nearly solid with large overrides.
+   **Sent 2026-11-03** as a reply in [trevorld/ggpattern#154](https://github.com/trevorld/ggpattern/issues/154)
+   (text below). It covers: it worked for all 134 swatches; the help text about ggpattern defaults is out of date;
+   legend keys are nearly solid with large overrides.
+
+## Reply to Trevor (sent 2026-11-03)
+
+Posted in [trevorld/ggpattern#154](https://github.com/trevorld/ggpattern/issues/154). The links point to commit
+`70176e4`, so they won't change. This is the draft as it was here; the version actually posted may have been edited.
+
+---
+
+Thanks, Trevor - the "unset" defaults are exactly what I was missing. I installed the development versions (gridpattern 1.6.0.4, ggpattern 1.4.0.2) and redid the proof of concept with `register_pattern()`. It works well.
+Here's some feedback, as you asked.
+
+**What I did.** I registered all 134 Cheysson swatches with `register_pattern()`, all sharing one geometry function
+that looks up the swatch from `params$pattern` and delegates the lines to `"gridpattern::stripe"` /
+`"gridpattern::crosshatch"`. Each swatch is registered with its own defaults:
+
+```r
+for (nm in swatch_names)   # "1886_28-1", "1886_28-2", ...
+  gridpattern::register_pattern(nm, draw_swatch,
+    defaults = list(pattern_spacing = 0.025, pattern_density = 0.30))
+```
+
+Script: https://github.com/friendly/ggCheysson/blob/70176e4/dev/custom-pattern/poc_register.R
+
+**What worked.** I had the pattern function record the spacing and density it received:
+
+| Case | spacing / density received |
+|---|---|
+| `geom_col_pattern()`, no arguments | 0.025 / 0.30 (registered defaults) |
+| `geom_col_pattern(pattern_spacing = 0.06, pattern_density = 0.6)` | 0.06 / 0.6 |
+| `geom_sf_pattern()`, no arguments | 0.025 / 0.30 |
+| `grid.pattern("1883_30-3", ...)`, no ggpattern | 0.025 / 0.30 |
+
+So I can drop the relative scaling against ggpattern's 0.05 / 0.2, and a swatch needs no geom arguments:
+
+```r
+ggplot(trade, aes(country, exports, pattern = country)) +
+  geom_col_pattern() +
+  scale_cheysson3("1886_28")   # a scale_pattern_manual() returning swatch names
+```
+
+Also fine:
+- Names like `"1886_28-1"` (a leading digit, and `-`) are accepted, in place of the `"1886_28:1"` I'd used before.
+- The old `options(ggpattern_geometry_funcs = ...)` route still works under the new versions, so I can keep it as
+  a fallback until these reach CRAN.
+- Registering 134 patterns one at a time in a loop is no trouble, so I don't think a family needs any special API.
+
+**Two things I noticed.**
+
+1. **The `register_pattern()` help looks out of date.** The `defaults` argument says "`{ggpattern}` supplies its
+   own (generic) defaults for most of its pattern aesthetics so these will mainly be used with `grid.pattern()` /
+   `patternGrob()`." With ggpattern 1.4.0.2, the registered defaults do apply through ggpattern (table above).
+2. **Legend keys with large values.** With `pattern_spacing = 0.06, pattern_density = 0.6`, the bars are clearly
+   striped, but the England and Germany legend keys are almost solid colour and France's nearly so. With the
+   defaults (0.025 / 0.30) the keys look right. Is that expected from the new legend-key scaling, and is there
+   something the pattern function should do with `legend = TRUE`?
+
+   ![](https://raw.githubusercontent.com/friendly/ggCheysson/70176e4/dev/custom-pattern/poc_register_bars_override.png)
+
+I'll build this into ggCheysson 1.2.0 once the new versions are on CRAN. Is there anything else I should test
+before then?
+
+Michael
+
+---
