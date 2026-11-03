@@ -34,6 +34,7 @@ reference:
     - list_cheysson_patterns
     - get_pattern_param
     - scale_cheysson
+    - cheysson_swatches
     - scale_fill_cheysson_pattern
     - scale_pattern_cheysson
     - starts_with("scale_pattern_")
