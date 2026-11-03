@@ -28,7 +28,9 @@ Suggests:
     Guerry,
     sf,
     tidyr,
-    dplyr
+    dplyr,
+    testthat (>= 3.0.0),
+    callr
 License: GPL (>= 3)
 Language: en-US
 Encoding: UTF-8
@@ -40,3 +42,4 @@ Depends:
 LazyData: true
 VignetteBuilder: knitr
 Config/roxygen2/version: 8.1.0
+Config/testthat/edition: 3
