@@ -8,8 +8,8 @@
 scale_cheysson(
   palette = "1881_12",
   reverse = FALSE,
-  aesthetics = c("fill", "pattern", "pattern_fill", "pattern_fill2", "pattern_angle"),
-  na.value = "grey80",
+  na.value = "none",
+  aesthetics = NULL,
   ...
 )
 
@@ -22,53 +22,54 @@ aes_cheysson(x, ...)
 
 \item{reverse}{Whether to reverse the palette order. Default is FALSE.}
 
-\item{aesthetics}{Which aesthetics to provide scales for: any of \code{"fill"},
-\code{"pattern"}, \code{"pattern_fill"}, \code{"pattern_fill2"}, \code{"pattern_angle"}.
-Default is all of them. A scale for an aesthetic that the plot does not
-map has no effect.}
+\item{na.value}{Pattern for missing values. The default, \code{"none"}, draws
+the geom's own \code{fill}, which no swatch shows, so e.g.
+\code{geom_col_pattern(fill = "grey80")} sets the color for missing values.}
 
-\item{na.value}{Color for missing values, used for the fill and line
-colors; missing values get no hatching (\code{pattern = "none"}).}
+\item{aesthetics}{Deprecated and ignored: \code{scale_cheysson()} used to
+return one scale per aesthetic. To use only some of a palette's
+properties, use the individual scales (see \link{scale_pattern_cheysson}).}
 
-\item{...}{For \code{scale_cheysson()}: additional arguments passed to every
-scale, e.g. \code{name} or \code{labels}; since all the scales get the
-same \code{name}, their legends stay merged into one. For \code{aes_cheysson()}:
-other aesthetic mappings to include, e.g. \code{x} and \code{y}.}
+\item{...}{Additional arguments passed to \code{\link[ggplot2:discrete_scale]{ggplot2::discrete_scale()}},
+e.g. \code{name}, \code{labels} or \code{guide}. For \code{aes_cheysson()}: other aesthetic
+mappings to include, e.g. \code{x} and \code{y}.}
 
 \item{x}{The variable to map, as in \code{\link[ggplot2:aes]{ggplot2::aes()}}.}
 }
 \value{
-\code{scale_cheysson()} returns a list of ggplot2 discrete scales, which
-can be added to a plot with \code{+} like a single scale.
+\code{scale_cheysson()} returns a ggplot2 discrete scale for the
+\code{pattern} aesthetic.
 
-\code{aes_cheysson()} returns an aesthetic mapping of \code{x} to \code{fill},
-\code{pattern}, \code{pattern_fill}, \code{pattern_fill2} and \code{pattern_angle}, plus any
-mappings in \code{...}.
+\code{aes_cheysson()} returns an aesthetic mapping of \code{x} to \code{pattern},
+plus any mappings in \code{...}.
 }
 \description{
-\strong{Experimental.} The interface of \code{scale_cheysson()} and \code{aes_cheysson()}
-may change in a future version.
+\strong{Experimental.} The interface of \code{scale_cheysson()} may change in a
+future version.
 }
 \details{
 Cheysson's palettes combine colors with hatching: each element of a
 palette has a paper or fill color, a hatch type (solid, stripe or
-crosshatch), a line color and an angle. Drawing them with 'ggpattern'
-takes one scale per aesthetic (\code{\link[=scale_fill_cheysson_pattern]{scale_fill_cheysson_pattern()}},
-\code{\link[=scale_pattern_type_cheysson]{scale_pattern_type_cheysson()}}, \code{\link[=scale_pattern_fill_cheysson]{scale_pattern_fill_cheysson()}}, ...).
-\code{scale_cheysson()} adds all of them with a single \code{+}, and
-\code{aes_cheysson()} maps one variable to all of the matching aesthetics.
+crosshatch), line colors and an angle. ggCheysson registers each element
+as a 'ggpattern' pattern of its own, a \emph{swatch} (see \link{cheysson_swatches}),
+and \code{scale_cheysson()} is a discrete scale for the \code{pattern} aesthetic
+that gives each level of the mapped variable one swatch. So a palette
+needs only \code{aes(pattern = x)} and this one scale.
 
-All the scales take their values from the same elements of the palette, so
-each level of the mapped variable gets one complete historical swatch.
-The aesthetics must be mapped for the scales to apply: a scale for
-\code{pattern_fill} does nothing unless \code{pattern_fill} is mapped, and 'ggpattern'
-then draws grey hatching. \code{aes_cheysson()} maps them all.
+For a sequential or diverging palette with more elements than the data
+has levels, the scale uses elements spread over the whole palette (keeping
+both ends), not the first ones. See \link{cheysson_patterns} for the stored
+order.
 
-Parameters that are better set to fixed values in the geom are not
-included: \code{pattern_density} and \code{pattern_spacing} (the palettes' spacings
-were measured on small swatches, see the Guerry maps vignette),
-\code{pattern_colour} (\code{NA} avoids outlines around the hatch lines) and the
-outline \code{colour}.
+The swatches set their own colors, angles, line spacing and density, so no
+other pattern aesthetics need to be mapped or set, and those that are
+(e.g. \code{pattern_fill}) are ignored, apart from \code{pattern_spacing},
+\code{pattern_density} and \code{pattern_units}. What these mean depends on the
+installed version of 'ggpattern'; see \link{cheysson_swatches}.
+
+\code{aes_cheysson(x)} is deprecated: it is now the same as
+\code{aes(pattern = x)}, since the other aesthetics it used to map aren't
+needed.
 }
 \examples{
 \donttest{
@@ -81,10 +82,8 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
     value = c(15, 23, 18, 20, 12)
   )
 
-  ggplot(data, aes(category, value)) +
-    geom_col_pattern(aes_cheysson(category),
-                     pattern_colour = NA, pattern_density = 0.35,
-                     colour = "black") +
+  ggplot(data, aes(category, value, pattern = category)) +
+    geom_col_pattern(colour = "black") +
     scale_cheysson("1883_30") +
     theme_minimal()
 }
@@ -92,6 +91,7 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
 
 }
 \seealso{
-\link{scale_pattern_cheysson} for the individual scales,
+\link{cheysson_swatches} for the swatches; \link{scale_pattern_cheysson}
+for the individual scales, one per pattern aesthetic;
 \code{\link[=cheysson_pattern]{cheysson_pattern()}} for the underlying pattern specifications.
 }

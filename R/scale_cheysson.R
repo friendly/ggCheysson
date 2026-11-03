@@ -1,48 +1,51 @@
 #' Apply a Cheysson color-and-pattern palette in one step
 #'
-#' **Experimental.** The interface of `scale_cheysson()` and `aes_cheysson()`
-#' may change in a future version.
+#' **Experimental.** The interface of `scale_cheysson()` may change in a
+#' future version.
 #'
 #' Cheysson's palettes combine colors with hatching: each element of a
 #' palette has a paper or fill color, a hatch type (solid, stripe or
-#' crosshatch), a line color and an angle. Drawing them with 'ggpattern'
-#' takes one scale per aesthetic ([scale_fill_cheysson_pattern()],
-#' [scale_pattern_type_cheysson()], [scale_pattern_fill_cheysson()], ...).
-#' `scale_cheysson()` adds all of them with a single `+`, and
-#' `aes_cheysson()` maps one variable to all of the matching aesthetics.
+#' crosshatch), line colors and an angle. ggCheysson registers each element
+#' as a 'ggpattern' pattern of its own, a *swatch* (see [cheysson_swatches]),
+#' and `scale_cheysson()` is a discrete scale for the `pattern` aesthetic
+#' that gives each level of the mapped variable one swatch. So a palette
+#' needs only `aes(pattern = x)` and this one scale.
 #'
 #' @param palette Name of palette (e.g., "1883_30") or palette type
 #'   ("sequential", "diverging", "grouped", "category"). See
 #'   [cheysson_patterns].
 #' @param reverse Whether to reverse the palette order. Default is FALSE.
-#' @param aesthetics Which aesthetics to provide scales for: any of `"fill"`,
-#'   `"pattern"`, `"pattern_fill"`, `"pattern_fill2"`, `"pattern_angle"`.
-#'   Default is all of them. A scale for an aesthetic that the plot does not
-#'   map has no effect.
-#' @param na.value Color for missing values, used for the fill and line
-#'   colors; missing values get no hatching (`pattern = "none"`).
-#' @param ... For `scale_cheysson()`: additional arguments passed to every
-#'   scale, e.g. `name` or `labels`; since all the scales get the
-#'   same `name`, their legends stay merged into one. For `aes_cheysson()`:
-#'   other aesthetic mappings to include, e.g. `x` and `y`.
+#' @param na.value Pattern for missing values. The default, `"none"`, draws
+#'   the geom's own `fill`, which no swatch shows, so e.g.
+#'   `geom_col_pattern(fill = "grey80")` sets the color for missing values.
+#' @param aesthetics Deprecated and ignored: `scale_cheysson()` used to
+#'   return one scale per aesthetic. To use only some of a palette's
+#'   properties, use the individual scales (see [scale_pattern_cheysson]).
+#' @param ... Additional arguments passed to [ggplot2::discrete_scale()],
+#'   e.g. `name`, `labels` or `guide`. For `aes_cheysson()`: other aesthetic
+#'   mappings to include, e.g. `x` and `y`.
 #'
-#' @returns `scale_cheysson()` returns a list of ggplot2 discrete scales, which
-#'   can be added to a plot with `+` like a single scale.
+#' @returns `scale_cheysson()` returns a ggplot2 discrete scale for the
+#'   `pattern` aesthetic.
 #'
 #' @details
-#' All the scales take their values from the same elements of the palette, so
-#' each level of the mapped variable gets one complete historical swatch.
-#' The aesthetics must be mapped for the scales to apply: a scale for
-#' `pattern_fill` does nothing unless `pattern_fill` is mapped, and 'ggpattern'
-#' then draws grey hatching. `aes_cheysson()` maps them all.
+#' For a sequential or diverging palette with more elements than the data
+#' has levels, the scale uses elements spread over the whole palette (keeping
+#' both ends), not the first ones. See [cheysson_patterns] for the stored
+#' order.
 #'
-#' Parameters that are better set to fixed values in the geom are not
-#' included: `pattern_density` and `pattern_spacing` (the palettes' spacings
-#' were measured on small swatches, see the Guerry maps vignette),
-#' `pattern_colour` (`NA` avoids outlines around the hatch lines) and the
-#' outline `colour`.
+#' The swatches set their own colors, angles, line spacing and density, so no
+#' other pattern aesthetics need to be mapped or set, and those that are
+#' (e.g. `pattern_fill`) are ignored, apart from `pattern_spacing`,
+#' `pattern_density` and `pattern_units`. What these mean depends on the
+#' installed version of 'ggpattern'; see [cheysson_swatches].
 #'
-#' @seealso [scale_pattern_cheysson] for the individual scales,
+#' `aes_cheysson(x)` is deprecated: it is now the same as
+#' `aes(pattern = x)`, since the other aesthetics it used to map aren't
+#' needed.
+#'
+#' @seealso [cheysson_swatches] for the swatches; [scale_pattern_cheysson]
+#'   for the individual scales, one per pattern aesthetic;
 #'   [cheysson_pattern()] for the underlying pattern specifications.
 #'
 #' @examples
@@ -56,46 +59,47 @@
 #'     value = c(15, 23, 18, 20, 12)
 #'   )
 #'
-#'   ggplot(data, aes(category, value)) +
-#'     geom_col_pattern(aes_cheysson(category),
-#'                      pattern_colour = NA, pattern_density = 0.35,
-#'                      colour = "black") +
+#'   ggplot(data, aes(category, value, pattern = category)) +
+#'     geom_col_pattern(colour = "black") +
 #'     scale_cheysson("1883_30") +
 #'     theme_minimal()
 #' }
 #' }
 #'
 #' @export
-scale_cheysson <- function(palette = "1881_12", reverse = FALSE,
-                           aesthetics = c("fill", "pattern", "pattern_fill",
-                                          "pattern_fill2", "pattern_angle"),
-                           na.value = "grey80", ...) {
-  aesthetics <- match.arg(aesthetics, several.ok = TRUE)
-  scales <- list(
-    fill          = scale_fill_cheysson_pattern,
-    pattern       = scale_pattern_type_cheysson,
-    pattern_fill  = scale_pattern_fill_cheysson,
-    pattern_fill2 = scale_pattern_fill2_cheysson,
-    pattern_angle = scale_pattern_angle_cheysson
+scale_cheysson <- function(palette = "1881_12", reverse = FALSE, na.value = "none",
+                           aesthetics = NULL, ...) {
+  if (!is.null(aesthetics)) {
+    warning("`aesthetics` is no longer used by scale_cheysson(), which is now a single ",
+            "scale for the `pattern` aesthetic, and is ignored. To use only some of a ",
+            "palette's properties, use the individual scales (?scale_pattern_cheysson).",
+            call. = FALSE)
+  }
+  pal <- get_palette(palette, ggCheysson::cheysson_patterns)
+  values <- paste0(pal$name, "-", seq_along(pal$patterns))
+  cheysson_discrete_scale(
+    aesthetics = "pattern",
+    scale_name = "cheysson",
+    palette = function(n) select_values(values, n, pal$type, reverse = reverse),
+    na.value = na.value,
+    ...
   )
-  colors <- c("fill", "pattern_fill", "pattern_fill2")
-  unname(lapply(aesthetics, function(aes) {
-    if (aes %in% colors) {
-      scales[[aes]](palette, reverse = reverse, na.value = na.value, ...)
-    } else {
-      scales[[aes]](palette, reverse = reverse, ...)
-    }
-  }))
 }
 
 
 #' @rdname scale_cheysson
 #' @param x The variable to map, as in [ggplot2::aes()].
-#' @returns `aes_cheysson()` returns an aesthetic mapping of `x` to `fill`,
-#'   `pattern`, `pattern_fill`, `pattern_fill2` and `pattern_angle`, plus any
-#'   mappings in `...`.
+#' @returns `aes_cheysson()` returns an aesthetic mapping of `x` to `pattern`,
+#'   plus any mappings in `...`.
 #' @export
 aes_cheysson <- function(x, ...) {
-  ggplot2::aes(fill = {{ x }}, pattern = {{ x }}, pattern_fill = {{ x }},
-               pattern_fill2 = {{ x }}, pattern_angle = {{ x }}, ...)
+  if (!isTRUE(.ggcheysson_env$noted_aes_cheysson)) {
+    .ggcheysson_env$noted_aes_cheysson <- TRUE
+    message(
+      "aes_cheysson() is deprecated: use aes(pattern = x) with scale_cheysson(), ",
+      "which no longer needs the other aesthetics.\n",
+      "This message is shown once per session."
+    )
+  }
+  ggplot2::aes(pattern = {{ x }}, ...)
 }

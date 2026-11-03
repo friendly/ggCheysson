@@ -148,7 +148,7 @@ cheysson_pattern_scale <- function(palette, reverse, aesthetic, scale_name, para
                                    na.value = pattern_na_value(aesthetic), ...) {
   pal <- get_palette(palette, ggCheysson::cheysson_patterns)
   values <- cheysson_pattern_params(pal$patterns, param)
-  ggplot2::discrete_scale(
+  cheysson_discrete_scale(
     aesthetics = aesthetic,
     scale_name = scale_name,
     palette = function(n) select_values(values, n, pal$type, reverse = reverse),
