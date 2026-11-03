@@ -4,7 +4,35 @@ Started 2026-09-14. Completed tasks from the run-up to the first CRAN release (1
 `theme_cheysson()` title-size fix, the CRAN (re)submission checklist, and the Git/Dropbox
 corruption incident log - are archived in [`dev/TASKS-v1.0.1.md`](TASKS-v1.0.1.md).
 
-## Handoff (2026-09-28, desktop -> laptop) - resume here
+## Handoff (2026-11-03) - resume here
+
+Everything below is pushed (`master` at `8e0aa21` or later). Done 2026-11-03:
+
+- **Version bumped to 1.2.0** in `DESCRIPTION` (Date 2026-11-03), with a NEWS 1.2.0 section ("In development" +
+  "Bug fixes"). Nothing user-facing for the pattern work is in `R/` yet.
+- **`register_pattern()` tried with the development versions** (gridpattern 1.6.0.4, ggpattern 1.4.0.2, installed
+  here from GitHub): POC 3, `dev/custom-pattern/poc_register.R`. Registered defaults now reach ggpattern, user values
+  override them, and `pattern_units` is handled. The `.onLoad()` wrapper was tested in a throwaway package and works
+  whether gridpattern loads before or after. Details and results: `dev/ggpattern-issue.md`, "Tried with the
+  development versions" and "What this means for 1.2.0". See the 1.2.0 item under "New development" below.
+- **Feedback sent to Trevor** in ggpattern#154 (text in `dev/ggpattern-issue.md`). Waiting for his reply on the
+  legend keys and the out-of-date `register_pattern()` help.
+- **Bug fixed (also in CRAN 1.1.0):** the palette functions and scales failed with "object 'cheysson_palettes' not
+  found" unless ggCheysson was attached, e.g. `ggCheysson::scale_fill_cheysson()` or use from another package.
+  Package code now uses `ggCheysson::<dataset>`, and `R/globals.R` is gone (`93e825b`).
+- **testthat set up** (3rd edition, `callr` in Suggests). `tests/testthat/test-unattached.R` runs the palette
+  functions in a fresh session where ggCheysson isn't attached; it fails before the fix and passes after
+  (`8e0aa21`). `R CMD check --as-cran` passes: 1 NOTE, only because pandoc isn't on the shell's `PATH`.
+- **Note:** this machine's R library now has the development build of ggCheysson (1.2.0) and the GitHub versions of
+  gridpattern and ggpattern, not the CRAN ones.
+
+Open decisions:
+- [ ] **Patch release 1.1.1** for the data lookup bug, rather than waiting for 1.2.0? If yes, set the version back to
+  1.1.1 for now, and move the NEWS bug-fix entry to a 1.1.1 section.
+- [ ] Does 1.2.0 wait for the new gridpattern/ggpattern on CRAN (Trevor said no sooner than about a month after
+  2026-11-01), or ship with the option-based fallback?
+
+## Handoff (2026-09-28, desktop -> laptop)
 
 - **Laptop first**: `git clone https://github.com/friendly/ggCheysson.git` into `C:\R\Projects`,
   repoint shortcut/RStudio; then rename the Dropbox copy to `ggCheysson-old` (see "Git/Dropbox"
@@ -871,12 +899,27 @@ two). No CRAN deadline applies (package too new). See the entry under "New devel
     `ggplot(d, aes(x, y, pattern = g)) + geom_col_pattern() + scale_cheysson("1886_28")`.
     To document: mapped `pattern_fill`, `pattern_angle` etc. are ignored for Cheysson swatches.
     This makes (6) `geom_cheysson()` unnecessary.
+  - **POC 3, `dev/custom-pattern/poc_register.R` (2026-11-03)**: POC 2 rebuilt on gridpattern's new
+    `register_pattern()` (development versions; not on CRAN yet). This changes (1) and (2):
+    - (1) Register each swatch with `gridpattern::register_pattern()` in `.onLoad()`, inside
+      `rlang::on_package_load("gridpattern", ...)`, falling back to the option on older gridpattern (Trevor's code,
+      in `dev/ggpattern-issue.md`). Tested in a throwaway package: works whether gridpattern loads before or after
+      ggCheysson; the package owns the swatches; unloading removes them, so no `.onUnload()`. Needs `rlang` in
+      `Imports`. Names can't contain `":"`, so they're now `"<palette>-<element>"`, e.g. `"1886_28-1"`.
+    - (2) Spacing/density become registered `defaults`, used as they arrive; no more scaling relative to ggpattern's
+      0.05 / 0.2. A user's `pattern_spacing` now *replaces* the swatch's value: a behaviour change to document. The
+      per-swatch relative spacing for `1888_27` etc. can be done the same way, with different defaults per swatch.
+    - `pattern_units` is passed on to gridpattern, and the default spacing follows it (0.025 snpc, else 0.3 cm).
+    - The option-based fallback gets the generic 0.05 / 0.2, so it still needs the old relative scaling.
+    - Open: legend keys draw nearly solid with large user overrides (`poc_register_bars_override.png`); asked Trevor.
   - [ ] (5) Rewrite the "Combining Colors and Patterns" vignette around it; try `geom_sf_pattern` maps.
   - [ ] (6) Later, maybe: `geom_cheysson(mapping, palette, geom = "col")` (Trevor's idea 2) to set
     `pattern = "cheysson"`, `fill = NA`, density/spacing defaults and the scale. Convenient, but a
     `geom_*()` that also adds a scale is unidiomatic in ggplot2 (clashes with a user's own scale) - only
     if the remaining boilerplate still feels heavy.
-  - [ ] Reply to Trevor on #154 with thanks + the POC result.
+  - [x] Reply to Trevor on #154 with thanks + the POC result. Follow-up questions in October (`dev/ggpattern-reply.md`,
+    answered in commit comments on `1337f53`); feedback on `register_pattern()` sent in #154 on 2026-11-03.
+  - [ ] Read Trevor's answer on the legend keys and the `register_pattern()` help text.
 
 - [ ] Another post from Tom Shanley: https://observablehq.com/@tomshanley/cheysson-grid discusses
   "programmatically creating gridlines like those used these charts created by Émile Cheysson in
