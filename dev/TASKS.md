@@ -6,7 +6,7 @@ corruption incident log - are archived in [`dev/TASKS-v1.0.1.md`](TASKS-v1.0.1.m
 
 ## Handoff (2026-11-03) - resume here
 
-Everything below is pushed (`master` at `62f3337` or later). Done 2026-11-03:
+Everything below is pushed (`master` at `a69adc7` or later). Done 2026-11-03:
 
 - **Version bumped to 1.2.0** in `DESCRIPTION` (Date 2026-11-03), with a NEWS 1.2.0 section ("New features" +
   "Bug fixes").
@@ -23,6 +23,11 @@ Everything below is pushed (`master` at `62f3337` or later). Done 2026-11-03:
   once-per-session note, so old code keeps working. The "Combining Colors and Patterns" vignette is updated (new
   "Line spacing and density" section; "Why both are needed" removed; subsetting now via the individual scales).
   Tests: `tests/testthat/test-scale_cheysson.R`.
+- **Guerry maps vignette (`a69adc7`):** the Donations (`1883_31`) and Regions (`1883_30`) pattern maps now use
+  `aes(pattern = ...) + geom_sf_pattern() + scale_cheysson()`. Donations now draws the palette's own stripe angles;
+  Regions' stripes are a little wider apart (0.025 vs the 0.02 it set). **The Literacy map (`1888_27`) keeps the
+  individual scales:** with `scale_cheysson()` its four striped quintiles look identical, since all swatches share
+  one spacing; the vignette says so. Needs per-swatch spacing, item (2) under the 1.2.0 item.
 - **ggplot2 `scale_name` deprecation:** all the package's discrete scales go through `cheysson_discrete_scale()`
   (`R/utils.R`), which passes `scale_name` only to ggplot2 < 3.5.0 (where it's required; no minimum ggplot2 version
   is declared).
@@ -93,9 +98,9 @@ Two-mode plan for 1.2.0 (see the 1.2.0 item under "New development" for the desi
 - [x] Tests for both modes: the spacing logic is tested directly for both, so it runs with any installed ggpattern;
   registration and drawing are tested with whatever is installed. All pass with both version sets (run with the CRAN
   versions first on `.libPaths()` for relative mode). `R CMD check --as-cran`: 1 NOTE (pandoc).
-- [ ] Mention the swatches / new `scale_cheysson()` in the README and the other vignettes ("Combining Colors and
-  Patterns" is done, `62f3337`). The Guerry maps vignette still uses the individual scales; try
-  `geom_sf_pattern()` + `scale_cheysson()` there.
+- [ ] Mention the swatches / new `scale_cheysson()` in the README and the "Getting Started" vignette. Done:
+  "Combining Colors and Patterns" (`62f3337`), and the Guerry maps vignette's Donations and Regions maps
+  (`a69adc7`); its Literacy map waits for per-swatch spacing (item (2) below).
 - [ ] Once the new versions are on CRAN: require them in a later release and drop the old mode.
 
 ## Handoff (2026-09-28, desktop -> laptop)
@@ -951,7 +956,10 @@ two). No CRAN deadline applies (package too new). See the entry under "New devel
     error, which seems clear enough.
   - [ ] (2) Spacing: multiply the geom's `pattern_spacing` by each swatch's *relative* spacing, so
     sequential palettes like `1888_27` (denser hatching per step) draw right at any size - removes the
-    Literacy map's `scale_pattern_spacing_manual()` workaround.
+    Literacy map's `scale_pattern_spacing_manual()` workaround. **Next step (2026-11-03):** confirmed needed; the
+    Literacy map can't use `scale_cheysson()` without it. With registered defaults this means a different default
+    spacing per swatch, from the specs' own `pattern_spacing` (rescaled: the vignette uses 0.3 x the measured values).
+    Decide how it combines with a user's `pattern_spacing` in each mode.
   - [ ] (3) Dots / dashes the aesthetics can't express: `1891_25`'s white-dot fills (cf. `hatch`'s
     `circle` special) and dashed stripes - needs the extraction to record them first.
   - [x] (4) Rewrite `scale_cheysson()` as a single scale returning swatch names, keeping
@@ -981,8 +989,8 @@ two). No CRAN deadline applies (package too new). See the entry under "New devel
     - The option-based fallback gets the generic 0.05 / 0.2, so it still needs the old relative scaling.
     - Open: legend keys draw nearly solid with large user overrides (`poc_register_bars_override.png`); asked Trevor.
   - [ ] (5) Rewrite the "Combining Colors and Patterns" vignette around it; try `geom_sf_pattern` maps.
-    **Vignette done 2026-11-03 (`62f3337`)**, for bar charts. Still to do: a `geom_sf_pattern()` map with
-    `scale_cheysson()` (here or in the Guerry maps vignette).
+    **Vignette done 2026-11-03 (`62f3337`)**, for bar charts. `geom_sf_pattern()` maps with `scale_cheysson()` are
+    in the Guerry maps vignette (`a69adc7`).
   - [ ] (6) Later, maybe: `geom_cheysson(mapping, palette, geom = "col")` (Trevor's idea 2) to set
     `pattern = "cheysson"`, `fill = NA`, density/spacing defaults and the scale. Convenient, but a
     `geom_*()` that also adds a scale is unidiomatic in ggplot2 (clashes with a user's own scale) - only
