@@ -29,19 +29,27 @@ else the \code{ggpattern_geometry_funcs} option.
 }
 \section{Spacing and density}{
 
-Each swatch draws its lines with a spacing of 0.025 and a density of 0.3,
-unless these are set. What setting \code{pattern_spacing} / \code{pattern_density}
+The swatches of a palette keep the relative line spacings Cheysson used,
+e.g. the hatching of sequential palette \code{"1888_27"} gets denser at each
+step. Each swatch's spacing is a \emph{base spacing}, by default 0.025, times its
+spacing relative to the palette's typical (median) hatched swatch, as
+measured on the plates (limited to between half and twice the base, since
+some measurements are unreliable). All swatches draw their lines with a
+density of 0.3.
+
+\code{pattern_spacing} sets the base spacing, so the palette keeps its
+proportions, and \code{pattern_density} sets the density. What setting them
 means depends on the installed version of 'ggpattern':
 \itemize{
-\item \strong{ggpattern >= 1.4.0}: they replace the swatch's values, in
-\code{pattern_units}.
+\item \strong{ggpattern >= 1.4.0}: they replace the default base spacing and
+density, in \code{pattern_units}.
 \item \strong{Earlier versions} (which always supply their own defaults of 0.05 and
-0.2): they adjust the swatch's values relative to those defaults, e.g.
+0.2): they adjust the defaults relative to those values, e.g.
 \code{pattern_spacing = 0.1} doubles the spacing.
 }
 
 Either way, with \code{pattern_units} other than \code{"snpc"} (e.g. \code{"cm"}), the
-swatch's own spacing is 0.3 cm, converted to those units.
+default base spacing is 0.3 cm, converted to those units.
 
 Set them only when needed, since code that sets them may draw differently
 when 'ggpattern' is updated.

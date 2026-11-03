@@ -197,29 +197,20 @@ print(p3)
 
 Now let's recreate the literacy map using Cheysson's signature hatching patterns. Palette
 `1888_27` is one of his sequential hatching scales: diagonal stripes that get progressively
-denser, ending in a solid fill. Mapping `pattern_spacing` as well as `pattern` reproduces that
-light-to-dark progression across the five quintiles. The palette's spacings were measured on
-Cheysson's small swatches, so they are scaled down here to suit a full-page map:
+denser, ending in a solid fill.
+
+`scale_cheysson()` does all the work: each element of the palette is a *swatch*, a `ggpattern`
+pattern that draws its color, hatching, angle and line spacing together, so only the `pattern`
+aesthetic needs to be mapped, and one scale gives each quintile a swatch (see
+`vignette("combining-colors-patterns", package = "ggCheysson")`). The swatches keep the
+relative line spacings measured on Cheysson's plate, which gives the light-to-dark progression
+across the quintiles. The geom's `fill` shows only for missing values:
 
 ```{r map-literacy-pattern, fig.height=7, fig.width=8}
 # Literacy with patterns - quintessential Cheysson style
-lit_spacing <- cheysson_pattern_params(cheysson_pattern("1888_27"), "pattern_spacing")
-
-p3b <- ggplot(france_data) +
-  geom_sf_pattern(
-    aes(fill = Literacy_quint,
-        pattern = Literacy_quint,
-        pattern_fill = Literacy_quint,
-        pattern_spacing = Literacy_quint),
-    pattern_density = 0.3,
-    pattern_colour = NA,
-    color = "black",
-    linewidth = 0.4
-  ) +
-  scale_fill_cheysson_pattern("1888_27", na.value = "grey90") +
-  scale_pattern_fill_cheysson("1888_27", na.value = "grey90") +
-  scale_pattern_type_cheysson("1888_27") +
-  scale_pattern_spacing_manual(values = 0.3 * lit_spacing) +
+p3b <- ggplot(france_data, aes(pattern = Literacy_quint)) +
+  geom_sf_pattern(fill = "grey90", color = "black", linewidth = 0.4) +
+  scale_cheysson("1888_27", name = "Literacy\nQuintile") +
   labs(
     title = "Literacy Rates",
     subtitle = "Sequential hatching, sparse to solid (quintiles)",
@@ -228,20 +219,10 @@ p3b <- ggplot(france_data) +
   theme_cheysson_map() +
   theme(
     legend.position = "right"
-  ) +
-  guides(
-    fill = guide_legend(title = "Literacy\nQuintile"),
-    pattern = guide_legend(title = "Literacy\nQuintile"),
-    pattern_spacing = guide_legend(title = "Literacy\nQuintile"),
-    pattern_fill = guide_legend(title = "Literacy\nQuintile")
   )
 
 print(p3b)
 ```
-
-This map uses the individual pattern scales rather than `scale_cheysson()` (used for the next
-maps), because `scale_cheysson()`'s swatches all draw their lines with the same spacing, so its
-four striped quintiles would look alike.
 
 ### Charitable Donations (Category Palette)
 
@@ -277,13 +258,8 @@ print(p4)
 The combination of colors and patterns was a hallmark of the Albums. Palette `1883_31` is one
 of Cheysson's diverging schemes: two hues, each used both solid and hatched. As in his maps,
 the solid fills mark the extremes and the hatched versions the milder classes on each side.
-Diverging palettes are stored in that low-to-high order, so they apply directly.
-
-Here `scale_cheysson()` does all the work: each element of the palette is a *swatch*, a
-`ggpattern` pattern that draws its color, hatching and angle together, so only the `pattern`
-aesthetic needs to be mapped, and one scale gives each class a swatch (see
-`vignette("combining-colors-patterns", package = "ggCheysson")`). The geom's `fill` shows only
-for missing values:
+Diverging palettes are stored in that low-to-high order, so `scale_cheysson()` applies them
+directly:
 
 ```{r map-donations-pattern, fig.height=7, fig.width=8}
 # Donations: solid at the extremes, hatched in the middle
@@ -533,8 +509,7 @@ This vignette demonstrated:
 - Joining spatial and tabular data
 - Creating choropleth maps with various Cheysson color palettes
 - **Using Cheysson hatching patterns combined with colors** - a signature feature of the Albums
-- Applying `geom_sf_pattern()` with `scale_cheysson()`, or with the individual pattern scales,
-  for authentic Cheysson cartography
+- Applying `geom_sf_pattern()` with `scale_cheysson()` for authentic Cheysson cartography
 - Using `theme_cheysson_map()` for cartographic styling
 - Displaying multiple maps in faceted layouts
 - Combining historical data with historical cartographic styles

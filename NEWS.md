@@ -11,6 +11,12 @@
   What setting `pattern_spacing` / `pattern_density` means depends on the ggpattern version; see
   `?cheysson_swatches`.
 
+* The swatches of a palette keep the relative line spacings measured on Cheysson's plates, so
+  e.g. the hatching of sequential palette `1888_27` gets denser at each step. `pattern_spacing`
+  sets the spacing of a palette's typical swatch, and the others keep their proportions. The
+  literacy map in the Guerry maps vignette now uses `scale_cheysson()` instead of mapping
+  `pattern_spacing` with `scale_pattern_spacing_manual()`.
+
 * Experimental `scale_cheysson()` is now a single discrete scale for the `pattern` aesthetic that
   gives each level a swatch, so a palette needs only
   `aes(pattern = x) + geom_col_pattern() + scale_cheysson("1886_28")`. It used to return five

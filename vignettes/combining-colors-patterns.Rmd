@@ -114,7 +114,8 @@ ggCheysson registers each element of each palette as a `ggpattern` pattern of it
 element's properties together: its fill or paper color, hatch type, line colors and angle, as
 well as its own line spacing and density. So only one aesthetic needs to be mapped, `pattern`,
 and `scale_cheysson("1886_28")` is a single scale that gives each level of `country` one
-swatch. This draws the same plot as above:
+swatch. This draws essentially the same plot as above (the swatches' line spacings differ
+slightly, following Cheysson's; see [Line spacing and density](#line-spacing-and-density)):
 
 ```{r short-form}
 ggplot(trade, aes(country, exports, pattern = country)) +
@@ -195,12 +196,18 @@ ggplot(trade_na, aes(country, exports, pattern = country)) +
 
 ## Line spacing and density
 
-Each swatch draws its lines with a spacing of 0.025 and a density of 0.3, which suit plots of
-about this size. `pattern_spacing` and `pattern_density` in the geom change them for all the
-swatches, but what they mean depends on the version of `ggpattern`:
+The swatches of a palette keep the relative line spacings Cheysson used, measured on his
+plates: in a sequential palette such as `1888_27` the hatching gets denser at each step (see
+the literacy map in `vignette("guerry-maps", package = "ggCheysson")`). A palette's typical
+swatch has a spacing of 0.025, and all draw their lines with a density of 0.3, which suit
+plots of about this size.
 
-- **ggpattern 1.4.0 or later**: they replace the swatches' values, so
-  `pattern_spacing = 0.05` gives lines twice as far apart.
+`pattern_spacing` in the geom sets that typical spacing, and the other swatches keep their
+proportions to it; `pattern_density` sets the density. What they mean depends on the version
+of `ggpattern`:
+
+- **ggpattern 1.4.0 or later**: they replace the defaults, so `pattern_spacing = 0.05` gives
+  lines twice as far apart.
 - **Earlier versions**: these always supply their own values (0.05 and 0.2), so the swatches
   treat a setting as relative to those: `pattern_spacing = 0.1` gives lines twice as far apart.
 
@@ -230,10 +237,9 @@ ggplot(trade, aes(country, exports, fill = country, pattern = country,
 
 ## What is not included
 
-- All swatches use the same line spacing and density. The palettes' own spacings were measured
-  on Cheysson's small swatches and need rescaling for a full-size plot; see the literacy map in
-  `vignette("guerry-maps", package = "ggCheysson")` for mapping `pattern_spacing` with
-  `scale_pattern_spacing_manual()` and the individual scales.
+- Line widths: all swatches use the same density, so a hatching's darkness comes from its
+  spacing alone. A few palettes, such as `1891_19`, trade spacing against line width, and draw
+  less faithfully.
 - The scales are discrete. For continuous data, cut it into classes first, as Cheysson did.
 - For plots without patterns (`geom_col()`, `geom_point()`, ...), use `scale_fill_cheysson()`
   and `scale_color_cheysson()`, which use the palettes' colors only.

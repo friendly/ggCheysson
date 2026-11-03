@@ -23,18 +23,26 @@
 #' else the `ggpattern_geometry_funcs` option.
 #'
 #' @section Spacing and density:
-#' Each swatch draws its lines with a spacing of 0.025 and a density of 0.3,
-#' unless these are set. What setting `pattern_spacing` / `pattern_density`
+#' The swatches of a palette keep the relative line spacings Cheysson used,
+#' e.g. the hatching of sequential palette `"1888_27"` gets denser at each
+#' step. Each swatch's spacing is a *base spacing*, by default 0.025, times its
+#' spacing relative to the palette's typical (median) hatched swatch, as
+#' measured on the plates (limited to between half and twice the base, since
+#' some measurements are unreliable). All swatches draw their lines with a
+#' density of 0.3.
+#'
+#' `pattern_spacing` sets the base spacing, so the palette keeps its
+#' proportions, and `pattern_density` sets the density. What setting them
 #' means depends on the installed version of 'ggpattern':
 #'
-#' * **ggpattern >= 1.4.0**: they replace the swatch's values, in
-#'   `pattern_units`.
+#' * **ggpattern >= 1.4.0**: they replace the default base spacing and
+#'   density, in `pattern_units`.
 #' * **Earlier versions** (which always supply their own defaults of 0.05 and
-#'   0.2): they adjust the swatch's values relative to those defaults, e.g.
+#'   0.2): they adjust the defaults relative to those values, e.g.
 #'   `pattern_spacing = 0.1` doubles the spacing.
 #'
 #' Either way, with `pattern_units` other than `"snpc"` (e.g. `"cm"`), the
-#' swatch's own spacing is 0.3 cm, converted to those units.
+#' default base spacing is 0.3 cm, converted to those units.
 #'
 #' Set them only when needed, since code that sets them may draw differently
 #' when 'ggpattern' is updated.
@@ -44,7 +52,7 @@
 #' @seealso [cheysson_patterns], [scale_cheysson()]
 NULL
 
-# The swatch's own line spacing (in "snpc", and in absolute units) and density
+# The base line spacing (in "snpc", and in absolute units) and the density
 swatch_spacing <- 0.025
 swatch_spacing_cm <- 0.3
 swatch_density <- 0.3
@@ -79,7 +87,27 @@ swatch_mode <- function() {
   if (!is.null(v) && v < "1.4.0") "relative" else "absolute"
 }
 
-# The swatch's own spacing in the user's pattern_units: the registered default in
+# Each swatch's line spacing relative to its palette's median hatched swatch, from the
+# measured spacings, as a vector named by swatch. Measured crosshatch spacings count
+# the lines of both directions, so they are doubled to compare with stripes (gridpattern's
+# crosshatch spacing is per direction). Limited to [0.5, 2]: some palettes have
+# placeholder (1883_21: all 1) or implausible (1891_19: 0.006 to 0.2, traded against
+# line widths of 2 to 54) values. Solids and swatches without a measurement get 1.
+swatch_spacing_ratios <- function() {
+  pats <- ggCheysson::cheysson_patterns
+  ratios <- lapply(names(pats), function(p) {
+    spacing <- vapply(pats[[p]]$patterns, function(s) {
+      if (s$type == "solid" || is.null(s$pattern_spacing)) return(NA_real_)
+      s$pattern_spacing * if (s$type == "crosshatch") 2 else 1
+    }, numeric(1))
+    r <- spacing / stats::median(spacing, na.rm = TRUE)
+    r[is.na(r)] <- 1
+    stats::setNames(pmin(pmax(r, 0.5), 2), paste0(p, "-", seq_along(r)))
+  })
+  unlist(ratios)
+}
+
+# The base spacing in the user's pattern_units: the registered default in
 # "absolute" mode, and the base that "relative" mode scales
 swatch_spacing_default <- function(params, gp = NULL) {
   units <- params$pattern_units %||% "snpc"
@@ -87,16 +115,17 @@ swatch_spacing_default <- function(params, gp = NULL) {
     grid::convertUnit(grid::unit(swatch_spacing_cm, "cm"), units, valueOnly = TRUE)
 }
 
-# Line spacing, density and units for gridpattern, from the pattern parameters
-swatch_line_params <- function(params, mode) {
+# Line spacing, density and units for gridpattern, from the pattern parameters and the
+# swatch's spacing ratio; pattern_spacing is the base spacing
+swatch_line_params <- function(params, mode, ratio = 1) {
   if (mode == "relative") {
-    # scale the swatch's own spacing in the same units, so legend keys (which get the
+    # scale the base spacing in the same units, so legend keys (which get the
     # same absolute value as the plot when units aren't "snpc") match the plot
-    list(spacing = swatch_spacing_default(params) * params$pattern_spacing / ggpattern_spacing,
+    list(spacing = ratio * swatch_spacing_default(params) * params$pattern_spacing / ggpattern_spacing,
          density = swatch_density * params$pattern_density / ggpattern_density,
          units = params$pattern_units %||% "snpc")
   } else {
-    list(spacing = params$pattern_spacing,
+    list(spacing = ratio * params$pattern_spacing,
          density = params$pattern_density,
          units = params$pattern_units %||% "snpc")
   }
@@ -104,6 +133,7 @@ swatch_line_params <- function(params, mode) {
 
 # A gridpattern geometry pattern function drawing any swatch, by name
 make_draw_swatch <- function(mode) {
+  ratios <- swatch_spacing_ratios()
   function(params, boundary_df, aspect_ratio, legend = FALSE) {
     spec <- swatch_spec(params$pattern)
     x <- boundary_df$x
@@ -112,7 +142,7 @@ make_draw_swatch <- function(mode) {
     bg_col <- if (spec$type == "solid" || !identical(spec$fill, "transparent")) spec$fill else swatch_paper
     bg <- grid::polygonGrob(x, y, id = id, gp = grid::gpar(fill = bg_col, col = NA))
     if (spec$type == "solid") return(bg)
-    line <- swatch_line_params(params, mode)
+    line <- swatch_line_params(params, mode, ratios[[sub("^.*::", "", params$pattern)]])
     lines <- gridpattern::patternGrob(
       if (spec$type == "crosshatch") "gridpattern::crosshatch" else "gridpattern::stripe",
       x = x, y = y, id = id, colour = NA,
