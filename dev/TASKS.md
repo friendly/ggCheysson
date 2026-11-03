@@ -6,10 +6,16 @@ corruption incident log - are archived in [`dev/TASKS-v1.0.1.md`](TASKS-v1.0.1.m
 
 ## Handoff (2026-11-03) - resume here
 
-Everything below is pushed (`master` at `8e0aa21` or later). Done 2026-11-03:
+Everything below is pushed (`master` at `e16b468` or later). Done 2026-11-03:
 
-- **Version bumped to 1.2.0** in `DESCRIPTION` (Date 2026-11-03), with a NEWS 1.2.0 section ("In development" +
-  "Bug fixes"). Nothing user-facing for the pattern work is in `R/` yet.
+- **Version bumped to 1.2.0** in `DESCRIPTION` (Date 2026-11-03), with a NEWS 1.2.0 section ("New features" +
+  "Bug fixes").
+- **Swatch registration is in the package (`e16b468`), experimental:** `R/swatches.R`, `?cheysson_swatches`,
+  `tests/testthat/test-swatches.R`. All 134 palette elements are registered as patterns named
+  `"<palette>-<element>"`, in two modes (see "Two-mode plan" below). Usable now as
+  `aes(pattern = x) + geom_col_pattern() + scale_pattern_manual(values = paste0("1886_28-", 1:6))`; no
+  ggCheysson scale for them yet. Also: `rlang` in Imports, and a local `%||%` (`R/utils.R`), which fixes
+  `cheysson_pattern_params()` on R < 4.4.
 - **`register_pattern()` tried with the development versions** (gridpattern 1.6.0.4, ggpattern 1.4.0.2, installed
   here from GitHub): POC 3, `dev/custom-pattern/poc_register.R`. Registered defaults now reach ggpattern, user values
   override them, and `pattern_units` is handled. The `.onLoad()` wrapper was tested in a throwaway package and works
@@ -41,9 +47,21 @@ Two-mode plan for 1.2.0 (see the 1.2.0 item under "New development" for the desi
   user's `pattern_spacing` is a relative adjustment (0.1 = twice as wide).
 - **Registration:** `register_pattern()` whenever gridpattern has it (CRAN's 1.5.1 does), else the
   `ggpattern_geometry_funcs` option, inside `rlang::on_package_load()` (tested; see the 1.2.0 item).
-- [ ] Decide how the swatch function picks the mode. Simplest: `utils::packageVersion("ggpattern") >= "1.4.0"`,
-  checked once when the swatches are registered. Also decide what grid-only use (`patternGrob()`,
-  no ggpattern) does.
+- [x] **Implemented 2026-11-03 (`e16b468`)** in `R/swatches.R`, with the modes called "absolute" (new) and
+  "relative" (old):
+  - **Mode:** `swatch_mode()` gives "relative" if ggpattern is installed and < 1.4.0, else "absolute" (so grid-only
+    use with no ggpattern is absolute). Checked once, when the swatches are registered.
+  - **Registered defaults:** absolute mode registers the swatch's 0.025 / 0.3 (spacing follows `pattern_units`:
+    0.3 cm in absolute units). Relative mode registers 0.05 / 0.2, so grid-only use, which gets them, scales to the
+    swatch's own values.
+  - **Relative mode respects `pattern_units` after all:** it scales the swatch's spacing *in the user's units*
+    (0.3 cm for `"cm"`) by `pattern_spacing / 0.05`. Converting to snpc instead made the legend keys a pale tint
+    with `"cm"`, because 1.3.1 gives keys the same absolute value as the plot.
+  - **Checked:** the proof-of-concept plots, rendered through the package with the same titles, are byte-identical
+    to the committed PNGs: all six in absolute mode; in relative mode all but the override plot, which differs by
+    design (0.06 / 0.6 is relative there).
+  - Swatch values are the same for all swatches (0.025 / 0.3), defined once at the top of `R/swatches.R`. The specs'
+    own `pattern_spacing` / `pattern_density` fields aren't used yet (see (2) under the 1.2.0 item).
 - [x] **Tested 2026-11-03: the CRAN combination** (gridpattern 1.5.1 + ggpattern 1.3.1, installed in a separate
   library; both proofs of concept run from copies so the committed PNGs weren't touched):
   - **Old mode works unchanged:** `poc_simplified.R`'s bar and map PNGs are byte-identical to the committed ones.
@@ -60,9 +78,12 @@ Two-mode plan for 1.2.0 (see the 1.2.0 item under "New development" for the desi
   - So: register with `register_pattern()` in both modes (when gridpattern has it); only the spacing/density
     handling differs. The mode can't be told from the values that arrive (0.05 / 0.2 could be the user's), so it has
     to come from ggpattern's version.
-- [ ] Document that `pattern_spacing` / `pattern_density` mean different things in the two modes (absolute vs relative),
-  and recommend setting them only when needed. Add tests for both modes (the new one is skipped unless ggpattern
-  >= 1.4.0 is installed).
+- [x] Document that `pattern_spacing` / `pattern_density` mean different things in the two modes, and recommend
+  setting them only when needed: in `?cheysson_swatches`, "Spacing and density".
+- [x] Tests for both modes: the spacing logic is tested directly for both, so it runs with any installed ggpattern;
+  registration and drawing are tested with whatever is installed. All pass with both version sets (run with the CRAN
+  versions first on `.libPaths()` for relative mode). `R CMD check --as-cran`: 1 NOTE (pandoc).
+- [ ] Mention the swatches in the vignettes/README once there's a scale for them (item (4) below).
 - [ ] Once the new versions are on CRAN: require them in a later release and drop the old mode.
 
 ## Handoff (2026-09-28, desktop -> laptop)
@@ -911,9 +932,10 @@ two). No CRAN deadline applies (package too new). See the entry under "New devel
   `geom_col_pattern(aes(pattern_type = x), pattern = "cheysson", fill = NA) +
   scale_pattern_type_manual(values = paste0("1886_28:", 1:4))`; legend keys show full swatches;
   1883_30's two-color crosshatch correct. Plan:
-  - [ ] (1) Package the pattern: `R/pattern_cheysson.R`; register in `.onLoad`, *appending* to any
-    user-set `ggpattern_geometry_funcs`; handle an `NA` / unknown swatch name (nullGrob + scale
-    `na.value`). gridpattern is in Suggests already.
+  - [x] (1) Package the pattern. **Done 2026-11-03 (`e16b468`)** as one pattern per swatch (POC 3), in
+    `R/swatches.R`; see "Two-mode plan" in the 2026-11-03 handoff. The option fallback appends to any user-set
+    `ggpattern_geometry_funcs`. Not done: an `NA` / unknown swatch name (nullGrob + scale `na.value`); that belongs
+    with the scale in (4).
   - [ ] (2) Spacing: multiply the geom's `pattern_spacing` by each swatch's *relative* spacing, so
     sequential palettes like `1888_27` (denser hatching per step) draw right at any size - removes the
     Literacy map's `scale_pattern_spacing_manual()` workaround.
