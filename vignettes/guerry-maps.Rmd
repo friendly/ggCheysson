@@ -239,6 +239,10 @@ p3b <- ggplot(france_data) +
 print(p3b)
 ```
 
+This map uses the individual pattern scales rather than `scale_cheysson()` (used for the next
+maps), because `scale_cheysson()`'s swatches all draw their lines with the same spacing, so its
+four striped quintiles would look alike.
+
 ### Charitable Donations (Category Palette)
 
 ```{r map-donations, fig.height=7, fig.width=8}
@@ -273,25 +277,19 @@ print(p4)
 The combination of colors and patterns was a hallmark of the Albums. Palette `1883_31` is one
 of Cheysson's diverging schemes: two hues, each used both solid and hatched. As in his maps,
 the solid fills mark the extremes and the hatched versions the milder classes on each side.
-Diverging palettes are stored in that low-to-high order, so the Cheysson pattern scales apply
-it directly:
+Diverging palettes are stored in that low-to-high order, so they apply directly.
+
+Here `scale_cheysson()` does all the work: each element of the palette is a *swatch*, a
+`ggpattern` pattern that draws its color, hatching and angle together, so only the `pattern`
+aesthetic needs to be mapped, and one scale gives each class a swatch (see
+`vignette("combining-colors-patterns", package = "ggCheysson")`). The geom's `fill` shows only
+for missing values:
 
 ```{r map-donations-pattern, fig.height=7, fig.width=8}
 # Donations: solid at the extremes, hatched in the middle
-p4b <- ggplot(france_data) +
-  geom_sf_pattern(
-    aes(fill = Donations_cat,
-        pattern = Donations_cat,
-        pattern_fill = Donations_cat),
-    pattern_density = 0.35,
-    pattern_spacing = 0.025,
-    pattern_colour = NA,
-    color = "black",
-    linewidth = 0.4
-  ) +
-  scale_fill_cheysson_pattern("1883_31", na.value = "grey90") +
-  scale_pattern_fill_cheysson("1883_31", na.value = "grey90") +
-  scale_pattern_type_cheysson("1883_31") +
+p4b <- ggplot(france_data, aes(pattern = Donations_cat)) +
+  geom_sf_pattern(fill = "grey90", color = "black", linewidth = 0.4) +
+  scale_cheysson("1883_31", name = "Donations\nLevel") +
   labs(
     title = "Charitable Donations",
     subtitle = "Authentic Cheysson-style patterns and colors (quartiles)",
@@ -300,11 +298,6 @@ p4b <- ggplot(france_data) +
   theme_cheysson_map() +
   theme(
     legend.position = "right"
-  ) +
-  guides(
-    fill = guide_legend(title = "Donations\nLevel"),
-    pattern = guide_legend(title = "Donations\nLevel"),
-    pattern_fill = guide_legend(title = "Donations\nLevel")
   )
 
 print(p4b)
@@ -431,35 +424,18 @@ print(p8)
 One of Cheysson's most distinctive techniques was using varied hatching patterns to distinguish regions.
 Most category palettes are solid colors only, so we pick one that has hatching: `1883_30` has
 red and blue stripes, a red-and-blue crosshatch, black stripes and solid black - one for each of the five regions.
-Mapping `pattern_angle` as well draws the stripes at the angles used in the original plate, and
-`pattern_fill2` gives the crosshatch its second color.
+The swatches of `scale_cheysson()` draw the stripes at the angles used in the original plate, and
+the crosshatch in its two colors.
 
 ```{r map-regions-pattern, fig.height=7, fig.width=8}
 # Regions with distinctive patterns - very characteristic of Cheysson
-p8b <- ggplot(france_data) +
-  geom_sf_pattern(
-    aes(fill = .data[[region_col]],
-        pattern = .data[[region_col]],
-        pattern_fill = .data[[region_col]],
-        pattern_fill2 = .data[[region_col]],
-        pattern_angle = .data[[region_col]]),
-    pattern_colour = NA,
-    pattern_density = 0.3,
-    pattern_spacing = 0.02,
-    color = "black",
-    linewidth = 0.5
-  ) +
-  scale_fill_cheysson_pattern("1883_30") +
-  scale_pattern_fill_cheysson("1883_30") +
-  scale_pattern_fill2_cheysson("1883_30") +
-  scale_pattern_type_cheysson("1883_30") +
-  scale_pattern_angle_cheysson("1883_30") +
+p8b <- ggplot(france_data, aes(pattern = .data[[region_col]])) +
+  geom_sf_pattern(color = "black", linewidth = 0.5) +
+  scale_cheysson("1883_30", name = "Region") +
   labs(
     title = "Regions of France",
     subtitle = "Distinctive hatching patterns for each region - authentic Albums style",
-    caption = "Source: Guerry package",
-    fill = "Region", pattern = "Region", pattern_fill = "Region",
-    pattern_fill2 = "Region", pattern_angle = "Region"
+    caption = "Source: Guerry package"
   ) +
   theme_cheysson_map() +
   theme(
@@ -557,7 +533,8 @@ This vignette demonstrated:
 - Joining spatial and tabular data
 - Creating choropleth maps with various Cheysson color palettes
 - **Using Cheysson hatching patterns combined with colors** - a signature feature of the Albums
-- Applying `geom_sf_pattern()` with pattern scales for authentic Cheysson cartography
+- Applying `geom_sf_pattern()` with `scale_cheysson()`, or with the individual pattern scales,
+  for authentic Cheysson cartography
 - Using `theme_cheysson_map()` for cartographic styling
 - Displaying multiple maps in faceted layouts
 - Combining historical data with historical cartographic styles
