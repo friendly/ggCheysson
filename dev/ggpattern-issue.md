@@ -197,8 +197,8 @@ Not from Trevor directly, so check these against the current docs.
 
 - **Our swatch names won't work as they are.** `register_pattern()` documents that `name` "must not contain
   `":"`", and the code aborts if it does, because `"owner::name"` is the qualified form. The proof of concept uses `"<palette>:<element>"`, so
-  use another separator, e.g. `"1886_28-1"` (which doesn't start with a letter either; I haven't checked
-  whether that matters).
+  use another separator, e.g. `"1886_28-1"`. (Checked 2026-11-03: names like that, starting with a digit
+  and containing `-`, are accepted.)
 - **Signature:** `register_pattern(name, fn, kind = "geometry", defaults, unprefixed, env)`. A geometry
   `fn` is `function(params, boundary_df, aspect_ratio, legend)`.
 - **`defaults`** is a named list of `pattern_`-prefixed values, or functions `function(params, gp)`, e.g.
@@ -210,7 +210,8 @@ Not from Trevor directly, so check these against the current docs.
   Packages should refer to patterns by qualified name, e.g. `"gridpattern::stripe"`, including when the
   drawing function delegates lines to `stripe` / `crosshatch`.
 - **Legend keys:** in ggpattern 1.4.0 these are scaled by gridpattern, so relative lengths scale together.
-  Re-check the swatch legend keys.
+  (Checked 2026-11-03: the keys look right with the swatch defaults, but nearly solid with large user overrides.
+  See "Tried with the development versions".)
 
 ## Tried with the development versions (2026-11-03)
 
@@ -242,11 +243,19 @@ gridpattern 1.6.0.4 and ggpattern 1.4.0.2, installed from GitHub. The script is 
 ## What this means for 1.2.0 (my reading)
 
 1. Register each swatch with `register_pattern()`, using the `.onLoad()` code above, under a name without `":"`.
+   **Shown to work (2026-11-03)** with names like `"1886_28-1"`, in `poc_register.R`. That script registers at
+   top level, so the `.onLoad()` / `rlang::on_package_load()` wrapper is still untested.
 2. Give each swatch its spacing and density as registered `defaults`, and use those values directly in place
    of today's relative scaling against ggpattern's 0.05 and 0.2. A user's `pattern_spacing` then overrides the
    swatch, rather than adjusting it, which is a behaviour change to decide on and document.
+   **Shown to work (2026-11-03):** the defaults apply and user values override them. Deciding on and documenting
+   the behaviour change is still to do.
 3. Until the development versions reach CRAN, ggpattern 1.3.1 still supplies its own values, so the registered
    defaults won't apply through it. Either wait to release 1.2.0, or keep the relative scaling as a fallback
-   and require newer versions in `DESCRIPTION` once they're out.
-4. Check how `pattern_units` affects the built-in spacing.
+   and require newer versions in `DESCRIPTION` once they're out. **Still open.** As of 2026-11-03, the dev versions
+   aren't on CRAN. The fallback is feasible: the option-based registration still works under the dev versions
+   (`poc_simplified.R`).
+4. Check how `pattern_units` affects the built-in spacing. **Not yet checked.**
 5. Tell Trevor how `register_pattern()` works for a family of 134 patterns, since he asked for feedback.
+   **Not yet sent.** Points to include: it worked for all 134 swatches; the help text about ggpattern defaults is
+   out of date; legend keys are nearly solid with large overrides.
