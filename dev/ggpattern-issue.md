@@ -212,6 +212,33 @@ Not from Trevor directly, so check these against the current docs.
 - **Legend keys:** in ggpattern 1.4.0 these are scaled by gridpattern, so relative lengths scale together.
   Re-check the swatch legend keys.
 
+## Tried with the development versions (2026-11-03)
+
+gridpattern 1.6.0.4 and ggpattern 1.4.0.2, installed from GitHub. The script is `dev/custom-pattern/poc_register.R`.
+
+- **The old proof of concept still works.** `poc_simplified.R` (registered through `options(ggpattern_geometry_funcs = ...)`)
+  runs unchanged, and its PNGs are byte-identical to the committed ones.
+- **`register_pattern()` works for all 134 swatches**, each registered with `defaults = list(pattern_spacing = 0.025,
+  pattern_density = 0.30)`. Names like `"1886_28-1"` are accepted, so a leading digit and `-` are fine.
+- **Registered defaults do apply through ggpattern.** The pattern function recorded what it received:
+
+  | Case | Received spacing / density |
+  |---|---|
+  | `geom_col_pattern()`, no arguments | 0.025 / 0.30 (the swatch defaults) |
+  | `geom_col_pattern(pattern_spacing = 0.06, pattern_density = 0.6)` | 0.06 / 0.6 (the user's values) |
+  | `geom_sf_pattern()`, no arguments | 0.025 / 0.30 |
+  | `gridpattern::grid.pattern("1883_30-3", ...)`, without ggpattern | 0.025 / 0.30 |
+
+  The `register_pattern()` help still says ggpattern "supplies its own (generic) defaults ... so these will mainly be
+  used with `grid.pattern()`". That's out of date as of these versions, which is worth telling Trevor.
+- **No relative scaling is needed**, so the `0.025 * pattern_spacing / 0.05` arithmetic is gone.
+- **Delegating to `"gridpattern::stripe"` / `"gridpattern::crosshatch"` by qualified name works.**
+- **The output matches the old proof of concept:** the bars and map look the same apart from the titles.
+- **Legend keys with large overrides:** with `pattern_spacing = 0.06, pattern_density = 0.6`, the England and Germany keys
+  draw as almost solid colour and the France key nearly so, while the bars are clearly striped
+  (`poc_register_bars_override.png`). The default keys look right. This is probably ggpattern 1.4.0's legend-key scaling;
+  ask Trevor.
+
 ## What this means for 1.2.0 (my reading)
 
 1. Register each swatch with `register_pattern()`, using the `.onLoad()` code above, under a name without `":"`.
