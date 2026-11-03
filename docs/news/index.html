@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggCheysson</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +37,21 @@
       <small>Source: <a href="https://github.com/friendly/ggCheysson/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.2.0" id="ggcheysson-120">ggCheysson 1.2.0<a class="anchor" aria-label="anchor" href="#ggcheysson-120"></a></h2>
+<div class="section level3">
+<h3 id="new-features-1-2-0">New features<a class="anchor" aria-label="anchor" href="#new-features-1-2-0"></a></h3>
+<ul><li><p>Experimental: each element of each pattern palette is now a ggpattern pattern of its own, a <em>swatch</em>, named <code>"&lt;palette&gt;-&lt;element&gt;"</code> (e.g. <code>"1886_28-1"</code>), that draws its fill, hatch type, line colors and angle together. A whole color-and-pattern palette then needs only <code>aes(pattern = x)</code> and a pattern scale, e.g. <code>scale_pattern_manual(values = paste0("1886_28-", 1:6))</code>: no <code><a href="../reference/scale_cheysson.html">aes_cheysson()</a></code>, and no <code>pattern_spacing</code> / <code>pattern_density</code> arguments. The swatches are registered when gridpattern loads, with <code><a href="https://trevorldavis.com/R/gridpattern/reference/register_pattern.html" class="external-link">gridpattern::register_pattern()</a></code> where available. What setting <code>pattern_spacing</code> / <code>pattern_density</code> means depends on the ggpattern version; see <code><a href="../reference/cheysson_swatches.html">?cheysson_swatches</a></code>.</p></li>
+<li><p>The swatches of a palette keep the relative line spacings measured on Cheysson’s plates, so e.g. the hatching of sequential palette <code>1888_27</code> gets denser at each step. <code>pattern_spacing</code> sets the spacing of a palette’s typical swatch, and the others keep their proportions. The literacy map in the Guerry maps vignette now uses <code><a href="../reference/scale_cheysson.html">scale_cheysson()</a></code> instead of mapping <code>pattern_spacing</code> with <code><a href="https://trevorldavis.com/R/ggpattern/reference/scale_pattern_manual.html" class="external-link">scale_pattern_spacing_manual()</a></code>.</p></li>
+<li><p>Experimental <code><a href="../reference/scale_cheysson.html">scale_cheysson()</a></code> is now a single discrete scale for the <code>pattern</code> aesthetic that gives each level a swatch, so a palette needs only <code>aes(pattern = x) + geom_col_pattern() + scale_cheysson("1886_28")</code>. It used to return five scales, one per pattern aesthetic. Its <code>aesthetics</code> argument is ignored, with a warning; to use only some of a palette’s properties, use the individual <code>scale_*_cheysson()</code> scales. <code>na.value</code> is now a pattern (default <code>"none"</code>, which shows the geom’s own <code>fill</code>) rather than a color. <code>aes_cheysson(x)</code> is deprecated and now the same as <code>aes(pattern = x)</code>, so existing code using both keeps working. The “Combining Colors and Patterns” vignette is updated.</p></li>
+<li><p>The package’s discrete scales no longer pass <code>scale_name</code> to <code><a href="https://ggplot2.tidyverse.org/reference/discrete_scale.html" class="external-link">ggplot2::discrete_scale()</a></code> with ggplot2 3.5.0 or later, where it is deprecated.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-1-2-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-2-0"></a></h3>
+<ul><li><p>The palette functions and scales (<code><a href="../reference/cheysson_pal.html">cheysson_pal()</a></code>, <code><a href="../reference/cheysson_pattern.html">cheysson_pattern()</a></code>, <code><a href="../reference/scale_color_cheysson.html">scale_fill_cheysson()</a></code>, <code><a href="../reference/scale_cheysson.html">scale_cheysson()</a></code>, etc.) and <code><a href="../reference/cheysson_name.html">cheysson_name()</a></code> failed with “object ‘cheysson_palettes’ not found” (or <code>'cheysson_patterns'</code>, <code>'cheysson_labels'</code>) unless ggCheysson was attached with <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code>, e.g. when called as <code><a href="../reference/scale_color_cheysson.html">ggCheysson::scale_fill_cheysson()</a></code> or from another package. They now find the palette data either way.</p></li>
+<li><p><code><a href="../reference/cheysson_pattern_params.html">cheysson_pattern_params()</a></code> used <code>%||%</code>, which base R has only from 4.4.0, so it failed on the earlier R versions the package supports (R &gt;= 3.5). The package now has its own.</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.1.0" id="ggcheysson-110">ggCheysson 1.1.0<a class="anchor" aria-label="anchor" href="#ggcheysson-110"></a></h2><p class="text-muted">CRAN release: 2026-10-01</p>
 <div class="section level3">

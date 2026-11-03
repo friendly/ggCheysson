@@ -13,6 +13,7 @@ features:
 - **Themes**: Period-appropriate ggplot2 themes
 
 ``` r
+
 library(ggCheysson)
 library(ggplot2)
 ```
@@ -22,6 +23,7 @@ library(ggplot2)
 For vignettes and documents, we recommend using the `showtext` method:
 
 ``` r
+
 # Load Cheysson fonts
 load_cheysson_fonts(method = "showtext")
 showtext::showtext_auto()
@@ -32,6 +34,7 @@ showtext::showtext_auto()
 The package includes 25 color palettes organized into four types:
 
 ``` r
+
 # View all available palettes
 head(list_cheysson_pals(), 10)
 #>       name       type album plate n_colors
@@ -69,6 +72,7 @@ list_cheysson_pals("category")
 ### Scatterplot with Sequential Palette
 
 ``` r
+
 # Create data with continuous variable
 data(iris)
 
@@ -92,6 +96,7 @@ print(p1)
 ### Scatterplot with Categorical Palette
 
 ``` r
+
 p2 <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   geom_point(size = 3, alpha = 0.8) +
   scale_color_cheysson("1881_22") +
@@ -114,6 +119,7 @@ The package integrates with `ggpattern` to recreate Cheysson’s
 distinctive hatching patterns.
 
 ``` r
+
 # Simple bar chart with colors only
 data(mtcars)
 cyl_summary <- aggregate(mpg ~ cyl, data = mtcars, FUN = mean)
@@ -136,7 +142,16 @@ print(p3)
 
 ![](getting-started_files/figure-html/barplot-simple-1.png)
 
+Cheysson’s palettes combine colors with hatching: each element has a
+fill or paper color, a hatch type (solid, stripe or crosshatch), line
+colors and an angle. With `ggpattern`,
+[`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+applies a whole palette in one step: map the variable to the `pattern`
+aesthetic, and the scale gives each level one of Cheysson’s swatches,
+with all of its properties:
+
 ``` r
+
 # Bar chart with patterns
 if (requireNamespace("ggpattern", quietly = TRUE)) {
   library(ggpattern)
@@ -146,17 +161,9 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
     exports = c(2350, 3120, 2680, 1890)
   )
 
-  p4 <- ggplot(trade_data, aes(reorder(country, exports), exports, fill = country)) +
-    geom_col_pattern(
-      aes(pattern = country, pattern_fill = country),
-      pattern_density = 0.3,
-      pattern_spacing = 0.025,
-      color = "black",
-      linewidth = 0.8
-    ) +
-    scale_fill_cheysson_pattern("1886_28") +
-    scale_pattern_fill_cheysson("1886_28") +
-    scale_pattern_type_cheysson("1886_28") +
+  p4 <- ggplot(trade_data, aes(reorder(country, exports), exports, pattern = country)) +
+    geom_col_pattern(color = "black", linewidth = 0.8) +
+    scale_cheysson("1886_28") +
     labs(
       title = "Export Statistics by Nation",
       subtitle = "Annual Trade Volume (1885)",
@@ -172,9 +179,16 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
 
 ![](getting-started_files/figure-html/barplot-patterns-1.png)
 
+See
+[`vignette("combining-colors-patterns", package = "ggCheysson")`](https://friendly.github.io/ggCheysson/articles/combining-colors-patterns.md)
+for more: legends, ordered palettes, missing values, line spacing, and
+the individual pattern scales, which give control over each property
+separately.
+
 ## Line Graphs: Time Series
 
 ``` r
+
 # Create time series data
 years <- 1880:1900
 railway_data <- data.frame(
@@ -212,6 +226,7 @@ print(p5)
 ## Stacked Area Chart
 
 ``` r
+
 # Stacked area for composition over time
 industry_data <- data.frame(
   year = rep(1880:1895, 4),
@@ -245,6 +260,7 @@ print(p6)
 ## Faceted Plots: Small Multiples
 
 ``` r
+
 # Regional comparison using facets
 set.seed(42)
 regional_data <- data.frame(
@@ -282,6 +298,7 @@ print(p7)
 ## Grouped Bar Chart with Patterns
 
 ``` r
+
 if (requireNamespace("ggpattern", quietly = TRUE)) {
   # Infrastructure comparison
   infrastructure <- data.frame(
@@ -295,26 +312,14 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
     )
   )
 
-  p8 <- ggplot(infrastructure, aes(region, length, fill = type)) +
-    geom_col_pattern(
-      aes(pattern = type, pattern_fill = type),
-      position = "dodge",
-      pattern_density = 0.35,
-      pattern_spacing = 0.02,
-      color = "black",
-      linewidth = 0.5
-    ) +
-    scale_fill_cheysson_pattern("1881_12") +
-    scale_pattern_fill_cheysson("1881_12") +
-    scale_pattern_type_cheysson("1881_12") +
+  p8 <- ggplot(infrastructure, aes(region, length, pattern = type)) +
+    geom_col_pattern(position = "dodge", color = "black", linewidth = 0.5) +
+    scale_cheysson("1881_12", name = "Type") +
     labs(
       title = "Transportation Network Comparison",
       subtitle = "Infrastructure Development by Region (1890)",
       x = "Region",
-      y = "Network Extent (hundreds of km)",
-      fill = "Type",
-      pattern = "Type",
-      pattern_fill = "Type"
+      y = "Network Extent (hundreds of km)"
     ) +
     theme_cheysson() +
     theme(legend.position = "right")
@@ -328,6 +333,7 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
 ## Map-Style Visualization
 
 ``` r
+
 # Simulated geographic data (dept-level statistics)
 set.seed(123)
 departments <- data.frame(
@@ -359,6 +365,7 @@ print(p9)
 ### Diverging Palette
 
 ``` r
+
 # Show temperature anomalies with diverging palette
 temp_data <- data.frame(
   year = 1880:1897,
@@ -411,7 +418,10 @@ The ggCheysson package provides:
   /
   [`scale_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md) -
   Apply color palettes
-- `scale_pattern_*_cheysson()` - Apply pattern fills
+- [`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md) -
+  Apply a color-and-pattern palette with `ggpattern`, in one step
+- `scale_pattern_*_cheysson()` - Apply single pattern properties (hatch
+  type, line color, angle, …)
 - [`theme_cheysson()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson.md) -
   Complete Cheysson theme
 - [`load_cheysson_fonts()`](https://friendly.github.io/ggCheysson/reference/load_cheysson_fonts.md) -
@@ -420,6 +430,7 @@ The ggCheysson package provides:
 ### Available Palettes
 
 ``` r
+
 # Count by type
 table(sapply(cheysson_palettes, function(x) x$type))
 #> 

@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggCheysson</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,7 +69,7 @@
                         <h4 data-toc-skip class="author">Michael
 Friendly</h4>
             
-            <h4 data-toc-skip class="date">2026-10-01</h4>
+            <h4 data-toc-skip class="date">2026-11-03</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/friendly/ggCheysson/blob/HEAD/vignettes/combining-colors-patterns.Rmd" class="external-link"><code>vignettes/combining-colors-patterns.Rmd</code></a></small>
       <div class="d-none name"><code>combining-colors-patterns.Rmd</code></div>
@@ -77,10 +77,11 @@ Friendly</h4>
 
     
     
-<p><strong>Experimental.</strong> The functions described here,
-<code><a href="../reference/scale_cheysson.html">scale_cheysson()</a></code> and <code><a href="../reference/scale_cheysson.html">aes_cheysson()</a></code>, are new
-in ggCheysson 1.1.0, and their interface may change in a future
-version.</p>
+<p><strong>Experimental.</strong> <code><a href="../reference/scale_cheysson.html">scale_cheysson()</a></code> is new
+in ggCheysson 1.1.0, and was changed in 1.2.0 to a single scale using
+the <em>swatches</em> described below; its interface may change again.
+In 1.2.0, <code><a href="../reference/scale_cheysson.html">aes_cheysson()</a></code> is deprecated: it is now the same
+as <code>aes(pattern = x)</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/friendly/ggCheysson" class="external-link">ggCheysson</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -160,82 +161,53 @@ values:</p>
 <p><img src="combining-colors-patterns_files/figure-html/long-form-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
-<h2 id="the-short-way-aes_cheysson-and-scale_cheysson">The short way: <code>aes_cheysson()</code> and
-<code>scale_cheysson()</code><a class="anchor" aria-label="anchor" href="#the-short-way-aes_cheysson-and-scale_cheysson"></a>
+<h2 id="the-short-way-swatches-and-scale_cheysson">The short way: swatches and <code>scale_cheysson()</code><a class="anchor" aria-label="anchor" href="#the-short-way-swatches-and-scale_cheysson"></a>
 </h2>
-<p>Two functions collapse the five mappings and the five scales to one
-line each:</p>
-<ul>
-<li>
-<code>aes_cheysson(country)</code> maps <code>country</code> to all
-five aesthetics. Other mappings can be given as further arguments,
-e.g. <code>aes_cheysson(country, x = year, y = value)</code>.</li>
-<li>
-<code>scale_cheysson("1886_28")</code> returns the five scales as a
-list, which <code>+</code> adds to the plot in one step. All of them
-take their values from the same palette elements, so each level of
-<code>country</code> gets one complete historical swatch.</li>
-</ul>
-<p>This draws the same plot as above:</p>
+<p>ggCheysson registers each element of each palette as a
+<code>ggpattern</code> pattern of its own, a <em>swatch</em>, named
+<code>"&lt;palette&gt;-&lt;element&gt;"</code>
+(e.g. <code>"1886_28-1"</code>). A swatch draws all of the element’s
+properties together: its fill or paper color, hatch type, line colors
+and angle, as well as its own line spacing and density. So only one
+aesthetic needs to be mapped, <code>pattern</code>, and
+<code>scale_cheysson("1886_28")</code> is a single scale that gives each
+level of <code>country</code> one swatch. This draws essentially the
+same plot as above (the swatches’ line spacings differ slightly,
+following Cheysson’s; see <a href="#line-spacing-and-density">Line
+spacing and density</a>):</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">trade</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">exports</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/geom-docs.html" class="external-link">geom_col_pattern</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="../reference/scale_cheysson.html">aes_cheysson</a></span><span class="op">(</span><span class="va">country</span><span class="op">)</span>,</span>
-<span>    pattern_colour <span class="op">=</span> <span class="cn">NA</span>, pattern_density <span class="op">=</span> <span class="fl">0.3</span>, pattern_spacing <span class="op">=</span> <span class="fl">0.025</span>,</span>
-<span>    colour <span class="op">=</span> <span class="st">"black"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">trade</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">exports</span>, pattern <span class="op">=</span> <span class="va">country</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/geom-docs.html" class="external-link">geom_col_pattern</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/scale_cheysson.html">scale_cheysson</a></span><span class="op">(</span><span class="st">"1886_28"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Exports by Nation, 1885"</span>, x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Thousands of francs"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_cheysson.html">theme_cheysson</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="combining-colors-patterns_files/figure-html/short-form-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
-<p>Settings that are better fixed than mapped stay in the geom:
-<code>pattern_density</code> and <code>pattern_spacing</code> (how thick
-and how close the lines are), <code>pattern_colour = NA</code> (no
-outlines around the hatch lines), and the outline
-<code>colour</code>.</p>
-<div class="section level3">
-<h3 id="why-both-are-needed">Why both are needed<a class="anchor" aria-label="anchor" href="#why-both-are-needed"></a>
-</h3>
-<p>A scale does nothing for an aesthetic the plot doesn’t map. Here only
-<code>fill</code> and <code>pattern</code> are mapped, so
-<code><a href="../reference/scale_cheysson.html">scale_cheysson()</a></code>’s other scales have no effect, and
-<code>ggpattern</code> falls back to its default grey hatch lines and
-angle:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">trade</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">exports</span>, fill <span class="op">=</span> <span class="va">country</span>, pattern <span class="op">=</span> <span class="va">country</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/geom-docs.html" class="external-link">geom_col_pattern</a></span><span class="op">(</span>pattern_colour <span class="op">=</span> <span class="cn">NA</span>, pattern_density <span class="op">=</span> <span class="fl">0.3</span>, pattern_spacing <span class="op">=</span> <span class="fl">0.025</span>,</span>
-<span>                   colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/scale_cheysson.html">scale_cheysson</a></span><span class="op">(</span><span class="st">"1886_28"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Only fill and pattern mapped"</span>, x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Thousands of francs"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/theme_cheysson.html">theme_cheysson</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="combining-colors-patterns_files/figure-html/partial-mapping-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
-</div>
+<p>The other pattern aesthetics, such as <code>pattern_fill</code> or
+<code>pattern_angle</code>, aren’t needed, and a swatch ignores them if
+they are mapped or set. The exceptions are <code>pattern_spacing</code>
+and <code>pattern_density</code>, which change how close and how thick
+the lines are; see <a href="#line-spacing-and-density">Line spacing and
+density</a> below.</p>
 </div>
 <div class="section level2">
 <h2 id="legends">Legends<a class="anchor" aria-label="anchor" href="#legends"></a>
 </h2>
-<p>Arguments to <code><a href="../reference/scale_cheysson.html">scale_cheysson()</a></code> such as <code>name</code>
-and <code>labels</code> are passed to every scale. With the same title,
-<code>ggplot2</code> merges the legends of all the aesthetics into one,
-whose keys show the full swatches. Here a sequential palette,
-<code>1881_12</code>, whose three steps are hatchings of increasing
-density in a single color, distinguishes three kinds of transport:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p>There is one scale, so there is one legend, and its keys show the
+full swatches. Arguments to <code><a href="../reference/scale_cheysson.html">scale_cheysson()</a></code> such as
+<code>name</code> and <code>labels</code> go to that scale. Here a
+sequential palette, <code>1881_12</code>, whose three steps are
+hatchings of increasing density in a single color, distinguishes three
+kinds of transport:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">infrastructure</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  region <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"North"</span>, <span class="st">"South"</span>, <span class="st">"East"</span>, <span class="st">"West"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
 <span>  type   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Road"</span>, <span class="st">"Canal"</span>, <span class="st">"Rail"</span><span class="op">)</span>, <span class="fl">4</span><span class="op">)</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Road"</span>, <span class="st">"Canal"</span>, <span class="st">"Rail"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">250</span>, <span class="fl">300</span>, <span class="fl">450</span>,  <span class="fl">250</span>, <span class="fl">400</span>, <span class="fl">350</span>,  <span class="fl">300</span>, <span class="fl">200</span>, <span class="fl">500</span>,  <span class="fl">250</span>, <span class="fl">350</span>, <span class="fl">400</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">infrastructure</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">region</span>, <span class="va">length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/geom-docs.html" class="external-link">geom_col_pattern</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="../reference/scale_cheysson.html">aes_cheysson</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span>,</span>
-<span>    position <span class="op">=</span> <span class="st">"dodge"</span>,</span>
-<span>    pattern_colour <span class="op">=</span> <span class="cn">NA</span>, pattern_density <span class="op">=</span> <span class="fl">0.35</span>, pattern_spacing <span class="op">=</span> <span class="fl">0.02</span>,</span>
-<span>    colour <span class="op">=</span> <span class="st">"black"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">infrastructure</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">region</span>, <span class="va">length</span>, pattern <span class="op">=</span> <span class="va">type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/geom-docs.html" class="external-link">geom_col_pattern</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span>, colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/scale_cheysson.html">scale_cheysson</a></span><span class="op">(</span><span class="st">"1881_12"</span>, name <span class="op">=</span> <span class="st">"Network"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Transportation Networks by Region"</span>, x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Hundreds of km"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_cheysson.html">theme_cheysson</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -252,19 +224,15 @@ elements spread over the whole palette, keeping both ends.</p>
 <p>Palette <code>1883_31</code> is diverging: two hues, each used solid
 and hatched. As in Cheysson’s maps, the solid fills mark the extremes
 and the hatched versions the milder classes:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">opinion</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  response <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Strongly against"</span>, <span class="st">"Against"</span>, <span class="st">"For"</span>, <span class="st">"Strongly for"</span><span class="op">)</span>,</span>
 <span>                    levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Strongly against"</span>, <span class="st">"Against"</span>, <span class="st">"For"</span>, <span class="st">"Strongly for"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  percent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">18</span>, <span class="fl">27</span>, <span class="fl">34</span>, <span class="fl">21</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">opinion</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">response</span>, <span class="va">percent</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/geom-docs.html" class="external-link">geom_col_pattern</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="../reference/scale_cheysson.html">aes_cheysson</a></span><span class="op">(</span><span class="va">response</span><span class="op">)</span>,</span>
-<span>    pattern_colour <span class="op">=</span> <span class="cn">NA</span>, pattern_density <span class="op">=</span> <span class="fl">0.35</span>, pattern_spacing <span class="op">=</span> <span class="fl">0.025</span>,</span>
-<span>    colour <span class="op">=</span> <span class="st">"black"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">opinion</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">response</span>, <span class="va">percent</span>, pattern <span class="op">=</span> <span class="va">response</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/geom-docs.html" class="external-link">geom_col_pattern</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/scale_cheysson.html">scale_cheysson</a></span><span class="op">(</span><span class="st">"1883_31"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"A Diverging Palette"</span>, x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Percent"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_cheysson.html">theme_cheysson</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -274,56 +242,83 @@ and the hatched versions the milder classes:</p>
 <div class="section level2">
 <h2 id="missing-values">Missing values<a class="anchor" aria-label="anchor" href="#missing-values"></a>
 </h2>
-<p>Missing values get no hatching and a plain fill, set by
-<code>na.value</code> (default <code>"grey80"</code>):</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<p>Missing values get the pattern <code>na.value</code>, by default
+<code>"none"</code>: no swatch, so the bar shows the geom’s own
+<code>fill</code>. Since every swatch covers the geom’s fill, setting
+<code>fill</code> in the geom sets the color for missing values
+only:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trade_na</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">trade</span>, <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>country <span class="op">=</span> <span class="cn">NA</span>, exports <span class="op">=</span> <span class="fl">1500</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">trade_na</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">exports</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/geom-docs.html" class="external-link">geom_col_pattern</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="../reference/scale_cheysson.html">aes_cheysson</a></span><span class="op">(</span><span class="va">country</span><span class="op">)</span>,</span>
-<span>    pattern_colour <span class="op">=</span> <span class="cn">NA</span>, pattern_density <span class="op">=</span> <span class="fl">0.3</span>, pattern_spacing <span class="op">=</span> <span class="fl">0.025</span>,</span>
-<span>    colour <span class="op">=</span> <span class="st">"black"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/scale_cheysson.html">scale_cheysson</a></span><span class="op">(</span><span class="st">"1886_28"</span>, na.value <span class="op">=</span> <span class="st">"grey90"</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">trade_na</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">exports</span>, pattern <span class="op">=</span> <span class="va">country</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/geom-docs.html" class="external-link">geom_col_pattern</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"grey90"</span>, colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/scale_cheysson.html">scale_cheysson</a></span><span class="op">(</span><span class="st">"1886_28"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Exports by Nation, 1885"</span>, x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Thousands of francs"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_cheysson.html">theme_cheysson</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="combining-colors-patterns_files/figure-html/missing-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
-<h2 id="applying-only-some-aesthetics">Applying only some aesthetics<a class="anchor" aria-label="anchor" href="#applying-only-some-aesthetics"></a>
+<h2 id="line-spacing-and-density">Line spacing and density<a class="anchor" aria-label="anchor" href="#line-spacing-and-density"></a>
 </h2>
-<p>To use only some of the palette’s properties, choose them with
-<code>aesthetics</code>, and map only those. Here the bars keep the
-palette’s hatch types and line colors, but not its angles:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p>The swatches of a palette keep the relative line spacings Cheysson
+used, measured on his plates: in a sequential palette such as
+<code>1888_27</code> the hatching gets denser at each step (see the
+literacy map in
+<code><a href="../articles/guerry-maps.html">vignette("guerry-maps", package = "ggCheysson")</a></code>). A
+palette’s typical swatch has a spacing of 0.025, and all draw their
+lines with a density of 0.3, which suit plots of about this size.</p>
+<p><code>pattern_spacing</code> in the geom sets that typical spacing,
+and the other swatches keep their proportions to it;
+<code>pattern_density</code> sets the density. What they mean depends on
+the version of <code>ggpattern</code>:</p>
+<ul>
+<li>
+<strong>ggpattern 1.4.0 or later</strong>: they replace the
+defaults, so <code>pattern_spacing = 0.05</code> gives lines twice as
+far apart.</li>
+<li>
+<strong>Earlier versions</strong>: these always supply their own
+values (0.05 and 0.2), so the swatches treat a setting as relative to
+those: <code>pattern_spacing = 0.1</code> gives lines twice as far
+apart.</li>
+</ul>
+<p>So code that sets them may draw differently when
+<code>ggpattern</code> is updated; set them only when needed. See
+<code><a href="../reference/cheysson_swatches.html">?cheysson_swatches</a></code> for details, including
+<code>pattern_units</code>.</p>
+</div>
+<div class="section level2">
+<h2 id="using-only-some-of-a-palettes-properties">Using only some of a palette’s properties<a class="anchor" aria-label="anchor" href="#using-only-some-of-a-palettes-properties"></a>
+</h2>
+<p>A swatch always applies all of an element’s properties. To use only
+some of them, use the individual scales,
+<code><a href="../reference/scale_fill_cheysson_pattern.html">scale_fill_cheysson_pattern()</a></code> and the
+<code>scale_pattern_*_cheysson()</code> family, as in <a href="#the-long-way-one-mapping-and-one-scale-per-property">the long
+way</a> above, and map only the aesthetics you want. Here the bars keep
+the palette’s fills, hatch types and line colors, but not its
+angles:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">trade</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">exports</span>, fill <span class="op">=</span> <span class="va">country</span>, pattern <span class="op">=</span> <span class="va">country</span>,</span>
 <span>                  pattern_fill <span class="op">=</span> <span class="va">country</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/geom-docs.html" class="external-link">geom_col_pattern</a></span><span class="op">(</span>pattern_colour <span class="op">=</span> <span class="cn">NA</span>, pattern_density <span class="op">=</span> <span class="fl">0.3</span>, pattern_spacing <span class="op">=</span> <span class="fl">0.025</span>,</span>
 <span>                   colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/scale_cheysson.html">scale_cheysson</a></span><span class="op">(</span><span class="st">"1886_28"</span>, aesthetics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fill"</span>, <span class="st">"pattern"</span>, <span class="st">"pattern_fill"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/scale_fill_cheysson_pattern.html">scale_fill_cheysson_pattern</a></span><span class="op">(</span><span class="st">"1886_28"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/scale_pattern_cheysson.html">scale_pattern_type_cheysson</a></span><span class="op">(</span><span class="st">"1886_28"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/scale_pattern_cheysson.html">scale_pattern_fill_cheysson</a></span><span class="op">(</span><span class="st">"1886_28"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Without the palette's angles"</span>, x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Thousands of francs"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_cheysson.html">theme_cheysson</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="combining-colors-patterns_files/figure-html/subset-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
-<p>The individual scales, <code><a href="../reference/scale_fill_cheysson_pattern.html">scale_fill_cheysson_pattern()</a></code> and
-the <code>scale_pattern_*_cheysson()</code> family, remain available for
-full control over each aesthetic.</p>
 </div>
 <div class="section level2">
 <h2 id="what-is-not-included">What is not included<a class="anchor" aria-label="anchor" href="#what-is-not-included"></a>
 </h2>
 <ul>
-<li>
-<code>pattern_density</code> and <code>pattern_spacing</code> are
-not mapped by <code><a href="../reference/scale_cheysson.html">aes_cheysson()</a></code> or set by
-<code><a href="../reference/scale_cheysson.html">scale_cheysson()</a></code>. The palettes’ spacings were measured on
-Cheysson’s small swatches and need rescaling for a full-size plot; see
-the literacy map in
-<code><a href="../articles/guerry-maps.html">vignette("guerry-maps", package = "ggCheysson")</a></code> for mapping
-<code>pattern_spacing</code> with
-<code><a href="https://trevorldavis.com/R/ggpattern/reference/scale_pattern_manual.html" class="external-link">scale_pattern_spacing_manual()</a></code>.</li>
+<li>Line widths: all swatches use the same density, so a hatching’s
+darkness comes from its spacing alone. A few palettes, such as
+<code>1891_19</code>, trade spacing against line width, and draw less
+faithfully.</li>
 <li>The scales are discrete. For continuous data, cut it into classes
 first, as Cheysson did.</li>
 <li>For plots without patterns (<code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col()</a></code>,

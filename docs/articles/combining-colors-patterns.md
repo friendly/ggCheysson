@@ -1,13 +1,15 @@
 # Combining Colors and Patterns
 
-**Experimental.** The functions described here,
+**Experimental.**
 [`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
-and
-[`aes_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md),
-are new in ggCheysson 1.1.0, and their interface may change in a future
-version.
+is new in ggCheysson 1.1.0, and was changed in 1.2.0 to a single scale
+using the *swatches* described below; its interface may change again. In
+1.2.0,
+[`aes_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+is deprecated: it is now the same as `aes(pattern = x)`.
 
 ``` r
+
 library(ggCheysson)
 library(ggplot2)
 library(ggpattern)
@@ -24,6 +26,7 @@ Each element of a palette in `cheysson_patterns` is therefore a small
 bundle of properties. Here are the six elements of palette `1886_28`:
 
 ``` r
+
 pats <- cheysson_pattern("1886_28")
 data.frame(
   pattern       = cheysson_pattern_params(pats, "pattern_type"),
@@ -58,6 +61,7 @@ aesthetic. To apply a palette to a variable, each aesthetic needs both a
 **scale** that supplies its values:
 
 ``` r
+
 trade <- data.frame(
   country = c("France", "England", "Germany", "Italy"),
   exports = c(2350, 3120, 2680, 1890)
@@ -82,28 +86,23 @@ ggplot(trade, aes(country, exports)) +
 
 ![](combining-colors-patterns_files/figure-html/long-form-1.png)
 
-## The short way: `aes_cheysson()` and `scale_cheysson()`
+## The short way: swatches and `scale_cheysson()`
 
-Two functions collapse the five mappings and the five scales to one line
-each:
-
-- `aes_cheysson(country)` maps `country` to all five aesthetics. Other
-  mappings can be given as further arguments,
-  e.g. `aes_cheysson(country, x = year, y = value)`.
-- `scale_cheysson("1886_28")` returns the five scales as a list, which
-  `+` adds to the plot in one step. All of them take their values from
-  the same palette elements, so each level of `country` gets one
-  complete historical swatch.
-
-This draws the same plot as above:
+ggCheysson registers each element of each palette as a `ggpattern`
+pattern of its own, a *swatch*, named `"<palette>-<element>"`
+(e.g. `"1886_28-1"`). A swatch draws all of the element’s properties
+together: its fill or paper color, hatch type, line colors and angle, as
+well as its own line spacing and density. So only one aesthetic needs to
+be mapped, `pattern`, and `scale_cheysson("1886_28")` is a single scale
+that gives each level of `country` one swatch. This draws essentially
+the same plot as above (the swatches’ line spacings differ slightly,
+following Cheysson’s; see [Line spacing and
+density](#line-spacing-and-density)):
 
 ``` r
-ggplot(trade, aes(country, exports)) +
-  geom_col_pattern(
-    aes_cheysson(country),
-    pattern_colour = NA, pattern_density = 0.3, pattern_spacing = 0.025,
-    colour = "black"
-  ) +
+
+ggplot(trade, aes(country, exports, pattern = country)) +
+  geom_col_pattern(colour = "black") +
   scale_cheysson("1886_28") +
   labs(title = "Exports by Nation, 1885", x = NULL, y = "Thousands of francs") +
   theme_cheysson() +
@@ -112,55 +111,31 @@ ggplot(trade, aes(country, exports)) +
 
 ![](combining-colors-patterns_files/figure-html/short-form-1.png)
 
-Settings that are better fixed than mapped stay in the geom:
-`pattern_density` and `pattern_spacing` (how thick and how close the
-lines are), `pattern_colour = NA` (no outlines around the hatch lines),
-and the outline `colour`.
-
-### Why both are needed
-
-A scale does nothing for an aesthetic the plot doesn’t map. Here only
-`fill` and `pattern` are mapped, so
-[`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)’s
-other scales have no effect, and `ggpattern` falls back to its default
-grey hatch lines and angle:
-
-``` r
-ggplot(trade, aes(country, exports, fill = country, pattern = country)) +
-  geom_col_pattern(pattern_colour = NA, pattern_density = 0.3, pattern_spacing = 0.025,
-                   colour = "black") +
-  scale_cheysson("1886_28") +
-  labs(title = "Only fill and pattern mapped", x = NULL, y = "Thousands of francs") +
-  theme_cheysson() +
-  theme(legend.position = "none")
-```
-
-![](combining-colors-patterns_files/figure-html/partial-mapping-1.png)
+The other pattern aesthetics, such as `pattern_fill` or `pattern_angle`,
+aren’t needed, and a swatch ignores them if they are mapped or set. The
+exceptions are `pattern_spacing` and `pattern_density`, which change how
+close and how thick the lines are; see [Line spacing and
+density](#line-spacing-and-density) below.
 
 ## Legends
 
-Arguments to
+There is one scale, so there is one legend, and its keys show the full
+swatches. Arguments to
 [`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
-such as `name` and `labels` are passed to every scale. With the same
-title, `ggplot2` merges the legends of all the aesthetics into one,
-whose keys show the full swatches. Here a sequential palette, `1881_12`,
-whose three steps are hatchings of increasing density in a single color,
-distinguishes three kinds of transport:
+such as `name` and `labels` go to that scale. Here a sequential palette,
+`1881_12`, whose three steps are hatchings of increasing density in a
+single color, distinguishes three kinds of transport:
 
 ``` r
+
 infrastructure <- data.frame(
   region = rep(c("North", "South", "East", "West"), each = 3),
   type   = factor(rep(c("Road", "Canal", "Rail"), 4), levels = c("Road", "Canal", "Rail")),
   length = c(250, 300, 450,  250, 400, 350,  300, 200, 500,  250, 350, 400)
 )
 
-ggplot(infrastructure, aes(region, length)) +
-  geom_col_pattern(
-    aes_cheysson(type),
-    position = "dodge",
-    pattern_colour = NA, pattern_density = 0.35, pattern_spacing = 0.02,
-    colour = "black"
-  ) +
+ggplot(infrastructure, aes(region, length, pattern = type)) +
+  geom_col_pattern(position = "dodge", colour = "black") +
   scale_cheysson("1881_12", name = "Network") +
   labs(title = "Transportation Networks by Region", x = NULL, y = "Hundreds of km") +
   theme_cheysson()
@@ -181,18 +156,15 @@ As in Cheysson’s maps, the solid fills mark the extremes and the hatched
 versions the milder classes:
 
 ``` r
+
 opinion <- data.frame(
   response = factor(c("Strongly against", "Against", "For", "Strongly for"),
                     levels = c("Strongly against", "Against", "For", "Strongly for")),
   percent = c(18, 27, 34, 21)
 )
 
-ggplot(opinion, aes(response, percent)) +
-  geom_col_pattern(
-    aes_cheysson(response),
-    pattern_colour = NA, pattern_density = 0.35, pattern_spacing = 0.025,
-    colour = "black"
-  ) +
+ggplot(opinion, aes(response, percent, pattern = response)) +
+  geom_col_pattern(colour = "black") +
   scale_cheysson("1883_31") +
   labs(title = "A Diverging Palette", x = NULL, y = "Percent") +
   theme_cheysson() +
@@ -203,19 +175,18 @@ ggplot(opinion, aes(response, percent)) +
 
 ## Missing values
 
-Missing values get no hatching and a plain fill, set by `na.value`
-(default `"grey80"`):
+Missing values get the pattern `na.value`, by default `"none"`: no
+swatch, so the bar shows the geom’s own `fill`. Since every swatch
+covers the geom’s fill, setting `fill` in the geom sets the color for
+missing values only:
 
 ``` r
+
 trade_na <- rbind(trade, data.frame(country = NA, exports = 1500))
 
-ggplot(trade_na, aes(country, exports)) +
-  geom_col_pattern(
-    aes_cheysson(country),
-    pattern_colour = NA, pattern_density = 0.3, pattern_spacing = 0.025,
-    colour = "black"
-  ) +
-  scale_cheysson("1886_28", na.value = "grey90") +
+ggplot(trade_na, aes(country, exports, pattern = country)) +
+  geom_col_pattern(fill = "grey90", colour = "black") +
+  scale_cheysson("1886_28") +
   labs(title = "Exports by Nation, 1885", x = NULL, y = "Thousands of francs") +
   theme_cheysson() +
   theme(legend.position = "none")
@@ -223,18 +194,49 @@ ggplot(trade_na, aes(country, exports)) +
 
 ![](combining-colors-patterns_files/figure-html/missing-1.png)
 
-## Applying only some aesthetics
+## Line spacing and density
 
-To use only some of the palette’s properties, choose them with
-`aesthetics`, and map only those. Here the bars keep the palette’s hatch
-types and line colors, but not its angles:
+The swatches of a palette keep the relative line spacings Cheysson used,
+measured on his plates: in a sequential palette such as `1888_27` the
+hatching gets denser at each step (see the literacy map in
+[`vignette("guerry-maps", package = "ggCheysson")`](https://friendly.github.io/ggCheysson/articles/guerry-maps.md)).
+A palette’s typical swatch has a spacing of 0.025, and all draw their
+lines with a density of 0.3, which suit plots of about this size.
+
+`pattern_spacing` in the geom sets that typical spacing, and the other
+swatches keep their proportions to it; `pattern_density` sets the
+density. What they mean depends on the version of `ggpattern`:
+
+- **ggpattern 1.4.0 or later**: they replace the defaults, so
+  `pattern_spacing = 0.05` gives lines twice as far apart.
+- **Earlier versions**: these always supply their own values (0.05 and
+  0.2), so the swatches treat a setting as relative to those:
+  `pattern_spacing = 0.1` gives lines twice as far apart.
+
+So code that sets them may draw differently when `ggpattern` is updated;
+set them only when needed. See
+[`?cheysson_swatches`](https://friendly.github.io/ggCheysson/reference/cheysson_swatches.md)
+for details, including `pattern_units`.
+
+## Using only some of a palette’s properties
+
+A swatch always applies all of an element’s properties. To use only some
+of them, use the individual scales,
+[`scale_fill_cheysson_pattern()`](https://friendly.github.io/ggCheysson/reference/scale_fill_cheysson_pattern.md)
+and the `scale_pattern_*_cheysson()` family, as in [the long
+way](#the-long-way-one-mapping-and-one-scale-per-property) above, and
+map only the aesthetics you want. Here the bars keep the palette’s
+fills, hatch types and line colors, but not its angles:
 
 ``` r
+
 ggplot(trade, aes(country, exports, fill = country, pattern = country,
                   pattern_fill = country)) +
   geom_col_pattern(pattern_colour = NA, pattern_density = 0.3, pattern_spacing = 0.025,
                    colour = "black") +
-  scale_cheysson("1886_28", aesthetics = c("fill", "pattern", "pattern_fill")) +
+  scale_fill_cheysson_pattern("1886_28") +
+  scale_pattern_type_cheysson("1886_28") +
+  scale_pattern_fill_cheysson("1886_28") +
   labs(title = "Without the palette's angles", x = NULL, y = "Thousands of francs") +
   theme_cheysson() +
   theme(legend.position = "none")
@@ -242,22 +244,11 @@ ggplot(trade, aes(country, exports, fill = country, pattern = country,
 
 ![](combining-colors-patterns_files/figure-html/subset-1.png)
 
-The individual scales,
-[`scale_fill_cheysson_pattern()`](https://friendly.github.io/ggCheysson/reference/scale_fill_cheysson_pattern.md)
-and the `scale_pattern_*_cheysson()` family, remain available for full
-control over each aesthetic.
-
 ## What is not included
 
-- `pattern_density` and `pattern_spacing` are not mapped by
-  [`aes_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
-  or set by
-  [`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md).
-  The palettes’ spacings were measured on Cheysson’s small swatches and
-  need rescaling for a full-size plot; see the literacy map in
-  [`vignette("guerry-maps", package = "ggCheysson")`](https://friendly.github.io/ggCheysson/articles/guerry-maps.md)
-  for mapping `pattern_spacing` with
-  [`scale_pattern_spacing_manual()`](https://trevorldavis.com/R/ggpattern/reference/scale_pattern_manual.html).
+- Line widths: all swatches use the same density, so a hatching’s
+  darkness comes from its spacing alone. A few palettes, such as
+  `1891_19`, trade spacing against line width, and draw less faithfully.
 - The scales are discrete. For continuous data, cut it into classes
   first, as Cheysson did.
 - For plots without patterns

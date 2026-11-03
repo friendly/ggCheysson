@@ -1,5 +1,71 @@
 # Changelog
 
+## ggCheysson 1.2.0
+
+### New features
+
+- Experimental: each element of each pattern palette is now a ggpattern
+  pattern of its own, a *swatch*, named `"<palette>-<element>"`
+  (e.g. `"1886_28-1"`), that draws its fill, hatch type, line colors and
+  angle together. A whole color-and-pattern palette then needs only
+  `aes(pattern = x)` and a pattern scale,
+  e.g. `scale_pattern_manual(values = paste0("1886_28-", 1:6))`: no
+  [`aes_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md),
+  and no `pattern_spacing` / `pattern_density` arguments. The swatches
+  are registered when gridpattern loads, with
+  [`gridpattern::register_pattern()`](https://trevorldavis.com/R/gridpattern/reference/register_pattern.html)
+  where available. What setting `pattern_spacing` / `pattern_density`
+  means depends on the ggpattern version; see
+  [`?cheysson_swatches`](https://friendly.github.io/ggCheysson/reference/cheysson_swatches.md).
+
+- The swatches of a palette keep the relative line spacings measured on
+  Cheysson’s plates, so e.g. the hatching of sequential palette
+  `1888_27` gets denser at each step. `pattern_spacing` sets the spacing
+  of a palette’s typical swatch, and the others keep their proportions.
+  The literacy map in the Guerry maps vignette now uses
+  [`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+  instead of mapping `pattern_spacing` with
+  [`scale_pattern_spacing_manual()`](https://trevorldavis.com/R/ggpattern/reference/scale_pattern_manual.html).
+
+- Experimental
+  [`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+  is now a single discrete scale for the `pattern` aesthetic that gives
+  each level a swatch, so a palette needs only
+  `aes(pattern = x) + geom_col_pattern() + scale_cheysson("1886_28")`.
+  It used to return five scales, one per pattern aesthetic. Its
+  `aesthetics` argument is ignored, with a warning; to use only some of
+  a palette’s properties, use the individual `scale_*_cheysson()`
+  scales. `na.value` is now a pattern (default `"none"`, which shows the
+  geom’s own `fill`) rather than a color. `aes_cheysson(x)` is
+  deprecated and now the same as `aes(pattern = x)`, so existing code
+  using both keeps working. The “Combining Colors and Patterns” vignette
+  is updated.
+
+- The package’s discrete scales no longer pass `scale_name` to
+  [`ggplot2::discrete_scale()`](https://ggplot2.tidyverse.org/reference/discrete_scale.html)
+  with ggplot2 3.5.0 or later, where it is deprecated.
+
+### Bug fixes
+
+- The palette functions and scales
+  ([`cheysson_pal()`](https://friendly.github.io/ggCheysson/reference/cheysson_pal.md),
+  [`cheysson_pattern()`](https://friendly.github.io/ggCheysson/reference/cheysson_pattern.md),
+  [`scale_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md),
+  [`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md),
+  etc.) and
+  [`cheysson_name()`](https://friendly.github.io/ggCheysson/reference/cheysson_name.md)
+  failed with “object ‘cheysson_palettes’ not found” (or
+  `'cheysson_patterns'`, `'cheysson_labels'`) unless ggCheysson was
+  attached with [`library()`](https://rdrr.io/r/base/library.html), e.g.
+  when called as
+  [`ggCheysson::scale_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_color_cheysson.md)
+  or from another package. They now find the palette data either way.
+
+- [`cheysson_pattern_params()`](https://friendly.github.io/ggCheysson/reference/cheysson_pattern_params.md)
+  used `%||%`, which base R has only from 4.4.0, so it failed on the
+  earlier R versions the package supports (R \>= 3.5). The package now
+  has its own.
+
 ## ggCheysson 1.1.0
 
 CRAN release: 2026-10-01

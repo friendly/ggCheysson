@@ -1,6 +1,6 @@
 # ggCheysson
 
-Version 1.1.0; documentation built 2026-09-28
+Version 1.2.0; documentation built 2026-11-03
 
 The `ggCheysson` package brings the graphical styles of the *Albums de
 Statistique Graphique* to R and ggplot2.
@@ -51,6 +51,7 @@ by hand.
 Install the development version from GitHub or R-universe:
 
 ``` r
+
 # install.packages("remotes")
 remotes::install_github("friendly/ggCheysson")
 
@@ -63,6 +64,7 @@ install.packages("ggCheysson", repos = c("https://friendly.r-universe.dev"))
 For full functionality, install these packages:
 
 ``` r
+
 install.packages(c("ggpattern", "systemfonts"))
 ```
 
@@ -119,20 +121,17 @@ maps above](reference/figures/color-palettes.png)
 
 ### New here
 
-This initial version (1.0.1) of the package defined separate functions
-and `ggplot2` scales for color palettes and shading patterns.
-
-Combining them correctly in one plot took real fixing: the pattern
-scales
-([`scale_pattern_type_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md),
-[`scale_pattern_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md))
-had bugs that silently prevented pattern type and color from varying by
-category at all - now fixed, so colors and patterns can be layered
-together as shown below.
-
-A fully unified API that applies Cheysson’s actual *designed*
-color-pattern pairings in a single call, matching the combined look of
-the original Albums, is still in development.
+In the development version (1.2.0),
+[`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+(experimental) applies Cheysson’s actual *designed* color-pattern
+pairings in a single call. Each element of a palette is a *swatch*, a
+`ggpattern` pattern that draws its fill color, hatch type, line colors,
+angle and line spacing together, so a plot needs only `aes(pattern = x)`
+and one scale (see the examples below, and
+[`vignette("combining-colors-patterns")`](https://friendly.github.io/ggCheysson/articles/combining-colors-patterns.md)).
+The individual pattern scales,
+[`scale_pattern_type_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)
+and the rest, remain for control over each property.
 
 ## 🚀 Quick Start
 
@@ -143,6 +142,7 @@ Here are a few examples to get you started.
 Use the color palette of the 1881 Album, plate 4
 
 ``` r
+
 library(ggplot2)
 library(ggCheysson)
 
@@ -158,6 +158,7 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
 ### With Fonts and Theme
 
 ``` r
+
 # Load Cheysson fonts (once per session)
 load_cheysson_fonts(method = "showtext")
 # Enable showtext for rendering
@@ -189,12 +190,14 @@ same rate as the rest of the theme, rather than reading undersized as
 `base_size` grows:
 
 ``` r
+
 p1 + theme_cheysson(base_size = 14)
 ```
 
 ![](reference/figures/README-base-size-14-1.png)
 
 ``` r
+
 p1 + theme_cheysson(base_size = 16)
 ```
 
@@ -203,6 +206,7 @@ p1 + theme_cheysson(base_size = 16)
 ### Complete Cheysson Aesthetic (Colors + Patterns + Fonts)
 
 ``` r
+
 library(ggpattern)
 
 data <- data.frame(
@@ -210,26 +214,10 @@ data <- data.frame(
   value = c(15, 23, 18, 20)
 )
 
-# Pull the palette's pattern specs directly, so pattern type and hatch
-# color follow the actual data rather than a single fixed pattern
-patterns <- cheysson_pattern("1883_30")
-
-ggplot(data, aes(category, value, fill = category)) +
-  geom_col_pattern(
-    aes(
-      pattern = category,
-      pattern_fill = category,
-      pattern_fill2 = category,
-      pattern_angle = category
-    ),
-    pattern_density = 0.35,
-    color = "black"
-  ) +
-  scale_fill_cheysson_pattern("1883_30") +
-  scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")) +
-  scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")) +
-  scale_pattern_fill2_cheysson("1883_30") +
-  scale_pattern_angle_cheysson("1883_30") +
+# One scale applies the palette's colors, hatch types, angles and spacings together
+ggplot(data, aes(category, value, pattern = category)) +
+  geom_col_pattern(color = "black") +
+  scale_cheysson("1883_30") +
   labs(
     title = "Statistical Comparison",
     x = "Category",
@@ -250,6 +238,7 @@ number it was extracted from, and its hex color codes.
 Click to show/hide the list of all palettes
 
 ``` r
+
 library(ggCheysson)
 
 # List all palettes
@@ -294,6 +283,7 @@ list_cheysson_pals("sequential")
 ```
 
 ``` r
+
 # View palette colors
 cheysson_pal("1880_21")
 #> [1] "#d9636c" "#869e80" "#dec367" "#85aab1" "#aea9a4" "#ed8238" "#ab90a4"
@@ -306,6 +296,7 @@ Use
 to display a palette with color swatches and hex codes:
 
 ``` r
+
 # Display a single palette with metadata
 show_palette("1895_16")
 ```
@@ -313,6 +304,7 @@ show_palette("1895_16")
 ![](reference/figures/README-show-palette-1.png)
 
 ``` r
+
 # Display multiple palettes at once
 show_palettes(c("1880_21", "1906_06", "1881_30"))
 ```
@@ -320,6 +312,7 @@ show_palettes(c("1880_21", "1906_06", "1881_30"))
 ![](reference/figures/README-show-palette-multi-1.png)
 
 ``` r
+
 # One palette of each type in a 2x2 grid: category, sequential, diverging, grouped
 show_palettes(c("1880_21", "1895_16", "1883_21", "1881_30"), ncol = 2)
 ```
@@ -333,6 +326,7 @@ with shades. Their swatches here show a single color; use
 Support, below).
 
 ``` r
+
 # Display all palettes of a specific type
 show_palettes("category")
 ```
@@ -351,6 +345,7 @@ pairs colors with historically accurate patterns (solid fills, stripes,
 crosshatching):
 
 ``` r
+
 library(ggpattern)
 
 # List available pattern palettes
@@ -363,49 +358,55 @@ head(list_cheysson_patterns())
 #> 5 1881_22   category  1881    22          4
 #> 6 1881_30    grouped  1881    30          8
 
-# Get pattern specifications for one palette
+# Each element of a palette is a bundle of properties
 patterns <- cheysson_pattern("1886_24")
+str(patterns[[2]])
+#> List of 7
+#>  $ type             : chr "crosshatch"
+#>  $ fill             : chr "transparent"
+#>  $ pattern_fill     : chr "#b61002"
+#>  $ pattern_color    : chr "#b61002"
+#>  $ pattern_density  : num 0.974
+#>  $ pattern_spacing  : num 0.0263
+#>  $ pattern_linewidth: num 2
 ```
 
 ``` r
-# Display the palette's patterns as swatches
+
+# Display the palette's elements as swatches
 n <- length(patterns)
-ggplot(data.frame(i = factor(seq_len(n))), aes(i, 1, fill = i)) +
-  geom_col_pattern(
-    aes(pattern = i, pattern_fill = i, pattern_angle = i),
-    pattern_density = 0.35, pattern_spacing = 0.03,
-    color = "black", width = 0.95
-  ) +
-  scale_fill_manual(values = cheysson_pattern_params(patterns, "fill")) +
-  scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")) +
-  scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")) +
-  scale_pattern_angle_manual(values = cheysson_pattern_params(patterns, "pattern_angle")) +
+ggplot(data.frame(i = factor(seq_len(n))), aes(i, 1, pattern = i)) +
+  geom_col_pattern(color = "black", width = 0.95) +
+  scale_cheysson("1886_24") +
   theme_void() +
   theme(legend.position = "none")
 ```
 
 ![](reference/figures/README-pattern-swatches-1.png)
 
-Use the pattern scales directly in a plot, alongside the matching fill
-scale:
+Use
+[`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+in a plot to give each category a swatch:
 
 ``` r
+
 data <- data.frame(category = LETTERS[1:4], value = c(15, 23, 18, 20))
 
-ggplot(data, aes(category, value, fill = category)) +
-  geom_col_pattern(
-    aes(pattern = category, pattern_fill = category),
-    pattern_density = 0.35, color = "black"
-  ) +
-
-    scale_fill_cheysson_pattern("1886_24") +
-  scale_pattern_manual(values = cheysson_pattern_params(patterns, "pattern_type")[1:4]) +
-  scale_pattern_fill_manual(values = cheysson_pattern_params(patterns, "pattern_fill")[1:4]) +
+ggplot(data, aes(category, value, pattern = category)) +
+  geom_col_pattern(color = "black") +
+  scale_cheysson("1886_24") +
   labs(title = "Statistical Comparison", x = "Category", y = "Value") +
   theme_minimal()
 ```
 
 ![](reference/figures/README-pattern-bars-1.png)
+
+For control over each property separately, use the individual pattern
+scales
+([`scale_fill_cheysson_pattern()`](https://friendly.github.io/ggCheysson/reference/scale_fill_cheysson_pattern.md),
+[`scale_pattern_type_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md),
+[`scale_pattern_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md),
+…), mapping each aesthetic yourself.
 
 ## ✍️ Font Families
 
@@ -433,6 +434,7 @@ sans capitals](reference/figures/fonts1.png)
 To use these:
 
 ``` r
+
 # Load fonts
 load_cheysson_fonts(method = "showtext")
 showtext::showtext_auto()
@@ -474,10 +476,12 @@ theme(
 
 ### Pattern Functions
 
+- [`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md) -
+  Apply a color-and-pattern palette in one step (experimental)
 - [`cheysson_pattern()`](https://friendly.github.io/ggCheysson/reference/cheysson_pattern.md) -
   Get pattern specifications
-- `scale_pattern_*_cheysson()` - ggpattern scales for fills, types,
-  angles, densities
+- `scale_pattern_*_cheysson()` - ggpattern scales for single properties:
+  fills, types, angles, densities
 - [`list_cheysson_patterns()`](https://friendly.github.io/ggCheysson/reference/list_cheysson_patterns.md) -
   List available pattern palettes
 
@@ -559,11 +563,12 @@ GPL (\>= 3)
 To cite `ggCheysson`, please use:
 
 ``` r
+
 citation("ggCheysson")
 #> To cite package 'ggCheysson' in publications use:
 #> 
 #>   Friendly M (2026). _ggCheysson: Graphic Styles of Emile Cheysson for
-#>   'ggplot2'_. R package version 1.1.0,
+#>   'ggplot2'_. R package version 1.2.0,
 #>   <https://github.com/friendly/ggCheysson>.
 #> 
 #> A BibTeX entry for LaTeX users is
@@ -572,7 +577,7 @@ citation("ggCheysson")
 #>     title = {ggCheysson: Graphic Styles of Emile Cheysson for 'ggplot2'},
 #>     author = {Michael Friendly},
 #>     year = {2026},
-#>     note = {R package version 1.1.0},
+#>     note = {R package version 1.2.0},
 #>     url = {https://github.com/friendly/ggCheysson},
 #>   }
 ```

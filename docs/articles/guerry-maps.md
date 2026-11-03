@@ -23,6 +23,7 @@ What if Guerry could have re-done his maps using Cheysson’s style?
 ## Required Packages
 
 ``` r
+
 library(ggCheysson)
 library(ggplot2)
 library(Guerry)      # Historical data on France
@@ -33,6 +34,7 @@ library(ggpattern)   # For Cheysson-style hatching patterns
 ## Loading Fonts
 
 ``` r
+
 # Load Cheysson fonts
 load_cheysson_fonts(method = "showtext")
 showtext::showtext_auto()
@@ -43,6 +45,7 @@ showtext::showtext_auto()
 ### Load and Examine Guerry’s Data
 
 ``` r
+
 # Load the dataset
 data(Guerry, package = "Guerry")
 
@@ -69,6 +72,7 @@ The `gfrance85` object is a SpatialPolygonsDataFrame. We’ll convert it
 to an sf object for modern spatial handling.
 
 ``` r
+
 # Load the map
 data(gfrance85, package = "Guerry")
 
@@ -94,6 +98,7 @@ head(france_sf[, c("Department", "Region")])
 ### Join Data with Map
 
 ``` r
+
 # Convert variables to ranks (since they're on different scales)
 guerry_ranked <- Guerry
 for (var in vars_of_interest) {
@@ -117,6 +122,7 @@ cat("Departments with data:", sum(!is.na(france_data$Crime_pers_rank)), "\n")
 ### Crime Against Persons (Sequential Palette)
 
 ``` r
+
 # Map of crimes against persons
 p1 <- ggplot(france_data) +
   geom_sf(aes(fill = Crime_pers_rank), color = "black", linewidth = 0.3) +
@@ -140,6 +146,7 @@ print(p1)
 ### Property Crime (Different Sequential Palette)
 
 ``` r
+
 p2 <- ggplot(france_data) +
   geom_sf(aes(fill = Crime_prop_rank), color = "black", linewidth = 0.3) +
   scale_fill_cheysson("1895_16", discrete = FALSE,
@@ -162,6 +169,7 @@ print(p2)
 ### Literacy (Grouped Palette)
 
 ``` r
+
 # Create quintiles for discrete display
 france_data$Literacy_quint <- cut(france_data$Literacy_rank,
                                   breaks = quantile(france_data$Literacy_rank,
@@ -195,30 +203,23 @@ print(p3)
 Now let’s recreate the literacy map using Cheysson’s signature hatching
 patterns. Palette `1888_27` is one of his sequential hatching scales:
 diagonal stripes that get progressively denser, ending in a solid fill.
-Mapping `pattern_spacing` as well as `pattern` reproduces that
-light-to-dark progression across the five quintiles. The palette’s
-spacings were measured on Cheysson’s small swatches, so they are scaled
-down here to suit a full-page map:
+
+[`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+does all the work: each element of the palette is a *swatch*, a
+`ggpattern` pattern that draws its color, hatching, angle and line
+spacing together, so only the `pattern` aesthetic needs to be mapped,
+and one scale gives each quintile a swatch (see
+[`vignette("combining-colors-patterns", package = "ggCheysson")`](https://friendly.github.io/ggCheysson/articles/combining-colors-patterns.md)).
+The swatches keep the relative line spacings measured on Cheysson’s
+plate, which gives the light-to-dark progression across the quintiles.
+The geom’s `fill` shows only for missing values:
 
 ``` r
-# Literacy with patterns - quintessential Cheysson style
-lit_spacing <- cheysson_pattern_params(cheysson_pattern("1888_27"), "pattern_spacing")
 
-p3b <- ggplot(france_data) +
-  geom_sf_pattern(
-    aes(fill = Literacy_quint,
-        pattern = Literacy_quint,
-        pattern_fill = Literacy_quint,
-        pattern_spacing = Literacy_quint),
-    pattern_density = 0.3,
-    pattern_colour = NA,
-    color = "black",
-    linewidth = 0.4
-  ) +
-  scale_fill_cheysson_pattern("1888_27", na.value = "grey90") +
-  scale_pattern_fill_cheysson("1888_27", na.value = "grey90") +
-  scale_pattern_type_cheysson("1888_27") +
-  scale_pattern_spacing_manual(values = 0.3 * lit_spacing) +
+# Literacy with patterns - quintessential Cheysson style
+p3b <- ggplot(france_data, aes(pattern = Literacy_quint)) +
+  geom_sf_pattern(fill = "grey90", color = "black", linewidth = 0.4) +
+  scale_cheysson("1888_27", name = "Literacy\nQuintile") +
   labs(
     title = "Literacy Rates",
     subtitle = "Sequential hatching, sparse to solid (quintiles)",
@@ -227,12 +228,6 @@ p3b <- ggplot(france_data) +
   theme_cheysson_map() +
   theme(
     legend.position = "right"
-  ) +
-  guides(
-    fill = guide_legend(title = "Literacy\nQuintile"),
-    pattern = guide_legend(title = "Literacy\nQuintile"),
-    pattern_spacing = guide_legend(title = "Literacy\nQuintile"),
-    pattern_fill = guide_legend(title = "Literacy\nQuintile")
   )
 
 print(p3b)
@@ -243,6 +238,7 @@ print(p3b)
 ### Charitable Donations (Category Palette)
 
 ``` r
+
 # Create categories
 france_data$Donations_cat <- cut(france_data$Donations_rank,
                                  breaks = quantile(france_data$Donations_rank,
@@ -277,25 +273,16 @@ The combination of colors and patterns was a hallmark of the Albums.
 Palette `1883_31` is one of Cheysson’s diverging schemes: two hues, each
 used both solid and hatched. As in his maps, the solid fills mark the
 extremes and the hatched versions the milder classes on each side.
-Diverging palettes are stored in that low-to-high order, so the Cheysson
-pattern scales apply it directly:
+Diverging palettes are stored in that low-to-high order, so
+[`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+applies them directly:
 
 ``` r
+
 # Donations: solid at the extremes, hatched in the middle
-p4b <- ggplot(france_data) +
-  geom_sf_pattern(
-    aes(fill = Donations_cat,
-        pattern = Donations_cat,
-        pattern_fill = Donations_cat),
-    pattern_density = 0.35,
-    pattern_spacing = 0.025,
-    pattern_colour = NA,
-    color = "black",
-    linewidth = 0.4
-  ) +
-  scale_fill_cheysson_pattern("1883_31", na.value = "grey90") +
-  scale_pattern_fill_cheysson("1883_31", na.value = "grey90") +
-  scale_pattern_type_cheysson("1883_31") +
+p4b <- ggplot(france_data, aes(pattern = Donations_cat)) +
+  geom_sf_pattern(fill = "grey90", color = "black", linewidth = 0.4) +
+  scale_cheysson("1883_31", name = "Donations\nLevel") +
   labs(
     title = "Charitable Donations",
     subtitle = "Authentic Cheysson-style patterns and colors (quartiles)",
@@ -304,11 +291,6 @@ p4b <- ggplot(france_data) +
   theme_cheysson_map() +
   theme(
     legend.position = "right"
-  ) +
-  guides(
-    fill = guide_legend(title = "Donations\nLevel"),
-    pattern = guide_legend(title = "Donations\nLevel"),
-    pattern_fill = guide_legend(title = "Donations\nLevel")
   )
 
 print(p4b)
@@ -319,6 +301,7 @@ print(p4b)
 ### Illegitimate Births (Sequential Palette)
 
 ``` r
+
 p5 <- ggplot(france_data) +
   geom_sf(aes(fill = Infants_rank), color = "black", linewidth = 0.3) +
   scale_fill_cheysson("1891_25", discrete = FALSE,
@@ -341,6 +324,7 @@ print(p5)
 ### Suicides (Different Sequential Palette)
 
 ``` r
+
 p6 <- ggplot(france_data) +
   geom_sf(aes(fill = Suicides_rank), color = "black", linewidth = 0.3) +
   scale_fill_cheysson("1887_22", discrete = FALSE,
@@ -365,6 +349,7 @@ print(p6)
 Create a faceted map showing multiple variables at once:
 
 ``` r
+
 # Prepare data in long format for faceting
 library(tidyr)
 library(dplyr)
@@ -410,6 +395,7 @@ print(p7)
 Let’s also examine regional patterns using discrete categories:
 
 ``` r
+
 # Map showing regions
 # Note: After merge, Region column may be duplicated as Region.x or Region.y
 # We'll use the spatial data version (Region.x) or check which exists
@@ -446,36 +432,21 @@ One of Cheysson’s most distinctive techniques was using varied hatching
 patterns to distinguish regions. Most category palettes are solid colors
 only, so we pick one that has hatching: `1883_30` has red and blue
 stripes, a red-and-blue crosshatch, black stripes and solid black - one
-for each of the five regions. Mapping `pattern_angle` as well draws the
-stripes at the angles used in the original plate, and `pattern_fill2`
-gives the crosshatch its second color.
+for each of the five regions. The swatches of
+[`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+draw the stripes at the angles used in the original plate, and the
+crosshatch in its two colors.
 
 ``` r
+
 # Regions with distinctive patterns - very characteristic of Cheysson
-p8b <- ggplot(france_data) +
-  geom_sf_pattern(
-    aes(fill = .data[[region_col]],
-        pattern = .data[[region_col]],
-        pattern_fill = .data[[region_col]],
-        pattern_fill2 = .data[[region_col]],
-        pattern_angle = .data[[region_col]]),
-    pattern_colour = NA,
-    pattern_density = 0.3,
-    pattern_spacing = 0.02,
-    color = "black",
-    linewidth = 0.5
-  ) +
-  scale_fill_cheysson_pattern("1883_30") +
-  scale_pattern_fill_cheysson("1883_30") +
-  scale_pattern_fill2_cheysson("1883_30") +
-  scale_pattern_type_cheysson("1883_30") +
-  scale_pattern_angle_cheysson("1883_30") +
+p8b <- ggplot(france_data, aes(pattern = .data[[region_col]])) +
+  geom_sf_pattern(color = "black", linewidth = 0.5) +
+  scale_cheysson("1883_30", name = "Region") +
   labs(
     title = "Regions of France",
     subtitle = "Distinctive hatching patterns for each region - authentic Albums style",
-    caption = "Source: Guerry package",
-    fill = "Region", pattern = "Region", pattern_fill = "Region",
-    pattern_fill2 = "Region", pattern_angle = "Region"
+    caption = "Source: Guerry package"
   ) +
   theme_cheysson_map() +
   theme(
@@ -492,6 +463,7 @@ print(p8b)
 Compare two variables using different visual encodings:
 
 ``` r
+
 # Create categories for both variables
 france_data$Crime_cat <- cut(france_data$Crime_pers_rank,
                              breaks = 3,
@@ -561,6 +533,7 @@ The ggCheysson package includes multiple palettes suitable for
 choropleth maps:
 
 ``` r
+
 # Sequential palettes (good for continuous rankings)
 list_cheysson_pals("sequential")
 #>      name       type album plate n_colors
@@ -614,7 +587,9 @@ This vignette demonstrated:
   signature feature of the Albums
 - Applying
   [`geom_sf_pattern()`](https://trevorldavis.com/R/ggpattern/reference/geom-docs.html)
-  with pattern scales for authentic Cheysson cartography
+  with
+  [`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+  for authentic Cheysson cartography
 - Using
   [`theme_cheysson_map()`](https://friendly.github.io/ggCheysson/reference/theme_cheysson_map.md)
   for cartographic styling
