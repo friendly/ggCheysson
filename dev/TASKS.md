@@ -44,9 +44,22 @@ Two-mode plan for 1.2.0 (see the 1.2.0 item under "New development" for the desi
 - [ ] Decide how the swatch function picks the mode. Simplest: `utils::packageVersion("ggpattern") >= "1.4.0"`,
   checked once when the swatches are registered. Also decide what grid-only use (`patternGrob()`,
   no ggpattern) does.
-- [ ] **Untested:** the CRAN combination (gridpattern 1.5.1 + ggpattern 1.3.1). Install it in a separate library and
-  run both proofs of concept against it. Does `register_pattern()` in 1.5.1 accept `defaults`, and do they apply in
-  grid-only use?
+- [x] **Tested 2026-11-03: the CRAN combination** (gridpattern 1.5.1 + ggpattern 1.3.1, installed in a separate
+  library; both proofs of concept run from copies so the committed PNGs weren't touched):
+  - **Old mode works unchanged:** `poc_simplified.R`'s bar and map PNGs are byte-identical to the committed ones.
+  - **gridpattern 1.5.1's `register_pattern()` works** for all 134 swatches, with `defaults`, `-` names and
+    delegation to `"gridpattern::stripe"`. In grid-only use (`grid.pattern()`) the registered defaults apply
+    (0.025 / 0.30).
+  - **Through ggpattern 1.3.1 they don't:** the swatch gets 0.05 / 0.2 (or the user's values), so `poc_register.R`
+    draws wider, thinner stripes than intended. This is why the old mode's relative scaling is needed.
+  - **Legend keys in 1.3.1 get a scaled-up spacing** in snpc: 0.917 in the key vs 0.05 in the bars (×18.3 here). The
+    relative scaling handles this, since the ratio to 0.05 is kept. In `"cm"` the keys get the same value as the bars.
+  - **`pattern_units` in the old mode:** 1.3.1 passes 0.05 *in the user's units* (0.05 cm for `"cm"`), so relative
+    scaling would give 0.025 cm, far too dense. Either ignore `pattern_units` in the old mode (as `poc_simplified.R`
+    does) or document it as unsupported there.
+  - So: register with `register_pattern()` in both modes (when gridpattern has it); only the spacing/density
+    handling differs. The mode can't be told from the values that arrive (0.05 / 0.2 could be the user's), so it has
+    to come from ggpattern's version.
 - [ ] Document that `pattern_spacing` / `pattern_density` mean different things in the two modes (absolute vs relative),
   and recommend setting them only when needed. Add tests for both modes (the new one is skipped unless ggpattern
   >= 1.4.0 is installed).
