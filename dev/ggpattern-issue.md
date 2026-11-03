@@ -255,7 +255,28 @@ gridpattern 1.6.0.4 and ggpattern 1.4.0.2, installed from GitHub. The script is 
    and require newer versions in `DESCRIPTION` once they're out. **Still open.** As of 2026-11-03, the dev versions
    aren't on CRAN. The fallback is feasible: the option-based registration still works under the dev versions
    (`poc_simplified.R`).
-4. Check how `pattern_units` affects the built-in spacing. **Not yet checked.**
+4. Check how `pattern_units` affects the built-in spacing. **Checked 2026-11-03, and both fixes below are now in
+   `poc_register.R`** (cases 2b and 2c, `poc_register_bars_cm*.png`; the default output is unchanged):
+   - The swatch function does receive `params$pattern_units` (`"snpc"` by default, or the user's value), in legend
+     keys too.
+   - **`poc_register.R` ignores it:** it passes `spacing` to `patternGrob()` but not `units`, so lines are always
+     spaced in `"snpc"`. `pattern_units = "cm", pattern_spacing = 0.3` gives 0.3 *snpc*, i.e. 2-3 huge bands per bar.
+     Fix: pass `units = params$pattern_units` on.
+   - **With units passed on, a fixed default of 0.025 breaks in absolute units:** `pattern_units = "cm"` alone gives
+     0.025 cm lines, which blur into a pale tint. Fix: make the registered default a function of the units, which
+     `defaults` allows since generic parameters such as units are filled in first:
+
+     ```r
+     spacing_default <- function(params, gp) {
+       u <- params$pattern_units
+       if (identical(u, "snpc")) 0.025 else grid::convertUnit(grid::unit(0.3, "cm"), u, valueOnly = TRUE)
+     }
+     register_pattern(nm, draw_swatch, defaults = list(pattern_spacing = spacing_default, pattern_density = 0.30))
+     ```
+
+     With both fixes: default units give 0.025 snpc, as before; `"cm"` gives 0.3 cm; `"in"` gives 0.118 in; and a
+     user's `pattern_spacing = 0.5` with `"cm"` gives 0.5 cm. All of these look right, legend keys included. 0.3 cm is
+     my choice: about 0.025 snpc on a 7 x 4.5 in plot.
 5. Tell Trevor how `register_pattern()` works for a family of 134 patterns, since he asked for feedback.
    **Sent 2026-11-03** as a reply in [trevorld/ggpattern#154](https://github.com/trevorld/ggpattern/issues/154)
    (text below). It covers: it worked for all 134 swatches; the help text about ggpattern defaults is out of date;
