@@ -69,7 +69,7 @@
 #'
 #' @export
 cheysson_pattern <- function(palette = "1881_12", n = NULL, type = 1) {
-  pal <- get_palette(palette, cheysson_patterns, type)
+  pal <- get_palette(palette, ggCheysson::cheysson_patterns, type)
   if (is.null(n)) {
     return(pal$patterns)
   }
@@ -160,7 +160,7 @@ cheysson_pattern_params <- function(patterns, param = "fill") {
 #' @export
 list_cheysson_patterns <- function(type = NULL) {
   # Get all palettes
-  pals <- cheysson_patterns
+  pals <- ggCheysson::cheysson_patterns
 
   # Filter by type if specified
   if (!is.null(type)) {

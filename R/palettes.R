@@ -91,7 +91,7 @@
 #'
 #' @export
 cheysson_pal <- function(palette = "1880_21", n = NULL, type = 1) {
-  pal <- get_palette(palette, cheysson_palettes, type)
+  pal <- get_palette(palette, ggCheysson::cheysson_palettes, type)
   if (is.null(n)) {
     return(pal$colors)
   }
@@ -171,7 +171,7 @@ select_values <- function(x, n, type, reverse = FALSE, interpolate = FALSE) {
 #' @export
 list_cheysson_pals <- function(type = NULL) {
   # Get all palettes
-  pals <- cheysson_palettes
+  pals <- ggCheysson::cheysson_palettes
 
   # Filter by type if specified
   if (!is.null(type)) {
@@ -229,7 +229,7 @@ list_cheysson_pals <- function(type = NULL) {
 #' @export
 show_palette <- function(palette = "1880_21", n = NULL, show_info = TRUE, cex = 1) {
   # Get palette information
-  pal <- get_palette(palette, cheysson_palettes)
+  pal <- get_palette(palette, ggCheysson::cheysson_palettes)
   pal_name <- pal$name
 
   # Get colors
@@ -302,10 +302,10 @@ show_palette <- function(palette = "1880_21", n = NULL, show_info = TRUE, cex = 
 show_palettes <- function(palettes = NULL, ncol = 1, cex = 0.8) {
   # Determine which palettes to show
   if (is.null(palettes)) {
-    pal_names <- names(cheysson_palettes)
+    pal_names <- names(ggCheysson::cheysson_palettes)
   } else if (length(palettes) == 1 &&
              tolower(palettes) %in% c("sequential", "diverging", "grouped", "category")) {
-    type_palettes <- Filter(function(x) x$type == tolower(palettes), cheysson_palettes)
+    type_palettes <- Filter(function(x) x$type == tolower(palettes), ggCheysson::cheysson_palettes)
     pal_names <- names(type_palettes)
   } else {
     pal_names <- palettes

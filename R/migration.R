@@ -12,7 +12,7 @@
 # For a collided old name, 1.0.1 shipped the highest advent_day (as in
 # cheysson_name()).
 old_name_target <- function(palette) {
-  hit <- cheysson_labels[cheysson_labels$old_name == palette, , drop = FALSE]
+  hit <- ggCheysson::cheysson_labels[ggCheysson::cheysson_labels$old_name == palette, , drop = FALSE]
   if (nrow(hit) == 0) return(NULL)
   hit$name[which.max(hit$advent_day)]
 }

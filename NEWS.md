@@ -9,6 +9,14 @@
   (`dev/custom-pattern/poc_register.R`) works with the development versions of gridpattern
   (1.6.0) and ggpattern (1.4.0), which aren't on CRAN yet. Nothing in the package has changed so far.
 
+## Bug fixes
+
+* The palette functions and scales (`cheysson_pal()`, `cheysson_pattern()`, `scale_fill_cheysson()`,
+  `scale_cheysson()`, etc.) and `cheysson_name()` failed with "object 'cheysson_palettes' not found"
+  (or `'cheysson_patterns'`, `'cheysson_labels'`) unless ggCheysson was attached with `library()`, e.g.
+  when called as `ggCheysson::scale_fill_cheysson()` or from another package. They now find the
+  palette data either way.
+
 # ggCheysson 1.1.0
 
 ## Breaking changes

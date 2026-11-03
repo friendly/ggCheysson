@@ -65,7 +65,7 @@ cheysson_name <- function(label,
     stop("`label` must be a single non-NA character string")
   }
   if (!is.null(advent_day)) {
-    if (length(advent_day) != 1 || !advent_day %in% cheysson_labels$advent_day) {
+    if (length(advent_day) != 1 || !advent_day %in% ggCheysson::cheysson_labels$advent_day) {
       stop("`advent_day` must be a single value in 1:25")
     }
   }
@@ -79,13 +79,13 @@ cheysson_name <- function(label,
   )
 
   find_in <- function(col) {
-    cheysson_labels[cheysson_labels[[col]] == label, , drop = FALSE]
+    ggCheysson::cheysson_labels[ggCheysson::cheysson_labels[[col]] == label, , drop = FALSE]
   }
 
   if (from == "auto") {
     # Safe, always-unique columns first; old_name (can be ambiguous) last
     search_order <- c("name", "andrews_label", "shanley_id", "rumsey_no", "old_name")
-    candidates <- cheysson_labels[0, ]
+    candidates <- ggCheysson::cheysson_labels[0, ]
     for (col in search_order) {
       hit <- find_in(col)
       if (nrow(hit) > 0) {
