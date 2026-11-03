@@ -6,7 +6,7 @@ corruption incident log - are archived in [`dev/TASKS-v1.0.1.md`](TASKS-v1.0.1.m
 
 ## Handoff (2026-11-03) - resume here
 
-Everything below is pushed (`master` at `a233011` or later). Done 2026-11-03:
+Everything below is pushed (`master` at `a4f202d` or later). Done 2026-11-03:
 
 - **Version bumped to 1.2.0** in `DESCRIPTION` (Date 2026-11-03), with a NEWS 1.2.0 section ("New features" +
   "Bug fixes").
@@ -107,9 +107,16 @@ Two-mode plan for 1.2.0 (see the 1.2.0 item under "New development" for the desi
 - [x] Tests for both modes: the spacing logic is tested directly for both, so it runs with any installed ggpattern;
   registration and drawing are tested with whatever is installed. All pass with both version sets (run with the CRAN
   versions first on `.libPaths()` for relative mode). `R CMD check --as-cran`: 1 NOTE (pandoc).
-- [ ] Mention the swatches / new `scale_cheysson()` in the README and the "Getting Started" vignette. Done:
+- [x] Mention the swatches / new `scale_cheysson()` in the README and the "Getting Started" vignette. **Done
+  2026-11-03:** README and Getting Started (`a4f202d`; README.md re-knitted, only the 3 changed figures differ),
   "Combining Colors and Patterns" (`62f3337`), and all three pattern maps in the Guerry maps vignette
-  (`a69adc7`, `a233011`).
+  (`a69adc7`, `a233011`). All pattern examples in the docs now use `scale_cheysson()`, except where the
+  individual scales are the point (the long form and the subset example in "Combining Colors and Patterns").
+- [ ] Small: Getting Started's grouped bar chart maps a character `type` to sequential `1881_12`, so the levels
+  take the palette in alphabetical order (Canal, Rail, Road: Road gets the densest hatching). Pre-existing; a
+  factor with meaningful levels would fix it.
+- [ ] Before submitting 1.2.0: run `R CMD check --as-cran` again (last full check was before the README/Getting
+  Started change), win-builder and R-hub; update `cran-comments.md`; rebuild the pkgdown site.
 - [ ] **`1891_19` draws unfaithfully:** it trades spacing against line width (thin lines, width ~2, about 0.006
   apart, up to very thick lines, width 54, 0.2 apart), which one density for all swatches can't reproduce; its
   spacing ratios look backwards and 3 are clamped. The vignette notes it. Proper fix: use the specs'
