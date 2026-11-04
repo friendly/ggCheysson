@@ -13,6 +13,13 @@
 #'   scale_pattern_manual(values = paste0("1886_28-", 1:6))
 #' ```
 #'
+#' All the swatches are shown below, one row per palette, so the swatch in row
+#' `1886_24`, column 2 is `"1886_24-2"`. Draw this atlas, or the part of it for
+#' chosen palettes or palette types, with [show_swatches()].
+#'
+#' \if{html}{\figure{swatches.png}{options: width=600 alt="Atlas of all 134 Cheysson swatches: one row per palette, grouped into panels by palette type (sequential, diverging, grouped, category), with columns numbered by element; each cell shows a solid fill, stripes or crosshatching"}}
+#' \if{latex}{\figure{swatches.png}{options: width=5in}}
+#'
 #' Other pattern aesthetics such as `pattern_fill` or `pattern_angle` are
 #' ignored by a swatch, apart from `pattern_spacing`, `pattern_density` and
 #' (see below) `pattern_units`.
@@ -49,7 +56,7 @@
 #'
 #' @name cheysson_swatches
 #' @aliases cheysson-swatches
-#' @seealso [cheysson_patterns], [scale_cheysson()]
+#' @seealso [cheysson_patterns], [scale_cheysson()], [show_swatches()]
 NULL
 
 # The base line spacing (in "snpc", and in absolute units) and the density

@@ -18,6 +18,13 @@ aesthetics or geom arguments needed:
   scale_pattern_manual(values = paste0("1886_28-", 1:6))
 }\if{html}{\out{</div>}}
 
+All the swatches are shown below, one row per palette, so the swatch in row
+\verb{1886_24}, column 2 is \code{"1886_24-2"}. Draw this atlas, or the part of it for
+chosen palettes or palette types, with \code{\link[=show_swatches]{show_swatches()}}.
+
+\if{html}{\figure{swatches.png}{options: width=600 alt="Atlas of all 134 Cheysson swatches: one row per palette, grouped into panels by palette type (sequential, diverging, grouped, category), with columns numbered by element; each cell shows a solid fill, stripes or crosshatching"}}
+\if{latex}{\figure{swatches.png}{options: width=5in}}
+
 Other pattern aesthetics such as \code{pattern_fill} or \code{pattern_angle} are
 ignored by a swatch, apart from \code{pattern_spacing}, \code{pattern_density} and
 (see below) \code{pattern_units}.
@@ -56,5 +63,5 @@ when 'ggpattern' is updated.
 }
 
 \seealso{
-\link{cheysson_patterns}, \code{\link[=scale_cheysson]{scale_cheysson()}}
+\link{cheysson_patterns}, \code{\link[=scale_cheysson]{scale_cheysson()}}, \code{\link[=show_swatches]{show_swatches()}}
 }
