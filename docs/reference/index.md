@@ -41,6 +41,8 @@ hatching and fill styles used in Cheysson’s maps and diagrams.
 - [`cheysson_swatches`](https://friendly.github.io/ggCheysson/reference/cheysson_swatches.md)
   [`cheysson-swatches`](https://friendly.github.io/ggCheysson/reference/cheysson_swatches.md)
   : Cheysson swatches as ggpattern patterns (experimental)
+- [`show_swatches()`](https://friendly.github.io/ggCheysson/reference/show_swatches.md)
+  : Display the Cheysson swatches
 - [`scale_fill_cheysson_pattern()`](https://friendly.github.io/ggCheysson/reference/scale_fill_cheysson_pattern.md)
   : Apply Cheysson patterns to fill aesthetic
 - [`scale_pattern_fill_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_pattern_cheysson.md)

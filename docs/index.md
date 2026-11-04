@@ -1,6 +1,6 @@
 # ggCheysson
 
-Version 1.2.0; documentation built 2026-11-03
+Version 1.2.0; documentation built 2026-11-04
 
 The `ggCheysson` package brings the graphical styles of the *Albums de
 Statistique Graphique* to R and ggplot2.
@@ -153,7 +153,9 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   theme_minimal()
 ```
 
-![](reference/figures/README-basic-palette-1.png)
+![Scatterplot of iris sepal width against sepal length, with points
+colored by species in the muted rose, pale yellow and sage green of
+palette 1881_22](reference/figures/README-basic-palette-1.png)
 
 ### With Fonts and Theme
 
@@ -177,7 +179,10 @@ p1 <- ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
 p1 + theme_cheysson()
 ```
 
-![](reference/figures/README-with-fonts-1.png)
+![Scatterplot of mpg against car weight from mtcars, colored by number
+of cylinders in slate blue, brown and orange from palette 1883_31, drawn
+with theme_cheysson: a bold outlined capital title, a serif subtitle and
+small-capital axis titles](reference/figures/README-with-fonts-1.png)
 
 ### Scaling with `base_size`
 
@@ -194,14 +199,18 @@ same rate as the rest of the theme, rather than reading undersized as
 p1 + theme_cheysson(base_size = 14)
 ```
 
-![](reference/figures/README-base-size-14-1.png)
+![The same mtcars scatterplot with theme_cheysson(base_size = 14):
+title, subtitle, axis and legend text are all larger, in
+proportion](reference/figures/README-base-size-14-1.png)
 
 ``` r
 
 p1 + theme_cheysson(base_size = 16)
 ```
 
-![](reference/figures/README-base-size-16-1.png)
+![The same mtcars scatterplot with theme_cheysson(base_size = 16): the
+text is larger still, with the title fonts scaled in step with the
+rest](reference/figures/README-base-size-16-1.png)
 
 ### Complete Cheysson Aesthetic (Colors + Patterns + Fonts)
 
@@ -227,7 +236,10 @@ ggplot(data, aes(category, value, pattern = category)) +
   theme(legend.position = "none")
 ```
 
-![](reference/figures/README-complete-aesthetic-1.png)
+![Bar chart of four categories, A to D, in theme_cheysson, each bar
+hatched with a swatch from palette 1883_30: red diagonal stripes, blue
+diagonal stripes, red and blue crosshatching, and black diagonal
+stripes](reference/figures/README-complete-aesthetic-1.png)
 
 ## 🌈 Available Palettes
 
@@ -301,7 +313,10 @@ to display a palette with color swatches and hex codes:
 show_palette("1895_16")
 ```
 
-![](reference/figures/README-show-palette-1.png)
+![show_palette() display of palette 1895_16: a header giving its type
+(sequential), album 1895 and plate 16, above three color rectangles,
+sage grey, slate blue and near-black, each labeled with its hex
+code](reference/figures/README-show-palette-1.png)
 
 ``` r
 
@@ -309,7 +324,11 @@ show_palette("1895_16")
 show_palettes(c("1880_21", "1906_06", "1881_30"))
 ```
 
-![](reference/figures/README-show-palette-multi-1.png)
+![show_palettes() display of three palettes stacked vertically, each
+with a header and labeled color rectangles: category palette 1880_21
+with 7 colors, category palette 1906_06 with 6 colors, and grouped
+palette 1881_30 with 5
+colors](reference/figures/README-show-palette-multi-1.png)
 
 ``` r
 
@@ -317,7 +336,10 @@ show_palettes(c("1880_21", "1906_06", "1881_30"))
 show_palettes(c("1880_21", "1895_16", "1883_21", "1881_30"), ncol = 2)
 ```
 
-![](reference/figures/README-show-palette-grid-1.png)
+![show_palettes() display in a 2 by 2 grid, one palette of each type:
+category 1880_21 (7 colors), sequential 1895_16 (3 colors), diverging
+1883_21 (red, cream, yellow) and grouped 1881_30 (5
+colors)](reference/figures/README-show-palette-grid-1.png)
 
 Some palettes, such as the sequential `1881_12`, have only one color:
 Cheysson made the steps with hatching of increasing density rather than
@@ -382,7 +404,10 @@ ggplot(data.frame(i = factor(seq_len(n))), aes(i, 1, pattern = i)) +
   theme(legend.position = "none")
 ```
 
-![](reference/figures/README-pattern-swatches-1.png)
+![The eight swatches of palette 1886_24 side by side: solid red, red
+crosshatching, red diagonal stripes, solid blue, blue crosshatching,
+solid black, black crosshatching and black diagonal
+stripes](reference/figures/README-pattern-swatches-1.png)
 
 Use
 [`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
@@ -399,7 +424,27 @@ ggplot(data, aes(category, value, pattern = category)) +
   theme_minimal()
 ```
 
-![](reference/figures/README-pattern-bars-1.png)
+![Bar chart of four categories using scale_cheysson("1886_24"): A is
+solid red, B red crosshatching, C red diagonal stripes and D solid blue,
+with a legend whose keys show the same
+swatches](reference/figures/README-pattern-bars-1.png)
+
+### All the swatches
+
+[`show_swatches()`](https://friendly.github.io/ggCheysson/reference/show_swatches.md)
+draws every swatch, one row per palette, grouped by palette type. The
+swatch in row `1886_24`, column 2 is `"1886_24-2"`, and
+`scale_cheysson("1886_24")` uses that row from left to right:
+
+``` r
+
+show_swatches()
+```
+
+![Atlas of all 134 Cheysson swatches: one row per palette, grouped into
+panels by palette type (sequential, diverging, grouped, category), with
+columns numbered by element; each cell shows a solid fill, stripes or
+crosshatching](reference/figures/README-show-swatches-1.png)
 
 For control over each property separately, use the individual pattern
 scales
@@ -484,6 +529,8 @@ theme(
   fills, types, angles, densities
 - [`list_cheysson_patterns()`](https://friendly.github.io/ggCheysson/reference/list_cheysson_patterns.md) -
   List available pattern palettes
+- [`show_swatches()`](https://friendly.github.io/ggCheysson/reference/show_swatches.md) -
+  Display all the swatches, or those of chosen palettes or types
 
 ### Font Functions
 

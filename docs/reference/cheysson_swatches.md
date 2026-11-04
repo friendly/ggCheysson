@@ -14,6 +14,16 @@ with no other pattern aesthetics or geom arguments needed:
       geom_col_pattern() +
       scale_pattern_manual(values = paste0("1886_28-", 1:6))
 
+All the swatches are shown below, one row per palette, so the swatch in
+row `1886_24`, column 2 is `"1886_24-2"`. Draw this atlas, or the part
+of it for chosen palettes or palette types, with
+[`show_swatches()`](https://friendly.github.io/ggCheysson/reference/show_swatches.md).
+
+![Atlas of all 134 Cheysson swatches: one row per palette, grouped into
+panels by palette type (sequential, diverging, grouped, category), with
+columns numbered by element; each cell shows a solid fill, stripes or
+crosshatching](figures/swatches.png)
+
 Other pattern aesthetics such as `pattern_fill` or `pattern_angle` are
 ignored by a swatch, apart from `pattern_spacing`, `pattern_density` and
 (see below) `pattern_units`.
@@ -54,4 +64,5 @@ differently when 'ggpattern' is updated.
 ## See also
 
 [cheysson_patterns](https://friendly.github.io/ggCheysson/reference/cheysson_patterns.md),
-[`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md)
+[`scale_cheysson()`](https://friendly.github.io/ggCheysson/reference/scale_cheysson.md),
+[`show_swatches()`](https://friendly.github.io/ggCheysson/reference/show_swatches.md)

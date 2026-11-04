@@ -69,7 +69,7 @@
                         <h4 data-toc-skip class="author">Michael
 Friendly</h4>
             
-            <h4 data-toc-skip class="date">2026-11-03</h4>
+            <h4 data-toc-skip class="date">2026-11-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/friendly/ggCheysson/blob/HEAD/vignettes/combining-colors-patterns.Rmd" class="external-link"><code>vignettes/combining-colors-patterns.Rmd</code></a></small>
       <div class="d-none name"><code>combining-colors-patterns.Rmd</code></div>
@@ -191,6 +191,29 @@ the lines are; see <a href="#line-spacing-and-density">Line spacing and
 density</a> below.</p>
 </div>
 <div class="section level2">
+<h2 id="choosing-a-palette-the-swatch-atlas">Choosing a palette: the swatch atlas<a class="anchor" aria-label="anchor" href="#choosing-a-palette-the-swatch-atlas"></a>
+</h2>
+<p><code><a href="../reference/show_swatches.html">show_swatches()</a></code> draws every swatch, one row per palette
+and one column per element, with the palettes grouped by type. A
+swatch’s name is its row and column: row <code>1886_28</code>, column 3
+is <code>"1886_28-3"</code>. <code>scale_cheysson("1886_28")</code> uses
+that row from left to right, and when the data have fewer levels than
+the palette has elements, it picks elements spread across the row (see
+<a href="#ordered-data-sequential-and-diverging-palettes">Ordered
+data</a>).</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/show_swatches.html">show_swatches</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="combining-colors-patterns_files/figure-html/swatch-atlas-1.png" class="r-plt" alt="Atlas of all 134 Cheysson swatches: one row per palette, grouped into panels by palette type (sequential, diverging, grouped, category), with columns numbered by element; each cell shows a solid fill, stripes or crosshatching" width="100%" style="display: block; margin: auto;"></p>
+<p>The atlas shows how Cheysson built each kind of palette. In
+sequential palettes such as <code>1888_27</code> and
+<code>1900_28</code>, the steps are hatchings of increasing density,
+ending in a solid color. In grouped palettes such as
+<code>1886_11</code> and <code>1886_24</code>, each color comes as
+stripes and crosshatching, or solid and hatched. Category palettes are
+mostly solid colors. To see only some palettes, give their names or a
+type, e.g. <code>show_swatches("diverging")</code>.</p>
+</div>
+<div class="section level2">
 <h2 id="legends">Legends<a class="anchor" aria-label="anchor" href="#legends"></a>
 </h2>
 <p>There is one scale, so there is one legend, and its keys show the
@@ -199,7 +222,7 @@ full swatches. Arguments to <code><a href="../reference/scale_cheysson.html">sca
 sequential palette, <code>1881_12</code>, whose three steps are
 hatchings of increasing density in a single color, distinguishes three
 kinds of transport:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">infrastructure</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  region <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"North"</span>, <span class="st">"South"</span>, <span class="st">"East"</span>, <span class="st">"West"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
 <span>  type   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Road"</span>, <span class="st">"Canal"</span>, <span class="st">"Rail"</span><span class="op">)</span>, <span class="fl">4</span><span class="op">)</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Road"</span>, <span class="st">"Canal"</span>, <span class="st">"Rail"</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -224,7 +247,7 @@ elements spread over the whole palette, keeping both ends.</p>
 <p>Palette <code>1883_31</code> is diverging: two hues, each used solid
 and hatched. As in Cheysson’s maps, the solid fills mark the extremes
 and the hatched versions the milder classes:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">opinion</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  response <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Strongly against"</span>, <span class="st">"Against"</span>, <span class="st">"For"</span>, <span class="st">"Strongly for"</span><span class="op">)</span>,</span>
 <span>                    levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Strongly against"</span>, <span class="st">"Against"</span>, <span class="st">"For"</span>, <span class="st">"Strongly for"</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -247,7 +270,7 @@ and the hatched versions the milder classes:</p>
 <code>fill</code>. Since every swatch covers the geom’s fill, setting
 <code>fill</code> in the geom sets the color for missing values
 only:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trade_na</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">trade</span>, <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>country <span class="op">=</span> <span class="cn">NA</span>, exports <span class="op">=</span> <span class="fl">1500</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">trade_na</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">exports</span>, pattern <span class="op">=</span> <span class="va">country</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -298,7 +321,7 @@ some of them, use the individual scales,
 way</a> above, and map only the aesthetics you want. Here the bars keep
 the palette’s fills, hatch types and line colors, but not its
 angles:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">trade</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">exports</span>, fill <span class="op">=</span> <span class="va">country</span>, pattern <span class="op">=</span> <span class="va">country</span>,</span>
 <span>                  pattern_fill <span class="op">=</span> <span class="va">country</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://trevorldavis.com/R/ggpattern/reference/geom-docs.html" class="external-link">geom_col_pattern</a></span><span class="op">(</span>pattern_colour <span class="op">=</span> <span class="cn">NA</span>, pattern_density <span class="op">=</span> <span class="fl">0.3</span>, pattern_spacing <span class="op">=</span> <span class="fl">0.025</span>,</span>

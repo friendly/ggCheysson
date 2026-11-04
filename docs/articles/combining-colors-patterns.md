@@ -117,6 +117,34 @@ exceptions are `pattern_spacing` and `pattern_density`, which change how
 close and how thick the lines are; see [Line spacing and
 density](#line-spacing-and-density) below.
 
+## Choosing a palette: the swatch atlas
+
+[`show_swatches()`](https://friendly.github.io/ggCheysson/reference/show_swatches.md)
+draws every swatch, one row per palette and one column per element, with
+the palettes grouped by type. A swatch’s name is its row and column: row
+`1886_28`, column 3 is `"1886_28-3"`. `scale_cheysson("1886_28")` uses
+that row from left to right, and when the data have fewer levels than
+the palette has elements, it picks elements spread across the row (see
+[Ordered data](#ordered-data-sequential-and-diverging-palettes)).
+
+``` r
+
+show_swatches()
+```
+
+![Atlas of all 134 Cheysson swatches: one row per palette, grouped into
+panels by palette type (sequential, diverging, grouped, category), with
+columns numbered by element; each cell shows a solid fill, stripes or
+crosshatching](combining-colors-patterns_files/figure-html/swatch-atlas-1.png)
+
+The atlas shows how Cheysson built each kind of palette. In sequential
+palettes such as `1888_27` and `1900_28`, the steps are hatchings of
+increasing density, ending in a solid color. In grouped palettes such as
+`1886_11` and `1886_24`, each color comes as stripes and crosshatching,
+or solid and hatched. Category palettes are mostly solid colors. To see
+only some palettes, give their names or a type,
+e.g. `show_swatches("diverging")`.
+
 ## Legends
 
 There is one scale, so there is one legend, and its keys show the full
