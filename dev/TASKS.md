@@ -4,7 +4,44 @@ Started 2026-09-14. Completed tasks from the run-up to the first CRAN release (1
 `theme_cheysson()` title-size fix, the CRAN (re)submission checklist, and the Git/Dropbox
 corruption incident log - are archived in [`dev/TASKS-v1.0.1.md`](TASKS-v1.0.1.md).
 
-## Handoff (2026-11-03) - resume here
+## Handoff (2026-11-04) - resume here
+
+Everything below is pushed (`master` at `545a2db`). Done 2026-11-04:
+
+- **Trevor's reply read** (commit comment on `1337f53`, 2026-11-04; earlier ones 2026-10-10, 10-28, 11-01):
+  - Keep the `ggpattern_geometry_funcs` fallback for a long time: gridpattern/ggpattern are in Suggests, so their
+    versions can't be guaranteed. Releasing before the new versions reach CRAN is fine; until then users get
+    ggpattern's old generic defaults (our "relative" mode handles this).
+  - He fixed the out-of-date `register_pattern()` `defaults` help.
+  - Legend keys with thick stripes are expected: the key zoom is a fixed factor, not a function of density/spacing.
+    Workarounds: `pattern_key_scale_factor`, or larger legend keys via the theme. With dev gridpattern, a registered
+    default `pattern_key_scale_factor` can be a *function* of `pattern_density` / `pattern_spacing` (see new item
+    under "Two-mode plan" below).
+  - `legend = TRUE` in a pattern function: built-in patterns ignore it (magick may be the exception). Nothing to do.
+  - {deeptime}'s "geo" pattern is another third-party registered pattern, a possible model.
+- **`show_swatches()` added (`702f983`):** `R/show_swatches.R`, returns a ggplot atlas of the swatches: one row per
+  palette, one column per element, `facet_grid()` panels by palette type, each cell drawn by its registered swatch
+  via `geom_tile_pattern(aes(pattern = swatch)) + scale_pattern_identity()`. `palettes` takes names or one or more
+  types. Bold monospace row labels (palette names only: "1886_28" already is year_plate). Stops if ggpattern is
+  missing. `importFrom(rlang, .data)`; listed in `_pkgdown.yml`; NEWS entry. No tests yet.
+- **README (`702f983`):** new "All the swatches" subsection in Pattern Support with the full atlas
+  (`man/figures/README-show-swatches-1.png`), `show_swatches()` in the function list, and **alt text (`fig.alt`)
+  for all 11 README figures** (the logo is still without one).
+- **Help page and vignette (`dab2115`):** `?cheysson_swatches` shows the pre-rendered atlas
+  (`man/figures/swatches.png`, 139 KB, ragg at 96 dpi; re-make with `dev/make_swatches_figure.R` when the swatches
+  change; `igure` width must be in pixels for `checkRd`). "Combining Colors and Patterns" gains "Choosing a
+  palette: the swatch atlas" (before "Legends"), drawn live with `show_swatches()`.
+- **pkgdown site rebuilt (`545a2db`).** The Pages deploy for `dab2115` failed with a GitHub 500 (transient); the
+  next one, for `545a2db`, succeeded and the live site has everything.
+
+Still open from today:
+- [ ] `R CMD check --as-cran` hasn't been run since `show_swatches()` was added (only its example was run).
+- [ ] Tests for `show_swatches()` (e.g. builds a ggplot; type filtering; unknown palette errors).
+- [ ] The atlas shows `1883_21`'s and `1883_31`'s stripes much finer and fainter than the rest: check their
+  spacing ratios / measurements (cf. the `1891_19` item below).
+- [ ] Blog post: the atlas is a good figure for the 'Emile Cheysson Meets `ggplot2`' draft.
+
+## Handoff (2026-11-03)
 
 Everything below is pushed (`master` at `e92a934` or later). Done 2026-11-03:
 
@@ -45,8 +82,7 @@ Everything below is pushed (`master` at `e92a934` or later). Done 2026-11-03:
   override them, and `pattern_units` is handled. The `.onLoad()` wrapper was tested in a throwaway package and works
   whether gridpattern loads before or after. Details and results: `dev/ggpattern-issue.md`, "Tried with the
   development versions" and "What this means for 1.2.0". See the 1.2.0 item under "New development" below.
-- **Feedback sent to Trevor** in ggpattern#154 (text in `dev/ggpattern-issue.md`). Waiting for his reply on the
-  legend keys and the out-of-date `register_pattern()` help.
+- **Feedback sent to Trevor** in ggpattern#154 (text in `dev/ggpattern-issue.md`). Answered 2026-11-04 (see above).
 - **Bug fixed (also in CRAN 1.1.0):** the palette functions and scales failed with "object 'cheysson_palettes' not
   found" unless ggCheysson was attached, e.g. `ggCheysson::scale_fill_cheysson()` or use from another package.
   Package code now uses `ggCheysson::<dataset>`, and `R/globals.R` is gone (`93e825b`).
@@ -125,7 +161,11 @@ Two-mode plan for 1.2.0 (see the 1.2.0 item under "New development" for the desi
   spacing ratios look backwards and 3 are clamped. The vignette notes it. Proper fix: use the specs'
   `pattern_linewidth` (per-swatch density). Also check its stored order against the plate
   (`data-raw/palette_order.R` reverses it).
-- [ ] Once the new versions are on CRAN: require them in a later release and drop the old mode.
+- [ ] Once the new versions are on CRAN: require them in a later release and drop the old mode. But Trevor
+  (2026-11-04) advises keeping the fallback a long time, since Suggests can't guarantee versions.
+- [ ] **Legend keys with thick stripes** (`poc_register_bars_override.png`): expected, per Trevor. Try registering a
+  default `pattern_key_scale_factor` as a function of `pattern_density` / `pattern_spacing` (dev gridpattern only;
+  absolute mode). Meanwhile document `pattern_key_scale_factor` and larger legend keys in `?cheysson_swatches`.
 
 ## Handoff (2026-09-28, desktop -> laptop)
 
@@ -1020,7 +1060,8 @@ two). No CRAN deadline applies (package too new). See the entry under "New devel
     if the remaining boilerplate still feels heavy.
   - [x] Reply to Trevor on #154 with thanks + the POC result. Follow-up questions in October (`dev/ggpattern-reply.md`,
     answered in commit comments on `1337f53`); feedback on `register_pattern()` sent in #154 on 2026-11-03.
-  - [ ] Read Trevor's answer on the legend keys and the `register_pattern()` help text.
+  - [x] Read Trevor's answer on the legend keys and the `register_pattern()` help text (2026-11-04; summary in the
+    2026-11-04 handoff at the top).
 
 - [ ] Another post from Tom Shanley: https://observablehq.com/@tomshanley/cheysson-grid discusses
   "programmatically creating gridlines like those used these charts created by Émile Cheysson in
