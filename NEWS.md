@@ -17,6 +17,10 @@
   literacy map in the Guerry maps vignette now uses `scale_cheysson()` instead of mapping
   `pattern_spacing` with `scale_pattern_spacing_manual()`.
 
+* New `show_swatches()` draws an atlas of the swatches: one row per palette and one column per
+  element, grouped by palette type, so a swatch's name reads off its row and column. It is shown
+  in the README.
+
 * Experimental `scale_cheysson()` is now a single discrete scale for the `pattern` aesthetic that
   gives each level a swatch, so a palette needs only
   `aes(pattern = x) + geom_col_pattern() + scale_cheysson("1886_28")`. It used to return five

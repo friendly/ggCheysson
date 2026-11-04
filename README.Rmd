@@ -135,7 +135,7 @@ Here are a few examples to get you started.
 ### Basic Color Palette
 Use the color palette of the 1881 Album, plate 4
 
-```{r basic-palette, fig.height=4, fig.width=6}
+```{r basic-palette, fig.height=4, fig.width=6, fig.alt="Scatterplot of iris sepal width against sepal length, with points colored by species in the muted rose, pale yellow and sage green of palette 1881_22"}
 library(ggplot2)
 library(ggCheysson)
 
@@ -148,7 +148,7 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
 
 ### With Fonts and Theme
 
-```{r with-fonts, fig.height=5, fig.width=7}
+```{r with-fonts, fig.height=5, fig.width=7, fig.alt="Scatterplot of mpg against car weight from mtcars, colored by number of cylinders in slate blue, brown and orange from palette 1883_31, drawn with theme_cheysson: a bold outlined capital title, a serif subtitle and small-capital axis titles"}
 # Load Cheysson fonts (once per session)
 load_cheysson_fonts(method = "showtext")
 # Enable showtext for rendering
@@ -175,17 +175,17 @@ output (slides, posters). Title and axis-title text (set in the decorative
 rate as the rest of the theme, rather than reading undersized as `base_size`
 grows:
 
-```{r base-size-14, fig.height=5, fig.width=7}
+```{r base-size-14, fig.height=5, fig.width=7, fig.alt="The same mtcars scatterplot with theme_cheysson(base_size = 14): title, subtitle, axis and legend text are all larger, in proportion"}
 p1 + theme_cheysson(base_size = 14)
 ```
 
-```{r base-size-16, fig.height=5, fig.width=7}
+```{r base-size-16, fig.height=5, fig.width=7, fig.alt="The same mtcars scatterplot with theme_cheysson(base_size = 16): the text is larger still, with the title fonts scaled in step with the rest"}
 p1 + theme_cheysson(base_size = 16)
 ```
 
 ### Complete Cheysson Aesthetic (Colors + Patterns + Fonts)
 
-```{r complete-aesthetic, fig.height=5, fig.width=7}
+```{r complete-aesthetic, fig.height=5, fig.width=7, fig.alt="Bar chart of four categories, A to D, in theme_cheysson, each bar hatched with a swatch from palette 1883_30: red diagonal stripes, blue diagonal stripes, red and blue crosshatching, and black diagonal stripes"}
 library(ggpattern)
 
 data <- data.frame(
@@ -236,17 +236,17 @@ cheysson_pal("1880_21")
 
 Use `show_palette()` to display a palette with color swatches and hex codes:
 
-```{r show-palette, fig.height=2, fig.width=8}
+```{r show-palette, fig.height=2, fig.width=8, fig.alt="show_palette() display of palette 1895_16: a header giving its type (sequential), album 1895 and plate 16, above three color rectangles, sage grey, slate blue and near-black, each labeled with its hex code"}
 # Display a single palette with metadata
 show_palette("1895_16")
 ```
 
-```{r show-palette-multi, fig.height=6, fig.width=8}
+```{r show-palette-multi, fig.height=6, fig.width=8, fig.alt="show_palettes() display of three palettes stacked vertically, each with a header and labeled color rectangles: category palette 1880_21 with 7 colors, category palette 1906_06 with 6 colors, and grouped palette 1881_30 with 5 colors"}
 # Display multiple palettes at once
 show_palettes(c("1880_21", "1906_06", "1881_30"))
 ```
 
-```{r show-palette-grid, fig.height=4, fig.width=10}
+```{r show-palette-grid, fig.height=4, fig.width=10, fig.alt="show_palettes() display in a 2 by 2 grid, one palette of each type: category 1880_21 (7 colors), sequential 1895_16 (3 colors), diverging 1883_21 (red, cream, yellow) and grouped 1881_30 (5 colors)"}
 # One palette of each type in a 2x2 grid: category, sequential, diverging, grouped
 show_palettes(c("1880_21", "1895_16", "1883_21", "1881_30"), ncol = 2)
 ```
@@ -283,7 +283,7 @@ patterns <- cheysson_pattern("1886_24")
 str(patterns[[2]])
 ```
 
-```{r pattern-swatches, fig.height=2, fig.width=8}
+```{r pattern-swatches, fig.height=2, fig.width=8, fig.alt="The eight swatches of palette 1886_24 side by side: solid red, red crosshatching, red diagonal stripes, solid blue, blue crosshatching, solid black, black crosshatching and black diagonal stripes"}
 # Display the palette's elements as swatches
 n <- length(patterns)
 ggplot(data.frame(i = factor(seq_len(n))), aes(i, 1, pattern = i)) +
@@ -295,7 +295,7 @@ ggplot(data.frame(i = factor(seq_len(n))), aes(i, 1, pattern = i)) +
 
 Use `scale_cheysson()` in a plot to give each category a swatch:
 
-```{r pattern-bars, fig.height=4, fig.width=6}
+```{r pattern-bars, fig.height=4, fig.width=6, fig.alt="Bar chart of four categories using scale_cheysson(\"1886_24\"): A is solid red, B red crosshatching, C red diagonal stripes and D solid blue, with a legend whose keys show the same swatches"}
 data <- data.frame(category = LETTERS[1:4], value = c(15, 23, 18, 20))
 
 ggplot(data, aes(category, value, pattern = category)) +
@@ -303,6 +303,16 @@ ggplot(data, aes(category, value, pattern = category)) +
   scale_cheysson("1886_24") +
   labs(title = "Statistical Comparison", x = "Category", y = "Value") +
   theme_minimal()
+```
+
+### All the swatches
+
+`show_swatches()` draws every swatch, one row per palette, grouped by palette type. The swatch
+in row `1886_24`, column 2 is `"1886_24-2"`, and `scale_cheysson("1886_24")` uses that row from
+left to right:
+
+```{r show-swatches, fig.height=10, fig.width=8, fig.alt="Atlas of all 134 Cheysson swatches: one row per palette, grouped into panels by palette type (sequential, diverging, grouped, category), with columns numbered by element; each cell shows a solid fill, stripes or crosshatching"}
+show_swatches()
 ```
 
 For control over each property separately, use the individual pattern scales
@@ -372,6 +382,7 @@ theme(
 - `cheysson_pattern()` - Get pattern specifications
 - `scale_pattern_*_cheysson()` - ggpattern scales for single properties: fills, types, angles, densities
 - `list_cheysson_patterns()` - List available pattern palettes
+- `show_swatches()` - Display all the swatches, or those of chosen palettes or types
 
 ### Font Functions
 - `load_cheysson_fonts()` - Load font families

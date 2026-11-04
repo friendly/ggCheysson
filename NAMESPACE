@@ -22,6 +22,7 @@ export(scale_pattern_fill_cheysson)
 export(scale_pattern_type_cheysson)
 export(show_palette)
 export(show_palettes)
+export(show_swatches)
 export(theme_cheysson)
 export(theme_cheysson_map)
 export(theme_cheysson_minimal)
@@ -34,4 +35,5 @@ importFrom(graphics,
   rect,
   text
 )
+importFrom(rlang,.data)
 importFrom(utils,getFromNamespace)
