@@ -99,6 +99,19 @@ default base spacing is 0.3 cm, converted to those units.</p>
 when 'ggpattern' is updated.</p>
     </div>
     <div class="section level2">
+    <h2 id="legend-keys">Legend keys<a class="anchor" aria-label="anchor" href="#legend-keys"></a></h2>
+
+
+<p>'ggpattern' zooms the pattern in a legend key by a fixed factor, which
+doesn't depend on the spacing or density. So with wide, thick lines (large
+<code>pattern_spacing</code> and <code>pattern_density</code>), a key can look almost solid while
+the bars are clearly hatched. Two fixes: set <code>pattern_key_scale_factor</code> in
+the geom below its default of 1, which draws the lines in the keys larger
+(e.g. <code>geom_col_pattern(pattern_key_scale_factor = 0.5)</code>), or make the keys
+bigger, e.g. <code>theme(legend.key.size = unit(1.5, "cm"))</code>. With the default
+spacing and density, the keys need neither.</p>
+    </div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><a href="cheysson_patterns.html">cheysson_patterns</a>, <code><a href="scale_cheysson.html">scale_cheysson()</a></code>, <code><a href="show_swatches.html">show_swatches()</a></code></p></div>
     </div>

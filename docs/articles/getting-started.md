@@ -303,7 +303,8 @@ if (requireNamespace("ggpattern", quietly = TRUE)) {
   # Infrastructure comparison
   infrastructure <- data.frame(
     region = rep(c("North", "South", "East", "West"), each = 3),
-    type = rep(c("Rail", "Canal", "Road"), 4),
+    # a factor, so the levels take the sequential palette from light to dense
+    type = factor(rep(c("Rail", "Canal", "Road"), 4), levels = c("Road", "Canal", "Rail")),
     length = c(
       450, 300, 250,  # North
       350, 400, 250,  # South
