@@ -7,7 +7,7 @@ corruption incident log - are archived in [`dev/TASKS-v1.0.1.md`](TASKS-v1.0.1.m
 ## 1.2.0 submitted to CRAN (2026-11-07) - resume here
 
 **"Thanks, package ggCheysson_1.2.0.tar.gz is on its way to CRAN."** Submitted 2026-11-07 12:23 UTC from
-`3ebe2e7` (`CRAN-SUBMISSION`, not yet committed).
+`3ebe2e7` (`CRAN-SUBMISSION` committed in `3c22092`). **Accepted and published on CRAN 2026-11-07.**
 
 Done 2026-11-07, before submitting:
 - **Checks, all clean (0 errors, 0 warnings, 0 notes / Status OK):**
@@ -26,7 +26,8 @@ Done 2026-11-07, before submitting:
 - Stale 1.1.0 `CRAN-SUBMISSION` removed (`bdbbcd8`); pkgdown site rebuilt (`ce17fc3`).
 
 After acceptance:
-- [ ] `usethis::use_github_release()` (tags v1.2.0, deletes `CRAN-SUBMISSION`).
+- [x] GitHub release **v1.2.0** published 2026-11-07 (made by hand with `gh`, tag at `3ebe2e7`; notes = intro +
+  swatch atlas image + NEWS 1.2.0). `CRAN-SUBMISSION` deleted.
 - [ ] Bump to a development version (`usethis::use_dev_version()`, 1.2.0.9000) and start a NEWS section.
 - [ ] Let Trevor know in ggpattern#154 that 1.2.0, with registered swatches, is on CRAN.
 
