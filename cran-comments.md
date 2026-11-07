@@ -4,7 +4,7 @@ This is a feature update. The main change is that each element of each color-and
 is now registered with 'gridpattern' as a pattern of its own (a *swatch*), so that a whole palette
 can be used through the single `pattern` aesthetic of 'ggpattern'; `scale_cheysson()` is now one
 scale giving these swatches. Both are marked experimental. A new function, `show_swatches()`,
-draws them all.
+draws them all. Thanks to Trevor L. Davis for help with this.
 
 'ggpattern' and 'gridpattern' remain in Suggests. The swatches are registered in `.onLoad()`
 only when 'gridpattern' is loaded (via `rlang::on_package_load()`, so 'rlang' is added to Imports),
@@ -22,12 +22,15 @@ below.
 
 * local Windows 11, R 4.6.1 (2026-06-24 ucrt), `R CMD check --as-cran`, with both the CRAN
   and the development versions of 'ggpattern' and 'gridpattern'
-* win-builder: TODO (devel, release)
-* R-hub (GitHub Actions): TODO (linux, windows, macos x86_64, macos-arm64)
+* win-builder, R 4.6.2 (2026-10-29 ucrt): Status OK
+* win-builder, R Under development (unstable) (2026-11-06 r90845 ucrt): Status OK
+* R-hub (GitHub Actions), R-devel (2026-11-05 r90840 / 2026-11-06 r90845): linux (x86_64),
+  windows, macos (x86_64-apple-darwin20, the platform of the 1.0.1 ERROR), macos-arm64
+  (aarch64-apple-darwin23): all Status OK, vignettes re-built
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes (local, with either version of 'ggpattern')
+0 errors | 0 warnings | 0 notes (all of the above; locally with either version of 'ggpattern')
 
 ## Reverse dependencies
 
