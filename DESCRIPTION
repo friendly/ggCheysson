@@ -1,6 +1,6 @@
 Package: ggCheysson
 Title: Graphic Styles of Emile Cheysson for 'ggplot2'
-Version: 1.2.0
+Version: 1.2.0.9000
 Date: 2026-11-07
 Authors@R: 
     c(person(given = "Michael", family = "Friendly", 
@@ -8,7 +8,8 @@ Authors@R:
              comment = c(ORCID = "0000-0002-3237-0941")),
       person(given = "RJ", family = "Andrews", role = "ctb"),
       person(given = "Tom", family = "Shanley",  role = "ctb"),
-      person(given = "Kenneth", family = "Fields",  role = "ctb")
+      person(given = "Kenneth", family = "Fields",  role = "ctb"),
+      person(given = c("Trevor", "L."), family = "Davis", role = "ctb")
       )
 Description: Implements for 'ggplot2' the stylistic elements (fonts, hatched patterns, color palettes) used by 'Emile
   Cheysson' in the 'Albums de Statistique Graphique', sometimes called the pinnacle of the

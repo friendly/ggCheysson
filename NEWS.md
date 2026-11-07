@@ -1,3 +1,8 @@
+# ggCheysson (development version)
+
+* Trevor L. Davis, author of 'ggpattern' and 'gridpattern', is added as a contributor, with thanks for
+  the pattern-registration API that the swatches use and his advice on using it.
+
 # ggCheysson 1.2.0
 
 ## New features
