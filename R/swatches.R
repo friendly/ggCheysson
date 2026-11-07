@@ -54,6 +54,16 @@
 #' Set them only when needed, since code that sets them may draw differently
 #' when 'ggpattern' is updated.
 #'
+#' @section Legend keys:
+#' 'ggpattern' zooms the pattern in a legend key by a fixed factor, which
+#' doesn't depend on the spacing or density. So with wide, thick lines (large
+#' `pattern_spacing` and `pattern_density`), a key can look almost solid while
+#' the bars are clearly hatched. Two fixes: set `pattern_key_scale_factor` in
+#' the geom below its default of 1, which draws the lines in the keys larger
+#' (e.g. `geom_col_pattern(pattern_key_scale_factor = 0.5)`), or make the keys
+#' bigger, e.g. `theme(legend.key.size = unit(1.5, "cm"))`. With the default
+#' spacing and density, the keys need neither.
+#'
 #' @name cheysson_swatches
 #' @aliases cheysson-swatches
 #' @seealso [cheysson_patterns], [scale_cheysson()], [show_swatches()]
