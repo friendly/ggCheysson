@@ -4,7 +4,33 @@ Started 2026-09-14. Completed tasks from the run-up to the first CRAN release (1
 `theme_cheysson()` title-size fix, the CRAN (re)submission checklist, and the Git/Dropbox
 corruption incident log - are archived in [`dev/TASKS-v1.0.1.md`](TASKS-v1.0.1.md).
 
-## Handoff (2026-11-04) - resume here
+## 1.2.0 submitted to CRAN (2026-11-07) - resume here
+
+**"Thanks, package ggCheysson_1.2.0.tar.gz is on its way to CRAN."** Submitted 2026-11-07 12:23 UTC from
+`3ebe2e7` (`CRAN-SUBMISSION`, not yet committed).
+
+Done 2026-11-07, before submitting:
+- **Checks, all clean (0 errors, 0 warnings, 0 notes / Status OK):**
+  - local `R CMD check --as-cran`, Windows 11, R 4.6.1, run twice: with the development ggpattern 1.4.0.2 /
+    gridpattern 1.6.0.4, and with CRAN's ggpattern 1.3.1 / gridpattern 1.5.1 (installed in a scratch library
+    first on `R_LIBS`; "relative" mode). Tests pass and the atlas draws in both.
+  - win-builder R-release (4.6.2) and R-devel (2026-11-06 r90845).
+  - R-hub, R-devel (run 42365795967): linux, windows, macos-arm64, and **Intel macOS** (the 1.0.1 segfault
+    platform: vignettes rebuilt in 105 s, no crash).
+  - CRAN's checks of 1.1.0 (published 2026-10-01) were OK on all 12 flavors.
+- **`e51445e`:** `DESCRIPTION` Date 2026-11-07; `cran-comments.md` rewritten for 1.2.0 (results filled in
+  `3ebe2e7`, plus a thank-you to Trevor L. Davis); `?cheysson_swatches` gains a "Legend keys" section
+  (`pattern_key_scale_factor` *below* 1 draws the key's lines larger - 0.5 fixes the 0.06 / 0.6 case, 0.75 isn't
+  enough - or `theme(legend.key.size = unit(1.5, "cm"))`); Getting Started's grouped bars use a factor
+  `type` (Road, Canal, Rail: light to dense).
+- Stale 1.1.0 `CRAN-SUBMISSION` removed (`bdbbcd8`); pkgdown site rebuilt (`ce17fc3`).
+
+After acceptance:
+- [ ] `usethis::use_github_release()` (tags v1.2.0, deletes `CRAN-SUBMISSION`).
+- [ ] Bump to a development version (`usethis::use_dev_version()`, 1.2.0.9000) and start a NEWS section.
+- [ ] Let Trevor know in ggpattern#154 that 1.2.0, with registered swatches, is on CRAN.
+
+## Handoff (2026-11-04)
 
 Everything below is pushed (`master` at `545a2db`). Done 2026-11-04:
 
@@ -35,8 +61,9 @@ Everything below is pushed (`master` at `545a2db`). Done 2026-11-04:
   next one, for `545a2db`, succeeded and the live site has everything.
 
 Still open from today:
-- [ ] `R CMD check --as-cran` hasn't been run since `show_swatches()` was added (only its example was run).
-- [ ] Tests for `show_swatches()` (e.g. builds a ggplot; type filtering; unknown palette errors).
+- [x] `R CMD check --as-cran` hasn't been run since `show_swatches()` was added. Done 2026-11-07, clean.
+- [ ] Tests for `show_swatches()` (e.g. builds a ggplot; type filtering; unknown palette errors). Skipped for
+  1.2.0 (user's choice).
 - [ ] The atlas shows `1883_21`'s and `1883_31`'s stripes much finer and fainter than the rest: check their
   spacing ratios / measurements (cf. the `1891_19` item below).
 - [ ] Blog post: the atlas is a good figure for the 'Emile Cheysson Meets `ggplot2`' draft.
@@ -148,14 +175,14 @@ Two-mode plan for 1.2.0 (see the 1.2.0 item under "New development" for the desi
   "Combining Colors and Patterns" (`62f3337`), and all three pattern maps in the Guerry maps vignette
   (`a69adc7`, `a233011`). All pattern examples in the docs now use `scale_cheysson()`, except where the
   individual scales are the point (the long form and the subset example in "Combining Colors and Patterns").
-- [ ] Small: Getting Started's grouped bar chart maps a character `type` to sequential `1881_12`, so the levels
+- [x] Small (fixed 2026-11-07, `e51445e`): Getting Started's grouped bar chart maps a character `type` to sequential `1881_12`, so the levels
   take the palette in alphabetical order (Canal, Rail, Road: Road gets the densest hatching). Pre-existing; a
   factor with meaningful levels would fix it.
 - [x] **pkgdown site rebuilt 2026-11-03** (`e92a934`) with all of the above, after adding the new
   `cheysson_swatches` topic to the reference index in `_pkgdown.yml` (`4fde487`; pkgdown errors on unlisted
   topics). Rebuild again before submitting if anything changes.
-- [ ] Before submitting 1.2.0: run `R CMD check --as-cran` again (last full check was before the README/Getting
-  Started change), win-builder and R-hub; update `cran-comments.md`.
+- [x] Before submitting 1.2.0: run `R CMD check --as-cran` again, win-builder and R-hub; update `cran-comments.md`.
+  Done 2026-11-07, all clean; submitted (see top).
 - [ ] **`1891_19` draws unfaithfully:** it trades spacing against line width (thin lines, width ~2, about 0.006
   apart, up to very thick lines, width 54, 0.2 apart), which one density for all swatches can't reproduce; its
   spacing ratios look backwards and 3 are clamped. The vignette notes it. Proper fix: use the specs'
@@ -165,7 +192,7 @@ Two-mode plan for 1.2.0 (see the 1.2.0 item under "New development" for the desi
   (2026-11-04) advises keeping the fallback a long time, since Suggests can't guarantee versions.
 - [ ] **Legend keys with thick stripes** (`poc_register_bars_override.png`): expected, per Trevor. Try registering a
   default `pattern_key_scale_factor` as a function of `pattern_density` / `pattern_spacing` (dev gridpattern only;
-  absolute mode). Meanwhile document `pattern_key_scale_factor` and larger legend keys in `?cheysson_swatches`.
+  absolute mode). The workarounds are documented in `?cheysson_swatches`, "Legend keys" (`e51445e`).
 
 ## Handoff (2026-09-28, desktop -> laptop)
 
